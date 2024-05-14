@@ -17,7 +17,6 @@
         <script type="text/javascript" src="slick/slick.min.js"></script>       
     </head>
     <body>
-        ---------------------------------------------------
         <jsp:include page="nav.jsp"/>
         <!-- banner -->
         <div class="container" style="padding-top: 10px;">
