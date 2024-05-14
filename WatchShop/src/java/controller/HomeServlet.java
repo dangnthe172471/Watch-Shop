@@ -5,12 +5,16 @@
 
 package controller;
 
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.Category;
+import model.Product;
 
 /**
  *
@@ -53,7 +57,17 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        ProductDAO pdao = new ProductDAO();
+        List<Category> listC = pdao.getAllCategory();
+        
+        List<Product> listP1 = pdao.listProductLast();
+        List<Product> listP2 = pdao.listProductBySold();
+        List<Product> listP3 = pdao.listProductByPrice();
+        request.setAttribute("listC", listC);
+        request.setAttribute("listP1", listP1);
+        request.setAttribute("listP2", listP2);
+        request.setAttribute("listP3", listP3);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     } 
 
     /** 
