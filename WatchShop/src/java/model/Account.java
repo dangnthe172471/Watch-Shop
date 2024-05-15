@@ -1,30 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author dung2
- */
 public class Account {
-     private String id;
-    private String avatar;
-    private String user;
-    private String pass;
-    private String email;
-    private String phone;
-    private String amount;
-    private String bought;
+
+    private int id;
+    private String avatar, user, pass, email, phone;
+    private double amount;
+    private int bought;
     private String address;
     private int status;
-    private String roleId;
+    private int roleID;
 
     public Account() {
     }
 
-    public Account(String id, String avatar, String user, String pass, String email, String phone, String amount, String bought, String address, int status, String roleId) {
+    public Account(int id, String avatar, String user, String pass, String email, String phone, double amount, int bought, String address, int status, int roleID) {
         this.id = id;
         this.avatar = avatar;
         this.user = user;
@@ -35,14 +24,14 @@ public class Account {
         this.bought = bought;
         this.address = address;
         this.status = status;
-        this.roleId = roleId;
+        this.roleID = roleID;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -86,19 +75,19 @@ public class Account {
         this.phone = phone;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    public String getBought() {
+    public int getBought() {
         return bought;
     }
 
-    public void setBought(String bought) {
+    public void setBought(int bought) {
         this.bought = bought;
     }
 
@@ -118,18 +107,12 @@ public class Account {
         this.status = status;
     }
 
-    public String getRoleId() {
-        return roleId;
+    public int getRoleID() {
+        return roleID;
     }
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
+    public void setRoleID(int roleID) {
+        this.roleID = roleID;
     }
 
-    @Override
-    public String toString() {
-        return "Account{" + "id=" + id + ", avatar=" + avatar + ", user=" + user + ", pass=" + pass + ", email=" + email + ", phone=" + phone + ", amount=" + amount + ", bought=" + bought + ", address=" + address + ", status=" + status + ", roleId=" + roleId + '}';
-    }
-    
-    
 }

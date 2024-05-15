@@ -1,8 +1,3 @@
-<%-- 
-    Document   : nav
-    Created on : May 8, 2024, 11:57:17 AM
-    Author     : admin
---%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -25,7 +20,7 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <!-- form tìm kiếm  -->
                     <form action="search" class="form-inline ml-auto my-2 my-lg-0 mr-3">
-                        <div class="input-group" style="width: 520px;">
+                        <div class="input-group" style="width: 500px;">
                             <input type="text" class="form-control" aria-label="Small"
                                    placeholder="Nhập tên sản phẩm cần tìm kiếm...">
                             <div class="input-group-append">
@@ -37,22 +32,21 @@
                     </form>
 
 
-                    <ul class="navbar-nav mb-1 ml-auto">
-                        <div class="dropdown">
-                            <li class="nav-item account">
-                                <c:if test="${sessionScope.user == null}" >
-                                    <a href="login" class="btn btn-secondary rounded-circle">
+                    <ul class="navbar-nav mb-0 ml-auto" style="width: 1000px">
+                        <div class="dropdown row" style="margin-left: 10px">
+                            <c:if test="${sessionScope.user == null}" >
+                                <li class="nav-item account">  <a href="login" class="btn btn-secondary rounded-circle">
                                         <i class="fa fa-user"></i>
                                     </a>
-                                    <a class="nav-link text-dark text-uppercase" href="login" style="display:inline-block">Tài khoản</a>
+                                    <a class="nav-link text-dark text-uppercase" href="login" style="display:inline-block">Tài khoản</a> </li>   
                                 </c:if>
                                 <c:if test="${sessionScope.user != null}" >
-                                    <a class="nav-link text-dark text-uppercase" href="profile" style="display:inline-block">Hello ${sessionScope.user}</a>
-                                    <a class="nav-link text-dark text-uppercase" href="logout" style="display:inline-block">logout</a>
+                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${user}</a></li> 
+                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block">Change Password</a></li> 
+                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="logout" style="display:inline-block">logout</a></li> 
                                 </c:if>
-                            </li>                            
                         </div>
-                        <div>
+                        <div style="margin-left: 10px">
                             <li class="nav-item giohang">
                                 <a class="btn btn-secondary rounded-circle">
                                     <i class="fa fa-shopping-cart"></i>
@@ -70,15 +64,15 @@
             <nav class="container">
                 <ul class="main-menu">
                     <li><a href="home">Trang chủ</a></li>
-                    <li><a href="search">Sản phẩm</a></li>                   
-                    <li><a href="#">Thương hiệu <i class="fa fa-caret-down fa-css"></i></a>
+                    <li style="margin-left: 30px;"><a href="search">Sản phẩm</a></li>                   
+                    <li style="margin-left: 30px;"><a href="search">Thương hiệu <i class="fa fa-caret-down fa-css"></i></a>
                         <ul class="sub-menu">
                             <c:forEach var="o" items="${listC}">                               
                                 <li><a href="search?cid=${o.cid}">${o.cname}</a></li>
                                 </c:forEach>
                         </ul>
                     </li>  
-                    <li><a href="#">Liên hệ</a></li>                   
+                    <li style="margin-left: 30px;"><a href="gioithieu.jsp">Giới thiệu</a></li>                   
                 </ul>
             </nav>
         </div>

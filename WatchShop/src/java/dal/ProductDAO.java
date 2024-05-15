@@ -144,7 +144,7 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<Product> search(int[] cid, String key, Double fromprice, Double toprice, Date fromdate, Date todate, int sort, int index) {
         List<Product> list = new ArrayList<>();
         String sql = """
@@ -270,5 +270,81 @@ public class ProductDAO extends DBContext {
         } catch (SQLException e) {
         }
         return 0;
+    }
+
+    public Product getProductByID(String id) {
+        String sql = """
+                       select p.[id]
+                       ,p.[name]
+                       ,p.[image]
+                       ,p.[price]
+                       ,p.[quantity]
+                       ,p.[sold]
+                       ,p.[releaseDate]
+                       ,p.[description]
+                       ,p.[rate]
+                       ,c.[cid]
+                       ,c.[cname]
+                       from product p inner join category c on (c.cid=p.cateID)
+                       where id = ?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getDate(7),
+                        rs.getString(8),
+                        rs.getDouble(9),
+                        new Category(rs.getInt(10),
+                                rs.getString(11)));
+            }
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    public List<Product> listProductByPid(String pid) {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+                        select top 4 p.[id]
+                        ,p.[name]
+                        ,p.[image]
+                        ,p.[price]
+                        ,p.[quantity]
+                        ,p.[sold]
+                        ,p.[releaseDate]
+                        ,p.[description]
+                        ,p.[rate]
+                        ,c.[cid]
+                        ,c.[cname]
+                        from product p inner join category c on (c.cid=p.cateID)
+                        where cateID = (select (cateID) from Product where id = ? ) AND p.[id] <> ?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, pid);
+            st.setString(2, pid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getDate(7),
+                        rs.getString(8),
+                        rs.getDouble(9),
+                        new Category(rs.getInt(10),
+                                rs.getString(11))));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
     }
 }

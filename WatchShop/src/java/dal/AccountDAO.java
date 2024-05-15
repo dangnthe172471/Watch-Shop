@@ -47,7 +47,7 @@ public class AccountDAO extends DBContext {
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
-             rs = st.executeQuery();
+            rs = st.executeQuery();
             if (rs.next()) {
                 Account account = new Account();
                 account.setUser(rs.getString("user"));
@@ -62,25 +62,21 @@ public class AccountDAO extends DBContext {
     }
 
     public void AddAccount(Account newUser) {
-         try {
-            
-            String strSQL = "INSERT INTO [dbo].[Account] ([user], [pass], [email], [phone], [Address], [roleID]) VALUES (?, ?, ?, ?, ?, '1')";
+        try {
+
+            String strSQL = "INSERT INTO [dbo].[Account] ([user], [pass], [email], [phone], [Address], [roleID]) VALUES (?, ?, ?, ?, ?, '4')";
             stm = connection.prepareStatement(strSQL);
 
-            stm.setString(1, newUser.getUser() );
+            stm.setString(1, newUser.getUser());
             stm.setString(2, newUser.getPass());
             stm.setString(3, newUser.getEmail());
             stm.setString(4, newUser.getPhone());
             stm.setString(5, newUser.getAddress());
-          
-            
 
-            stm.executeUpdate(); 
+            stm.executeUpdate();
         } catch (SQLException e) {
             System.out.print("AddAccount:" + e.getMessage());
         }
     }
-
-
 
 }
