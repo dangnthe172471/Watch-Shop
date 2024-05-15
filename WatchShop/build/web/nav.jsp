@@ -40,15 +40,15 @@
                     <ul class="navbar-nav mb-1 ml-auto">
                         <div class="dropdown">
                             <li class="nav-item account">
-                                <c:if test="${sessionScope.account == null}" >
+                                <c:if test="${sessionScope.user == null}" >
                                     <a href="login" class="btn btn-secondary rounded-circle">
                                         <i class="fa fa-user"></i>
                                     </a>
                                     <a class="nav-link text-dark text-uppercase" href="login" style="display:inline-block">Tài khoản</a>
                                 </c:if>
-                                <c:if test="${sessionScope.account != null}" >
-                                    <a class="nav-link text-dark text-uppercase" href="login" style="display:inline-block">Hello ${account.user}</a>
-                                    <a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a>
+                                <c:if test="${sessionScope.user != null}" >
+                                    <a class="nav-link text-dark text-uppercase" href="profile" style="display:inline-block">Hello ${sessionScope.user}</a>
+                                    <a class="nav-link text-dark text-uppercase" href="logout" style="display:inline-block">logout</a>
                                 </c:if>
                             </li>                            
                         </div>
