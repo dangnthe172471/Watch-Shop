@@ -17,8 +17,8 @@ CREATE TABLE [dbo].[Account](
 	[avatar] [varchar](255) DEFAULT N'img/avata.jpg',
     [user] [varchar](255) NOT NULL,
     [pass] [varchar](255) Not NULL,
-	[email] [varchar](255) NULL,
-	[phone] [varchar](255) NULL,
+	[email] [varchar](255) not NULL,
+	[phone] [varchar](255) not NULL,
 	[amount] [money] DEFAULT 0,
     [bought] [int] DEFAULT 0,
 	[Address] [varchar](255) NULL,
@@ -60,6 +60,7 @@ CREATE TABLE [dbo].[Order](
 	[aid] [int],
 	[date] [date],
 	[totalMoney] [money],
+	[address]  [nvarchar](max),
 	[sid] [int],
 	PRIMARY KEY CLUSTERED([id]),
 	foreign key ([aid]) references [dbo].[Account]([id]),
@@ -225,16 +226,16 @@ INSERT [dbo].[Status]([id], [status]) VALUES (2,N'Đang giao hàng')
 INSERT [dbo].[Status]([id], [status]) VALUES (3,N'Hoàn thành')
 SET IDENTITY_INSERT [dbo].[Status] OFF
 
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [sid]) VALUES (2, CAST(N'2020-06-12' AS Date),7400,3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [sid]) VALUES (1, CAST(N'2021-05-05' AS Date),10650,3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [sid]) VALUES (1, CAST(N'2021-10-12' AS Date),3700,3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [sid]) VALUES (3, CAST(N'2021-12-12' AS Date),10500,3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [sid]) VALUES (1, CAST(N'2022-01-05' AS Date),7300,3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [sid]) VALUES (4, CAST(N'2022-03-12' AS Date),7400,3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [sid]) VALUES (5, CAST(N'2022-08-05' AS Date),7100,2)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [sid]) VALUES (3, CAST(N'2022-12-12' AS Date),3700,2)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [sid]) VALUES (2, CAST(N'2023-01-12' AS Date),10500,1)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [sid]) VALUES (4, CAST(N'2023-02-05' AS Date),14600,1)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (2, CAST(N'2020-06-12' AS Date),7400,N'Ha Noi', 3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (1, CAST(N'2021-05-05' AS Date),10650,N'Hai phong',3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (1, CAST(N'2021-10-12' AS Date),3700,N'Hue',3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2021-12-12' AS Date),10500,N'Bac Giang',3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (1, CAST(N'2022-01-05' AS Date),7300,N'Hai Duong',3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2022-03-12' AS Date),7400,N'Bac Ninh',3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (5, CAST(N'2022-08-05' AS Date),7100,N'Ninh Binh',2)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2022-12-12' AS Date),3700,N'Cao Bang',2)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (2, CAST(N'2023-01-12' AS Date),10500,N'Ca Mau',1)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2023-02-05' AS Date),14600,N'Ha Long',1)
 
 INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (1,6,2,3700)
 INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (2,10,3,3550)
