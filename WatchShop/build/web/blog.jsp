@@ -26,7 +26,7 @@
         <jsp:include page="nav.jsp"/>
         <div class="container">
 
-            <c:forEach items="${listB}" var="o">
+            <c:forEach items="${listBl}" var="o">
                 <div class="row mb-5 mt-3">
                     <div class="col-md-4">
                         <h4 style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical; overflow: hidden;" title="${o.title}">${o.title}</h4>

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.Blog;
+import model.Brand;
 import model.Category;
 import model.Product;
 
@@ -39,9 +40,24 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
+    public List<Brand> getAllBrand() {
+        List<Brand> list = new ArrayList<>();
+        String sql = "select * from Brand";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new Brand(rs.getInt(1),
+                        rs.getString(2)));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
     public List<Category> getAllCategory() {
         List<Category> list = new ArrayList<>();
-        String sql = "select * from Category";
+        String sql = "select * from category";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -57,18 +73,8 @@ public class ProductDAO extends DBContext {
     public List<Product> listProductLast() {
         List<Product> list = new ArrayList<>();
         String sql = """
-                        select top 5 p.[id]
-                        ,p.[name]
-                        ,p.[image]
-                        ,p.[price]
-                        ,p.[quantity]
-                        ,p.[sold]
-                        ,p.[releaseDate]
-                        ,p.[description]
-                        ,p.[rate]
-                        ,c.[cid]
-                        ,c.[cname]
-                        from product p inner join category c on (c.cid=p.cateID)
+                        select top 5 *
+                        from product 
                         order by releaseDate desc""";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -83,8 +89,8 @@ public class ProductDAO extends DBContext {
                         rs.getDate(7),
                         rs.getString(8),
                         rs.getDouble(9),
-                        new Category(rs.getInt(10),
-                                rs.getString(11))));
+                        rs.getInt(10),
+                        rs.getInt(11)));
             }
         } catch (SQLException e) {
         }
@@ -94,19 +100,9 @@ public class ProductDAO extends DBContext {
     public List<Product> listProductBySold() {
         List<Product> list = new ArrayList<>();
         String sql = """
-                       select top 5 p.[id]
-                                    ,p.[name]
-                                    ,p.[image]
-                                    ,p.[price]
-                                    ,p.[quantity]
-                                    ,p.[sold]
-                                    ,p.[releaseDate]
-                                    ,p.[description]
-                                    ,p.[rate]
-                                    ,c.[cid]
-                                    ,c.[cname]
-                                    from product p inner join category c on (c.cid=p.cateID)
-                                    order by sold""";
+                       select top 5 *
+                       from product 
+                       order by sold""";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -120,8 +116,8 @@ public class ProductDAO extends DBContext {
                         rs.getDate(7),
                         rs.getString(8),
                         rs.getDouble(9),
-                        new Category(rs.getInt(10),
-                                rs.getString(11))));
+                        rs.getInt(10),
+                        rs.getInt(11)));
             }
         } catch (SQLException e) {
         }
@@ -131,18 +127,8 @@ public class ProductDAO extends DBContext {
     public List<Product> listProductByPrice() {
         List<Product> list = new ArrayList<>();
         String sql = """
-                       select top 5 p.[id]
-                       ,p.[name]
-                       ,p.[image]
-                       ,p.[price]
-                       ,p.[quantity]
-                       ,p.[sold]
-                       ,p.[releaseDate]
-                       ,p.[description]
-                       ,p.[rate]
-                       ,c.[cid]
-                       ,c.[cname]
-                       from product p inner join category c on (c.cid=p.cateID)
+                       select top 5 *
+                       from product
                        order by price""";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -157,30 +143,31 @@ public class ProductDAO extends DBContext {
                         rs.getDate(7),
                         rs.getString(8),
                         rs.getDouble(9),
-                        new Category(rs.getInt(10),
-                                rs.getString(11))));
+                        rs.getInt(10),
+                        rs.getInt(11)));
             }
         } catch (SQLException e) {
         }
         return list;
     }
 
-    public List<Product> search(int[] cid, String key, Double fromprice, Double toprice, Date fromdate, Date todate, int sort, int index) {
+    public List<Product> search(int[] bid, int[] cid, String key, Double fromprice, Double toprice, Date fromdate, Date todate, int sort, int index) {
         List<Product> list = new ArrayList<>();
         String sql = """
-                       select p.[id]
-                       ,p.[name]
-                       ,p.[image]
-                       ,p.[price]
-                       ,p.[quantity]
-                       ,p.[sold]
-                       ,p.[releaseDate]
-                       ,p.[description]
-                       ,p.[rate]
-                       ,c.[cid]
-                       ,c.[cname]
-                       from product p inner join category c on (c.cid=p.cateID)
+                       select *
+                       from product p
                        where 1=1""";
+
+        if (bid != null && bid[0] != 0) {
+            sql += " and p.[brandID] in (";
+            for (int i = 0; i < bid.length; i++) {
+                sql += bid[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
 
         if (cid != null && cid[0] != 0) {
             sql += " and p.[cateID] in (";
@@ -243,19 +230,30 @@ public class ProductDAO extends DBContext {
                         rs.getDate(7),
                         rs.getString(8),
                         rs.getDouble(9),
-                        new Category(rs.getInt(10),
-                                rs.getString(11))));
+                        rs.getInt(10),
+                        rs.getInt(11)));
             }
         } catch (SQLException e) {
         }
         return list;
     }
 
-    public int countSearchProduct(int[] cid, String key, Double fromprice, Double toprice, Date fromdate, Date todate) {
+    public int countSearchProduct(int[] bid, int[] cid, String key, Double fromprice, Double toprice, Date fromdate, Date todate) {
         String sql = """
                     SELECT COUNT(*) 
-                    from product p inner join category c on (c.cid=p.cateID)
+                    from product p
                     where 1=1""";
+
+        if (bid != null && bid[0] != 0) {
+            sql += " and p.[brandID] in (";
+            for (int i = 0; i < bid.length; i++) {
+                sql += bid[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
         if (cid != null && cid[0] != 0) {
             sql += " and p.[cateID] in (";
             for (int i = 0; i < cid.length; i++) {
@@ -294,18 +292,8 @@ public class ProductDAO extends DBContext {
 
     public Product getProductByID(String id) {
         String sql = """
-                       select p.[id]
-                       ,p.[name]
-                       ,p.[image]
-                       ,p.[price]
-                       ,p.[quantity]
-                       ,p.[sold]
-                       ,p.[releaseDate]
-                       ,p.[description]
-                       ,p.[rate]
-                       ,c.[cid]
-                       ,c.[cname]
-                       from product p inner join category c on (c.cid=p.cateID)
+                       select *
+                       from product
                        where id = ?""";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -321,8 +309,8 @@ public class ProductDAO extends DBContext {
                         rs.getDate(7),
                         rs.getString(8),
                         rs.getDouble(9),
-                        new Category(rs.getInt(10),
-                                rs.getString(11)));
+                        rs.getInt(10),
+                        rs.getInt(11));
             }
         } catch (SQLException e) {
         }
@@ -332,18 +320,8 @@ public class ProductDAO extends DBContext {
     public List<Product> listProductByPid(String pid) {
         List<Product> list = new ArrayList<>();
         String sql = """
-                        select top 4 p.[id]
-                        ,p.[name]
-                        ,p.[image]
-                        ,p.[price]
-                        ,p.[quantity]
-                        ,p.[sold]
-                        ,p.[releaseDate]
-                        ,p.[description]
-                        ,p.[rate]
-                        ,c.[cid]
-                        ,c.[cname]
-                        from product p inner join category c on (c.cid=p.cateID)
+                        select top 4 *
+                        from product p
                         where cateID = (select (cateID) from Product where id = ? ) AND p.[id] <> ?""";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -360,8 +338,8 @@ public class ProductDAO extends DBContext {
                         rs.getDate(7),
                         rs.getString(8),
                         rs.getDouble(9),
-                        new Category(rs.getInt(10),
-                                rs.getString(11))));
+                        rs.getInt(10),
+                        rs.getInt(11)));
             }
         } catch (SQLException e) {
         }

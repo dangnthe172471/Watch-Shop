@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Blog;
+import model.Brand;
 import model.Category;
 
 /**
@@ -62,10 +63,12 @@ public class BlogServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDAO pd = new ProductDAO();
-        List<Blog> listB = pd.getAllBlog();
+        List<Blog> listBl = pd.getAllBlog();
+        List<Brand> listB = pd.getAllBrand();
         List<Category> listC = pd.getAllCategory();
-        request.setAttribute("listC", listC);
         request.setAttribute("listB", listB);
+        request.setAttribute("listC", listC);
+        request.setAttribute("listBl", listBl);
         request.getRequestDispatcher("blog.jsp").forward(request, response);
     }
 

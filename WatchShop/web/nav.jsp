@@ -67,6 +67,14 @@
                     <li style="margin-left: 30px;"><a href="search">Sản phẩm</a></li>                   
                     <li style="margin-left: 30px;"><a href="search">Thương hiệu <i class="fa fa-caret-down fa-css"></i></a>
                         <ul class="sub-menu">
+                            <c:forEach var="o" items="${listB}">                               
+                                <li><a href="search?bid=${o.bid}">${o.bname}</a></li>
+                                </c:forEach>
+                        </ul>
+                    </li>  
+
+                    <li style="margin-left: 30px;"><a href="search">Loại<i class="fa fa-caret-down fa-css"></i></a>
+                        <ul class="sub-menu">
                             <c:forEach var="o" items="${listC}">                               
                                 <li><a href="search?cid=${o.cid}">${o.cname}</a></li>
                                 </c:forEach>

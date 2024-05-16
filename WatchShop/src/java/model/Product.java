@@ -20,12 +20,13 @@ public class Product {
     private Date releaseDate;
     private String description;
     private double rate;
-    private Category category;
+    private int cateID;
+    private int brandID;
 
     public Product() {
     }
 
-    public Product(int id, String name, String image, double price, int quantity, int sold, Date releaseDate, String description, double rate, Category category) {
+    public Product(int id, String name, String image, double price, int quantity, int sold, Date releaseDate, String description, double rate, int cateID, int brandID) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -35,7 +36,8 @@ public class Product {
         this.releaseDate = releaseDate;
         this.description = description;
         this.rate = rate;
-        this.category = category;
+        this.cateID = cateID;
+        this.brandID = brandID;
     }
 
     public int getId() {
@@ -110,12 +112,20 @@ public class Product {
         this.rate = rate;
     }
 
-    public Category getCategory() {
-        return category;
+    public int getCateID() {
+        return cateID;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCateID(int cateID) {
+        this.cateID = cateID;
+    }
+
+    public int getBrandID() {
+        return brandID;
+    }
+
+    public void setBrandID(int brandID) {
+        this.brandID = brandID;
     }
     
 }
