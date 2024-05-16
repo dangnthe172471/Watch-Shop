@@ -72,6 +72,7 @@
                                 </c:forEach>
                         </ul>
                     </li>  
+                    <li style="margin-left: 30px;"><a href="blog.jsp">Blog</a></li>                   
                     <li style="margin-left: 30px;"><a href="gioithieu.jsp">Giới thiệu</a></li>                   
                 </ul>
             </nav>
