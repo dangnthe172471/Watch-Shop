@@ -135,7 +135,7 @@
         </section>
 
         <section class="container">
-            <h2>Sản phẩm cùng loại</h2>
+            <h2>Sản phẩm cùng thương hiệu</h2>
             <div class="row col-12 col-md-12 col-lg-12">                  
                 <c:forEach items="${listP}" var="o">                                 
                     <div class="col-12 col-md-3 col-lg-3">

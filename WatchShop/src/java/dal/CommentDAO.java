@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
-import model.Category;
 import model.Comment;
 import model.Product;
 
@@ -46,14 +45,14 @@ public class CommentDAO extends DBContext {
                         p.[releaseDate],
                         p.[description],
                         p.[rate],
-                        ca.[cid],
-                        ca.[cname]
+                        p.[cateID],
+                        p.[brandID]
                         FROM [Comment] c  
                         INNER JOIN [Account] a ON (a.[id] = c.[aid])
-                        INNER JOIN (Product p inner join Category ca on ca.[cid]=p.[cateID]) ON (p.[id] = c.[pid])
+                        INNER JOIN Product p  ON (p.[id] = c.[pid])
                         where p.[id] = ?
                         order by c.[id] desc
-                        OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY
+                        OFFSET ? ROWS FETCH NEXT 4 ROWS ONLY
                      """;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -84,8 +83,8 @@ public class CommentDAO extends DBContext {
                                 rs.getDate(21),
                                 rs.getString(22),
                                 rs.getDouble(23),
-                                new Category(rs.getInt(24),
-                                        rs.getString(25)))));
+                                rs.getInt(24),
+                                rs.getInt(25))));
             }
         } catch (SQLException e) {
         }

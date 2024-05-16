@@ -36,5 +36,4 @@ public class Category {
         this.cname = cname;
     }
     
-    
 }

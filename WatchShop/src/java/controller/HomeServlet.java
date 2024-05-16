@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Brand;
 import model.Category;
 import model.Product;
 
@@ -60,10 +61,12 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDAO pdao = new ProductDAO();
+        List<Brand> listB = pdao.getAllBrand();
         List<Category> listC = pdao.getAllCategory();
         List<Product> listP1 = pdao.listProductLast();
         List<Product> listP2 = pdao.listProductBySold();
         List<Product> listP3 = pdao.listProductByPrice();
+        request.setAttribute("listB", listB);
         request.setAttribute("listC", listC);
         request.setAttribute("listP1", listP1);
         request.setAttribute("listP2", listP2);

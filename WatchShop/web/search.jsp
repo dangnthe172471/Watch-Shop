@@ -28,8 +28,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-3" style="margin-top: 24px;">
-                    <form action="search" style="margin-top: 20px;">                           
-                        <h5>Categories:</h5>
+                    <form action="search" style="margin-top: 20px;"> 
+                        <h5>Thương hiệu:</h5>
+                        <c:forEach items="${requestScope.listB}" var="b">
+                            <c:set var="isChecked" value="false" />
+                            <c:if test="${not empty requestScope.bid}">
+                                <c:forEach var="selectedBid" items="${requestScope.bid}">
+                                    <c:if test="${b.bid == selectedBid}">
+                                        <c:set var="isChecked" value="true" />
+                                    </c:if>
+                                </c:forEach>
+                            </c:if>
+                            <input ${isChecked ? 'checked' : ''} type="checkbox" class="categoryCheckbox" value="${b.bid}" name="bid" onchange="this.form.submit()"/> ${b.bname}<br>
+                        </c:forEach>
+
+                        <h5>Loại:</h5>
                         <c:forEach items="${requestScope.listC}" var="c">
                             <c:set var="isChecked" value="false" />
                             <c:if test="${not empty requestScope.cid}">
