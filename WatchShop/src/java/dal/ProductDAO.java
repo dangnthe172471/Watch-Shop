@@ -22,7 +22,8 @@ public class ProductDAO extends DBContext {
 
     public List<Blog> getAllBlog() {
         List<Blog> list = new ArrayList<>();
-        String sql = "select * from Blog";
+        String sql = "select * from Blog \n"
+                + "order by Date desc";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
