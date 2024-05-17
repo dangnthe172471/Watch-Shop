@@ -94,10 +94,10 @@ public class Register extends HttpServlet {
                 newUser.setEmail(email);
                 newUser.setPhone(phone);
                 newUser.setAddress(address);
-
                 AccountDAO dao = new AccountDAO();
                 da.AddAccount(newUser);
                 HttpSession session = request.getSession();
+               session.setAttribute("account", newUser);
                session.setAttribute("user", newUser.getUser());
             response.sendRedirect(request.getContextPath() + "/home");
             } else {

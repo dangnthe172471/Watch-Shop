@@ -40,6 +40,8 @@
                                     </a>
                                     <a class="nav-link text-dark text-uppercase" href="login" style="display:inline-block">Tài khoản</a> </li>   
                                 </c:if>
+                                <c:if test="${sessionScope.account != null}" >
+                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account.user}</a></li> 
                                 <c:if test="${sessionScope.user != null}" >
                                 <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${user}</a></li> 
                                 <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block">Change Password</a></li> 

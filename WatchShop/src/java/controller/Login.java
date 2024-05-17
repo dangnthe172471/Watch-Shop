@@ -84,7 +84,23 @@ public class Login extends HttpServlet {
 
             }
             request.getRequestDispatcher("Login.jsp").forward(request, response);
-        } else {
+        } else {            
+            session.setAttribute("account", account);
+            Cookie cu = new Cookie("cuser", username);
+            Cookie cp = new Cookie("cpass", password);
+            Cookie cr = new Cookie("crem", rem);
+            if (rem != null) {
+                cu.setMaxAge(60 * 60 * 24 * 5);
+                cp.setMaxAge(60 * 60 * 24 * 5);
+                cr.setMaxAge(60 * 60 * 24 * 5);
+            } else {
+                cu.setMaxAge(0);
+                cp.setMaxAge(0);
+                cr.setMaxAge(0);
+            }
+            response.addCookie(cu);
+            response.addCookie(cp);
+            response.addCookie(cr);
             session.setAttribute("user", account.getUser());
             response.sendRedirect(request.getContextPath() + "/home");
         }
