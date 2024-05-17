@@ -49,7 +49,7 @@
     </head>
     <body>
        
-        <form action="login" method="post">
+        <form action="login" method="get">
             <div class="container">
                 <legend>Đăng nhập </legend>
             <h3 style="color: red" "> ${requestScope.error}</h3>

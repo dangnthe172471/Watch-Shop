@@ -8,7 +8,6 @@ import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -59,32 +58,9 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String logout = request.getParameter("type");
-        if (logout != null && logout.equals("logout")) {
-            HttpSession session = request.getSession();
-            session.removeAttribute("account");
-            response.sendRedirect("home");
-        } else {
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
-        }
-
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
         // Nhận thông tin từ request
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
-        String rem = request.getParameter("rem");
         if (username == null || password == null) {
             request.getRequestDispatcher("Login.jsp").forward(request, response);
             return;
@@ -100,35 +76,33 @@ public class Login extends HttpServlet {
                 //sai mk dung tk
                 existingUser.setPass(null);
                 session.setAttribute("user", username);
-                request.setAttribute("error", "Mật khẩu sai!!!");
+                request.setAttribute("error", "Invalid password!");
             } else {
                 // sai ca mk va tk
                 session.removeAttribute("user");
-                request.setAttribute("error", "Tài khoản hoặc mật khẩu không đúng !!!");
+                request.setAttribute("error", "Invalid username or password!");
 
             }
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         } else {
-            
-            
-            session.setAttribute("account", account.getUser());
-            Cookie cu = new Cookie("cuser", username);
-            Cookie cp = new Cookie("cpass", password);
-            Cookie cr = new Cookie("crem", rem);
-            if (rem != null) {
-                cu.setMaxAge(60 * 60 * 24 * 5);
-                cp.setMaxAge(60 * 60 * 24 * 5);
-                cr.setMaxAge(60 * 60 * 24 * 5);
-            } else {
-                cu.setMaxAge(0);
-                cp.setMaxAge(0);
-                cr.setMaxAge(0);
-            }
-            response.addCookie(cu);
-            response.addCookie(cp);
-            response.addCookie(cr);
+            session.setAttribute("user", account.getUser());
             response.sendRedirect(request.getContextPath() + "/home");
         }
+
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
