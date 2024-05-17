@@ -98,7 +98,7 @@ public class Register extends HttpServlet {
                 AccountDAO dao = new AccountDAO();
                 da.AddAccount(newUser);
                 HttpSession session = request.getSession();
-               session.setAttribute("account", newUser.getUser());
+               session.setAttribute("account", newUser);
             response.sendRedirect(request.getContextPath() + "/home");
             } else {
                 request.setAttribute("error", "Tài khoản đã tồn tại!");

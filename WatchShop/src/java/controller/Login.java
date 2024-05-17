@@ -111,7 +111,7 @@ public class Login extends HttpServlet {
         } else {
             
             
-            session.setAttribute("account", account.getUser());
+            session.setAttribute("account", account);
             Cookie cu = new Cookie("cuser", username);
             Cookie cp = new Cookie("cpass", password);
             Cookie cr = new Cookie("crem", rem);
