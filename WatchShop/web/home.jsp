@@ -58,6 +58,7 @@
                     <div class="row">
                         <!--header-->
                         <div class="col-12 d-flex justify-content-between align-items-center pb-2 bg-transparent pt-4">
+                            <h2 class="header text-uppercase" style="font-weight: 400;">Sản phẩm mới</h2>
                         </div>
                     </div>
                     <div class="khoisanpham" style="padding-bottom: 2rem;">
