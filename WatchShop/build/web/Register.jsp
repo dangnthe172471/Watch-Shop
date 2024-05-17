@@ -48,20 +48,24 @@
         </style>
     </head>
     <body>
-       
-        <form action="login" method="post">
+
+        <form action="register" method="post">
             <div class="container">
-                <legend>Đăng nhập </legend>
-            <h3 style="color: red" "> ${requestScope.error}</h3>
-            Account: <input type="text" name="user" value="${not empty sessionScope.user ? sessionScope.user : ''}" /><br>
-            Password: <input type="text" name="pass" value="" /><br>
-            <input type="submit" value="login" name="submit" />
-            <div class="link">
+                <h2>Đăng ký thành viên</h2>
+                <h3 style="color: red" ">${requestScope.error}</h3>
+
+                Tên đăng nhập: <input type="text" name="username" required><br>
+                Mật khẩu: <input type="password" name="password" required><br>
+                Nhập lại Mật Khẩu:<input type="password" name="repassword" required><br>
+                Email: <input type="email" name="email"><br>
+                Số điện thoại: <input type="text" name="phone"><br>
+                Địa chỉ: <input type="text" name="address"><br>
+                <input type="submit" value="Đăng ký"><br>
                 <a href="home">Về trang chủ</a> /
-                <a href="Register.jsp" class="last">Đăng ký</a>
+                <a href="login" class="last">Login</a>
+
             </div>
-            </div>
-            
+
         </form>
     </body>
 </html>
