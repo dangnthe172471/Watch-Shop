@@ -63,6 +63,7 @@ CREATE TABLE [dbo].[Status](
 	PRIMARY KEY CLUSTERED([id]),
 ) ON [PRIMARY]
 
+
 CREATE TABLE [dbo].[Order](
 	[id] [int]  IDENTITY(1,1),
 	[aid] [int],
@@ -75,7 +76,7 @@ CREATE TABLE [dbo].[Order](
 	foreign key ([sid]) references [dbo].[Status]([id]),
 ) ON [PRIMARY]
 
-CREATE TABLE [dbo].[OrderLine](
+CREATE TABLE [dbo].[OrderDetail](
 	[oid] [int],
 	[pid] [int],
 	[quantity] [float],
@@ -85,7 +86,7 @@ CREATE TABLE [dbo].[OrderLine](
 	foreign key ([pid]) references [dbo].[product]([id]),
 ) ON [PRIMARY]
 
-CREATE TABLE [dbo].[Shipper](
+CREATE TABLE [dbo].[ShippingHistory](
 	[id] [int]  IDENTITY(1,1),
 	[aid] [int],
 	[oid] [int],
@@ -103,14 +104,6 @@ CREATE TABLE [dbo].[Comment](
 	PRIMARY KEY CLUSTERED([id],[aid],[pid]),
 	foreign key ([aid]) references [dbo].[Account]([id]),
 	foreign key ([pid]) references [dbo].[product]([id]),
-) ON [PRIMARY]
-Go
-CREATE TABLE [dbo].[Block](
-	[id] [int]  IDENTITY(1,1),
-	[aid] [int],
-	PRIMARY KEY CLUSTERED([id],[aid]),
-	foreign key ([aid]) references [dbo].[Account]([id]),
-	CONSTRAINT [UC_aid] UNIQUE ([aid])
 ) ON [PRIMARY]
 go
 CREATE TABLE [dbo].[Blog](
@@ -259,25 +252,25 @@ INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, 
 INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (2, CAST(N'2023-01-12' AS Date),10500,N'Ca Mau',1)
 INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2023-02-05' AS Date),14600,N'Ha Long',1)
 
-INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (1,6,2,3700)
-INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (2,10,3,3550)
-INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (3,6,1,3700)
-INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (4,12,3,3500)
-INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (5,2,2,3650)
-INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (6,6,2,3700)
-INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (7,10,2,3550)
-INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (8,6,1,3700)
-INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (9,12,3,3500)
-INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) VALUES (10,2,4,3650)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (1,6,2,3700)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (2,10,3,3550)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (3,6,1,3700)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (4,12,3,3500)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (5,2,2,3650)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (6,6,2,3700)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (7,10,2,3550)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (8,6,1,3700)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (9,12,3,3500)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (10,2,4,3650)
 
-INSERT [dbo].[Shipper]([oid],[aid]) VALUES (1,5)
-INSERT [dbo].[Shipper]([oid],[aid]) VALUES (2,5)
-INSERT [dbo].[Shipper]([oid],[aid]) VALUES (3,6)
-INSERT [dbo].[Shipper]([oid],[aid]) VALUES (4,6)
-INSERT [dbo].[Shipper]([oid],[aid]) VALUES (5,5)
-INSERT [dbo].[Shipper]([oid],[aid]) VALUES (6,6)
-INSERT [dbo].[Shipper]([oid],[aid]) VALUES (7,6)
-INSERT [dbo].[Shipper]([oid],[aid]) VALUES (8,5)
+INSERT [dbo].[ShippingHistory]([oid],[aid]) VALUES (1,5)
+INSERT [dbo].[ShippingHistory]([oid],[aid]) VALUES (2,5)
+INSERT [dbo].[ShippingHistory]([oid],[aid]) VALUES (3,6)
+INSERT [dbo].[ShippingHistory]([oid],[aid]) VALUES (4,6)
+INSERT [dbo].[ShippingHistory]([oid],[aid]) VALUES (5,5)
+INSERT [dbo].[ShippingHistory]([oid],[aid]) VALUES (6,6)
+INSERT [dbo].[ShippingHistory]([oid],[aid]) VALUES (7,6)
+INSERT [dbo].[ShippingHistory]([oid],[aid]) VALUES (8,5)
 
 INSERT INTO [dbo].[Comment]([aid],[pid],[content],[voted]) VALUES (1,1,N'sản phẩm đẹp',4)
 INSERT INTO [dbo].[Comment]([aid],[pid],[content],[voted]) VALUES (2,1,N'sản phẩm oke',5)
