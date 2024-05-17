@@ -34,16 +34,16 @@
 
                     <ul class="navbar-nav mb-0 ml-auto" style="width: 1000px">
                         <div class="dropdown row" style="margin-left: 10px">
-                            <c:if test="${sessionScope.user == null}" >
+                            <c:if test="${sessionScope.account == null}" >
                                 <li class="nav-item account">  <a href="login" class="btn btn-secondary rounded-circle">
                                         <i class="fa fa-user"></i>
                                     </a>
                                     <a class="nav-link text-dark text-uppercase" href="login" style="display:inline-block">Tài khoản</a> </li>   
                                 </c:if>
-                                <c:if test="${sessionScope.user != null}" >
-                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${user}</a></li> 
+                                <c:if test="${sessionScope.account != null}" >
+                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account}</a></li> 
                                 <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block">Change Password</a></li> 
-                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="logout" style="display:inline-block">logout</a></li> 
+                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
                                 </c:if>
                         </div>
                         <div style="margin-left: 10px">
