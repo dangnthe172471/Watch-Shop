@@ -40,9 +40,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="ManageCategory.jsp">
                         <i class='bx bxs-shopping-bag-alt' ></i>
-                        <span class="text">My Store</span>
+                        <span class="text">Category</span>
                     </a>
                 </li>
                 <li>
