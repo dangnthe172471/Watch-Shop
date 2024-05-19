@@ -41,18 +41,22 @@
                                     <a class="nav-link text-dark text-uppercase" href="login" style="display:inline-block">Tài khoản</a> </li>   
                                 </c:if>
                                 <c:if test="${sessionScope.account != null}" >
-                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account}</a></li> 
+                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="AdminManage.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account}</a></li> 
                                 <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block">Change Password</a></li> 
                                 <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
                                 </c:if>
                         </div>
+                        <c:set var="size" value="${sessionScope.size}"/>
                         <div style="margin-left: 10px">
                             <li class="nav-item giohang">
-                                <a class="btn btn-secondary rounded-circle">
+                                <a href="Cart.jsp" class="btn btn-secondary rounded-circle">
                                     <i class="fa fa-shopping-cart"></i>
-                                    <div class="cart-amount">0</div>
+                                    <c:if test="${size>0}">
+                                        <div class="cart-amount">${size}</div>
+                                    </c:if>
+                                    
                                 </a>
-                                <a class="nav-link text-dark text-uppercase" style="display:inline-block">Giỏ hàng</a>
+                                <a href="Cart.jsp" class="nav-link text-dark text-uppercase" style="display:inline-block">Giỏ hàng</a>
                             </li>
                         </div>
                     </ul>

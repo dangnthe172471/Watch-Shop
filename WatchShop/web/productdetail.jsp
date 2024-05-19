@@ -24,10 +24,15 @@
         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
         <script type="text/javascript" src="js/showcart.js"></script>        
         <script type="text/javascript" src="js/main.js"></script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js"></script>
     </head>
     <body>
         <jsp:include page="nav.jsp"/>
-        
+
         <section class="product-page mb-4">
             <div class="container">
                 <div class="product-detail bg-white p-4">
@@ -39,38 +44,44 @@
                                 </a>
                             </div>
                         </div>
+
                         <div class="col-md-6 khoithongtin">
-                            <div class="row">
-                                <div class="col-md-12 header">
-                                    <h4 class="ten">${detail.name}</h4>
-                                    ${detail.rate}<i class="fa fa-star" style="color: blue"></i>
-                                    <hr>
+                            <form name="f" action="" method="post">
+
+                                <div class="row">
+                                    <div class="col-md-12 header">
+                                        <h4 class="ten">${detail.name}</h4>
+                                        ${detail.rate}<i class="fa fa-star" style="color: blue"></i>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="gia">
+                                            <div style="color: red; font-size:30px; font-weight:bold;">${detail.price} $</div>
+                                            <div class="tietkiem">Ngày sản xuất: <b>${detail.releaseDate}</b> </div>
+                                            <div class="tietkiem">Đã bán: <b>${detail.sold}</b> </div>
+                                        </div>
+                                        <div class="uudai my-3">
+                                            <h6 class="header font-weight-bold">Khuyến mãi & Ưu đãi tại Watch Shop</h6>
+                                            <ul>
+                                                <li><b>Miễn phí giao hàng </b>cho mọi đơn hàng</li>
+                                                <li><b>Đổi trả hàng nhanh chóng khi gặp lỗi </b></li>
+                                                <li>Thay pin miễn phí và tặng móc khóa cho mọi đơn hàng</li>
+                                            </ul>
+                                        </div>
+                                        <div class="soluong d-flex">
+                                            <label class="font-weight-bold">Số lượng: </label>
+                                            <dd>
+                                                <input type="number" name="num" style="width:70px;" min="1" max="${detail.quantity}" value="1" >
+                                            </dd>                                       
+                                        </div>
+                                        <label class="font-weight-bold" style="color: red">Lượng hàng trong kho (${detail.quantity})</label>
+                                        <a href="#" onclick="buy('${detail.id}')" class="btn btn-primary" style="width:200px; color: white" >Chọn mua</a>
+                                    </div>
                                 </div>
-                                <div class="col-md-7">
-                                    <div class="gia">
-                                        <div style="color: red; font-size:30px; font-weight:bold;">${detail.price} $</div>
-                                        <div class="tietkiem">Ngày sản xuất: <b>${detail.releaseDate}</b> </div>
-                                        <div class="tietkiem">Đã bán: <b>${detail.sold}</b> </div>
-                                    </div>
-                                    <div class="uudai my-3">
-                                        <h6 class="header font-weight-bold">Khuyến mãi & Ưu đãi tại Watch Shop</h6>
-                                        <ul>
-                                            <li><b>Miễn phí giao hàng </b>cho mọi đơn hàng</li>
-                                            <li><b>Đổi trả hàng nhanh chóng khi gặp lỗi </b></li>
-                                            <li>Thay pin miễn phí và tặng móc khóa cho mọi đơn hàng</li>
-                                        </ul>
-                                    </div>
-                                    <div class="soluong d-flex">
-                                        <label class="font-weight-bold">Số lượng: </label>
-                                        <dd>
-                                            <input type="number" name="num" style="width:70px;" min="1" max="${detail.quantity}" value="1" >
-                                        </dd>                                       
-                                    </div>
-                                    <label class="font-weight-bold" style="color: red">Lượng hàng trong kho (${detail.quantity})</label>
-                                    <button class="btn btn-primary" style="width:200px">Chọn mua</button>
-                                </div>
-                            </div>
+                            </form>
+
                         </div>
+
                         <div class="row">
                             <div class="col-md-7" style="padding-top: 40px;">
                                 <div class="tab-content" id="nav-tabContent">
@@ -162,5 +173,17 @@
         </section>
         <br>
         <jsp:include page="nav2.jsp"/>
+
+        <script type="text/javascript">
+            function buy(id) {
+                $.bootstrapGrowl("Thêm giỏ hàng thành công!", {
+                    type: "success"
+                });
+                setTimeout(function () {
+                    document.f.action = "buy?id=" + id;
+                    document.f.submit();
+                }, 500);
+            }
+        </script>  
     </body>
 </html>
