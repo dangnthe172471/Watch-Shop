@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.CommentDAO;
+import dal.OrderDAO;
 import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,18 +13,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Brand;
-import model.Category;
-import model.Comment;
+import model.Cart;
+import model.Item;
 import model.Product;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "ProductDetailServlet", urlPatterns = {"/detail"})
-public class ProductDetailServlet extends HttpServlet {
+@WebServlet(name = "BuyServlet", urlPatterns = {"/buy"})
+public class BuyServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +43,10 @@ public class ProductDetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductDetailServlet</title>");
+            out.println("<title>Servlet BuyServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProductDetailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet BuyServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,33 +64,7 @@ public class ProductDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("pid");
-        ProductDAO pdao = new ProductDAO();
-        CommentDAO cdao = new CommentDAO();
-        String indexpage = request.getParameter("index");
-        if (indexpage == null) {
-            indexpage = "1";
-        }
-        int index = Integer.parseInt(indexpage);
-        int countP = cdao.countCommentByPid(id);
-        int endpage = countP / 4;
-        if (countP % 4 != 0) {
-            endpage++;
-        }
-        List<Comment> listCo = cdao.displayComment(id, index);
-        Product p = pdao.getProductByID(id);
-        List<Product> listP = pdao.listProductByPid(id);
-        List<Brand> listB = pdao.getAllBrand();
-        List<Category> listC = pdao.getAllCategory();
-        request.setAttribute("detail", p);
-        request.setAttribute("listP", listP);
-        request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
-        request.setAttribute("listCo", listCo);
-        request.setAttribute("page", index);
-        request.setAttribute("countP", countP);
-        request.setAttribute("endP", endpage);
-        request.getRequestDispatcher("productdetail.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -104,7 +78,37 @@ public class ProductDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        HttpSession session = request.getSession(true);
+        Cart cart = null;
+        Object o = session.getAttribute("cart");
+        ProductDAO dao = new ProductDAO();
+        OrderDAO odao = new OrderDAO();
+        // có rồi
+        if (o != null) {
+            cart = (Cart) o;
+        } else {
+            cart = new Cart();
+        }
+        String tnmum = request.getParameter("num");
+        String id = request.getParameter("id");
+        int num;
+        try {
+            num = Integer.parseInt(tnmum);
+            Product p = dao.getProductByID(id);
+            double price = p.getPrice();
+            Item t = new Item(p, num, price);
+            cart.addItem(t);
+        } catch (NumberFormatException e) {
+        }
+        List<Item> list = cart.getItems();
+        double totalMoney = 0;
+        for (Item item : list) {
+            totalMoney += item.getPrice() * item.getQuantity();
+        }
+        session.setAttribute("totalMoney", totalMoney);
+        session.setAttribute("cart", cart);
+        session.setAttribute("size", list.size());
+        response.sendRedirect("detail?pid=" + id);
     }
 
     /**
