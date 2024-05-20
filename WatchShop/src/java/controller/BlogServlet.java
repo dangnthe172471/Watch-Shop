@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.BlogDAO;
 import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,7 +64,8 @@ public class BlogServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDAO pd = new ProductDAO();
-        List<Blog> listBl = pd.getAllBlog();
+        BlogDAO bd = new BlogDAO();
+        List<Blog> listBl = bd.getAllBlog();
         List<Brand> listB = pd.getAllBrand();
         List<Category> listC = pd.getAllCategory();
         request.setAttribute("listB", listB);
