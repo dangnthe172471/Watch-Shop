@@ -137,7 +137,7 @@
                                             <td>${b.bid}</td>
                                             <td>${b.bname}</td> 
                                             <td><a  class="btn btn-primary editbtn"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;
-                                                <a href="#" onclick="doDelete('${b.bname}')"><i class="fa fa-trash"></i></a>
+                                                <a href="#" onclick="doDelete('${b.bid}')"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr> 
                                     </c:forEach>
@@ -161,7 +161,7 @@
                             </div>
 
                             <div class="modal-body">
-                                <input type="text" name="bid" >
+                                <label>Name</label>
                                 <input type="text" name="bname"> 
                             </div>
 
@@ -186,7 +186,9 @@
                             </div>
 
                             <div class="modal-body">
-                                <input type="text" name="bid" id="update_id" readonly>
+                                <label>ID</label>
+                                <input type="text" name="bid" id="update_id" readonly style="background: gray">
+                                <label>Name</label>
                                 <input type="text" name="bname" id="update_name"> 
                             </div>
 
@@ -226,9 +228,9 @@
         </script>
 
         <script type="text/javascript">
-            function doDelete(bname) {
-                if (confirm('Are You Sure Delete Brand: ' + bname + '?')) {
-                    window.location = 'deletebrand?bname=' + bname;
+            function doDelete(bid) {
+                if (confirm('Are You Sure Delete Brand has ID: ' + bid + '?')) {
+                    window.location = 'deletebrand?bid=' + bid;
                 }
             }
         </script>

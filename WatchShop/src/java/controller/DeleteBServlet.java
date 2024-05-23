@@ -60,9 +60,9 @@ public class DeleteBServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("bname");
+        String id = request.getParameter("bid");
         BrandDAO b = new BrandDAO();
-        b.deleteDataByBrandName(name);
+        b.deleteDataByBrandName(id);
         response.sendRedirect("brand");
     }
 
