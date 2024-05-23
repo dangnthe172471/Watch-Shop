@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Watch Shop</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-md bg-white navbar-light">
@@ -54,7 +54,7 @@
                                     <c:if test="${size>0}">
                                         <div class="cart-amount">${size}</div>
                                     </c:if>
-                                    
+
                                 </a>
                                 <a href="Cart.jsp" class="nav-link text-dark text-uppercase" style="display:inline-block">Giỏ hàng</a>
                             </li>

@@ -35,13 +35,12 @@
 
     </head>
     <body>
-        <!-- SIDEBAR -->
         <section id="sidebar">
             <a href="home" class="brand" style="margin-left: 60px;">
                 <span class="text">Watch Shop</span>
             </a>
             <ul class="side-menu top">
-                <li >
+                <li>
                     <a href="AdminManage.jsp">
                         <i class='bx bxs-dashboard' ></i>
                         <span class="text">Dashboard</span>
@@ -73,9 +72,7 @@
                 </li>
             </ul>
         </section>
-        <!-- SIDEBAR -->
 
-        <!-- CONTENT -->
         <section id="content">
             <!-- NAVBAR -->
             <nav class="navbar navbar-expand-md bg-white navbar-light">
