@@ -47,7 +47,7 @@ public class ProductDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                list.add(new Brand(rs.getInt(1),
+                list.add(new Brand(rs.getString(1),
                         rs.getString(2)));
             }
         } catch (SQLException e) {
