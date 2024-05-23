@@ -35,7 +35,6 @@
 
     </head>
     <body>
-        <!-- SIDEBAR -->
         <section id="sidebar">
             <a href="home" class="brand" style="margin-left: 60px;">
                 <span class="text">Watch Shop</span>
@@ -73,9 +72,7 @@
                 </li>
             </ul>
         </section>
-        <!-- SIDEBAR -->
 
-        <!-- CONTENT -->
         <section id="content">
             <!-- NAVBAR -->
             <nav class="navbar navbar-expand-md bg-white navbar-light">
