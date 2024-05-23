@@ -15,16 +15,17 @@ import model.Brand;
  *
  * @author quyld
  */
-public class BrandDAO extends DBContext{
-    public List<Brand> getBrand(){
+public class BrandDAO extends DBContext {
+
+    public List<Brand> getAllBrand() {
         List<Brand> list = new ArrayList<>();
-        
+
         try {
             String sql = "select * from brand";
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Brand b = new Brand();                
+                Brand b = new Brand();
                 b.setBid(String.valueOf(rs.getInt(1)));
                 b.setBname(rs.getString(2));
                 list.add(b);
@@ -33,7 +34,8 @@ public class BrandDAO extends DBContext{
         }
         return list;
     }
-    public void addBrand(Brand b){
+
+    public void addBrand(Brand b) {
         try {
             String sql = "INSERT INTO brand (bid,bname) VALUES (?,?)";
             PreparedStatement st = connection.prepareStatement(sql);
@@ -64,7 +66,8 @@ public class BrandDAO extends DBContext{
 //        }
 //        
 //    }
-    public void updateBrand (Brand b){
+
+    public void updateBrand(Brand b) {
         String sql = "update brand set bname=? where bid=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -74,18 +77,18 @@ public class BrandDAO extends DBContext{
         } catch (SQLException e) {
 
         }
-    } 
-    
-    public Brand getBrandByName(String bname){
+    }
+
+    public Brand getBrandByName(String bname) {
         String sql = "select * from brand where bname = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, bname);
             ResultSet rs = st.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return new Brand(
-                rs.getString("bid"),
-                rs.getString("bname"));
+                        rs.getString("bid"),
+                        rs.getString("bname"));
 //                Brand b = new Brand();
 //                b.setBid(rs.getString(1));
 //                b.setBname(rs.getString(2));
@@ -109,43 +112,44 @@ public class BrandDAO extends DBContext{
 //        } catch (Exception e) {
 //        }
 //    }
+
     public void deleteDataByBrandName(String bname) {
         try {
             // Disable auto-commit mode
             connection.setAutoCommit(false);
 
             // Step 1: Xóa các bình luận liên quan từ bảng Comment
-            String deleteCommentsSQL = "DELETE m FROM Comment m " +
-                                       "INNER JOIN product p ON m.pid = p.id " +
-                                       "INNER JOIN brand b ON p.brandID = b.bid " +
-                                       "WHERE b.bname = ?";
+            String deleteCommentsSQL = "DELETE m FROM Comment m "
+                    + "INNER JOIN product p ON m.pid = p.id "
+                    + "INNER JOIN brand b ON p.brandID = b.bid "
+                    + "WHERE b.bname = ?";
             try (PreparedStatement deleteCommentsStmt = connection.prepareStatement(deleteCommentsSQL)) {
                 deleteCommentsStmt.setString(1, bname);
                 deleteCommentsStmt.executeUpdate();
             }
 
             // Step 2: Xóa các dòng đơn hàng liên quan từ bảng OrderLine
-            String deleteOrderLinesSQL = "DELETE ol FROM OrderLine ol " +
-                                         "INNER JOIN product p ON ol.pid = p.id " +
-                                         "INNER JOIN brand b ON p.brandID = b.bid " +
-                                         "WHERE b.bname = ?";
+            String deleteOrderLinesSQL = "DELETE ol FROM OrderLine ol "
+                    + "INNER JOIN product p ON ol.pid = p.id "
+                    + "INNER JOIN brand b ON p.brandID = b.bid "
+                    + "WHERE b.bname = ?";
             try (PreparedStatement deleteOrderLinesStmt = connection.prepareStatement(deleteOrderLinesSQL)) {
                 deleteOrderLinesStmt.setString(1, bname);
                 deleteOrderLinesStmt.executeUpdate();
             }
 
             // Step 3: Xóa các sản phẩm liên quan từ bảng Product
-            String deleteProductsSQL = "DELETE p FROM product p " +
-                                       "INNER JOIN brand b ON p.brandID = b.bid " +
-                                       "WHERE b.bname = ?";
+            String deleteProductsSQL = "DELETE p FROM product p "
+                    + "INNER JOIN brand b ON p.brandID = b.bid "
+                    + "WHERE b.bname = ?";
             try (PreparedStatement deleteProductsStmt = connection.prepareStatement(deleteProductsSQL)) {
                 deleteProductsStmt.setString(1, bname);
                 deleteProductsStmt.executeUpdate();
             }
 
             // Step 4: Xóa các thương hiệu từ bảng Brand
-            String deleteBrandsSQL = "DELETE b FROM brand b " +
-                                     "WHERE b.bname = ?";
+            String deleteBrandsSQL = "DELETE b FROM brand b "
+                    + "WHERE b.bname = ?";
             try (PreparedStatement deleteBrandsStmt = connection.prepareStatement(deleteBrandsSQL)) {
                 deleteBrandsStmt.setString(1, bname);
                 deleteBrandsStmt.executeUpdate();
@@ -170,12 +174,13 @@ public class BrandDAO extends DBContext{
             }
         }
     }
+
     public static void main(String[] args) {
         // Tạo một đối tượng DAO để truy cập CSDL
         BrandDAO b = new BrandDAO();
 
         // Gọi phương thức getAllC() để lấy danh sách tất cả các danh mục
-        List<Brand> list = b.getBrand();
+        List<Brand> list = b.getAllBrand();
 
         // Hiển thị thông tin của từng danh mục
         for (Brand brand : list) {

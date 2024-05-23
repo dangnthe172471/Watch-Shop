@@ -40,36 +40,6 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
-    public List<Brand> getAllBrand() {
-        List<Brand> list = new ArrayList<>();
-        String sql = "select * from Brand";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                list.add(new Brand(rs.getString(1),
-                        rs.getString(2)));
-            }
-        } catch (SQLException e) {
-        }
-        return list;
-    }
-
-    public List<Category> getAllCategory() {
-        List<Category> list = new ArrayList<>();
-        String sql = "select * from category";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                list.add(new Category(rs.getInt(1),
-                        rs.getString(2)));
-            }
-        } catch (SQLException e) {
-        }
-        return list;
-    }
-
     public List<Product> listProductLast() {
         List<Product> list = new ArrayList<>();
         String sql = """

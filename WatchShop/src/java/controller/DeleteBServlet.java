@@ -64,7 +64,6 @@ public class DeleteBServlet extends HttpServlet {
         BrandDAO b = new BrandDAO();
         b.deleteDataByBrandName(name);
         response.sendRedirect("brand");
-        
     }
 
     /**

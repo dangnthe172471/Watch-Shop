@@ -41,7 +41,7 @@
                 <span class="text">Watch Shop</span>
             </a>
             <ul class="side-menu top">
-                <li >
+                <li>
                     <a href="AdminManage.jsp">
                         <i class='bx bxs-dashboard' ></i>
                         <span class="text">Dashboard</span>
@@ -53,7 +53,7 @@
                         <span class="text">Brand</span>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="#">
                         <i class='bx bxs-doughnut-chart' ></i>
                         <span class="text">Category</span>
@@ -176,7 +176,7 @@
                     </div>
                 </div>
             </form>
-            
+
             <!-- The Modal -->
             <form action="updatebrand" method="post">
                 <div class="modal fade" id="editmodal">
@@ -214,18 +214,18 @@
                                                     });
         </script>
         <script>
-                                                    $(document).ready(function () {
-                                                        $('.editbtn').on('click', function () {
-                                                            $('#editmodal').modal('show');
-                                                            $tr = $(this).closest('tr');
-                                                            var data = $tr.children("td").map(function () {
-                                                                return $(this).text();
-                                                            }).get();
-                                                            console.log(data);
-                                                            $('#update_id').val(data[0]);
-                                                            $('#update_name').val(data[1]);
-                                                        });
-                                                    });
+            $(document).ready(function () {
+                $('.editbtn').on('click', function () {
+                    $('#editmodal').modal('show');
+                    $tr = $(this).closest('tr');
+                    var data = $tr.children("td").map(function () {
+                        return $(this).text();
+                    }).get();
+                    console.log(data);
+                    $('#update_id').val(data[0]);
+                    $('#update_name').val(data[1]);
+                });
+            });
         </script>
 
         <script type="text/javascript">
