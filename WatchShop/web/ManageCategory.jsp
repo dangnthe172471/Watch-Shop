@@ -35,25 +35,6 @@
 
     </head>
     <body>
-        <!--        Modal
-                <div class="modal fade" id="brandaddmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="ẽampleModalLabel">Add Brand</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Colse">
-                                    
-                                </button>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    
-                
-        -->
-
         <!-- SIDEBAR -->
         <section id="sidebar">
             <a href="home" class="brand" style="margin-left: 60px;">
