@@ -33,7 +33,7 @@
                         <img src="${o.image}" style="width: 350px;height: 150px"/>
                     </div>
                     <div class="col-md-8 mt-5">
-                        <span class="container" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical; overflow: hidden;" title="${o.description}">
+                        <span class="container" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical" title="${o.description}">
                             ${o.description}
                         </span>
                     </div>

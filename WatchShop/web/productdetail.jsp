@@ -182,7 +182,7 @@
                 setTimeout(function () {
                     document.f.action = "buy?id=" + id;
                     document.f.submit();
-                }, 1000);
+                }, 800);
             }
         </script>  
     </body>
