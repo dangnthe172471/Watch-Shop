@@ -39,9 +39,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="ManageCategory.jsp">
+                    <a href="brand">
                         <i class='bx bxs-shopping-bag-alt' ></i>
-                        <span class="text">Category</span>
+                        <span class="text">Brand</span>
                     </a>
                 </li>
                 <li>

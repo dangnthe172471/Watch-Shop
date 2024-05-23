@@ -9,22 +9,22 @@ package model;
  * @author admin
  */
 public class Brand {
-    private int bid;
+    private String bid;
     private String bname;
 
     public Brand() {
     }
 
-    public Brand(int bid, String bname) {
+    public Brand(String bid, String bname) {
         this.bid = bid;
         this.bname = bname;
     }
 
-    public int getBid() {
+    public String getBid() {
         return bid;
     }
 
-    public void setBid(int bid) {
+    public void setBid(String bid) {
         this.bid = bid;
     }
 
