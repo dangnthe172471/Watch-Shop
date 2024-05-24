@@ -13,6 +13,12 @@
         <servlet-class>controller.Register</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Changepass</servlet-name>
+        <servlet-class>controller.Changepass</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Forgotpass</servlet-name>
+        <servlet-class>controller.Forgotpass</servlet-class>
         <servlet-name>BrandServlet</servlet-name>
         <servlet-class>controller.BrandServlet</servlet-class>
     </servlet>
@@ -29,6 +35,12 @@
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>Changepass</servlet-name>
+        <url-pattern>/changepass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Forgotpass</servlet-name>
+        <url-pattern>/forgotpass</url-pattern>
         <servlet-name>BrandServlet</servlet-name>
         <url-pattern>/brand</url-pattern>
     </servlet-mapping>

@@ -1,6 +1,6 @@
 <%-- 
     Document   : Login
-    Created on : Apr 15, 2024, 1:10:12 PM
+    Created on : May 23, 2024, 3:05:38 PM
     Author     : dung2
 --%>
 
@@ -9,59 +9,71 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <style>
-            body {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-            }
+        <title>Watch Shop</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Custom styles-path -->
+        <link rel="stylesheet" href="css/login.css">
 
-            .container {
-                border: 1px solid #ccc;
-                border-radius: 10px;
-                padding: 20px;
-                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            }
+        <!-- Font Awesome kit script -->
+        <script src="https://kit.fontawesome.com/a81368914c.js"></script>
 
-            h1 {
-                text-align: center;
-            }
+        <!-- Google Fonts Open Sans-->
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 
-            input[type="text"],
-            select {
-                width: 100%;
-                padding: 8px;
-                margin-bottom: 10px;
-                box-sizing: border-box;
-            }
-
-            input[type="text"] {
-                margin-right: 10px;
-            }
-
-            select {
-                margin-right: 10px;
-            }
-        </style>
     </head>
-    <body>
-       
-        <form action="login" method="post">
-            <div class="container">
-                <legend>Đăng nhập </legend>
-            <h3 style="color: red" "> ${requestScope.error}</h3>
-            Account: <input type="text" name="user" value="${not empty sessionScope.user ? sessionScope.user : ''}" /><br>
-            Password: <input type="text" name="pass" value="" /><br>
-            <input type="submit" value="login" name="submit" />
-            <div class="link">
-                <a href="home">Về trang chủ</a> /
-                <a href="Register.jsp" class="last">Đăng ký</a>
+    <body style="background-image: url('img/watchlogin1.jpg')">
+        <div class="container">
+            <div class="img">
             </div>
+            <div class="login-container" >
+                <form action="login" method="post">
+                    <h2>LOGIN</h2>
+                    <p>Welcome back !</p>
+                    <h3 style="color: red" ">${requestScope.error}</h3>
+                    <div class="input-div one">
+                        <div class="i">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h5>Username</h5>
+                            <input class="input" type="text" name="user"  value="${cookie.cuser.value}">
+                        </div>
+                    </div>
+                    <div class="input-div two">
+                        <div class="i">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div>
+                            <h5>Password</h5>
+                            <input class="input" type="password" name="pass" value="${cookie.cpass.value}">
+                        </div>
+                    </div>
+                        <div class="form-group form-check">
+                    <input type="checkbox" ${cookie.crem.value eq 'on'?'checked':''} name="rem" value="on" style="margin-right: 10px" /> Remember me
+
+                </div>
+                        <input type="submit" class="btn" name="submit" value="login">
+                    <a class="forgot" href="forgotpass">Forgot password ?</a>
+                    <div class="others">
+                        <hr>
+                        <p>OR</p>
+                        <hr>
+                    </div>
+                    <div class="social">
+                        <div class="social-icons facebook">
+                            <a href="#"><img src="img/facebook.png">Login with Facebook</a>
+                        </div>
+                        <div class="social-icons google">
+                            <a href="#"><img src="img/google.png">Login with Google</a>
+                        </div>
+                    </div>
+                    <div class="account">
+                        <p>Register new account.</p>
+                        <a href="register">Register</a>
+                    </div>
+                </form>
             </div>
-            
-        </form>
+        </div>
+
+        <script type="text/javascript" src="js/login.js"></script>
     </body>
 </html>
