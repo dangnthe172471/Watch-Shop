@@ -55,13 +55,13 @@
                             <input ${isChecked ? 'checked' : ''} type="checkbox" class="categoryCheckbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.cname}<br>
                         </c:forEach>
                         <hr>
-                        <h5>Filters:</h5>
+                        <h5>Miêu tả</h5>
                         <input type="text" name="key" value="${key != null ? key : ''}" placeholder="Nhập tên, miêu tả" ><br><hr>
-                        <h5>Price:</h5>       
-                        Min: <input type="number" name="fromprice" value="${fromprice != null ? fromprice : ''}">
-                        Max:<input type="number" name="toprice" value="${toprice != null ? toprice : ''}"> <br>
+                        <h5>Giá</h5>       
+                        Từ: &nbsp;<input type="number" name="fromprice" value="${fromprice != null ? fromprice : ''}"><br>
+                        Đến:<input type="number" name="toprice" value="${toprice != null ? toprice : ''}"> <br>
                         <hr>
-                        <h5>Date:</h5>
+                        <h5>Ngày</h5>
                         Từ ngày: <input type="date" name="fromdate" value="${fromdate != null ? fromdate : ''}" style="margin-left: 9px"> <br> 
                         Đến ngày: <input type="date" name="todate" value="${todate != null ? todate : ''}"> <br> 
                         <br> 
