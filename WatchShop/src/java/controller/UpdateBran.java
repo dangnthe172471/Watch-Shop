@@ -5,8 +5,6 @@
 package controller;
 
 import dal.BrandDAO;
-import dal.CategoryDAO;
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,17 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.Blog;
+import jakarta.servlet.http.HttpSession;
 import model.Brand;
-import model.Category;
 
 /**
  *
- * @author admin
+ * @author quyld
  */
-@WebServlet(name = "BlogServlet", urlPatterns = {"/blog"})
-public class BlogServlet extends HttpServlet {
+@WebServlet(name = "UpdateBran", urlPatterns = {"/updatebrand"})
+public class UpdateBran extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +39,10 @@ public class BlogServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BlogServlet</title>");
+            out.println("<title>Servlet UpdateBran</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BlogServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateBran at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,16 +60,17 @@ public class BlogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDAO pd = new ProductDAO();
-        BrandDAO bdao = new BrandDAO();
-        CategoryDAO cdao = new CategoryDAO();
-        List<Blog> listBl = pd.getAllBlog();
-        List<Brand> listB = bdao.getAllBrand();
-        List<Category> listC = cdao.getAllCategory();
-        request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
-        request.setAttribute("listBl", listBl);
-        request.getRequestDispatcher("blog.jsp").forward(request, response);
+        BrandDAO b = new BrandDAO();
+        String bname = request.getParameter("bname");
+        Brand brand = b.getBrandByName(bname);
+        if (brand != null) {
+            request.setAttribute("b", brand);
+            request.setAttribute("brandName", bname);
+            request.getRequestDispatcher("UpdateBrand.jsp").forward(request, response);
+
+        } else {
+            response.sendRedirect("updatebrand?error");
+        }
     }
 
     /**
@@ -87,7 +84,14 @@ public class BlogServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String id_raw = request.getParameter("bid");
+        String name = request.getParameter("bname");
+        Brand brand = new Brand(id_raw, name);
+        BrandDAO b = new BrandDAO();
+        if (request.getParameter("update") != null) {
+            b.updateBrand(brand);
+        }
+        response.sendRedirect("brand");
     }
 
     /**

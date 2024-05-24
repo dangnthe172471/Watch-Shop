@@ -1,0 +1,45 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 23, 2024, 8:41:33 PM
+    Author     : quyld
+*/
+body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+        .modal-header {
+            background-color: #343a40;
+            color: white;
+        }
+        .modal-header .close {
+            color: white;
+        }
+        .modal-body input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .modal-footer .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+        .modal-footer .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+        .modal-footer .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .modal-footer .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .modal-footer .btn-primary:hover {
+            background-color: #0056b3;
+        }

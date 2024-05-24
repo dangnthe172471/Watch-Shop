@@ -5,26 +5,21 @@
 package controller;
 
 import dal.BrandDAO;
-import dal.CategoryDAO;
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
-import model.Blog;
 import model.Brand;
-import model.Category;
 
 /**
  *
- * @author admin
+ * @author quyld
  */
-@WebServlet(name = "BlogServlet", urlPatterns = {"/blog"})
-public class BlogServlet extends HttpServlet {
+public class BrandServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +38,10 @@ public class BlogServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BlogServlet</title>");
+            out.println("<title>Servlet BrandServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BlogServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet BrandServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,16 +59,10 @@ public class BlogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDAO pd = new ProductDAO();
-        BrandDAO bdao = new BrandDAO();
-        CategoryDAO cdao = new CategoryDAO();
-        List<Blog> listBl = pd.getAllBlog();
-        List<Brand> listB = bdao.getAllBrand();
-        List<Category> listC = cdao.getAllCategory();
-        request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
-        request.setAttribute("listBl", listBl);
-        request.getRequestDispatcher("blog.jsp").forward(request, response);
+        BrandDAO b = new BrandDAO();
+        List<Brand> listb = b.getAllBrand();
+        request.setAttribute("listb", listb);
+        request.getRequestDispatcher("ManageBrand.jsp").forward(request, response);
     }
 
     /**
@@ -87,7 +76,10 @@ public class BlogServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //        BrandDAO b = new BrandDAO();
+        //        List<Brand> listb = b.getBrand();
+        //        request.setAttribute("listb", listb);
+        //        request.getRequestDispatcher("ManageCategory.jsp").forward(request, response);
     }
 
     /**

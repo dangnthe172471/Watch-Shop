@@ -4,6 +4,8 @@
  */
 package controller;
 
+import dal.BrandDAO;
+import dal.CategoryDAO;
 import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,6 +77,8 @@ public class SearchServlet extends HttpServlet {
         int[] cid = null;
         int[] bid = null;
         ProductDAO pdao = new ProductDAO();
+        BrandDAO bdao = new BrandDAO();
+        CategoryDAO cdao = new CategoryDAO();
         if (cid_raw != null) {
             cid = new int[cid_raw.length];
             for (int i = 0; i < cid.length; i++) {
@@ -108,8 +112,8 @@ public class SearchServlet extends HttpServlet {
         if (countP % 10 != 0) {
             endpage++;
         }
-        List<Brand> listB = pdao.getAllBrand();
-        List<Category> listC = pdao.getAllCategory();
+        List<Brand> listB = bdao.getAllBrand();
+        List<Category> listC = cdao.getAllCategory();
         List<Product> listP = pdao.search(bid, cid, key, fromprice, toprice, fromdate, todate, sort, index);
         request.setAttribute("fromdate", fromdate);
         request.setAttribute("todate", todate);

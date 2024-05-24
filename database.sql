@@ -29,13 +29,13 @@ CREATE TABLE [dbo].[Account](
 );
 
 CREATE TABLE [dbo].[Category](
-	[cid] [int] NOT NULL,
+	[cid] [int] IDENTITY(1,1) NOT NULL,
 	[cname] [nvarchar](50) NOT NULL,
 	PRIMARY KEY CLUSTERED ([cid] ASC)
 );
 
 CREATE TABLE [dbo].[brand] (
-	[bid] [int] NOT NULL,
+	[bid] [int] IDENTITY(1,1) NOT NULL,
 	[bname] [nvarchar](50) NOT NULL,
 	PRIMARY KEY CLUSTERED ([bid] ASC)
 );
@@ -131,15 +131,19 @@ INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought
 INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (6, N'shiper2', N'123456', N'shiper2@gmail.com',N'0963258741',1500, 1000, N'Hung Yen', 3)
 SET IDENTITY_INSERT [dbo].[Account] OFF
 
+SET IDENTITY_INSERT [dbo].[brand] ON 
 INSERT [dbo].[brand] ([bid], [bname]) VALUES (1, N'Đồng hồ Rolex')
 INSERT [dbo].[brand] ([bid], [bname]) VALUES (2, N'Đồng hồ Cartier')
 INSERT [dbo].[brand] ([bid], [bname]) VALUES (3, N'Đồng hồ Audemars Piguet')
 INSERT [dbo].[brand] ([bid], [bname]) VALUES (4, N'Đồng hồ Patek Philippe')
+SET IDENTITY_INSERT [dbo].[brand] OFF
 
+SET IDENTITY_INSERT [dbo].[Category] ON 
 INSERT [dbo].[Category] ([cid], [cname]) VALUES (1, N'Đồng hồ Nam')
 INSERT [dbo].[Category] ([cid], [cname]) VALUES (2, N'Đồng hồ Nữ')
 INSERT [dbo].[Category] ([cid], [cname]) VALUES (3, N'Đồng hồ Pin')
 INSERT [dbo].[Category] ([cid], [cname]) VALUES (4, N'Đồng hồ Cơ')
+SET IDENTITY_INSERT [dbo].[Category] OFF
 
 INSERT [dbo].[product] ([name], [image], [price], [quantity] ,[sold], [releaseDate], [description],[rate], [cateID], [brandID]) VALUES 
 (N'Rolex COSMOGRAPH DAYTONA', N'img/rolex1.png', 3550, 2000, 1000, CAST(N'2023-06-12' AS Date), N'Rolex Cosmograph Daytona là một trong những biểu tượng không thể phủ nhận trong thế giới đồng hồ thể thao cao cấp. Được giới thiệu lần đầu vào năm 1963, Daytona nhanh chóng trở thành biểu tượng của tốc độ và sự chính xác. Với thiết kế đặc trưng của mặt số có 3 sub-dials và bezel có thể xoay, nó không chỉ là một chiếc đồng hồ mà còn là biểu tượng của phong cách và sự sang trọng.<br><br>

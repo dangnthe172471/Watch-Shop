@@ -4,6 +4,8 @@
  */
 package controller;
 
+import dal.BrandDAO;
+import dal.CategoryDAO;
 import dal.CommentDAO;
 import dal.ProductDAO;
 import java.io.IOException;
@@ -67,6 +69,8 @@ public class ProductDetailServlet extends HttpServlet {
         String id = request.getParameter("pid");
         ProductDAO pdao = new ProductDAO();
         CommentDAO cdao = new CommentDAO();
+        BrandDAO bdao = new BrandDAO();
+        CategoryDAO cadao = new CategoryDAO();
         String indexpage = request.getParameter("index");
         if (indexpage == null) {
             indexpage = "1";
@@ -80,8 +84,8 @@ public class ProductDetailServlet extends HttpServlet {
         List<Comment> listCo = cdao.displayComment(id, index);
         Product p = pdao.getProductByID(id);
         List<Product> listP = pdao.listProductByPid(id);
-        List<Brand> listB = pdao.getAllBrand();
-        List<Category> listC = pdao.getAllCategory();
+        List<Brand> listB = bdao.getAllBrand();
+        List<Category> listC = cadao.getAllCategory();
         request.setAttribute("detail", p);
         request.setAttribute("listP", listP);
         request.setAttribute("listB", listB);

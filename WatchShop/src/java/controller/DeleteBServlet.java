@@ -1,12 +1,10 @@
+package controller;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
-
 import dal.BrandDAO;
-import dal.CategoryDAO;
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,16 +13,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Blog;
 import model.Brand;
-import model.Category;
 
 /**
  *
- * @author admin
+ * @author quyld
  */
-@WebServlet(name = "BlogServlet", urlPatterns = {"/blog"})
-public class BlogServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/deletebrand"})
+public class DeleteBServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +39,10 @@ public class BlogServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BlogServlet</title>");
+            out.println("<title>Servlet DeleteBServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BlogServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteBServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,16 +60,10 @@ public class BlogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDAO pd = new ProductDAO();
-        BrandDAO bdao = new BrandDAO();
-        CategoryDAO cdao = new CategoryDAO();
-        List<Blog> listBl = pd.getAllBlog();
-        List<Brand> listB = bdao.getAllBrand();
-        List<Category> listC = cdao.getAllCategory();
-        request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
-        request.setAttribute("listBl", listBl);
-        request.getRequestDispatcher("blog.jsp").forward(request, response);
+        String id = request.getParameter("bid");
+        BrandDAO b = new BrandDAO();
+        b.deleteDataByBrandName(id);
+        response.sendRedirect("brand");
     }
 
     /**
@@ -87,7 +77,14 @@ public class BlogServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String id_raw = request.getParameter("bid");
+        String name = request.getParameter("bname");
+        Brand brand = new Brand(id_raw, name);
+        BrandDAO b = new BrandDAO();
+        if (request.getParameter("add") != null) {
+            b.addBrand(brand);
+        }
+        response.sendRedirect("brand");
     }
 
     /**
