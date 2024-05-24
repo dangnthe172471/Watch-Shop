@@ -78,5 +78,42 @@ public class AccountDAO extends DBContext {
             System.out.print("AddAccount:" + e.getMessage());
         }
     }
+    public void changepass(Account user) {
+        String sql = "UPDATE [dbo].[Account] SET [pass] = ? WHERE [user] = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, user.getPass());
+            st.setString(2, user.getUser());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    public Account forgotAccount(String user, String email) {
+        String sql = """
+                       select * from account
+                       where [user]=? and [email] = ?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, user);
+            st.setString(2, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new Account(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getDouble(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getInt(11));
+            }
+        } catch (SQLException e) {
+        }
+        return null;
+    }
 
 }
