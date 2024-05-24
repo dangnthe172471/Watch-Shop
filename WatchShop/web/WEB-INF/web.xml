@@ -19,6 +19,8 @@
     <servlet>
         <servlet-name>Forgotpass</servlet-name>
         <servlet-class>controller.Forgotpass</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>BrandServlet</servlet-name>
         <servlet-class>controller.BrandServlet</servlet-class>
     </servlet>
@@ -41,6 +43,8 @@
     <servlet-mapping>
         <servlet-name>Forgotpass</servlet-name>
         <url-pattern>/forgotpass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>BrandServlet</servlet-name>
         <url-pattern>/brand</url-pattern>
     </servlet-mapping>
