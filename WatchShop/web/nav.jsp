@@ -21,8 +21,7 @@
                     <!-- form tìm kiếm  -->
                     <form action="search" class="form-inline ml-auto my-2 my-lg-0 mr-3">
                         <div class="input-group" style="width: 500px;">
-                            <input type="text" class="form-control" aria-label="Small"
-                                   placeholder="Nhập tên sản phẩm cần tìm kiếm...">
+                            <input type="text" class="form-control" aria-label="Small" value="${key != null ? key : ''}" name="key" placeholder="Nhập tên sản phẩm cần tìm kiếm...">
                             <div class="input-group-append">
                                 <button type="submit" class="btn" style="background-color: rgb(0, 0, 196); color: white;">
                                     <i class="fa fa-search"></i>
@@ -84,7 +83,7 @@
                                 </c:forEach>
                         </ul>
                     </li>  
-                    <li style="margin-left: 30px;"><a href="blog">Blog</a></li>                   
+                    <li style="margin-left: 30px;"><a href="blog">Tin Tức</a></li>                   
                     <li style="margin-left: 30px;"><a href="gioithieu.jsp">Giới thiệu</a></li>                   
                 </ul>
             </nav>
