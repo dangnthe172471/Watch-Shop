@@ -20,7 +20,8 @@ import jakarta.mail.internet.MimeMessage;
  * @author dung2
  */
 public class Email {
-     private final String eFrom = "shoesshop193@gmail.com";
+
+    private final String eFrom = "shoesshop193@gmail.com";
     private final String ePass = "lezr tpnq quwj vexs";
 
     public void sendEmail(String subject, String messgage, String to) {
