@@ -59,7 +59,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String logout = request.getParameter("type");
+        String logout = request.getParameter("type");
         if (logout != null && logout.equals("logout")) {
             HttpSession session = request.getSession();
             session.removeAttribute("account");
@@ -81,7 +81,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String username = request.getParameter("user");
+        String username = request.getParameter("user");
         String password = request.getParameter("pass");
         String rem = request.getParameter("rem");
 
@@ -99,14 +99,20 @@ public class Login extends HttpServlet {
             Account existingUser = da.checkAccountExist(username);
             if (existingUser != null) {
                 existingUser.setPass(null);
-                session.setAttribute("user", username);
-                request.setAttribute("error", "Mật khẩu sai!!!");
+                
+                request.setAttribute("error", "wrong password try again !!!");
             } else {
                 session.removeAttribute("user");
-                request.setAttribute("error", "Tài khoản hoặc mật khẩu không đúng !!!");
+                request.setAttribute("error", "Account or password is incorrect !!!");
             }
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         } else {
+            if (account.getStatus() == 1) {
+                request.setAttribute("error", "Account blocked !!!");
+                request.getRequestDispatcher("Login.jsp").forward(request, response);
+                return;
+            }
+
             session.setAttribute("account", account);
 
             Cookie cu = new Cookie("cuser", username);
@@ -169,8 +175,6 @@ public class Login extends HttpServlet {
 //            response.sendRedirect(request.getContextPath() + "/home");
 //        }
 //    }
-
-  
     /**
      * Returns a short description of the servlet.
      *

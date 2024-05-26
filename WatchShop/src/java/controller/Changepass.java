@@ -78,7 +78,7 @@ public class Changepass extends HttpServlet {
         HttpSession session = request.getSession();
         
         if (!newPassword.equals(confirmPassword)) {
-            request.setAttribute("error", "Mật khẩu mới và mật khẩu xác nhận không khớp.");
+            request.setAttribute("error", "The new password and confirmation password do not match!!!");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
             return;
         }
@@ -92,7 +92,7 @@ public class Changepass extends HttpServlet {
             response.sendRedirect("home"); 
         } else {
             // Xác thực thất bại
-            request.setAttribute("error", "Mật khẩu cũ không đúng vui lòng đăng nhập lại!!!");
+            request.setAttribute("error", "The old password is incorrect, please log in again!!!");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
     }
