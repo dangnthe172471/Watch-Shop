@@ -21,6 +21,11 @@ import model.Product;
  */
 public class ProductDAO extends DBContext {
 
+    /**
+     * get all value of table blog
+     *
+     * @return list blog
+     */
     public List<Blog> getAllBlog() {
         List<Blog> list = new ArrayList<>();
         String sql = "select * from Blog \n"
@@ -40,6 +45,11 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
+    /**
+     * get list 5 new product
+     *
+     * @return list new product
+     */
     public List<Product> listProductLast() {
         List<Product> list = new ArrayList<>();
         String sql = """
@@ -67,6 +77,11 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
+    /**
+     * get list 5 product by sold
+     *
+     * @return list product by sold
+     */
     public List<Product> listProductBySold() {
         List<Product> list = new ArrayList<>();
         String sql = """
@@ -94,6 +109,11 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
+    /**
+     * get list5 product by price
+     *
+     * @return list product by price
+     */
     public List<Product> listProductByPrice() {
         List<Product> list = new ArrayList<>();
         String sql = """
@@ -121,6 +141,20 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
+    /**
+     * search for a product by its attributes
+     *
+     * @param bid is brandID of product
+     * @param cid is CategoryID of product
+     * @param key is keyword for search
+     * @param fromprice is min price
+     * @param toprice is max price
+     * @param fromdate is from date
+     * @param todate is to date
+     * @param sort is sort its attributes
+     * @param index is paging
+     * @return list product after
+     */
     public List<Product> search(int[] bid, int[] cid, String key, Double fromprice, Double toprice, Date fromdate, Date todate, int sort, int index) {
         List<Product> list = new ArrayList<>();
         String sql = """
@@ -128,28 +162,40 @@ public class ProductDAO extends DBContext {
                        from product p
                        where 1=1""";
 
+        // if array is not null and first values is not 0
         if (bid != null && bid[0] != 0) {
             sql += " and p.[brandID] in (";
+
+            // add values of array bid to string sql
             for (int i = 0; i < bid.length; i++) {
                 sql += bid[i] + ",";
             }
+
+            // remove ',' end
             if (sql.endsWith(",")) {
                 sql = sql.substring(0, sql.length() - 1);
             }
             sql += ")";
         }
 
+        // if array is not null and first values is not 0
         if (cid != null && cid[0] != 0) {
             sql += " and p.[cateID] in (";
+
+            // add values of array bid to string sql
             for (int i = 0; i < cid.length; i++) {
                 sql += cid[i] + ",";
             }
+
+            // remove ',' end
             if (sql.endsWith(",")) {
                 sql = sql.substring(0, sql.length() - 1);
             }
             sql += ")";
         }
-        if (key != null && !key.equals("")) {
+
+        // if attributes is not null add attributes to string sql
+        if (key != null) {
             sql += " and (p.[name] like '%" + key + "%')";
         }
         if (fromdate != null) {
@@ -208,6 +254,17 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
+    /**
+     * count number of products after searching
+     * @param bid is brandID of product
+     * @param cid is CategoryID of product
+     * @param key is keyword for search
+     * @param fromprice is min price
+     * @param toprice is max price
+     * @param fromdate is from date
+     * @param todate is to date
+     * @return Number of products after searching
+     */
     public int countSearchProduct(int[] bid, int[] cid, String key, Double fromprice, Double toprice, Date fromdate, Date todate) {
         String sql = """
                     SELECT COUNT(*) 
@@ -260,6 +317,11 @@ public class ProductDAO extends DBContext {
         return 0;
     }
 
+    /**
+     * get product by id
+     * @param id is ID of product
+     * @return product
+     */
     public Product getProductByID(String id) {
         String sql = """
                        select *
@@ -287,6 +349,11 @@ public class ProductDAO extends DBContext {
         return null;
     }
 
+    /**
+     * get list top 4 product by product ID
+     * @param pid is id of product
+     * @return list product by product ID
+     */
     public List<Product> listProductByPid(String pid) {
         List<Product> list = new ArrayList<>();
         String sql = """
