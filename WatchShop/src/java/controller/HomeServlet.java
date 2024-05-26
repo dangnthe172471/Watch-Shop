@@ -62,14 +62,18 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // get data from dao
         ProductDAO pdao = new ProductDAO();
         BrandDAO bdao = new BrandDAO();
         CategoryDAO cdao = new CategoryDAO();
+        
         List<Brand> listB = bdao.getAllBrand();
         List<Category> listC = cdao.getAllCategory();
         List<Product> listP1 = pdao.listProductLast();
         List<Product> listP2 = pdao.listProductBySold();
         List<Product> listP3 = pdao.listProductByPrice();
+        
+        // set data to jsp
         request.setAttribute("listB", listB);
         request.setAttribute("listC", listC);
         request.setAttribute("listP1", listP1);

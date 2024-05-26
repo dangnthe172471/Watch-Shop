@@ -66,12 +66,15 @@ public class ProductDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // get data from html
         String id = request.getParameter("pid");
+        String indexpage = request.getParameter("index");
+
+        // get data from dao
         ProductDAO pdao = new ProductDAO();
         CommentDAO cdao = new CommentDAO();
         BrandDAO bdao = new BrandDAO();
         CategoryDAO cadao = new CategoryDAO();
-        String indexpage = request.getParameter("index");
         if (indexpage == null) {
             indexpage = "1";
         }
@@ -86,6 +89,8 @@ public class ProductDetailServlet extends HttpServlet {
         List<Product> listP = pdao.listProductByPid(id);
         List<Brand> listB = bdao.getAllBrand();
         List<Category> listC = cadao.getAllCategory();
+        
+        // set data to jsp
         request.setAttribute("detail", p);
         request.setAttribute("listP", listP);
         request.setAttribute("listB", listB);

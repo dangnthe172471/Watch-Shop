@@ -61,15 +61,15 @@
                                             </a>
                                             <div class="item-caption d-flex w-100">
                                                 <div class="item-info ml-2">
-                                                    <a href="detail?pid=${i.product.id}" class="ten" style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;width: 346px;" title="${i.product.name}">${i.product.name}</a>
+                                                    <a href="detail?pid=${i.product.id}" class="ten" style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;width: 340px;" title="${i.product.name}">${i.product.name}</a>
                                                     <div class="soluong d-flex">
                                                         <div class="input-number input-group mb-3">
                                                             <div class="input-group-prepend">
-                                                                <a  href="process?num=-1&id=${i.product.id}" class="input-group-text btn-spin btn-dec" style="border: none;">-</a> 
+                                                                <a  href="#" class="input-group-text btn-spin btn-dec" style="border: none;">-</a> 
                                                             </div>
                                                             <input type="text" value="${i.quantity}" class="soluongsp  text-center">
                                                             <div class="input-group-append">
-                                                                <a href="process?num=1&id=${i.product.id}" class="input-group-text btn-spin btn-dec" style="border: none" >+</a>
+                                                                <a href="#" class="input-group-text btn-spin btn-dec" style="border: none" >+</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -88,7 +88,6 @@
                                     </c:forEach>
                                 </div> <br>
                                 <hr>
-
 
                                 <div class="row">
                                     <div class="col-md-3">
