@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import model.Blog;
-import model.Brand;
-import model.Category;
 import model.Product;
 
 /**
