@@ -81,7 +81,7 @@ public class Register extends HttpServlet {
         String address = request.getParameter("address");
 
         if (!password.equals(repassword)) {
-            request.setAttribute("error", "Mật khẩu và xác nhận mật khẩu không khớp!");
+            request.setAttribute("error", "Password and confirm password do not match!");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
         } else {
             AccountDAO da = new AccountDAO();
@@ -101,7 +101,7 @@ public class Register extends HttpServlet {
                session.setAttribute("account", newUser);
             response.sendRedirect(request.getContextPath() + "/home");
             } else {
-                request.setAttribute("error", "Tài khoản đã tồn tại!");
+                request.setAttribute("error", "Account already exists!");
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
             }
         }
