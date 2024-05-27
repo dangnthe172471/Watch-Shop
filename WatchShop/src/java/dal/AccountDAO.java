@@ -26,10 +26,17 @@ public class AccountDAO extends DBContext {
             stm.setString(2, password);
             rs = stm.executeQuery();
             while (rs.next()) {
-                Account a = new Account();
-                a.setUser(rs.getString("user"));
-                a.setPass(rs.getString("pass"));
-                return a;
+                return new Account(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getDouble(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getInt(11));
             }
         } catch (Exception e) {
             System.out.print("checkAccount:" + e.getMessage());
@@ -49,11 +56,17 @@ public class AccountDAO extends DBContext {
             st.setString(1, username);
             rs = st.executeQuery();
             if (rs.next()) {
-                Account account = new Account();
-                account.setUser(rs.getString("user"));
-                account.setPass(rs.getString("pass"));
-
-                return account;
+                 return new Account(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getDouble(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getInt(11));
             }
         } catch (SQLException e) {
             System.out.print("checkAccountExist:" + e.getMessage());
@@ -77,6 +90,43 @@ public class AccountDAO extends DBContext {
         } catch (SQLException e) {
             System.out.print("AddAccount:" + e.getMessage());
         }
+    }
+    public void changepass(Account user) {
+        String sql = "UPDATE [dbo].[Account] SET [pass] = ? WHERE [user] = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, user.getPass());
+            st.setString(2, user.getUser());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    public Account forgotAccount(String user, String email) {
+        String sql = """
+                       select * from account
+                       where [user]=? and [email] = ?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, user);
+            st.setString(2, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new Account(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getDouble(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getInt(11));
+            }
+        } catch (SQLException e) {
+        }
+        return null;
     }
 
 }

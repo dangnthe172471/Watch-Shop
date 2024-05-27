@@ -4,21 +4,22 @@
  */
 package controller;
 
-import dal.AccountDAO;
+import dal.BrandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Account;
+import java.util.ArrayList;
+import java.util.List;
+import model.Brand;
 
 /**
  *
- * @author dung2
+ * @author quyld
  */
-public class Register extends HttpServlet {
+public class BrandServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +38,10 @@ public class Register extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Register</title>");
+            out.println("<title>Servlet BrandServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Register at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet BrandServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +59,10 @@ public class Register extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("Register.jsp").forward(request, response);
+        BrandDAO b = new BrandDAO();
+        List<Brand> listb = b.getAllBrand();
+        request.setAttribute("listb", listb);
+        request.getRequestDispatcher("ManageBrand.jsp").forward(request, response);
     }
 
     /**
@@ -72,39 +76,10 @@ public class Register extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String repassword = request.getParameter("repassword");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-
-        if (!password.equals(repassword)) {
-            request.setAttribute("error", "Password and confirm password do not match!");
-            request.getRequestDispatcher("Register.jsp").forward(request, response);
-        } else {
-            AccountDAO da = new AccountDAO();
-            Account account = da.checkAccountExist(username);
-            
-            if (account == null) {
-                Account newUser = new Account();
-                newUser.setUser(username);
-                newUser.setPass(password);
-                newUser.setEmail(email);
-                newUser.setPhone(phone);
-                newUser.setAddress(address);
-
-                AccountDAO dao = new AccountDAO();
-                da.AddAccount(newUser);
-                HttpSession session = request.getSession();
-               session.setAttribute("account", newUser);
-            response.sendRedirect(request.getContextPath() + "/home");
-            } else {
-                request.setAttribute("error", "Account already exists!");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
-            }
-        }
+        //        BrandDAO b = new BrandDAO();
+        //        List<Brand> listb = b.getBrand();
+        //        request.setAttribute("listb", listb);
+        //        request.getRequestDispatcher("ManageCategory.jsp").forward(request, response);
     }
 
     /**

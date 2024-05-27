@@ -59,7 +59,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String logout = request.getParameter("type");
+        String logout = request.getParameter("type");
         if (logout != null && logout.equals("logout")) {
             HttpSession session = request.getSession();
             session.removeAttribute("account");
@@ -81,37 +81,40 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Nhận thông tin từ request
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
         String rem = request.getParameter("rem");
+
         if (username == null || password == null) {
             request.getRequestDispatcher("Login.jsp").forward(request, response);
             return;
         }
-        // Xử lý yêu cầu
+
         AccountDAO da = new AccountDAO();
         Account account = da.checkAccount(username, password);
+
         HttpSession session = request.getSession();
+
         if (account == null) {
-            // kiem tra tai khoan ton tai
             Account existingUser = da.checkAccountExist(username);
             if (existingUser != null) {
-                //sai mk dung tk
                 existingUser.setPass(null);
-                session.setAttribute("user", username);
-                request.setAttribute("error", "Mật khẩu sai!!!");
+                
+                request.setAttribute("error", "wrong password try again !!!");
             } else {
-                // sai ca mk va tk
                 session.removeAttribute("user");
-                request.setAttribute("error", "Tài khoản hoặc mật khẩu không đúng !!!");
-
+                request.setAttribute("error", "Account or password is incorrect !!!");
             }
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         } else {
-            
-            
-            session.setAttribute("account", account.getUser());
+            if (account.getStatus() == 1) {
+                request.setAttribute("error", "Account blocked !!!");
+                request.getRequestDispatcher("Login.jsp").forward(request, response);
+                return;
+            }
+
+            session.setAttribute("account", account);
+
             Cookie cu = new Cookie("cuser", username);
             Cookie cp = new Cookie("cpass", password);
             Cookie cr = new Cookie("crem", rem);
@@ -131,6 +134,47 @@ public class Login extends HttpServlet {
         }
     }
 
+//    private void handleGoogleLogin(HttpServletRequest request, HttpServletResponse response, String code)
+//            throws ServletException, IOException {
+//        GoogleLogin gg = new GoogleLogin();
+//        String accessToken = gg.getToken(code);
+//
+//        if (accessToken == null || accessToken.isEmpty()) {
+//            request.getRequestDispatcher("login.jsp").forward(request, response);
+//            return;
+//        }
+//
+//        GoogleAccount acc = gg.getUserInfo(accessToken);
+//
+//        if (acc == null || acc.getEmail() == null) {
+//            request.getRequestDispatcher("login.jsp").forward(request, response);
+//            return;
+//        }
+//
+//        AccountDAO da = new AccountDAO();
+//        Account existingAccount = da.findAccountByEmail(acc.getEmail());
+//
+//        if (existingAccount == null) {
+//            HttpSession session = request.getSession();
+//            session.setAttribute("googleAccount", acc.getEmail());
+//            response.sendRedirect("Register.jsp");
+//        } else {
+//            HttpSession session = request.getSession();
+//            session.setAttribute("account", acc);
+//
+//            Cookie googleNameCookie = new Cookie("googleName", acc.getName());
+//            Cookie googleEmailCookie = new Cookie("googleEmail", acc.getEmail());
+//
+//            int cookieMaxAge = 60 * 60 * 24 * 5;
+//            googleNameCookie.setMaxAge(cookieMaxAge);
+//            googleEmailCookie.setMaxAge(cookieMaxAge);
+//
+//            response.addCookie(googleNameCookie);
+//            response.addCookie(googleEmailCookie);
+//
+//            response.sendRedirect(request.getContextPath() + "/home");
+//        }
+//    }
     /**
      * Returns a short description of the servlet.
      *

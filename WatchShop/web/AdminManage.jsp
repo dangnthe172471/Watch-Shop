@@ -27,22 +27,21 @@
         <script type="text/javascript" src="slick/slick.min.js"></script>  
     </head>
     <body>
-        <!-- SIDEBAR -->
         <section id="sidebar">
             <a href="home" class="brand" style="margin-left: 60px;">
                 <span class="text">Watch Shop</span>
             </a>
             <ul class="side-menu top">
                 <li class="active">
-                    <a href="#">
+                    <a href="AdminManage.jsp">
                         <i class='bx bxs-dashboard' ></i>
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="ManageCategory.jsp">
+                    <a href="brand">
                         <i class='bx bxs-shopping-bag-alt' ></i>
-                        <span class="text">Category</span>
+                        <span class="text">Brand</span>
                     </a>
                 </li>
                 <li>
@@ -65,11 +64,7 @@
                 </li>
             </ul>
         </section>
-        <!-- SIDEBAR -->
-
-        <!-- CONTENT -->
         <section id="content">
-            <!-- NAVBAR -->
             <nav class="navbar navbar-expand-md bg-white navbar-light">
                 <i class='bx bx-menu' ></i>  
                 <ul class="navbar-nav" style="margin-left: 600px;">
@@ -81,7 +76,7 @@
                                 <a class="nav-link text-dark text-uppercase" href="login" style="display:inline-block">Tài khoản</a> </li>   
                             </c:if>
                             <c:if test="${sessionScope.account != null}" >
-                            <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account}</a></li> 
+                            <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${sessionScope.account.user}</a></li> 
                             <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block">Change Password</a></li> 
                             <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
                             </c:if>

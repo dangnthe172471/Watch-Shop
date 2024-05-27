@@ -4,21 +4,23 @@
  */
 package controller;
 
-import dal.AccountDAO;
+import dal.BrandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Account;
+import model.Brand;
 
 /**
  *
- * @author dung2
+ * @author quyld
  */
-public class Register extends HttpServlet {
+@WebServlet(name = "UpdateBran", urlPatterns = {"/updatebrand"})
+public class UpdateBran extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +39,10 @@ public class Register extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Register</title>");
+            out.println("<title>Servlet UpdateBran</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Register at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateBran at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +60,17 @@ public class Register extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("Register.jsp").forward(request, response);
+        BrandDAO b = new BrandDAO();
+        String bname = request.getParameter("bname");
+        Brand brand = b.getBrandByName(bname);
+        if (brand != null) {
+            request.setAttribute("b", brand);
+            request.setAttribute("brandName", bname);
+            request.getRequestDispatcher("UpdateBrand.jsp").forward(request, response);
+
+        } else {
+            response.sendRedirect("updatebrand?error");
+        }
     }
 
     /**
@@ -72,39 +84,14 @@ public class Register extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String repassword = request.getParameter("repassword");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-
-        if (!password.equals(repassword)) {
-            request.setAttribute("error", "Password and confirm password do not match!");
-            request.getRequestDispatcher("Register.jsp").forward(request, response);
-        } else {
-            AccountDAO da = new AccountDAO();
-            Account account = da.checkAccountExist(username);
-            
-            if (account == null) {
-                Account newUser = new Account();
-                newUser.setUser(username);
-                newUser.setPass(password);
-                newUser.setEmail(email);
-                newUser.setPhone(phone);
-                newUser.setAddress(address);
-
-                AccountDAO dao = new AccountDAO();
-                da.AddAccount(newUser);
-                HttpSession session = request.getSession();
-               session.setAttribute("account", newUser);
-            response.sendRedirect(request.getContextPath() + "/home");
-            } else {
-                request.setAttribute("error", "Account already exists!");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
-            }
+        String id_raw = request.getParameter("bid");
+        String name = request.getParameter("bname");
+        Brand brand = new Brand(id_raw, name);
+        BrandDAO b = new BrandDAO();
+        if (request.getParameter("update") != null) {
+            b.updateBrand(brand);
         }
+        response.sendRedirect("brand");
     }
 
     /**

@@ -4,6 +4,8 @@
  */
 package controller;
 
+import dal.BrandDAO;
+import dal.CategoryDAO;
 import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,6 +65,7 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // get data from html
         String[] cid_raw = request.getParameterValues("cid");
         String[] bid_raw = request.getParameterValues("bid");
         String key = request.getParameter("key");
@@ -70,47 +73,66 @@ public class SearchServlet extends HttpServlet {
         String toprice_raw = request.getParameter("toprice");
         String fromdate_raw = request.getParameter("fromdate");
         String todate_raw = request.getParameter("todate");
+
         Double fromprice, toprice;
         Date fromdate, todate;
         int[] cid = null;
         int[] bid = null;
+
+        // get data from dao
         ProductDAO pdao = new ProductDAO();
+        BrandDAO bdao = new BrandDAO();
+        CategoryDAO cdao = new CategoryDAO();
+        
+        // If the string array is not null, then convert the string array to an int array
         if (cid_raw != null) {
             cid = new int[cid_raw.length];
+            
+            // convert the string array to an int array
             for (int i = 0; i < cid.length; i++) {
                 cid[i] = Integer.parseInt(cid_raw[i]);
             }
         }
+        
+        // If the string array is not null, then convert the string array to an int array
         if (bid_raw != null) {
             bid = new int[bid_raw.length];
+            
+            // convert the string array to an int array
             for (int i = 0; i < bid.length; i++) {
                 bid[i] = Integer.parseInt(bid_raw[i]);
             }
         }
+        
+        // get data from html
         String sort_raw = request.getParameter("sort");
         String indexpage = request.getParameter("index");
         int sort, index;
         if (indexpage == null) {
             indexpage = "1";
         }
+        
+        // convert the values
         index = Integer.parseInt(indexpage);
         sort = (sort_raw == null) ? 0 : Integer.parseInt(sort_raw);
-        fromprice = ((fromprice_raw == null || fromprice_raw.equals("")))
-                ? null : Double.parseDouble(fromprice_raw);
-        toprice = ((toprice_raw == null || toprice_raw.equals("")))
-                ? null : Double.parseDouble(toprice_raw);
-        fromdate = ((fromdate_raw == null || fromdate_raw.equals("")))
+        fromprice = (fromprice_raw == null || fromprice_raw.equals(""))
+                ? null : Double.valueOf(fromprice_raw);
+        toprice = (toprice_raw == null || toprice_raw.equals(""))
+                ? null : Double.valueOf(toprice_raw);
+        fromdate = (fromdate_raw == null || fromdate_raw.equals(""))
                 ? null : Date.valueOf(fromdate_raw);
-        todate = ((todate_raw == null || todate_raw.equals("")))
+        todate = (todate_raw == null || todate_raw.equals(""))
                 ? null : Date.valueOf(todate_raw);
         int countP = pdao.countSearchProduct(bid, cid, key, fromprice, toprice, fromdate, todate);
         int endpage = countP / 10;
         if (countP % 10 != 0) {
             endpage++;
         }
-        List<Brand> listB = pdao.getAllBrand();
-        List<Category> listC = pdao.getAllCategory();
+        List<Brand> listB = bdao.getAllBrand();
+        List<Category> listC = cdao.getAllCategory();
         List<Product> listP = pdao.search(bid, cid, key, fromprice, toprice, fromdate, todate, sort, index);
+        
+        // set data from jsp
         request.setAttribute("fromdate", fromdate);
         request.setAttribute("todate", todate);
         request.setAttribute("fromprice", fromprice);

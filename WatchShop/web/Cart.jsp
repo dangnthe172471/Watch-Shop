@@ -33,6 +33,25 @@
                             <div class="cart-content py-3 pl-3">
                                 <h6 class="header-gio-hang">GIỎ HÀNG CỦA BẠN</h6><br>
                                 <div class="cart-list-items">
+
+
+                                    <div class="cart-item d-flex">
+                                        <h5 style="width: 200px;">Sản phẩm</h5>
+                                        <div class="item-caption d-flex w-100">
+                                            <div class="soluong d-flex" style="margin-left: 58px;">
+                                                <h5> Số lượng</h5>
+                                            </div>
+                                            <div class="item-price ml-auto d-flex flex-column align-items-end">
+                                                <div class="giacu" style="margin-left: 170px;">Đơn giá</div>
+                                                <span class="remove mt-auto"><i class="far fa-trash-alt"></i></span>
+                                            </div>
+                                            <div class="item-price ml-auto d-flex flex-column align-items-end">
+                                                <div class="giacu">Thành tiền</div>
+                                                <span class="remove mt-auto"><i class="far fa-trash-alt"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <c:set var="o" value="${sessionScope.cart}"/>
                                     <c:set var="t" value="0"/>
                                     <c:forEach items="${o.items}" var="i">
@@ -41,23 +60,26 @@
                                                 <img src="${i.product.image}" class="img-fluid" style="height: 100px;width: 150px;">
                                             </a>
                                             <div class="item-caption d-flex w-100">
-                                                <div class="item-info ml-3">
-                                                    <a href="detail?pid=${i.product.id}" class="ten">${i.product.name}</a>
+                                                <div class="item-info ml-2">
+                                                    <a href="detail?pid=${i.product.id}" class="ten" style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;width: 340px;" title="${i.product.name}">${i.product.name}</a>
                                                     <div class="soluong d-flex">
                                                         <div class="input-number input-group mb-3">
                                                             <div class="input-group-prepend">
-                                                                <a  href="process?num=-1&id=${i.product.id}" class="input-group-text btn-spin btn-dec" style="border: none;">-</a> 
+                                                                <a  href="#" class="input-group-text btn-spin btn-dec" style="border: none;">-</a> 
                                                             </div>
                                                             <input type="text" value="${i.quantity}" class="soluongsp  text-center">
                                                             <div class="input-group-append">
-                                                                <a href="process?num=1&id=${i.product.id}" class="input-group-text btn-spin btn-dec" style="border: none" >+</a>
+                                                                <a href="#" class="input-group-text btn-spin btn-dec" style="border: none" >+</a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="item-price ml-auto d-flex flex-column align-items-end">
-                                                    <div class="giacu" style="margin-top: 25px">${i.price} $</div>
-                                                    <div class="giamoi">${i.quantity*i.price} $</div>
+                                                    <div class="giacu" style="margin-top: 30px; margin-left: -15px;">${i.price} $</div>
+                                                    <span class="remove mt-auto"><i class="far fa-trash-alt"></i></span>
+                                                </div>
+                                                <div class="item-price ml-auto d-flex flex-column align-items-end">
+                                                    <div class="giamoi" style="margin-top: 32px">${i.quantity*i.price} $</div>
                                                     <span class="remove mt-auto"><i class="far fa-trash-alt"></i></span>
                                                 </div>
                                             </div>
@@ -66,7 +88,6 @@
                                     </c:forEach>
                                 </div> <br>
                                 <hr>
-
 
                                 <div class="row">
                                     <div class="col-md-3">

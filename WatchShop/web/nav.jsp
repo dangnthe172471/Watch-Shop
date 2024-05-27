@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Watch Shop</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-md bg-white navbar-light">
@@ -21,8 +21,7 @@
                     <!-- form tìm kiếm  -->
                     <form action="search" class="form-inline ml-auto my-2 my-lg-0 mr-3">
                         <div class="input-group" style="width: 500px;">
-                            <input type="text" class="form-control" aria-label="Small"
-                                   placeholder="Nhập tên sản phẩm cần tìm kiếm...">
+                            <input type="text" class="form-control" aria-label="Small" value="${key != null ? key : ''}" name="key" placeholder="Nhập tên sản phẩm cần tìm kiếm...">
                             <div class="input-group-append">
                                 <button type="submit" class="btn" style="background-color: rgb(0, 0, 196); color: white;">
                                     <i class="fa fa-search"></i>
@@ -41,8 +40,8 @@
                                     <a class="nav-link text-dark text-uppercase" href="login" style="display:inline-block">Tài khoản</a> </li>   
                                 </c:if>
                                 <c:if test="${sessionScope.account != null}" >
-                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="AdminManage.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account}</a></li> 
-                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block">Change Password</a></li> 
+                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="AdminManage.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account.user}</a></li> 
+                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="changepass" style="display:inline-block">Change Password</a></li> 
                                 <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
                                 </c:if>
                         </div>
@@ -54,7 +53,7 @@
                                     <c:if test="${size>0}">
                                         <div class="cart-amount">${size}</div>
                                     </c:if>
-                                    
+
                                 </a>
                                 <a href="Cart.jsp" class="nav-link text-dark text-uppercase" style="display:inline-block">Giỏ hàng</a>
                             </li>
@@ -84,7 +83,7 @@
                                 </c:forEach>
                         </ul>
                     </li>  
-                    <li style="margin-left: 30px;"><a href="blog">Blog</a></li>                   
+                    <li style="margin-left: 30px;"><a href="blog">Tin Tức</a></li>                   
                     <li style="margin-left: 30px;"><a href="gioithieu.jsp">Giới thiệu</a></li>                   
                 </ul>
             </nav>
