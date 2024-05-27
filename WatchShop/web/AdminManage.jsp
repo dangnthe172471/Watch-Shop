@@ -47,7 +47,7 @@
                 <li>
                     <a href="#">
                         <i class='bx bxs-doughnut-chart' ></i>
-                        <span class="text"></span>
+                        <span class="text">Category</span>
                     </a>
                 </li>
                 <li>

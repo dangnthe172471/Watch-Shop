@@ -7,7 +7,6 @@ package controller;
 import dal.BlogDAO;
 import dal.BrandDAO;
 import dal.CategoryDAO;
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -65,10 +64,10 @@ public class BlogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDAO pd = new ProductDAO();
         BrandDAO bdao = new BrandDAO();
+        BlogDAO bldao = new BlogDAO();
         CategoryDAO cdao = new CategoryDAO();
-        List<Blog> listBl = pd.getAllBlog();
+        List<Blog> listBl = bldao.getAllBlog();
         List<Brand> listB = bdao.getAllBrand();
         List<Category> listC = cdao.getAllCategory();
         request.setAttribute("listB", listB);

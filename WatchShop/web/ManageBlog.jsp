@@ -40,15 +40,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="brand">
                         <i class='bx bxs-shopping-bag-alt' ></i>
-                        <span class="text">Category</span>
+                        <span class="text">Brand</span>
                     </a>
                 </li>
                 <li >
                     <a href="#">
                         <i class='bx bxs-doughnut-chart' ></i>
-                        <span class="text"></span>
+                        <span class="text">Cateogy</span>
                     </a>
                 </li>
                 <li class="active">
@@ -74,17 +74,9 @@
                 <i class='bx bx-menu' ></i>  
                 <ul class="navbar-nav" style="margin-left: 600px;">
                     <div class="dropdown row" style="margin-left: 10px">
-                        <c:if test="${sessionScope.account == null}" >
-                            <li class="nav-item account">  <a href="login" class="btn btn-secondary rounded-circle">
-                                    <i class="fa fa-user"></i>
-                                </a>
-                                <a class="nav-link text-dark text-uppercase" href="login" style="display:inline-block">Tài khoản</a> </li>   
-                            </c:if>
-                            <c:if test="${sessionScope.account != null}" >
-                            <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account}</a></li> 
-                            <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block">Change Password</a></li> 
-                            <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
-                            </c:if>
+                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${sessionScope.account.user}</a></li> 
+                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block">Change Password</a></li> 
+                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
                     </div>
                     <c:set var="size" value="${sessionScope.size}"/>
                     <div style="margin-left: 10px">
@@ -135,7 +127,7 @@
                                         <td><span style="display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical; overflow: hidden;" title="${c.description}">${c.description}</span></td>
                                     </tr>
                                 </c:forEach>
-                                    
+
                             </thead>
                         </table>
                     </div>                  

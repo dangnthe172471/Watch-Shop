@@ -6,7 +6,7 @@ package controller;
 
 import dal.BrandDAO;
 import dal.CategoryDAO;
-import dal.FeedbackDAO;
+import dal.CommentDAO;
 import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Brand;
 import model.Category;
-import model.Feedback;
+import model.Comment;
 import model.Product;
 
 /**
@@ -72,19 +72,19 @@ public class ProductDetailServlet extends HttpServlet {
 
         // get data from dao
         ProductDAO pdao = new ProductDAO();
-        FeedbackDAO cdao = new FeedbackDAO();
+        CommentDAO cdao = new CommentDAO();
         BrandDAO bdao = new BrandDAO();
         CategoryDAO cadao = new CategoryDAO();
         if (indexpage == null) {
             indexpage = "1";
         }
         int index = Integer.parseInt(indexpage);
-        int countP = cdao.countFeedbackByPid(id);
+        int countP = cdao.countCommentByPid(id);
         int endpage = countP / 4;
         if (countP % 4 != 0) {
             endpage++;
         }
-        List<Feedback> listCo = cdao.displayFeedback(id, index);
+        List<Comment> listCo = cdao.displayComment(id, index);
         Product p = pdao.getProductByID(id);
         List<Product> listP = pdao.listProductByPid(id);
         List<Brand> listB = bdao.getAllBrand();

@@ -59,9 +59,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="manageblog">
                         <i class='bx bxs-message-dots' ></i>
-                        <span class="text">Message</span>
+                        <span class="text">Blog</span>
                     </a>
                 </li>
                 <li>
