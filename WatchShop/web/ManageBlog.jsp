@@ -135,6 +135,7 @@
                                         <td><span style="display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical; overflow: hidden;" title="${c.description}">${c.description}</span></td>
                                     </tr>
                                 </c:forEach>
+                                    
                             </thead>
                         </table>
                     </div>                  
