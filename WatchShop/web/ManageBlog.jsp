@@ -107,7 +107,7 @@
                         <h1>Blog</h1>                      
                     </div>
                     <a href="#" class="btn-download">
-                        <span class="text">Add new category</span>
+                        <span class="text">Add or remove Blog</span>
                     </a>
                 </div>
                 <div class="table-data">
@@ -120,10 +120,21 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Blog name</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
+                                    <th>Blog ID</th>
+                                    <th>Blog Title</th>
+                                    <th>Blog date</th>
+                                    <th>Blog Description</th>
                                 </tr>
+                                <c:forEach items="${requestScope.listBl}" var="c">
+                                    <c:set var="id" value="${c.id}"/>
+                                    <tr>
+                                        <td>${id}</td>
+                                        <td>${c.title}</td>
+                                        <td>${c.image}</td>
+                                        <td>${c.date}</td>
+                                        <td>${c.description}</td>
+                                    </tr>
+                                </c:forEach>
                             </thead>
                             <tbody>
                                 <tr>

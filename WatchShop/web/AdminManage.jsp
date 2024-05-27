@@ -46,9 +46,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="ManageBlog.jsp">
                         <i class='bx bxs-doughnut-chart' ></i>
-                        <span class="text">Analytics</span>
+                        <span class="text">Blog</span>
                     </a>
                 </li>
                 <li>
