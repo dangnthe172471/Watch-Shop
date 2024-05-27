@@ -45,16 +45,16 @@
                         <span class="text">Category</span>
                     </a>
                 </li>
-                <li class="active">
+                <li >
                     <a href="#">
                         <i class='bx bxs-doughnut-chart' ></i>
-                        <span class="text">Blog</span>
+                        <span class="text"></span>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="active">
+                    <a href="manageblog">
                         <i class='bx bxs-message-dots' ></i>
-                        <span class="text">Message</span>
+                        <span class="text">Blog</span>
                     </a>
                 </li>
                 <li>
@@ -122,46 +122,20 @@
                                 <tr>
                                     <th>Blog ID</th>
                                     <th>Blog Title</th>
+                                    <th>Blog Image</th>
                                     <th>Blog date</th>
                                     <th>Blog Description</th>
                                 </tr>
                                 <c:forEach items="${requestScope.listBl}" var="c">
-                                    <c:set var="id" value="${c.id}"/>
                                     <tr>
-                                        <td>${id}</td>
+                                        <td>${c.id}</td>
                                         <td>${c.title}</td>
-                                        <td>${c.image}</td>
+                                        <td><img src="${c.image}"/></td>
                                         <td>${c.date}</td>
-                                        <td>${c.description}</td>
+                                        <td><span style="display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical; overflow: hidden;" title="${c.description}">${c.description}</span></td>
                                     </tr>
                                 </c:forEach>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>01-10-2021</td>
-                                    <td><span class="status completed">Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>01-10-2021</td>
-                                    <td><span class="status pending">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="img/people.png">
-                                        <p>John Doe</p>
-                                    </td>
-                                    <td>01-10-2021</td>
-                                    <td><span class="status process">Process</span></td>
-                                </tr>
-                            </tbody>
                         </table>
                     </div>                  
                 </div>
