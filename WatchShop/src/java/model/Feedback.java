@@ -1,7 +1,7 @@
 
 package model;
 
-public class Comment {
+public class Feedback {
 
     private int id;
     private String content;
@@ -9,10 +9,10 @@ public class Comment {
     private Account account;
     private Product product;
 
-    public Comment() {
+    public Feedback() {
     }
 
-    public Comment(int id, String content, int voted, Account account, Product product) {
+    public Feedback(int id, String content, int voted, Account account, Product product) {
         this.id = id;
         this.content = content;
         this.voted = voted;
