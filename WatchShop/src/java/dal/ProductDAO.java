@@ -20,30 +20,6 @@ import model.Product;
 public class ProductDAO extends DBContext {
 
     /**
-     * get all value of table blog
-     *
-     * @return list blog
-     */
-    public List<Blog> getAllBlog() {
-        List<Blog> list = new ArrayList<>();
-        String sql = "select * from Blog \n"
-                + "order by Date desc";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                list.add(new Blog(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5)));
-            }
-        } catch (SQLException e) {
-        }
-        return list;
-    }
-
-    /**
      * get list 5 new product
      *
      * @return list new product

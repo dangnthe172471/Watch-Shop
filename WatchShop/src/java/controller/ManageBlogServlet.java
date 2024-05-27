@@ -5,8 +5,6 @@
 package controller;
 
 import dal.BlogDAO;
-import dal.BrandDAO;
-import dal.CategoryDAO;
 import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,10 +20,10 @@ import model.Category;
 
 /**
  *
- * @author admin
+ * @author Admin
  */
-@WebServlet(name = "BlogServlet", urlPatterns = {"/blog"})
-public class BlogServlet extends HttpServlet {
+@WebServlet(name = "ManageBlogServlet", urlPatterns = {"/manageblog"})
+public class ManageBlogServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +42,10 @@ public class BlogServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BlogServlet</title>");
+            out.println("<title>Servlet ManageBlogServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BlogServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageBlogServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,16 +63,10 @@ public class BlogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDAO pd = new ProductDAO();
-        BrandDAO bdao = new BrandDAO();
-        CategoryDAO cdao = new CategoryDAO();
-        List<Blog> listBl = pd.getAllBlog();
-        List<Brand> listB = bdao.getAllBrand();
-        List<Category> listC = cdao.getAllCategory();
-        request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
+        BlogDAO bd = new BlogDAO();
+        List<Blog> listBl = bd.getAllBlog();
         request.setAttribute("listBl", listBl);
-        request.getRequestDispatcher("blog.jsp").forward(request, response);
+        request.getRequestDispatcher("ManageBlog.jsp").forward(request, response);
     }
 
     /**
@@ -88,7 +80,30 @@ public class BlogServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+
+        if (action != null && action.equals("add")) {
+            int id = Integer.parseInt(request.getParameter("id")); // Assuming ID is manually input by the user
+            String title = request.getParameter("title");
+            String image = request.getParameter("image");
+            String date = request.getParameter("date");
+            String description = request.getParameter("description");
+
+            Blog newBlog = new Blog(id, title, image, date, description);
+            BlogDAO blogDAO = new BlogDAO();
+            blogDAO.addBlog(newBlog);
+
+            // Redirect to a confirmation page or the list of blogs
+            response.sendRedirect("ManageBlog.jsp");
+        } else if (action != null && action.equals("delete")) {
+            int blogId = Integer.parseInt(request.getParameter("blogId"));
+
+            BlogDAO blogDAO = new BlogDAO();
+            blogDAO.deleteBlog(blogId);
+
+            // Redirect to a confirmation page or the list of blogs
+            response.sendRedirect("ManageBlog.jsp");
+        }
     }
 
     /**
