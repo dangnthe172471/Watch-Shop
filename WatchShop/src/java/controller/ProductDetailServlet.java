@@ -79,12 +79,12 @@ public class ProductDetailServlet extends HttpServlet {
             indexpage = "1";
         }
         int index = Integer.parseInt(indexpage);
-        int countP = cdao.countCommentByPid(id);
+        int countP = cdao.countFeedbackByPid(id);
         int endpage = countP / 4;
         if (countP % 4 != 0) {
             endpage++;
         }
-        List<Feedback> listCo = cdao.displayComment(id, index);
+        List<Feedback> listCo = cdao.displayFeedback(id, index);
         Product p = pdao.getProductByID(id);
         List<Product> listP = pdao.listProductByPid(id);
         List<Brand> listB = bdao.getAllBrand();

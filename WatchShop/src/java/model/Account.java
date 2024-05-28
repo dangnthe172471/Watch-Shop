@@ -9,11 +9,12 @@ public class Account {
     private String address;
     private int status;
     private int roleID;
-
+    private String token;
+    
     public Account() {
     }
 
-    public Account(int id, String avatar, String user, String pass, String email, String phone, double amount, int bought, String address, int status, int roleID) {
+    public Account(int id, String avatar, String user, String pass, String email, String phone, double amount, int bought, String address, int status, int roleID, String token) {
         this.id = id;
         this.avatar = avatar;
         this.user = user;
@@ -25,6 +26,7 @@ public class Account {
         this.address = address;
         this.status = status;
         this.roleID = roleID;
+        this.token = token;
     }
 
     public int getId() {
@@ -113,6 +115,14 @@ public class Account {
 
     public void setRoleID(int roleID) {
         this.roleID = roleID;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
 }

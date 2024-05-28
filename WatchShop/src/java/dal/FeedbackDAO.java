@@ -25,15 +25,15 @@ public class FeedbackDAO extends DBContext {
      * @param index is paging
      * @return list feedback of product
      */
-    public List<Feedback> displayComment(String pid, int index) {
+    public List<Feedback> displayFeedback(String pid, int index) {
         List<Feedback> list = new ArrayList<>();
         String sql = """
                         SELECT *
-                        FROM [Comment] c  
-                        INNER JOIN [Account] a ON (a.[id] = c.[aid])
-                        INNER JOIN Product p  ON (p.[id] = c.[pid])
+                        FROM [feedback] f 
+                        INNER JOIN [Account] a ON (a.[id] = f.[aid])
+                        INNER JOIN Product p  ON (p.[id] = f.[pid])
                         where p.[id] = ?
-                        order by c.[id] desc
+                        order by f.[id] desc
                         OFFSET ? ROWS FETCH NEXT 4 ROWS ONLY
                      """;
         try {
@@ -55,18 +55,19 @@ public class FeedbackDAO extends DBContext {
                                 rs.getInt(13),
                                 rs.getString(14),
                                 rs.getInt(15),
-                                rs.getInt(16)),
-                        new Product(rs.getInt(17),
-                                rs.getString(18),
+                                rs.getInt(16),
+                        rs.getString(17)),
+                        new Product(rs.getInt(18),
                                 rs.getString(19),
-                                rs.getDouble(20),
-                                rs.getInt(21),
+                                rs.getString(20),
+                                rs.getDouble(21),
                                 rs.getInt(22),
-                                rs.getDate(23),
-                                rs.getString(24),
-                                rs.getDouble(25),
-                                rs.getInt(26),
-                                rs.getInt(27))));
+                                rs.getInt(23),
+                                rs.getDate(24),
+                                rs.getString(25),
+                                rs.getDouble(26),
+                                rs.getInt(27),
+                                rs.getInt(28))));
             }
         } catch (SQLException e) {
         }
@@ -78,9 +79,9 @@ public class FeedbackDAO extends DBContext {
      * @param pid is ID of product
      * @return number feedback of product
      */
-    public int countCommentByPid(String pid) {
+    public int countFeedbackByPid(String pid) {
         String sql = """
-                     SELECT COUNT(*) FROM Comment 
+                     SELECT COUNT(*) FROM feedback 
                      where pid = ?""";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
