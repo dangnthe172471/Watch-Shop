@@ -36,7 +36,8 @@ public class AccountDAO extends DBContext {
                         rs.getInt(8),
                         rs.getString(9),
                         rs.getInt(10),
-                        rs.getInt(11));
+                        rs.getInt(11),
+                        rs.getString(12));
             }
         } catch (Exception e) {
             System.out.print("checkAccount:" + e.getMessage());
@@ -56,7 +57,7 @@ public class AccountDAO extends DBContext {
             st.setString(1, username);
             rs = st.executeQuery();
             if (rs.next()) {
-                 return new Account(rs.getInt(1),
+                return new Account(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -66,7 +67,8 @@ public class AccountDAO extends DBContext {
                         rs.getInt(8),
                         rs.getString(9),
                         rs.getInt(10),
-                        rs.getInt(11));
+                        rs.getInt(11),
+                        rs.getString(12));
             }
         } catch (SQLException e) {
             System.out.print("checkAccountExist:" + e.getMessage());
@@ -91,6 +93,7 @@ public class AccountDAO extends DBContext {
             System.out.print("AddAccount:" + e.getMessage());
         }
     }
+
     public void changepass(Account user) {
         String sql = "UPDATE [dbo].[Account] SET [pass] = ? WHERE [user] = ?";
         try {
@@ -102,6 +105,7 @@ public class AccountDAO extends DBContext {
             System.out.println(e);
         }
     }
+
     public Account forgotAccount(String user, String email) {
         String sql = """
                        select * from account
@@ -122,7 +126,8 @@ public class AccountDAO extends DBContext {
                         rs.getInt(8),
                         rs.getString(9),
                         rs.getInt(10),
-                        rs.getInt(11));
+                        rs.getInt(11),
+                        rs.getString(12));
             }
         } catch (SQLException e) {
         }
