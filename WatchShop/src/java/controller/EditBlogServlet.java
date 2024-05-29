@@ -8,6 +8,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Collections;
+import java.util.Comparator;
 import model.Blog;
 
 @WebServlet(name = "EditBlogServlet", urlPatterns = {"/editblog"})
@@ -32,6 +34,7 @@ public class EditBlogServlet extends HttpServlet {
         }
 
         List<Blog> listBl = blogDAO.getAllBlog();
+        Collections.sort(listBl, Comparator.comparingInt(Blog::getId));
         request.setAttribute("listBl", listBl);
         request.getRequestDispatcher("EditBlog.jsp").forward(request, response);
     }
@@ -63,4 +66,3 @@ public class EditBlogServlet extends HttpServlet {
         response.sendRedirect("editblog");
     }
 }
-    

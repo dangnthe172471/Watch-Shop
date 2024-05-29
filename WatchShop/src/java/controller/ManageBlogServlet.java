@@ -8,6 +8,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Collections;
+import java.util.Comparator;
 import model.Blog;
 
 @WebServlet(name = "ManageBlogServlet", urlPatterns = {"/manageblog"})
@@ -18,6 +20,7 @@ public class ManageBlogServlet extends HttpServlet {
             throws ServletException, IOException {
         BlogDAO blogDAO = new BlogDAO();
         List<Blog> listBl = blogDAO.getAllBlog();
+        Collections.sort(listBl, Comparator.comparingInt(Blog::getId));
         request.setAttribute("listBl", listBl);
         request.getRequestDispatcher("ManageBlog.jsp").forward(request, response);
     }
