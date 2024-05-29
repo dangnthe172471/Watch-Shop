@@ -36,6 +36,21 @@ public class BlogDAO extends DBContext {
         return list;
     }
 
+    public Blog getBlogById(int id) {
+        String sql = "SELECT * FROM Blog WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new Blog(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void addBlog(Blog blog) {
         String sql = "INSERT INTO Blog (title, image, date, description) VALUES (?, ?, ?, ?)";
         try {

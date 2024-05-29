@@ -98,8 +98,7 @@
                     <div class="left">
                         <h1>Blog</h1>                      
                     </div>
-                    <a href="#" class="btn-download">
-                        <span class="text">Add or remove Blog</span>
+                <button class="btn btn-success" onclick="window.location.href='editblog'">Customize Blog</button>
                     </a>
                 </div>
                 <div class="table-data">
