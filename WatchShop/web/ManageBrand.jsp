@@ -47,13 +47,13 @@
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
-                <li class="active">
+                <li class="${page==2?'active':''}">
                     <a href="brand">
                         <i class='bx bxs-shopping-bag-alt' ></i>
                         <span class="text">Brand</span>
                     </a>
                 </li>
-                <li>
+                <li class="${page==3?'active':''}">
                     <a href="category">
                         <i class='bx bxs-doughnut-chart' ></i>
                         <span class="text">Category</span>

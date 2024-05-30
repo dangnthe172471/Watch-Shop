@@ -62,6 +62,7 @@ public class BrandServlet extends HttpServlet {
         BrandDAO b = new BrandDAO();
         List<Brand> listb = b.getAllBrand();
         request.setAttribute("listb", listb);
+        request.setAttribute("page", "2");
         request.getRequestDispatcher("ManageBrand.jsp").forward(request, response);
     }
 
