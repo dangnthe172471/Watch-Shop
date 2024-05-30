@@ -13,9 +13,8 @@
             <h2>Manage Blogs</h2>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBlogModal">
                 Add Blog
-                <a href="manageblog" class="btn btn-primary" style="position: absolute; top: 45px; right: 200px;">Back</a>
             </button>
-
+            <a href="manageblog" class="btn btn-primary" style="position: absolute; top: 45px; right: 200px;">Back</a>
             <hr/>
 
             <h2>Blog List</h2>
@@ -23,9 +22,9 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Title</th>
-                        <th>Image</th>
-                        <th>Date</th>
+                        <th style="width: 150px;">Title</th>
+                        <th style="width: 200px">Image</th>
+                        <th style="width: 150px;">Date</th>
                         <th>Description</th>
                         <th>Actions</th>
                     </tr>
@@ -34,10 +33,18 @@
                     <c:forEach var="blogItem" items="${listBl}">
                         <tr>
                             <td>${blogItem.id}</td>
-                            <td>${blogItem.title}</td>
-                            <td><img src="${blogItem.image}" alt="${blogItem.title}" width="100"></td>
+                            <td>
+                                <span style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;" title="${blogItem.title}"  >
+                                    ${blogItem.title}
+                                </span>
+                            </td>
+                            <td><img src="${blogItem.image}" alt="${blogItem.title}" style="width: 150px;height: 150px;"></td>
                             <td>${blogItem.date}</td>
-                            <td>${blogItem.description}</td>
+                            <td>
+                                <span style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;" title="${blogItem.description}"  >
+                                    ${blogItem.description}
+                                </span>
+                            </td>
                             <td>
                                 <a href="editblog?action=edit&id=${blogItem.id}" class="btn btn-warning">Edit</a>
                                 <button class="btn btn-danger" onclick="removeBlog(${blogItem.id})">Delete</button>

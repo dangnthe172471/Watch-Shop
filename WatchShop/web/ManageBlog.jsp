@@ -28,72 +28,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </head>
     <body>
-        <!-- SIDEBAR -->
-        <section id="sidebar">
-            <a href="home" class="brand" style="margin-left: 60px;">
-                <span class="text">Watch Shop</span>
-            </a>
-            <ul class="side-menu top">
-                <li >
-                    <a href="AdminManage.jsp">
-                        <i class='bx bxs-dashboard' ></i>
-                        <span class="text">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="brand">
-                        <i class='bx bxs-shopping-bag-alt' ></i>
-                        <span class="text">Brand</span>
-                    </a>
-                </li>
-                <li >
-                    <a href="category">
-                        <i class='bx bxs-doughnut-chart' ></i>
-                        <span class="text">Category</span>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="manageblog">
-                        <i class='bx bxs-message-dots' ></i>
-                        <span class="text">Blog</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class='bx bxs-group' ></i>
-                        <span class="text">Team</span>
-                    </a>
-                </li>
-            </ul>
-        </section>
-        <!-- SIDEBAR -->
-
-        <!-- CONTENT -->
+         <jsp:include page="left.jsp" />
         <section id="content">
-            <!-- NAVBAR -->
-            <nav class="navbar navbar-expand-md bg-white navbar-light">
-                <i class='bx bx-menu' ></i>  
-                <ul class="navbar-nav" style="margin-left: 600px;">
-                    <div class="dropdown row" style="margin-left: 10px">
-                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${sessionScope.account.user}</a></li> 
-                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block">Change Password</a></li> 
-                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
-                    </div>
-                    <c:set var="size" value="${sessionScope.size}"/>
-                    <div style="margin-left: 10px">
-                        <li class="nav-item giohang">
-                            <a href="Cart.jsp" class="btn btn-secondary rounded-circle">
-                                <i class="fa fa-shopping-cart"></i>
-                                <c:if test="${size>0}">
-                                    <div class="cart-amount">${size}</div>
-                                </c:if>
-                            </a>
-                            <a href="Cart.jsp" class="nav-link text-dark text-uppercase" style="display:inline-block">Giỏ hàng</a>
-                        </li>
-                    </div>
-                </ul>
-            </nav>
-
             <main>
                 <div class="head-title">
                     <div class="left">
@@ -114,30 +50,32 @@
                                 <tr>
                                     <th style="width: 50px;">ID</th>
                                     <th style="width: 150px;">Title</th>
-                                    <th style="width: 100px;">Image</th>
+                                    <th style="width: 200px;">Image</th>
+                                    <th style="width: 100px;">Date</th> 
                                     <th>Description</th>
-                                    <th style="width: 150px;">Date</th> 
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach items="${requestScope.listBl}" var="c">
                                     <tr>
                                         <td>${c.id}</td>
-                                        <td>${c.title}</td>
-                                        <td style="text-align: center;">
-                                            <img src="${c.image}" class="blog-image" style="border-radius: 0;">
-                                        </td>                                       
                                         <td>
-                                            <span class="container" style="display: -webkit-box;
-                                                  -webkit-line-clamp: 3;
-                                                  -webkit-box-orient: vertical;
-                                                  overflow: hidden;" title="${c.description}">
+                                            <span style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;" title="${c.title}"  >
+                                                ${c.title}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <img src="${c.image}" class="blog-image" style="border-radius: 0;width: 150px;height: 150px;">
+                                        </td>   
+                                        <td>${c.date}</td>
+                                        <td>
+                                            <span class="container" style="display: -webkit-box;-webkit-line-clamp: 4;-webkit-box-orient: vertical;overflow: hidden;" title="${c.description}">
                                                 ${c.description}
                                             </span>
                                         </td>
-                                        <td>${c.date}</td>
-                                </tr>
-                            </c:forEach>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>                  

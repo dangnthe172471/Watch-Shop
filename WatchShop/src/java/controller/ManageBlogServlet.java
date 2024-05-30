@@ -22,6 +22,7 @@ public class ManageBlogServlet extends HttpServlet {
         List<Blog> listBl = blogDAO.getAllBlog();
         Collections.sort(listBl, Comparator.comparingInt(Blog::getId));
         request.setAttribute("listBl", listBl);
+        request.setAttribute("tab", "4");
         request.getRequestDispatcher("ManageBlog.jsp").forward(request, response);
     }
 }

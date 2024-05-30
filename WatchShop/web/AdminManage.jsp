@@ -27,75 +27,8 @@
         <script type="text/javascript" src="slick/slick.min.js"></script>  
     </head>
     <body>
-        <section id="sidebar">
-            <a href="home" class="brand" style="margin-left: 60px;">
-                <span class="text">Watch Shop</span>
-            </a>
-            <ul class="side-menu top">
-                <li class="active">
-                    <a href="AdminManage.jsp">
-                        <i class='bx bxs-dashboard' ></i>
-                        <span class="text">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="brand">
-                        <i class='bx bxs-shopping-bag-alt' ></i>
-                        <span class="text">Brand</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="category">
-                        <i class='bx bxs-doughnut-chart' ></i>
-                        <span class="text">Category</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="manageblog">
-                        <i class='bx bxs-message-dots' ></i>
-                        <span class="text">Blog</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class='bx bxs-group' ></i>
-                        <span class="text">Team</span>
-                    </a>
-                </li>
-            </ul>
-        </section>
-        <section id="content">
-            <nav class="navbar navbar-expand-md bg-white navbar-light">
-                <i class='bx bx-menu' ></i>  
-                <ul class="navbar-nav" style="margin-left: 600px;">
-                    <div class="dropdown row" style="margin-left: 10px">
-                        <c:if test="${sessionScope.account == null}" >
-                            <li class="nav-item account">  <a href="login" class="btn btn-secondary rounded-circle">
-                                    <i class="fa fa-user"></i>
-                                </a>
-                                <a class="nav-link text-dark text-uppercase" href="login" style="display:inline-block">Tài khoản</a> </li>   
-                            </c:if>
-                            <c:if test="${sessionScope.account != null}" >
-                            <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${sessionScope.account.user}</a></li> 
-                            <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="#" style="display:inline-block">Change Password</a></li> 
-                            <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
-                            </c:if>
-                    </div>
-                    <c:set var="size" value="${sessionScope.size}"/>
-                    <div style="margin-left: 10px">
-                        <li class="nav-item giohang">
-                            <a href="Cart.jsp" class="btn btn-secondary rounded-circle">
-                                <i class="fa fa-shopping-cart"></i>
-                                <c:if test="${size>0}">
-                                    <div class="cart-amount">${size}</div>
-                                </c:if>
-                            </a>
-                            <a href="Cart.jsp" class="nav-link text-dark text-uppercase" style="display:inline-block">Giỏ hàng</a>
-                        </li>
-                    </div>
-                </ul>
-            </nav>
-
+        <jsp:include page="left.jsp" />
+        <section id="content">     
             <main>
                 <div class="head-title">
                     <div class="left">

@@ -63,7 +63,7 @@ public class CategoryServlet extends HttpServlet {
         CategoryDAO c = new CategoryDAO();
         List<Category> list = c.getAllCategory();
         request.setAttribute("listc", list);
-        request.setAttribute("page", "3");
+        request.setAttribute("tab", "3");
         request.getRequestDispatcher("ManageCategory.jsp").forward(request, response);
     }
 

@@ -92,7 +92,7 @@
                             </div>
                             <div class="col-md-5" style="padding-top: 50px; padding-left:40px">
                                 <h4>Đánh giá</h4>
-                                <c:if test="${sessionScope.account!=null}">
+                                <c:if test="${sessionScope.account.roleID==4}">
                                     <form action="comment" style="margin-top: 20px;">
                                         <div style="display: flex; align-items: center; padding-left: 10px;">
                                             <img src="${sessionScope.account.avatar}" style="width: 40px;height: 40px;border-radius: 50%;"/>
@@ -111,8 +111,8 @@
                                         <input value="${sessionScope.account.id}" type="hidden" name="aid">
                                     </form>    
                                 </c:if>
-                                <c:if test="${sessionScope.account==null}">
-                                    <span style="color: red; font-size: 18px;">Vui lòng <a href="login" style="color: red">đăng nhập</a> để đánh giá!</span>
+                                <c:if test="${sessionScope.account.roleID!=4}">
+                                    <span style="color: red; font-size: 18px;">Vui lòng <a href="login" style="color: red">đăng nhập</a> tài khoản khách hàng để đánh giá!</span>
                                 </c:if>
                                 <div>                                        
                                     <c:forEach items="${listCo}" var="co">

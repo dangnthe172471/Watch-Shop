@@ -20,7 +20,7 @@ import model.Brand;
  * @author quyld
  */
 @WebServlet(name = "UpdateBran", urlPatterns = {"/updatebrand"})
-public class UpdateBran extends HttpServlet {
+public class UpdateBrand extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
