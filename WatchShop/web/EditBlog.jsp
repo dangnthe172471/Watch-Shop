@@ -13,7 +13,7 @@
             <h2>Manage Blogs</h2>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBlogModal">
                 Add Blog
-            <a href="manageblog" class="btn btn-primary" style="position: absolute; top: 45px; right: 200px;">Back</a>
+                <a href="manageblog" class="btn btn-primary" style="position: absolute; top: 45px; right: 200px;">Back</a>
             </button>
 
             <hr/>
@@ -58,6 +58,7 @@
                         </div>
                         <div class="modal-body">
                             <form action="editblog" method="post" id="addBlogForm">
+                                <input type="hidden" name="id" value="${param.id}" />
                                 <div class="form-group">
                                     <label for="title">Title:</label>
                                     <input type="text" class="form-control" id="title" name="title" required>
@@ -74,7 +75,6 @@
                                     <label for="description">Description:</label>
                                     <textarea class="form-control" id="description" name="description" required></textarea>
                                 </div>
-                                <input type="hidden" name="id" value="${blog.id}" />
                             </form>
                         </div>
                         <div class="modal-footer">
