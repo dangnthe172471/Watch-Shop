@@ -74,15 +74,60 @@ public class BrandDAO extends DBContext {
         return null;
     }
 
-    public void deleteDataByBrandName(String bid) {
-         String sql = """
-                   delete from [Brand] where bid = ?""";
+    public void deleteDataByBrandId(String bid) {
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, bid);
-            st.executeUpdate();
+            // Disable auto-commit mode
+            connection.setAutoCommit(false);
+            System.out.println("Auto-commit disabled.");
+
+            // Step 1: Xóa các bình luận liên quan từ bảng Comment
+            String deleteCommentsSQL = "DELETE f FROM [dbo].[Feedback] f "
+                    + "INNER JOIN [dbo].[product] p ON f.pid = p.id "
+                    + "INNER JOIN [dbo].[brand] b ON p.brandID = b.bid "
+                    + "WHERE b.bid = ?";
+            
+            try (PreparedStatement deleteCommentsStmt = connection.prepareStatement(deleteCommentsSQL)) {
+                deleteCommentsStmt.setString(1, bid);
+                deleteCommentsStmt.executeUpdate();
+                System.out.println("Comments deleted.");
+            }
+
+            // Step 2: Xóa các dòng đơn hàng liên quan từ bảng OrderLine
+            String deleteOrderLinesSQL = "DELETE od FROM [dbo].[OrderDetail] od "
+                    + "INNER JOIN [dbo].[product] p ON od.pid = p.id "
+                    + "INNER JOIN [dbo].[brand] b ON p.brandID = b.bid "
+                    + "WHERE b.bid = ?";
+            try (PreparedStatement deleteOrderLinesStmt = connection.prepareStatement(deleteOrderLinesSQL)) {
+                deleteOrderLinesStmt.setString(1, bid);
+                deleteOrderLinesStmt.executeUpdate();
+                System.out.println("Order lines deleted.");
+            }
+
+            // Step 3: Xóa các sản phẩm liên quan từ bảng Product
+            String deleteProductsSQL = "DELETE p FROM [dbo].[product] p "
+                    + "INNER JOIN [dbo].[brand] b ON p.brandID = b.bid "
+                    + "WHERE b.bid = ?";
+            try (PreparedStatement deleteProductsStmt = connection.prepareStatement(deleteProductsSQL)) {
+                deleteProductsStmt.setString(1, bid);
+                deleteProductsStmt.executeUpdate();
+                System.out.println("Products deleted.");
+            }
+
+            // Step 4: Xóa các thương hiệu từ bảng Brand
+            String deleteBrandsSQL = "DELETE b FROM [dbo].[brand] b "
+                    + "WHERE b.bid = ?";
+            try (PreparedStatement deleteBrandsStmt = connection.prepareStatement(deleteBrandsSQL)) {
+                deleteBrandsStmt.setString(1, bid);
+                deleteBrandsStmt.executeUpdate();
+                System.out.println("Brand deleted.");
+            }
+
+            // Commit the transaction
+            connection.commit();
+            System.out.println("Transaction committed.");
         } catch (SQLException e) {
-        }
+            //
+        } 
     }
 
 //    public static void main(String[] args) {

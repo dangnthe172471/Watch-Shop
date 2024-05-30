@@ -62,7 +62,7 @@ public class DeleteBServlet extends HttpServlet {
             throws ServletException, IOException {
         String id = request.getParameter("bid");
         BrandDAO b = new BrandDAO();
-        b.deleteDataByBrandName(id);
+        b.deleteDataByBrandId(id);
         response.sendRedirect("brand");
     }
 
@@ -77,13 +77,24 @@ public class DeleteBServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        BrandDAO b = new BrandDAO();
         String id_raw = request.getParameter("bid");
         String name = request.getParameter("bname");
         Brand brand = new Brand(id_raw, name);
-        BrandDAO b = new BrandDAO();
-        if (request.getParameter("add") != null) {
-            b.addBrand(brand);
+        Brand check = b.getBrandByName(name);
+        String err = "";
+        if (name.isBlank()) {
+            err = "Chưa có dữ liệu";
+        } else {
+            if (check != null) {
+                err = "Đã tồn tại";
+            } else {
+                if (request.getParameter("add") != null) {
+                    b.addBrand(brand);
+                }
+            }
         }
+        request.setAttribute("err", err);
         response.sendRedirect("brand");
     }
 

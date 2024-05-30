@@ -4,22 +4,23 @@
  */
 package controller;
 
-import dal.BrandDAO;
+import dal.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
-import model.Brand;
+import model.Category;
 
 /**
  *
  * @author quyld
  */
-public class BrandServlet extends HttpServlet {
+@WebServlet(name = "CategoryServlet", urlPatterns = {"/category"})
+public class CategoryServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +39,10 @@ public class BrandServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BrandServlet</title>");
+            out.println("<title>Servlet CategoryServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BrandServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CategoryServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,11 +60,11 @@ public class BrandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BrandDAO b = new BrandDAO();
-        List<Brand> listb = b.getAllBrand();
-        request.setAttribute("listb", listb);
-        request.setAttribute("page", "2");
-        request.getRequestDispatcher("ManageBrand.jsp").forward(request, response);
+        CategoryDAO c = new CategoryDAO();
+        List<Category> list = c.getAllCategory();
+        request.setAttribute("listc", list);
+        request.setAttribute("page", "3");
+        request.getRequestDispatcher("ManageCategory.jsp").forward(request, response);
     }
 
     /**
@@ -77,10 +78,7 @@ public class BrandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //        BrandDAO b = new BrandDAO();
-        //        List<Brand> listb = b.getBrand();
-        //        request.setAttribute("listb", listb);
-        //        request.getRequestDispatcher("ManageCategory.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

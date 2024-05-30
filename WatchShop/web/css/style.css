@@ -709,3 +709,17 @@ img.coverImage {
 .gallery-photos-rowFirst div p {
     font-size: 14px;
 }
+
+.blog-image {
+    max-width: 100px;
+    max-height: 100px;
+}
+.blog-image {
+    max-width: 100px;
+    max-height: 100px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 0;
+    object-fit: cover;
+    clip-path: none;
+}

@@ -24,7 +24,8 @@
         <script type="text/javascript" src="js/main.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
-        <script type="text/javascript" src="slick/slick.min.js"></script>  
+        <script type="text/javascript" src="slick/slick.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </head>
     <body>
         <!-- SIDEBAR -->
@@ -46,9 +47,9 @@
                     </a>
                 </li>
                 <li >
-                    <a href="#">
+                    <a href="category">
                         <i class='bx bxs-doughnut-chart' ></i>
-                        <span class="text">Cateogy</span>
+                        <span class="text">Category</span>
                     </a>
                 </li>
                 <li class="active">
@@ -98,8 +99,7 @@
                     <div class="left">
                         <h1>Blog</h1>                      
                     </div>
-                    <a href="#" class="btn-download">
-                        <span class="text">Add or remove Blog</span>
+                    <button class="btn btn-success" onclick="window.location.href = 'editblog'">Customize Blog</button>
                     </a>
                 </div>
                 <div class="table-data">
@@ -109,31 +109,45 @@
                             <i class='bx bx-search' ></i>
                             <i class='bx bx-filter' ></i>
                         </div>
-                        <table>
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Blog ID</th>
-                                    <th>Blog Title</th>
-                                    <th>Blog Image</th>
-                                    <th>Blog date</th>
-                                    <th>Blog Description</th>
+                                    <th style="width: 50px;">ID</th>
+                                    <th style="width: 150px;">Title</th>
+                                    <th style="width: 100px;">Image</th>
+                                    <th>Description</th>
+                                    <th style="width: 150px;">Date</th> 
                                 </tr>
+                            </thead>
+                            <tbody>
                                 <c:forEach items="${requestScope.listBl}" var="c">
                                     <tr>
                                         <td>${c.id}</td>
                                         <td>${c.title}</td>
-                                        <td><img src="${c.image}"/></td>
+                                        <td style="text-align: center;">
+                                            <img src="${c.image}" class="blog-image" style="border-radius: 0;">
+                                        </td>                                       
+                                        <td>
+                                            <span class="container" style="display: -webkit-box;
+                                                  -webkit-line-clamp: 3;
+                                                  -webkit-box-orient: vertical;
+                                                  overflow: hidden;" title="${c.description}">
+                                                ${c.description}
+                                            </span>
+                                        </td>
                                         <td>${c.date}</td>
-                                        <td><span style="display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical; overflow: hidden;" title="${c.description}">${c.description}</span></td>
-                                    </tr>
-                                </c:forEach>
-
-                            </thead>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
                         </table>
                     </div>                  
                 </div>
             </main>
         </section>
         <script src="js/script.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
+</body>
 </html>
