@@ -39,20 +39,20 @@
                                     </c:if>
                                 </c:forEach>
                             </c:if>
-                            <input ${isChecked ? 'checked' : ''} type="checkbox" class="categoryCheckbox" value="${b.bid}" name="bid" onchange="this.form.submit()"/> ${b.bname}<br>
+                            <input ${isChecked ? 'checked' : ''} type="checkbox" value="${b.bid}" name="bid" onchange="this.form.submit()"/> ${b.bname}<br>
                         </c:forEach>
 
                         <h5>Loại:</h5>
                         <c:forEach items="${requestScope.listC}" var="c">
                             <c:set var="isChecked" value="false" />
-                            <c:if test="${not empty requestScope.cid}">
+                            <c:if test="${requestScope.cid!=null}">
                                 <c:forEach var="selectedCid" items="${requestScope.cid}">
                                     <c:if test="${c.cid == selectedCid}">
                                         <c:set var="isChecked" value="true" />
                                     </c:if>
                                 </c:forEach>
                             </c:if>
-                            <input ${isChecked ? 'checked' : ''} type="checkbox" class="categoryCheckbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.cname}<br>
+                            <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.cname}<br>
                         </c:forEach>
                         <hr>
                         <h5>Miêu tả</h5>
@@ -93,7 +93,7 @@
                                         <option ${sort == 6 ? 'selected' : ''} value="6">Lượt bán ↓</option>
                                     </select>                                    
                                 </form>
-                                <c:if test="${countP > 10}">
+                                <c:if test="${countP >= 10}">
                                     <div class="clearfix row" style="margin: 10px -24px">
                                         <div class="hint-text" style="margin-left: 40px;">Showing <b>10</b> out of <b>${countP}</b> entries</div>
                                         <ul class="pagination" style="margin-left: 360px;">                                          
@@ -108,7 +108,8 @@
                                                         <input type="hidden" value="${fromprice}" name="fromprice">
                                                         <input type="hidden" value="${todate}" name="todate">
                                                         <input type="hidden" value="${toprice}" name="toprice">
-                                                        <button name="index" value="${i}" type="submit" style="border: none;background-color:${page==i?'orange':''}">${i}</button>
+                                                        <input type="hidden" value="${sort}" name="sort">
+                                                        <button name="index" value="${i}" type="submit" style="width: 25px;;border: none;background-color:${page==i?'orange':''}">${i}</button>
                                                     </form>
                                                 </li>
                                             </c:forEach>                                       
