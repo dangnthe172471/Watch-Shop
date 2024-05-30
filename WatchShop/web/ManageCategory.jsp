@@ -1,8 +1,9 @@
 <%-- 
-    Document   : AdminManage
-    Created on : May 18, 2024, 7:21:38 PM
-    Author     : admin
+    Document   : ManageCategory
+    Created on : May 25, 2024, 3:26:38 PM
+    Author     : quyld
 --%>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -47,13 +48,13 @@
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="brand">
                         <i class='bx bxs-shopping-bag-alt' ></i>
                         <span class="text">Brand</span>
                     </a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="category">
                         <i class='bx bxs-doughnut-chart' ></i>
                         <span class="text">Category</span>
@@ -110,10 +111,10 @@
             <main>
                 <div class="head-title">
                     <div class="left">
-                        <h1>Brand</h1>                      
+                        <h1>Category</h1>                      
                     </div>
                     <a class="btn-download, btn btn-primary addbtn">
-                        <span class="text">Add new brand</span>
+                        <span class="text">Add new category</span>
                     </a>
                 </div>
                 <div class="table-data">
@@ -123,22 +124,22 @@
                             <i class='bx bx-search' ></i>
                             <i class='bx bx-filter' ></i>
                         </div>
-                        <form action="brand">
+                        <form action="category">
                             <table>
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Brand</th>
+                                        <th>Category</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${listb}" var="b">
+                                    <c:forEach items="${listc}" var="c">
                                         <tr>
-                                            <td>${b.bid}</td>
-                                            <td>${b.bname}</td> 
-                                            <td><a  class="btn btn-primary editbtn"><i class="material-icons" style="font-size:15px">edit</i></a>&nbsp;&nbsp;
-                                                <a href="#" onclick="doDelete('${b.bid}')"><i class="fa fa-trash"></i></a>
+                                            <td>${c.cid}</td>
+                                            <td>${c.cname}</td> 
+                                            <td><a  class="btn btn-primary editbtn"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;
+                                                <a href="#" onclick="doDelete('${c.cid}')"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr> 
                                     </c:forEach>
@@ -151,19 +152,18 @@
             </main>
 
             <!-- The Modal -->
-            <form action="deletebrand" method="post">
+            <form action="addcategory" method="post">
                 <div class="modal fade" id="addmodal">
                     <div class="modal-dialog">
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h4 class="modal-title">Add Brand</h4>
+                                <h4 class="modal-title">Add Category</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
-
                             <div class="modal-body">
                                 <label>Name</label>
-                                <input type="text" name="bname"> 
+                                <input type="text" name="cname">
                             </div>
 
                             <div class="modal-footer">
@@ -176,21 +176,21 @@
             </form>
 
             <!-- The Modal -->
-            <form action="updatebrand" method="post">
+            <form action="updatecate" method="post">
                 <div class="modal fade" id="editmodal">
                     <div class="modal-dialog">
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h4 class="modal-title">Edit Brand</h4>
+                                <h4 class="modal-title">Edit Category</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
 
                             <div class="modal-body">
                                 <label>ID</label>
-                                <input type="text" name="bid" id="update_id" readonly style="background: gray">
+                                <input type="text" name="cid" id="update_id" readonly style="background: gray">
                                 <label>Name</label>
-                                <input type="text" name="bname" id="update_name"> 
+                                <input type="text" name="cname" id="update_name"> 
                             </div>
 
                             <div class="modal-footer">
@@ -206,12 +206,12 @@
 
         <script src="js/script.js"></script>
         <script>
-                                                    $(document).ready(function () {
-                                                        $('.addbtn').on('click', function () {
-                                                            $('#addmodal').modal('show');
-                                                            $tr = $(this).closest('tr');
-                                                        });
-                                                    });
+                    $(document).ready(function () {
+                        $('.addbtn').on('click', function () {
+                            $('#addmodal').modal('show');
+                            $tr = $(this).closest('tr');
+                        });
+                    });
         </script>
         <script>
             $(document).ready(function () {
@@ -229,9 +229,9 @@
         </script>
 
         <script type="text/javascript">
-            function doDelete(bid) {
-                if (confirm('Are You Sure Delete Brand has ID: ' + bid + '?')) {
-                    window.location = 'deletebrand?bid=' + bid;
+            function doDelete(cid) {
+                if (confirm('Are You Sure Delete Category has ID: ' + cid + '?')) {
+                    window.location = 'addcategory?cid=' + cid;
                 }
             }
         </script>

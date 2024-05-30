@@ -9,22 +9,22 @@ package model;
  * @author admin
  */
 public class Category {
-    private int cid;
+    private String cid;
     private String cname;
 
     public Category() {
     }
 
-    public Category(int cid, String cname) {
+    public Category(String cid, String cname) {
         this.cid = cid;
         this.cname = cname;
     }
 
-    public int getCid() {
+    public String getCid() {
         return cid;
     }
 
-    public void setCid(int cid) {
+    public void setCid(String cid) {
         this.cid = cid;
     }
 
