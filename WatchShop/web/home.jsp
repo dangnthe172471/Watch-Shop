@@ -67,7 +67,6 @@
                                     <img class="card-img-top anh" src="${o.pimage.img1}" style="height: 250px">
                                     <div class="card-body noidungsp mt-3">
                                         <h3 class="card-title ten">${o.name}</h3>
-
                                         <div class="gia d-flex align-items-baseline">
                                             <div class="giamoi">${o.price} $</div>
                                             <div class="giacu text-muted"><del>${o.price+350} $</del></div>
@@ -89,7 +88,6 @@
             <div class="container">
                 <div class="noidung bg-white" style=" width: 100%;">
                     <div class="row">
-                        header 
                         <div class="col-12 d-flex justify-content-between align-items-center pb-2 bg-light">
                             <h2 class="header text-uppercase" style="font-weight: 400;">Sản phẩm bán chạy</h2>
                         </div>
@@ -123,7 +121,6 @@
             <div class="container">
                 <div class="noidung bg-white" style=" width: 100%;">
                     <div class="row">
-                        header 
                         <div class="col-12 d-flex justify-content-between align-items-center pb-2 bg-light">
                             <h2 class="header text-uppercase" style="font-weight: 400;">Sản phẩm Giá tốt</h2>
                         </div>

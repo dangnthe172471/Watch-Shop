@@ -52,17 +52,17 @@
                                     </c:if>
                                 </c:forEach>
                             </c:if>
-                            <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.type==2?'Chống nước:':''}${c.type==3?'Độ rộng:':''}${c.cname}<br>
+                            <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.type==2?'Chống nước: ':''}${c.type==3?'Độ rộng dây đeo: ':''} ${c.cname}<br>
                         </c:forEach>
                         <hr>
                         <h5>Miêu tả</h5>
                         <input type="text" name="key" value="${key != null ? key : ''}" placeholder="Nhập tên, miêu tả" ><br><hr>
                         <h5>Giá</h5>       
-                        Từ: &nbsp;<input type="number" name="fromprice" value="${fromprice != null ? fromprice : ''}"><br>
+                        Từ: &nbsp;<input style="margin-bottom: 10px;" type="number" name="fromprice" value="${fromprice != null ? fromprice : ''}"><br>
                         Đến:<input type="number" name="toprice" value="${toprice != null ? toprice : ''}"> <br>
                         <hr>
                         <h5>Ngày</h5>
-                        Từ ngày: <input type="date" name="fromdate" value="${fromdate != null ? fromdate : ''}" style="margin-left: 9px"> <br> 
+                        Từ ngày: <input type="date" name="fromdate" value="${fromdate != null ? fromdate : ''}" style="margin-left: 9px;margin-bottom: 10px;"> <br> 
                         Đến ngày: <input type="date" name="todate" value="${todate != null ? todate : ''}"> <br> 
                         <br> 
                         <input type="submit" value="SEARCH">
