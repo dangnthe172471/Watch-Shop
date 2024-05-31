@@ -124,12 +124,12 @@ INSERT [dbo].[Role]([id], [Role], [description]) VALUES (4, N'Customer', N'Ngư�
 SET IDENTITY_INSERT [dbo].[Role] OFF
 
 SET IDENTITY_INSERT [dbo].[Account] ON 
-INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (1, N'admin',  N'1', N'bapthom3@gmail.com', N'0123456789',9999, 0, N'Bac Ninh', 1)
-INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (2, N'staff', N'1', N'bapthom3@gmail.com',N'0987654321',800, 1500, N'Ha Noi', 2)
-INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (3, N'user1', N'123456', N'user1@gmail.com',N'0123654789',600, 2000, N'Sơn La', 4)
-INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (4, N'user2', N'123456', N'user2@gmail.com',N'0987456321',1000, 1500, N'Bac Giang', 4)
-INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (5, N'shiper1', N'123456', N'shiper2@gmail.com',N'0147258369',2000, 2250, N'Hai Phong', 3)
-INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (6, N'shiper2', N'123456', N'shiper2@gmail.com',N'0963258741',1500, 1000, N'Hung Yen', 3)
+INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (1, N'admin',  N'CJlHD5VzqsB7h7T8nTQMPX/mIwQ=', N'bapthom3@gmail.com', N'0123456789',9999, 0, N'Bac Ninh', 1)
+INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (2, N'staff', N'CJlHD5VzqsB7h7T8nTQMPX/mIwQ=', N'bapthom3@gmail.com',N'0987654321',800, 1500, N'Ha Noi', 2)
+INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (3, N'user1', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'user1@gmail.com',N'0123654789',600, 2000, N'Sơn La', 4)
+INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (4, N'user2', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'user2@gmail.com',N'0987456321',1000, 1500, N'Bac Giang', 4)
+INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (5, N'shiper1', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'shiper2@gmail.com',N'0147258369',2000, 2250, N'Hai Phong', 3)
+INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES (6, N'shiper2', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'shiper2@gmail.com',N'0963258741',1500, 1000, N'Hung Yen', 3)
 SET IDENTITY_INSERT [dbo].[Account] OFF
 
 SET IDENTITY_INSERT [dbo].[brand] ON 

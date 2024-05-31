@@ -12,7 +12,8 @@ import java.util.Base64;
  * @author dung2
  */
 class Mahoa {
-     public static String toSHA1(String str) {
+
+    public static String toSHA1(String str) {
         String salt = "asjrlkmcoewj@tjle;oxqskjhdjksjf1jurVn";
         String result = null;
         str = str + salt;
@@ -26,7 +27,8 @@ class Mahoa {
         return result; // Moved return statement outside of the try-catch block
     }
     
-      public static void main(String[] args) {
+    public static void main(String[] args) {
         System.out.println(toSHA1("123456"));
+        System.out.println(toSHA1("1"));
     }
 }

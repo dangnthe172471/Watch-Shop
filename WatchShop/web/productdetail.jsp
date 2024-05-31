@@ -174,8 +174,8 @@
         <br>
         <jsp:include page="nav2.jsp"/>
 
-        <!--<script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>-->
-        <script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
+        <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+        <!--<script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
         <script>
