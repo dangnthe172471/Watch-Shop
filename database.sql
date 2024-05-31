@@ -235,13 +235,13 @@ INSERT [dbo].[ImageProduct]([pid],[image1],[image2],[image3],[image4]) VALUES
 (2,N'img/rolex3.png',N'img/rolex3-1.jpg',N'img/rolex3-2.jpg',N'img/rolex3-3.jpg'),
 (3,N'img/cartier3.png',N'img/cartier3-1.png',N'img/cartier3-2.jpg',N'img/cartier3-3.jpg'),
 (4,N'img/audemars2.png',N'img/audemars2-1.png',N'img/audemars2-2.jpg',N'img/audemars2-3.jpg'),
-(5,N'img/audemars1.png',N'img/audemars1-2.jpg',N'img/audemars1-2.jpg',N'img/audemars1-2.jpg'),
+(5,N'img/audemars1.png',N'img/audemars1-1.jpg',N'img/audemars1-2.jpg',N'img/audemars1-3.jpg'),
 (6,N'img/rolex2.png',N'img/rolex2-1.jpg',N'img/rolex2-2.jpg',N'img/rolex2-3.jpg'),
 (7,N'img/patek3.png',N'img/patek3-1.png',N'img/patek3-2.jpg',N'img/patek3-3.jpg'),
 (8,N'img/cartier2.png',N'img/cartier2-1.jpg',N'img/cartier2-2.jpg',N'img/cartier2-3.jpg'),
 (9,N'img/patek1.png',N'img/patek1-1.jpg',N'img/patek1-2.jpg',N'img/patek1-3.jpg'),
 (10,N'img/audemars3.png',N'img/audemars3-1.jpg',N'img/audemars3-2.jpg',N'img/audemars3-3.jpg'),
-(11,N'img/cartier1.png',N'img/cartier1-1.jpg',N'img/cartier1-1.jpg',N'img/cartier1-1.jpg'),
+(11,N'img/cartier1.png',N'img/cartier1-1.jpg',N'img/cartier1-2.jpg',N'img/cartier1-3.jpg'),
 (12,N'img/patek2.png',N'img/patek2-1.jpg',N'img/patek2-2.jpg',N'img/patek2-3.jpg')
 
 SET IDENTITY_INSERT [dbo].[Status] ON 
