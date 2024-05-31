@@ -34,9 +34,7 @@
                     <h2>REGISTER</h2>
                     <p>With to:</p>
                     <div class="social">
-                        <div class="social-icons facebook">
-                            <a href="#"><img src="img/facebook.png">Register with Facebook</a>
-                        </div>
+                        
                         <div class="social-icons google">
                             <a href="#"><img src="img/google.png">Register with Google</a>
                         </div>

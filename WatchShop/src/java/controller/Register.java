@@ -4,6 +4,7 @@
  */
 package controller;
 
+
 import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.security.MessageDigest;
+import java.util.Base64;
 import model.Account;
 
 /**
@@ -90,7 +93,7 @@ public class Register extends HttpServlet {
             if (account == null) {
                 Account newUser = new Account();
                 newUser.setUser(username);
-                newUser.setPass(password);
+                 newUser.setPass(Mahoa.toSHA1(password));
                 newUser.setEmail(email);
                 newUser.setPhone(phone);
                 newUser.setAddress(address);
@@ -117,4 +120,7 @@ public class Register extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    
+    
 }

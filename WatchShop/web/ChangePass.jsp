@@ -70,6 +70,7 @@
                             <input class="input" type="password" name="rpass">
                         </div>
                     </div>
+                        <a class="col-sm-6" href="home"><button class="btn btn-primary btn-block" type="button" id="btn-signup">Trang Chủ</button></a>
                 <input type="submit" class="btn" value="Change">
                 <div class="account">
                     <p>Do you remember your password?</p>
