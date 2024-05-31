@@ -16,10 +16,10 @@ import model.Brand;
  * @author quyld
  */
 public class BrandDAO extends DBContext {
-
+    
     public List<Brand> getAllBrand() {
         List<Brand> list = new ArrayList<>();
-
+        
         try {
             String sql = "select * from brand";
             PreparedStatement st = connection.prepareStatement(sql);
@@ -28,13 +28,16 @@ public class BrandDAO extends DBContext {
                 Brand b = new Brand();
                 b.setBid(String.valueOf(rs.getInt(1)));
                 b.setBname(rs.getString(2));
+                b.setImage(rs.getString(3));
+                b.setDescription(rs.getString(4));
+                b.setDeleted(String.valueOf(rs.getInt(5)));
                 list.add(b);
             }
         } catch (Exception e) {
         }
         return list;
     }
-
+    
     public void addBrand(Brand b) {
         try {
             String sql = "INSERT INTO brand (bname) VALUES (?)";
@@ -44,7 +47,7 @@ public class BrandDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-
+    
     public void updateBrand(Brand b) {
         String sql = "update brand set bname=? where bid=?";
         try {
@@ -53,10 +56,10 @@ public class BrandDAO extends DBContext {
             st.setString(1, b.getBname());
             st.executeUpdate();
         } catch (SQLException e) {
-
+            
         }
     }
-
+    
     public Brand getBrandByName(String bname) {
         String sql = "select * from brand where bname = ?";
         try {
@@ -66,14 +69,17 @@ public class BrandDAO extends DBContext {
             if (rs.next()) {
                 return new Brand(
                         rs.getString("bid"),
-                        rs.getString("bname"));
+                        rs.getString("bname"),
+                        rs.getString("image"),
+                        rs.getString("description"),
+                        rs.getString("deleted"));
             }
         } catch (Exception e) {
             System.out.println("in ra lỗi đê" + e.getMessage());
         }
         return null;
     }
-
+    
     public void deleteDataByBrandId(String bid) {
         try {
             // Disable auto-commit mode
@@ -127,7 +133,7 @@ public class BrandDAO extends DBContext {
             System.out.println("Transaction committed.");
         } catch (SQLException e) {
             //
-        } 
+        }
     }
 
 //    public static void main(String[] args) {

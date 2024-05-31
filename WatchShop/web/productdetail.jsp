@@ -39,22 +39,34 @@
                     <div class="row">
                         <div class="col-md-6 khoianh">
                             <div class="anhto mb-4">
-                                <a class="active" href="#" data-fancybox="thumb-img">
-                                    <img class="product-image" src="${detail.image}" style="width: 450px;height: 400px;">
+                                <a class="active" href="detail?pid=${detail.id}" data-fancybox="thumb-img">
+                                    <img class="product-image" src="${detail.pimage.img1}" style="width: 450px;height: 400px;">
                                 </a>
                             </div>
                         </div>
 
                         <div class="col-md-6 khoithongtin">
                             <form name="f" action="" method="post">
-
                                 <div class="row">
                                     <div class="col-md-12 header">
                                         <h4 class="ten">${detail.name}</h4>
+                                        <h5 class="ten">Mã Sản phẩm: ${detail.code}</h5>
                                         ${detail.rate}<i class="fa fa-star" style="color: blue"></i>
-                                        <hr>
                                     </div>
                                     <div class="col-md-7">
+                                        <c:forEach  items="${listB}" var="c">
+                                            <p style="font-weight: bold;display: ${detail.brandID ==c.bid?'':'none'}">Thương hiệu: ${c.bname}<p>
+                                            </c:forEach>
+                                            <c:forEach  items="${listC}" var="c">
+                                            <p style="display: ${detail.cateID1 ==c.cid?'':'none'}">${c.cname}<p>
+                                            </c:forEach>
+                                            <c:forEach  items="${listC}" var="c">
+                                            <p style="display: ${detail.cateID2 ==c.cid?'':'none'}">Chống nước: ${c.cname}<p>
+                                            </c:forEach>
+                                            <c:forEach  items="${listC}" var="c">
+                                            <p style="display: ${detail.cateID3 ==c.cid?'':'none'}">Độ rộng: ${c.cname}<p>
+                                            </c:forEach>
+
                                         <div class="gia">
                                             <div style="color: red; font-size:30px; font-weight:bold;">${detail.price} $</div>
                                             <div class="tietkiem">Ngày sản xuất: <b>${detail.releaseDate}</b> </div>
@@ -152,7 +164,7 @@
                     <div class="col-12 col-md-3 col-lg-3">
                         <div class="card">
                             <a href="detail?pid=${o.id}" class="motsanpham" style="text-decoration: none; color: black;" data-toggle="tooltip" data-placement="bottom">
-                                <img class="card-img-top anh" src="${o.image}" style="height: 250px">
+                                <img class="card-img-top anh" src="${o.pimage.img1}" style="height: 250px">
                                 <div class="card-body noidungsp mt-3">
                                     <h3 class="card-title ten">${o.name}</h3>
                                     <div class="gia d-flex align-items-baseline">
@@ -179,7 +191,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
         <script>
-            CKEDITOR.replace('content');
+                                            CKEDITOR.replace('content');
         </script>
 
         <script type="text/javascript">

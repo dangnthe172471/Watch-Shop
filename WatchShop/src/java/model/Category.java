@@ -9,15 +9,20 @@ package model;
  * @author admin
  */
 public class Category {
+
     private String cid;
     private String cname;
+    private String type;
+    private String deleted;
 
     public Category() {
     }
 
-    public Category(String cid, String cname) {
+    public Category(String cid, String cname, String type, String deleted) {
         this.cid = cid;
         this.cname = cname;
+        this.type = type;
+        this.deleted = deleted;
     }
 
     public String getCid() {
@@ -35,5 +40,21 @@ public class Category {
     public void setCname(String cname) {
         this.cname = cname;
     }
-    
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(String deleted) {
+        this.deleted = deleted;
+    }
+
 }

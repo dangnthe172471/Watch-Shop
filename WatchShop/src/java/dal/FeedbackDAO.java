@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Account;
 import model.Feedback;
+import model.ImageProduct;
 import model.Product;
 
 /**
@@ -21,17 +22,25 @@ public class FeedbackDAO extends DBContext {
 
     /**
      * get all feedback of product
+     *
      * @param pid is product ID
      * @param index is paging
      * @return list feedback of product
      */
+    public static void main(String[] args) {
+        FeedbackDAO fd= new FeedbackDAO();
+        List<Feedback> listF= fd.displayFeedback("6", 0);
+        for (Feedback feedback : listF) {
+            System.out.println(feedback);
+        }
+    }
     public List<Feedback> displayFeedback(String pid, int index) {
         List<Feedback> list = new ArrayList<>();
         String sql = """
-                        SELECT *
+                        Select *
                         FROM [feedback] f 
                         INNER JOIN [Account] a ON (a.[id] = f.[aid])
-                        INNER JOIN Product p  ON (p.[id] = f.[pid])
+                        INNER JOIN (Product p inner join ImageProduct [ip] on (p.id=[ip].pid)) ON (p.[id] = f.[pid])
                         where p.[id] = ?
                         order by f.[id] desc
                         OFFSET ? ROWS FETCH NEXT 4 ROWS ONLY
@@ -56,7 +65,7 @@ public class FeedbackDAO extends DBContext {
                                 rs.getString(14),
                                 rs.getInt(15),
                                 rs.getInt(16),
-                        rs.getString(17)),
+                                rs.getString(17)),
                         new Product(rs.getInt(18),
                                 rs.getString(19),
                                 rs.getString(20),
@@ -67,7 +76,14 @@ public class FeedbackDAO extends DBContext {
                                 rs.getString(25),
                                 rs.getDouble(26),
                                 rs.getInt(27),
-                                rs.getInt(28))));
+                                rs.getInt(28),
+                                rs.getInt(29),
+                                rs.getInt(30),
+                                new ImageProduct(rs.getInt(31),
+                                        rs.getInt(32),
+                                        rs.getString(33),
+                                        rs.getString(34),
+                                        rs.getString(35)))));
             }
         } catch (SQLException e) {
         }
@@ -76,6 +92,7 @@ public class FeedbackDAO extends DBContext {
 
     /**
      * count number feedback of product for paging
+     *
      * @param pid is ID of product
      * @return number feedback of product
      */

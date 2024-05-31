@@ -11,33 +11,40 @@ import java.util.Date;
  * @author admin
  */
 public class Product {
+
     private int id;
+    private String code;
     private String name;
-    private String image;
     private double price;
     private int quantity;
     private int sold;
     private Date releaseDate;
     private String description;
     private double rate;
-    private int cateID;
+    private int cateID1;
+    private int cateID2;
+    private int cateID3;
     private int brandID;
+    private ImageProduct pimage;
 
     public Product() {
     }
 
-    public Product(int id, String name, String image, double price, int quantity, int sold, Date releaseDate, String description, double rate, int cateID, int brandID) {
+    public Product(int id, String code, String name, double price, int quantity, int sold, Date releaseDate, String description, double rate, int cateID1, int cateID2, int cateID3, int brandID, ImageProduct pimage) {
         this.id = id;
+        this.code = code;
         this.name = name;
-        this.image = image;
         this.price = price;
         this.quantity = quantity;
         this.sold = sold;
         this.releaseDate = releaseDate;
         this.description = description;
         this.rate = rate;
-        this.cateID = cateID;
+        this.cateID1 = cateID1;
+        this.cateID2 = cateID2;
+        this.cateID3 = cateID3;
         this.brandID = brandID;
+        this.pimage = pimage;
     }
 
     public int getId() {
@@ -48,20 +55,20 @@ public class Product {
         this.id = id;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public double getPrice() {
@@ -112,12 +119,28 @@ public class Product {
         this.rate = rate;
     }
 
-    public int getCateID() {
-        return cateID;
+    public int getCateID1() {
+        return cateID1;
     }
 
-    public void setCateID(int cateID) {
-        this.cateID = cateID;
+    public void setCateID1(int cateID1) {
+        this.cateID1 = cateID1;
+    }
+
+    public int getCateID2() {
+        return cateID2;
+    }
+
+    public void setCateID2(int cateID2) {
+        this.cateID2 = cateID2;
+    }
+
+    public int getCateID3() {
+        return cateID3;
+    }
+
+    public void setCateID3(int cateID3) {
+        this.cateID3 = cateID3;
     }
 
     public int getBrandID() {
@@ -127,5 +150,13 @@ public class Product {
     public void setBrandID(int brandID) {
         this.brandID = brandID;
     }
-    
+
+    public ImageProduct getPimage() {
+        return pimage;
+    }
+
+    public void setPimage(ImageProduct pimage) {
+        this.pimage = pimage;
+    }
+
 }

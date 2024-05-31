@@ -15,7 +15,7 @@ import model.Category;
  *
  * @author admin
  */
-public class CategoryDAO extends DBContext{
+public class CategoryDAO extends DBContext {
 
     public List<Category> getAllCategory() {
         List<Category> list = new ArrayList<>();
@@ -27,6 +27,8 @@ public class CategoryDAO extends DBContext{
                 Category c = new Category();
                 c.setCid(String.valueOf(rs.getInt(1)));
                 c.setCname(rs.getString(2));
+                c.setType(String.valueOf(rs.getInt(3)));
+                c.setDeleted(String.valueOf(rs.getInt(4)));
                 list.add(c);
             }
         } catch (SQLException e) {
@@ -34,6 +36,15 @@ public class CategoryDAO extends DBContext{
         }
         return list;
     }
+    
+    public static void main(String[] args) {
+        CategoryDAO cd= new CategoryDAO();
+        List<Category> c = cd.getAllCategory();
+        for (Category category : c) {
+            System.out.println(category.getCid());
+        }
+    }
+
     public void addCategory(Category c) {
         try {
             String sql = "insert into category (cname) VALUES (?)";
@@ -44,6 +55,7 @@ public class CategoryDAO extends DBContext{
             //
         }
     }
+
     public void updatecategory(Category c) {
         String sql = "update category set cname=? where cid=?";
         try {
@@ -55,6 +67,7 @@ public class CategoryDAO extends DBContext{
 //
         }
     }
+
     public Category getCategoryByName(String cname) {
         String sql = "select * from category where cname = ?";
         try {
@@ -64,15 +77,16 @@ public class CategoryDAO extends DBContext{
             if (rs.next()) {
                 return new Category(
                         rs.getString("cid"),
-                        rs.getString("cname"));
+                        rs.getString("cname"),
+                        rs.getString("type"),
+                        rs.getString("deleted"));
             }
         } catch (Exception e) {
-           //
+            //
         }
         return null;
     }
-    
-   
+
     public void deleteDataByCategoryId(String cid) {
         try {
             // Disable auto-commit mode
@@ -84,7 +98,7 @@ public class CategoryDAO extends DBContext{
                     + "INNER JOIN product p ON f.pid = p.id "
                     + "INNER JOIN category c ON p.cateID = c.cid "
                     + "WHERE c.cid = ?";
-            
+
             try (PreparedStatement deleteCommentsStmt = connection.prepareStatement(deleteCommentsSQL)) {
                 deleteCommentsStmt.setString(1, cid);
                 deleteCommentsStmt.executeUpdate();
@@ -126,7 +140,7 @@ public class CategoryDAO extends DBContext{
             System.out.println("Transaction committed.");
         } catch (SQLException e) {
             //
-        } 
+        }
     }
 
 }

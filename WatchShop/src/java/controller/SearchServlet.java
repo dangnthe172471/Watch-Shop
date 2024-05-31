@@ -83,27 +83,27 @@ public class SearchServlet extends HttpServlet {
         ProductDAO pdao = new ProductDAO();
         BrandDAO bdao = new BrandDAO();
         CategoryDAO cdao = new CategoryDAO();
-        
-        // If the string array is not null, then convert the string array to an int array
-        if (cid_raw != null) {
-            cid = new int[cid_raw.length];
-            
-            // convert the string array to an int array
-            for (int i = 0; i < cid.length; i++) {
-                cid[i] = Integer.parseInt(cid_raw[i]);
-            }
-        }
-        
+
         // If the string array is not null, then convert the string array to an int array
         if (bid_raw != null) {
             bid = new int[bid_raw.length];
-            
+
             // convert the string array to an int array
             for (int i = 0; i < bid.length; i++) {
                 bid[i] = Integer.parseInt(bid_raw[i]);
             }
         }
-        
+
+        // If the string array is not null, then convert the string array to an int array
+        if (cid_raw != null) {
+            cid = new int[cid_raw.length];
+
+            // convert the string array to an int array
+            for (int i = 0; i < cid.length; i++) {
+                cid[i] = Integer.parseInt(cid_raw[i]);
+            }
+        }
+
         // get data from html
         String sort_raw = request.getParameter("sort");
         String indexpage = request.getParameter("index");
@@ -111,7 +111,7 @@ public class SearchServlet extends HttpServlet {
         if (indexpage == null) {
             indexpage = "1";
         }
-        
+
         // convert the values
         index = Integer.parseInt(indexpage);
         sort = (sort_raw == null) ? 0 : Integer.parseInt(sort_raw);
@@ -124,14 +124,14 @@ public class SearchServlet extends HttpServlet {
         todate = (todate_raw == null || todate_raw.equals(""))
                 ? null : Date.valueOf(todate_raw);
         int countP = pdao.countSearchProduct(bid, cid, key, fromprice, toprice, fromdate, todate);
-        int endpage = countP / 10;
-        if (countP % 10 != 0) {
+        int endpage = countP / 9;
+        if (countP % 9 != 0) {
             endpage++;
         }
         List<Brand> listB = bdao.getAllBrand();
         List<Category> listC = cdao.getAllCategory();
         List<Product> listP = pdao.search(bid, cid, key, fromprice, toprice, fromdate, todate, sort, index);
-        
+
         // set data from jsp
         request.setAttribute("fromdate", fromdate);
         request.setAttribute("todate", todate);

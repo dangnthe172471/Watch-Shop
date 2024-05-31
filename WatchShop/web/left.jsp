@@ -41,31 +41,31 @@
                 <li class="${tab==null?'active':''}">
                     <a href="AdminManage.jsp">
                         <i class='bx bxs-dashboard' ></i>
-                        <span class="text">Dashboard</span>
+                        <span class="text">Thống kê</span>
                     </a>
                 </li>
                 <li class="${tab==2?'active':''}">
                     <a href="brand">
                         <i class='bx bxs-shopping-bag-alt' ></i>
-                        <span class="text">Brand</span>
+                        <span class="text">Thương hiệu</span>
                     </a>
                 </li>
                 <li class="${tab==3?'active':''}">
                     <a href="category">
                         <i class='bx bxs-doughnut-chart' ></i>
-                        <span class="text">Category</span>
+                        <span class="text">Loại</span>
                     </a>
                 </li>
                 <li class="${tab==4?'active':''}">
                     <a href="manageblog">
                         <i class='bx bxs-message-dots' ></i>
-                        <span class="text">Blog</span>
+                        <span class="text">Tin tức</span>
                     </a>
                 </li>
                 <li class="${tab==5?'active':''}">
                     <a href="#">
                         <i class='bx bxs-group' ></i>
-                        <span class="text">Product</span>
+                        <span class="text">Sản phẩm</span>
                     </a>
                 </li>
             </ul>

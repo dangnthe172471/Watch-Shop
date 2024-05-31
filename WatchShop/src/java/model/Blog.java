@@ -12,16 +12,18 @@ public class Blog {
 
     private int id;
     private String title, image, date, description;
+    private int status;
 
     public Blog() {
     }
 
-    public Blog(int id, String title, String image, String date, String description) {
+    public Blog(int id, String title, String image, String date, String description, int status) {
         this.id = id;
         this.title = title;
         this.image = image;
         this.date = date;
         this.description = description;
+        this.status = status;
     }
 
     public int getId() {
@@ -62,6 +64,14 @@ public class Blog {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
 }

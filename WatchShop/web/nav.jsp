@@ -80,15 +80,7 @@
                                 <li><a href="search?bid=${o.bid}">${o.bname}</a></li>
                                 </c:forEach>
                         </ul>
-                    </li>  
-
-                    <li style="margin-left: 30px;"><a href="search">Loại<i class="fa fa-caret-down fa-css"></i></a>
-                        <ul class="sub-menu">
-                            <c:forEach var="o" items="${listC}">                               
-                                <li><a href="search?cid=${o.cid}">${o.cname}</a></li>
-                                </c:forEach>
-                        </ul>
-                    </li>  
+                    </li>   
                     <li style="margin-left: 30px;"><a href="blog">Tin Tức</a></li>                   
                     <li style="margin-left: 30px;"><a href="gioithieu.jsp">Giới thiệu</a></li>                   
                 </ul>

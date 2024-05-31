@@ -20,6 +20,7 @@ public class BlogDAO extends DBContext {
     public List<Blog> getAllBlog() {
         List<Blog> list = new ArrayList<>();
         String sql = "select * from Blog \n"
+                + "where [status]=1\n"
                 + "order by Date desc";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -29,7 +30,8 @@ public class BlogDAO extends DBContext {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getString(5)));
+                        rs.getString(5),
+                        rs.getInt(6)));
             }
         } catch (SQLException e) {
         }
@@ -43,7 +45,12 @@ public class BlogDAO extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return new Blog(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                return new Blog(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getInt(6));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,7 +88,7 @@ public class BlogDAO extends DBContext {
     }
 
     public void deleteBlog(int id) {
-        String sql = "DELETE FROM Blog WHERE id = ?";
+        String sql = "UPDATE Blog SET staus =2 WHERE id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);

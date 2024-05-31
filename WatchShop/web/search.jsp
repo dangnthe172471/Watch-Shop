@@ -52,7 +52,7 @@
                                     </c:if>
                                 </c:forEach>
                             </c:if>
-                            <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.cname}<br>
+                            <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.type==2?'Chống nước:':''}${c.type==3?'Độ rộng:':''}${c.cname}<br>
                         </c:forEach>
                         <hr>
                         <h5>Miêu tả</h5>
@@ -93,9 +93,9 @@
                                         <option ${sort == 6 ? 'selected' : ''} value="6">Lượt bán ↓</option>
                                     </select>                                    
                                 </form>
-                                <c:if test="${countP >= 10}">
+                                <c:if test="${countP >= 9}">
                                     <div class="clearfix row" style="margin: 10px -24px">
-                                        <div class="hint-text" style="margin-left: 40px;">Showing <b>10</b> out of <b>${countP}</b> entries</div>
+                                        <div class="hint-text" style="margin-left: 40px;">Showing <b>9</b> out of <b>${countP}</b> entries</div>
                                         <ul class="pagination" style="margin-left: 360px;">                                          
                                             <c:forEach begin="1" end="${endP}" var="i">                                             
                                                 <li style="margin: -15px 5px;${page==i?'text-decoration: underline;':''}">
@@ -122,7 +122,7 @@
                                     <div class="col-12 col-md-4 col-lg-4">
                                         <div class="card">
                                             <a href="detail?pid=${o.id}" class="motsanpham" style="text-decoration: none; color: black;" data-toggle="tooltip" data-placement="bottom">
-                                                <img class="card-img-top anh" src="${o.image}" style="height: 250px">
+                                                <img class="card-img-top anh" src="${o.pimage.img1}" style="height: 250px">
                                                 <div class="card-body noidungsp mt-3">
                                                     <h3 class="card-title ten">${o.name}</h3>
                                                     <div class="gia d-flex align-items-baseline">
@@ -132,7 +132,7 @@
                                                     </div>
                                                     <div class="danhgia">
                                                         Đã bán: ${o.sold}
-                                                        <span style="margin-left:80px">${o.rate}<i class="fa fa-star" style="color: yellow"></i></span>
+                                                        <span style="margin-left:70px">${o.rate}<i class="fa fa-star" style="color: yellow"></i></span>
                                                     </div>
                                                 </div>
                                             </a>

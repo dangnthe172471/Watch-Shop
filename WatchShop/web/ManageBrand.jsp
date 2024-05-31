@@ -57,16 +57,22 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Brand</th>
-                                        <th>Action</th>
+                                        <th style="width: 200px;">Thương hiệu</th>
+                                        <th style="width: 200px;">Hình ảnh</th>
+                                        <th>Mô tả</th>
+                                        <th style="width: 100px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${listb}" var="b">
                                         <tr>
-                                            <td>${b.bid}</td>
                                             <td>${b.bname}</td> 
+                                            <td>
+                                                <img src="${b.image}" style="width: 150px;height: 150px;border-radius: 0" />
+                                            </td> 
+                                            <td>
+                                                ${b.description}
+                                            </td> 
                                             <td><a  class="btn btn-primary editbtn"><i class="material-icons" style="font-size:15px">edit</i></a>&nbsp;&nbsp;
                                                 <a href="#" onclick="doDelete('${b.bid}')"><i class="fa fa-trash"></i></a>
                                             </td>
