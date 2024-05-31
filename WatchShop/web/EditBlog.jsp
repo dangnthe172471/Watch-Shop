@@ -13,8 +13,8 @@
             <h2>Manage Blogs</h2>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBlogModal">
                 Add Blog
-                <a href="manageblog" class="btn btn-primary" style="position: absolute; top: 45px; right: 200px;">Back</a>
             </button>
+            <a href="manageblog" class="btn btn-primary" style="position: absolute; top: 45px; right: 200px;">Back</a>
 
             <hr/>
 
@@ -34,7 +34,7 @@
                     <c:forEach var="blogItem" items="${listBl}">
                         <tr>
                             <td>${blogItem.id}</td>
-                          <td>
+                            <td>
                                 <span style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;" title="${blogItem.title}"  >
                                     ${blogItem.title}
                                 </span>
@@ -121,7 +121,7 @@
                 function removeBlog(id) {
                     $('#confirmDeleteModal').modal('show');
 
-                    $('#confirmDeleteButton').on('click', function() {
+                    $('#confirmDeleteButton').on('click', function () {
                         window.location.href = 'editblog?action=delete&id=' + id;
                     });
                 }

@@ -112,7 +112,7 @@
                                     </form>    
                                 </c:if>
                                 <c:if test="${sessionScope.account.roleID!=4}">
-                                    <span style="color: red; font-size: 18px;">Vui lòng <a href="login" style="color: red">đăng nhập</a> tài khoản khách hàng để đánh giá!</span>
+                                    <span style="font-size: 18px;">Vui lòng <a href="login" style="color: red"> đăng nhập </a> tài khoản khách hàng để đánh giá!</span>
                                 </c:if>
                                 <div>                                        
                                     <c:forEach items="${listCo}" var="co">

@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </head>
     <body>
-         <jsp:include page="left.jsp" />
+        <jsp:include page="left.jsp" />
         <section id="content">
             <main>
                 <div class="head-title">
