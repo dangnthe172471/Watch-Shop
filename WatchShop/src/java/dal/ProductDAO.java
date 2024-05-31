@@ -294,28 +294,61 @@ public class ProductDAO extends DBContext {
                     from product p
                     where 1=1""";
 
+        // if array is not null and first values is not 0
         if (bid != null && bid[0] != 0) {
             sql += " and p.[brandID] in (";
+
+            // add values of array bid to string sql
             for (int i = 0; i < bid.length; i++) {
                 sql += bid[i] + ",";
             }
+
+            // remove ',' end
             if (sql.endsWith(",")) {
                 sql = sql.substring(0, sql.length() - 1);
             }
             sql += ")";
         }
+
+        // if array is not null and first values is not 0
         if (cid != null && cid[0] != 0) {
-            sql += " and p.[cateID] in (";
+            sql += " and ( p.[cateID1] in (";
+            // add values of array bid to string sql
             for (int i = 0; i < cid.length; i++) {
                 sql += cid[i] + ",";
             }
+            // remove ',' end
             if (sql.endsWith(",")) {
                 sql = sql.substring(0, sql.length() - 1);
             }
             sql += ")";
+
+            sql += " OR p.[cateID2] in (";
+            // add values of array bid to string sql
+            for (int i = 0; i < cid.length; i++) {
+                sql += cid[i] + ",";
+            }
+            // remove ',' end
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+
+            sql += " OR p.[cateID3] in (";
+            // add values of array bid to string sql
+            for (int i = 0; i < cid.length; i++) {
+                sql += cid[i] + ",";
+            }
+            // remove ',' end
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ") )";
         }
-        if (key != null && !key.equals("")) {
-            sql += " and (p.[name] like '%" + key + "%')";
+
+        // if attributes is not null add attributes to string sql
+        if (key != null) {
+            sql += " and ( p.[code] like '%" + key + "%' or p.[name]  like '%" + key + "%' )";
         }
         if (fromdate != null) {
             sql += " and p.[releaseDate] >='" + fromdate + "'";
@@ -386,24 +419,25 @@ public class ProductDAO extends DBContext {
      * @param pid is id of product
      * @return list product by product ID
      */
-    public static void main(String[] args) {
-        ProductDAO pd = new ProductDAO();
-        List<Product> p = pd.listProductByPid("6");
-        for (Product product : p) {
-            System.out.println(product);
-        }
-    }
-
     public List<Product> listProductByPid(String pid) {
         List<Product> list = new ArrayList<>();
         String sql = """
                         select top 4 *
                         from product p inner join ImageProduct [pi] on(p.id=[pi].[pid])
-                        where BrandID = (select (BrandID) from Product where id = ? ) AND p.[id] <> ?""";
+                        where BrandID = (select (BrandID) from Product where id = ? ) 
+                        Or cateID1 = (select (cateID1) from Product where id = ? )
+                        Or cateID2 = (select (cateID2) from Product where id = ? )
+                        Or cateID3 = (select (cateID3) from Product where id = ? )
+                        AND p.[id] <> ?
+                        Order by sold desc
+                     """;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, pid);
             st.setString(2, pid);
+            st.setString(3, pid);
+            st.setString(4, pid);
+            st.setString(5, pid);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
@@ -428,5 +462,44 @@ public class ProductDAO extends DBContext {
         } catch (SQLException e) {
         }
         return list;
+    }
+
+    public Product getProductByID111(String id) {
+        String sql = "select top 1 *\n"
+                + "from product p inner join ImageProduct [pi] on(p.id=[pi].[pid])\n"
+                + "where p.code like '%" + id + "%'";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getDate(7),
+                        rs.getString(8),
+                        rs.getDouble(9),
+                        rs.getInt(10),
+                        rs.getInt(11),
+                        rs.getInt(12),
+                        rs.getInt(13),
+                        new ImageProduct(rs.getInt(14),
+                                rs.getInt(15),
+                                rs.getString(16),
+                                rs.getString(17),
+                                rs.getString(18)));
+            }
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        ProductDAO pd = new ProductDAO();
+        Product p = pd.getProductByID111("RLX001");
+        System.out.println(p);
     }
 }

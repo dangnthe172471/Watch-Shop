@@ -64,7 +64,7 @@
                                             <p style="display: ${detail.cateID2 ==c.cid?'':'none'}">Chống nước: ${c.cname}<p>
                                             </c:forEach>
                                             <c:forEach  items="${listC}" var="c">
-                                            <p style="display: ${detail.cateID3 ==c.cid?'':'none'}">Độ rộng: ${c.cname}<p>
+                                            <p style="display: ${detail.cateID3 ==c.cid?'':'none'}">Độ rộng dây đeo: ${c.cname}<p>
                                             </c:forEach>
 
                                         <div class="gia">
