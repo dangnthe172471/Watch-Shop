@@ -73,6 +73,7 @@ create table [dbo].[ImageProduct](
 	[image1] [nvarchar](50) NULL,
 	[image2] [nvarchar](50) NULL,
 	[image3] [nvarchar](50) NULL,
+	[image4] [nvarchar](50) NULL,
 	FOREIGN KEY([pid]) REFERENCES [dbo].[product]([id]),
 	PRIMARY KEY CLUSTERED([id]),
 )
@@ -229,20 +230,19 @@ Thiết kế của Perpetual Calendar thường mang đậm dấu ấn của Pat
 Tính năng chính của Perpetual Calendar là khả năng hiển thị ngày, tháng và năm mà không cần điều chỉnh thủ công, thậm chí trong các năm nhuận. Điều này là nhờ vào cơ chế phức tạp và chính xác của bộ máy cơ tự động bên trong.<br><br>
 Với sự kết hợp hoàn hảo giữa kiểu dáng đẳng cấp và tính năng thông minh, đồng hồ Patek Philippe Perpetual Calendar là một biểu tượng của sự sang trọng và tinh tế trong thế giới đồng hồ cao cấp.',4.9, 2,5,6,3)
 
-INSERT [dbo].[ImageProduct]([pid],[image1],[image2],[image3]) VALUES 
-(1,N'img/rolex1.png',N'',N''),
-(2,N'img/rolex3.png',N'',N''),
-(3,N'img/cartier3.png',N'',N''),
-(4,N'img/audemars2.png',N'',N''),
-(5,N'img/audemars1.png',N'',N''),
-(6,N'img/rolex2.png',N'',N''),
-(7,N'img/patek3.png',N'',N''),
-(8,N'img/cartier2.png',N'',N''),
-(9,N'img/patek1.png',N'',N''),
-(10,N'img/audemars3.png',N'',N''),
-(11,N'img/cartier1.png',N'',N''),
-(12,N'img/patek2.png',N'',N'')
-
+INSERT [dbo].[ImageProduct]([pid],[image1],[image2],[image3],[image4]) VALUES 
+(1,N'img/rolex1.png',N'img/rolex1-1.jpg',N'img/rolex1-2.jpg',N'img/rolex1-3.jpg'),
+(2,N'img/rolex3.png',N'img/rolex3-1.jpg',N'img/rolex3-2.jpg',N'img/rolex3-3.jpg'),
+(3,N'img/cartier3.png',N'img/cartier3-1.png',N'img/cartier3-2.jpg',N'img/cartier3-3.jpg'),
+(4,N'img/audemars2.png',N'img/audemars2-1.png',N'img/audemars2-2.jpg',N'img/audemars2-3.jpg'),
+(5,N'img/audemars1.png',N'img/audemars1-2.jpg',N'img/audemars1-2.jpg',N'img/audemars1-2.jpg'),
+(6,N'img/rolex2.png',N'img/rolex2-1.jpg',N'img/rolex2-2.jpg',N'img/rolex2-3.jpg'),
+(7,N'img/patek3.png',N'img/patek3-1.png',N'img/patek3-2.jpg',N'img/patek3-3.jpg'),
+(8,N'img/cartier2.png',N'img/cartier2-1.jpg',N'img/cartier2-2.jpg',N'img/cartier2-3.jpg'),
+(9,N'img/patek1.png',N'img/patek1-1.jpg',N'img/patek1-2.jpg',N'img/patek1-3.jpg'),
+(10,N'img/audemars3.png',N'img/audemars3-1.jpg',N'img/audemars3-2.jpg',N'img/audemars3-3.jpg'),
+(11,N'img/cartier1.png',N'img/cartier1-1.jpg',N'img/cartier1-1.jpg',N'img/cartier1-1.jpg'),
+(12,N'img/patek2.png',N'img/patek2-1.jpg',N'img/patek2-2.jpg',N'img/patek2-3.jpg')
 
 SET IDENTITY_INSERT [dbo].[Status] ON 
 INSERT [dbo].[Status]([id], [status]) VALUES (1,N'Chờ giao hàng')

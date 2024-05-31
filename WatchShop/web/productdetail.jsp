@@ -40,8 +40,14 @@
                         <div class="col-md-6 khoianh">
                             <div class="anhto mb-4">
                                 <a class="active" href="detail?pid=${detail.id}" data-fancybox="thumb-img">
-                                    <img class="product-image" src="${detail.pimage.img1}" style="width: 450px;height: 400px;">
+                                    <img class="product-image" src="${detail.pimage.img1}" alt="" style="width: 100%;">
                                 </a>
+                            </div>
+                            <div class="list-anhchitiet d-flex mb-4" style="margin-left: 4rem;">
+                                <img class="thumb-img thumb1 mr-3" src="img/audemars1.png" class="img-fluid" alt="">
+                                <img class="thumb-img thumb1 mr-3" src="img/audemars1.png" class="img-fluid" alt="">
+                                <img class="thumb-img thumb1 mr-3" src="img/audemars1.png" class="img-fluid" alt="">
+                                <img class="thumb-img thumb1 mr-3" src="img/audemars1.png" class="img-fluid" alt="">
                             </div>
                         </div>
 
