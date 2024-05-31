@@ -67,35 +67,37 @@ public class Changepass extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+   protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         AccountDAO da = new AccountDAO();
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("user");
-        String oldPassword = request.getParameter("opass"); 
+        String oldPassword = request.getParameter("opass");
         String newPassword = request.getParameter("pass");
         String confirmPassword = request.getParameter("rpass");
         HttpSession session = request.getSession();
         
         if (!newPassword.equals(confirmPassword)) {
             request.setAttribute("error", "The new password and confirmation password do not match!!!");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
+            request.getRequestDispatcher("ChangePass.jsp").forward(request, response);
             return;
         }
-        
-        Account user = da.checkAccount(username, oldPassword);
-        if (user != null) {
 
-            user.setPass(newPassword);
-            da.changepass(user); 
+        String hashedOldPassword = Mahoa.toSHA1(oldPassword);
+
+        Account user = da.checkAccount(username, hashedOldPassword);
+        if (user != null) {
+            String hashedNewPassword = Mahoa.toSHA1(newPassword);
+            user.setPass(hashedNewPassword);
+            da.changepass(user);
             session.setAttribute("account", user);
-            response.sendRedirect("home"); 
+            response.sendRedirect("home");
         } else {
-            // Xác thực thất bại
-            request.setAttribute("error", "The old password is incorrect, please log in again!!!");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
+            request.setAttribute("error", "The old password is incorrect, please try again!!!");
+            request.getRequestDispatcher("ChangePass.jsp").forward(request, response);
         }
     }
+
 
     /** 
      * Returns a short description of the servlet.

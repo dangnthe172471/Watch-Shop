@@ -52,6 +52,7 @@
 
                 </div>
                         <input type="submit" class="btn" name="submit" value="login">
+                        <a class="col-sm-6" href="home"><button class="btn btn-primary btn-block" type="button" id="btn-signup">Trang Chủ</button></a>
                     <a class="forgot" href="forgotpass">Forgot password ?</a>
                     <div class="others">
                         <hr>
@@ -59,11 +60,14 @@
                         <hr>
                     </div>
                     <div class="social">
-                        <div class="social-icons facebook">
-                            <a href="#"><img src="img/facebook.png">Login with Facebook</a>
-                        </div>
+                        
                         <div class="social-icons google">
-                            <a href="#"><img src="img/google.png">Login with Google</a>
+                            <a href="https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:9999/watchshop/login&response_type=code&client_id=&approval_prompt=force" >
+                            
+                           Login with Google
+                       <img src="img/google.png"> </a>
+
+                          
                         </div>
                     </div>
                     <div class="account">

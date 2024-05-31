@@ -90,25 +90,19 @@ public class Login extends HttpServlet {
             return;
         }
 
+        String hashedPassword = Mahoa.toSHA1(password); 
+
         AccountDAO da = new AccountDAO();
-        Account account = da.checkAccount(username, password);
+        Account account = da.checkAccount(username, hashedPassword);
 
         HttpSession session = request.getSession();
 
         if (account == null) {
-            Account existingUser = da.checkAccountExist(username);
-            if (existingUser != null) {
-                existingUser.setPass(null);
-                
-                request.setAttribute("error", "wrong password try again !!!");
-            } else {
-                session.removeAttribute("user");
-                request.setAttribute("error", "Account or password is incorrect !!!");
-            }
+          request.setAttribute("error", "Account or password is incorrect!");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         } else {
             if (account.getStatus() == 1) {
-                request.setAttribute("error", "Account blocked !!!");
+                request.setAttribute("error", "Account is blocked!");
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
                 return;
             }
@@ -116,7 +110,7 @@ public class Login extends HttpServlet {
             session.setAttribute("account", account);
 
             Cookie cu = new Cookie("cuser", username);
-            Cookie cp = new Cookie("cpass", password);
+            Cookie cp = new Cookie("cpass", hashedPassword); 
             Cookie cr = new Cookie("crem", rem);
             if (rem != null) {
                 cu.setMaxAge(60 * 60 * 24 * 5);
@@ -133,6 +127,7 @@ public class Login extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/home");
         }
     }
+
 
 //    private void handleGoogleLogin(HttpServletRequest request, HttpServletResponse response, String code)
 //            throws ServletException, IOException {
