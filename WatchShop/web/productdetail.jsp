@@ -29,6 +29,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js"></script>
+        <style>
+            .thumb-img {
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
         <jsp:include page="nav.jsp"/>
@@ -40,18 +45,18 @@
                         <div class="col-md-6 khoianh">
                             <div class="anhto mb-4">
                                 <a class="active" href="detail?pid=${detail.id}" data-fancybox="thumb-img">
-                                    <img class="product-image" src="${detail.pimage.img1}" alt="" style="width: 100%;">
+                                    <img id="main-image" class="product-image" src="${detail.pimage.img1}" alt="" style="width: 520px;height: 580px;">
                                 </a>
                             </div>
                             <div class="list-anhchitiet d-flex mb-4" style="margin-left: 4rem;">
-                                <img class="thumb-img thumb1 mr-3" src="img/audemars1.png" class="img-fluid" alt="">
-                                <img class="thumb-img thumb1 mr-3" src="img/audemars1.png" class="img-fluid" alt="">
-                                <img class="thumb-img thumb1 mr-3" src="img/audemars1.png" class="img-fluid" alt="">
-                                <img class="thumb-img thumb1 mr-3" src="img/audemars1.png" class="img-fluid" alt="">
+                                <img class="thumb-img mr-3" src="${detail.pimage.img1}" class="img-fluid" alt="">
+                                <img class="thumb-img mr-3" src="${detail.pimage.img2}" class="img-fluid" alt="">
+                                <img class="thumb-img mr-3" src="${detail.pimage.img3}" class="img-fluid" alt="">
+                                <img class="thumb-img mr-3" src="${detail.pimage.img4}" class="img-fluid" alt="">
                             </div>
                         </div>
 
-                        <div class="col-md-6 khoithongtin">
+                        <div class="col-md-5 khoithongtin" style="margin-left: 50px;margin-top: 30px;">
                             <form name="f" action="" method="post">
                                 <div class="row">
                                     <div class="col-md-12 header">
@@ -59,7 +64,7 @@
                                         <h5 class="ten">Mã Sản phẩm: ${detail.code}</h5>
                                         ${detail.rate}<i class="fa fa-star" style="color: blue"></i>
                                     </div>
-                                    <div class="col-md-7">
+                                    <div class="col-md-9">
                                         <c:forEach  items="${listB}" var="c">
                                             <p style="font-weight: bold;display: ${detail.brandID ==c.bid?'':'none'}">Thương hiệu: ${c.bname}<p>
                                             </c:forEach>
@@ -191,13 +196,25 @@
         </section>
         <br>
         <jsp:include page="nav2.jsp"/>
+        <script>
+            const thumbImages = document.querySelectorAll('.thumb-img');
+
+            const mainImage = document.getElementById('main-image');
+
+            thumbImages.forEach(img => {
+                img.addEventListener('click', function () {
+                    // Đổi src của ảnh chính thành src của ảnh thumb được click
+                    mainImage.src = this.src;
+                });
+            });
+        </script>
 
         <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
         <!--<script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
         <script>
-                                            CKEDITOR.replace('content');
+            CKEDITOR.replace('content');
         </script>
 
         <script type="text/javascript">

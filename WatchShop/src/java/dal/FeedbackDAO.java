@@ -28,12 +28,13 @@ public class FeedbackDAO extends DBContext {
      * @return list feedback of product
      */
     public static void main(String[] args) {
-        FeedbackDAO fd= new FeedbackDAO();
-        List<Feedback> listF= fd.displayFeedback("6", 0);
+        FeedbackDAO fd = new FeedbackDAO();
+        List<Feedback> listF = fd.displayFeedback("6", 0);
         for (Feedback feedback : listF) {
             System.out.println(feedback);
         }
     }
+
     public List<Feedback> displayFeedback(String pid, int index) {
         List<Feedback> list = new ArrayList<>();
         String sql = """
@@ -83,7 +84,8 @@ public class FeedbackDAO extends DBContext {
                                         rs.getInt(32),
                                         rs.getString(33),
                                         rs.getString(34),
-                                        rs.getString(35)))));
+                                        rs.getString(35),
+                                        rs.getString(36)))));
             }
         } catch (SQLException e) {
         }
