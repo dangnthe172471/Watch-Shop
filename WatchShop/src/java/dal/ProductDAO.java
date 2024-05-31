@@ -51,7 +51,8 @@ public class ProductDAO extends DBContext {
                                 rs.getInt(15),
                                 rs.getString(16),
                                 rs.getString(17),
-                                rs.getString(18))));
+                                rs.getString(18),
+                                rs.getString(19))));
             }
         } catch (SQLException e) {
         }
@@ -90,7 +91,8 @@ public class ProductDAO extends DBContext {
                                 rs.getInt(15),
                                 rs.getString(16),
                                 rs.getString(17),
-                                rs.getString(18))));
+                                rs.getString(18),
+                                rs.getString(19))));
             }
         } catch (SQLException e) {
         }
@@ -129,7 +131,8 @@ public class ProductDAO extends DBContext {
                                 rs.getInt(15),
                                 rs.getString(16),
                                 rs.getString(17),
-                                rs.getString(18))));
+                                rs.getString(18),
+                                rs.getString(19))));
             }
         } catch (SQLException e) {
         }
@@ -269,7 +272,8 @@ public class ProductDAO extends DBContext {
                                 rs.getInt(15),
                                 rs.getString(16),
                                 rs.getString(17),
-                                rs.getString(18))));
+                                rs.getString(18),
+                                rs.getString(19))));
             }
         } catch (SQLException e) {
         }
@@ -406,7 +410,8 @@ public class ProductDAO extends DBContext {
                                 rs.getInt(15),
                                 rs.getString(16),
                                 rs.getString(17),
-                                rs.getString(18)));
+                                rs.getString(18),
+                                rs.getString(19)));
             }
         } catch (SQLException e) {
         }
@@ -457,7 +462,8 @@ public class ProductDAO extends DBContext {
                                 rs.getInt(15),
                                 rs.getString(16),
                                 rs.getString(17),
-                                rs.getString(18))));
+                                rs.getString(18),
+                                rs.getString(19))));
             }
         } catch (SQLException e) {
         }
@@ -490,16 +496,12 @@ public class ProductDAO extends DBContext {
                                 rs.getInt(15),
                                 rs.getString(16),
                                 rs.getString(17),
-                                rs.getString(18)));
+                                rs.getString(18),
+                                rs.getString(19)));
             }
         } catch (SQLException e) {
         }
         return null;
     }
 
-    public static void main(String[] args) {
-        ProductDAO pd = new ProductDAO();
-        Product p = pd.getProductByID111("RLX001");
-        System.out.println(p);
-    }
 }
