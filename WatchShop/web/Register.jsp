@@ -33,18 +33,13 @@
                 <form action="register" method="post">
                     <h2>REGISTER</h2>
                     <p>With to:</p>
-                    <div class="social">
-                        
-                        <div class="social-icons google">
-                            <a href="#"><img src="img/google.png">Register with Google</a>
-                        </div>
-                    </div>
+                    
                     <div class="input-div one">
                         <div class="i">
                             <i class="fas fa-user"></i>
                         </div>
                         <div>
-                            <h5>Username</h5>
+                            <h5>Tên đăng nhập</h5>
                             <input class="input" type="text" name="username" required>
                         </div>
                     </div>
@@ -62,7 +57,7 @@
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
-                            <h5>Phone Number</h5>
+                            <h5>Số điện thoại</h5>
                             <input class="input" type="text" name="phone">
                         </div>
                     </div>
@@ -71,7 +66,7 @@
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
-                            <h5>Password</h5>
+                            <h5>Mật khẩu</h5>
                             <input class="input" type="password" name="password" required>
                         </div>
                     </div>
@@ -81,7 +76,7 @@
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
-                            <h5>Confirm Password</h5>
+                            <h5>Nhập lại mật khẩu </h5>
                             <input class="input" type="password" name="repassword" required>
                         </div>
                     </div>
@@ -90,18 +85,19 @@
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
-                            <h5>Location</h5>
+                            <h5>Địa chỉ giao hàng</h5>
                             <input class="input" type="text" name="address">
                         </div>
                     </div><br>
                     <h3 style="color: red" ">${requestScope.error}</h3>
                     <div class="btn-container">
-                        <a class="col-sm-6" href="login"><button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-sign-in-alt"></i> Back</button></a>
-                        <input type="submit" class="btn"  value="register">
+                        
+                        <input type="submit" class="btn"  value="Đăng ký">
+                        <a class="col-sm-6" href="login"><button class="btn btn-primary btn-block" type="button" id="btn-signup">Trở về</button></a>
                     </div>
                     <div class="account">
-                        <p>Are you ready an account?</p>
-                        <a href="login">Login.</a>
+                        <p>Bạn đã có tài khoản?</p>
+                        <a href="login">Đăng nhập.</a>
                     </div>
                    
                 </form>

@@ -31,8 +31,8 @@
         </div>
         <div class="login-container">
             <form action="changepass" method="post">
-                <h2>Change Password</h2>
-                <p>You need to change your password</p>
+                <h2>Thay Đổi Mật Khẩu</h2>
+                <p>Bạn cần thay đổi mật khẩu của bạn</p>
                 <h3 style="color: red" ">${requestScope.error}</h3>
                 <div class="input-div one">
                         <div class="i">
@@ -48,7 +48,7 @@
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
-                            <h5>Old Password</h5>
+                            <h5>Mật khẩu cũ</h5>
                             <input class="input" type="password" name="opass">
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
-                            <h5>Password</h5>
+                            <h5>Mật khẩu mới</h5>
                             <input class="input" type="password" name="pass">
                         </div>
                     </div>
@@ -66,15 +66,15 @@
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
-                            <h5>Confirm Password</h5>
+                            <h5>Nhập lại mật khẩu mới</h5>
                             <input class="input" type="password" name="rpass">
                         </div>
                     </div>
                         <a class="col-sm-6" href="home"><button class="btn btn-primary btn-block" type="button" id="btn-signup">Trang Chủ</button></a>
-                <input type="submit" class="btn" value="Change">
+                <input type="submit" class="btn" value="Thay Đổi">
                 <div class="account">
-                    <p>Do you remember your password?</p>
-                    <a href="index.html">Login.</a>
+                    <p>Trở về trang đăng nhập</p>
+                    <a href="login">Login.</a>
                 </div>
             </form>
         </div>
