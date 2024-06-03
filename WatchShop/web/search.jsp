@@ -21,6 +21,7 @@
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
         <script type="text/javascript" src="slick/slick.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <style>
             .button {
                 background: linear-gradient(#c72f3c,#6771db);
@@ -86,7 +87,7 @@
                         </div><br><hr>
 
                         <div>
-                            <h5>Độ rộng dây đeo</h5> 
+                            <h5>Đường kính mặt số</h5> 
                             <c:forEach items="${requestScope.listC}" var="c">
                                 <c:if test="${c.type==3}">
                                     <c:set var="isChecked" value="false" />
@@ -103,12 +104,12 @@
                         </div><br><hr>
                         <div>
                             <h5>Miêu tả</h5>
-                            <input type="text" name="key" value="${key != null ? key : ''}" placeholder="Nhập tên, mã sản phẩm" ><br>   
+                            <input oninput="searchByKey(this)" type="text" name="key" value="${key != null ? key : ''}" placeholder="Nhập tên, mã sản phẩm" ><br>   
                         </div><br><hr>
                         <div>
-                            <h5>Giá</h5>       
-                            <label>Từ: </label><input style="margin-bottom: 10px;margin-left: 10px" type="number" name="fromprice" value="${fromprice != null ? fromprice : ''}"><br>
-                            <label>Đến:</label><input type="number" name="toprice" value="${toprice != null ? toprice : ''}"> <br>
+                            <h5>Giá</h5>
+                            <label>Từ: </label><input oninput="searchByFromPrice(this)" style="margin-bottom: 10px;margin-left: 10px" type="number" name="fromprice" value="${fromprice != null ? fromprice : ''}" ><br>
+                            <label>Đến:</label><input oninput="searchByToPrice(this)" type="number" name="toprice" value="${toprice != null ? toprice : ''}"> <br>
                         </div><br><hr>
                         <div>
                             <h5>Ngày</h5>
@@ -142,38 +143,11 @@
                                         <option ${sort == 5 ? 'selected' : ''} value="5">Lượt bán ↑</option>    
                                         <option ${sort == 6 ? 'selected' : ''} value="6">Lượt bán ↓</option>
                                     </select>                                    
-                                </form>
-                                <c:if test="${countP >= 9}">
-                                    <form action="search">
-                                        <input type="hidden" value="${key}" name="key">
-                                        <input type="hidden" value="${fromdate}" name="todate">
-                                        <input type="hidden" value="${fromprice}" name="fromprice">
-                                        <input type="hidden" value="${todate}" name="todate">
-                                        <input type="hidden" value="${toprice}" name="toprice">
-                                        <input type="hidden" value="${sort}" name="sort">
-                                        <c:set var="i" value="${page}"/>
-                                        <div class="clearfix row" style="margin: 10px -24px">
-                                            <div class="hint-text" style="margin-left: 40px;">Showing <b>9</b> out of <b>${countP}</b> entries</div>
-                                            <ul class="pagination" style="margin-left: 300px;">  
-                                                <button name="index" value="${i-1}" type="${i>1?'submit':'button'}" style="width: 65px;height: 30px;border: 1px solid #007BFF;background-color: ${i>1?'white':'#9698ab'}">Previous</button>
-                                                <c:forEach begin="1" end="${endP}" var="i">                                             
-                                                    <li>
-                                                        <c:forEach var="cidValue" items="${cid}">
-                                                            <input type="hidden" value="${cidValue}" name="cid">
-                                                        </c:forEach>
-                                                        <button name="index" value="${i}" type="submit" style="width: 30px;height: 30px;margin: 0 2px;border: 1px solid #007BFF;background-color:${page==i?'#007BFF':'white'}">${i}</button>
-                                                    </li>
-                                                </c:forEach>  
-                                                <c:set var="i" value="${page}"/>
-                                                <button name="index" value="${i+1}" type="${i<endP?'submit':'button'}" style="width:65px;height: 30px;border: 1px solid #007BFF;background-color: ${i<endP?'white':'#9698ab'}">Next</button>
-                                            </ul>
-                                        </div>
-                                    </form>
-                                </c:if>
+                                </form>                              
                             </div>
                             <div id="content" class="row col-12 col-md-12 col-lg-12">                       
                                 <c:forEach items="${listP}" var="o">                                       
-                                    <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="col-12 col-md-4 col-lg-4" id="content" style="margin-bottom: 15px;">
                                         <div class="card">
                                             <a href="detail?pid=${o.id}" class="motsanpham" style="text-decoration: none; color: black;" data-toggle="tooltip" data-placement="bottom">
                                                 <img class="card-img-top anh" src="${o.pimage.img1}" style="height: 250px">
@@ -192,7 +166,34 @@
                                             </a>
                                         </div> 
                                     </div>                          
-                                </c:forEach>                               
+                                </c:forEach>  
+                                <c:if test="${countP >= 9}">
+                                    <form action="search">
+                                        <input type="hidden" value="${key}" name="key">
+                                        <input type="hidden" value="${fromdate}" name="todate">
+                                        <input type="hidden" value="${fromprice}" name="fromprice">
+                                        <input type="hidden" value="${todate}" name="todate">
+                                        <input type="hidden" value="${toprice}" name="toprice">
+                                        <input type="hidden" value="${sort}" name="sort">
+                                        <c:set var="i" value="${page}"/>
+                                        <div class="clearfix row" style="margin: 10px -24px">
+                                            <div class="hint-text" style="margin-left: 40px;">Showing <b>9</b> out of <b>${countP}</b> entries</div>
+                                            <ul class="pagination" style="margin-left: 100px;">  
+                                                <button name="index" value="${i-1}" type="${i>1?'submit':'button'}" style="width: 65px;height: 30px;border: 1px solid #007BFF;background-color: ${i>1?'white':'#9698ab'}">Previous</button>
+                                                <c:forEach begin="1" end="${endP}" var="i">                                             
+                                                    <li>
+                                                        <c:forEach var="cidValue" items="${cid}">
+                                                            <input type="hidden" value="${cidValue}" name="cid">
+                                                        </c:forEach>
+                                                        <button name="index" value="${i}" type="submit" style="width: 30px;height: 30px;margin: 0 2px;border: 1px solid #007BFF;background-color:${page==i?'#007BFF':'white'}">${i}</button>
+                                                    </li>
+                                                </c:forEach>  
+                                                <c:set var="i" value="${page}"/>
+                                                <button name="index" value="${i+1}" type="${i<endP?'submit':'button'}" style="width:65px;height: 30px;border: 1px solid #007BFF;background-color: ${i<endP?'white':'#9698ab'}">Next</button>
+                                            </ul>
+                                        </div>
+                                    </form>
+                                </c:if>
                             </div>
                         </div>                         
                     </c:if>
@@ -204,5 +205,61 @@
         </div>
         <br> 
         <jsp:include page="nav2.jsp" />  
+        <script>
+            function searchByKey(param) {
+                var keySearch = param.value;
+                $.ajax({
+                    url: "/watchshop/searchbyajax",
+                    type: "get", //send it through get method
+                    data: {
+                        key: keySearch
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("content");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+            }
+
+            function searchByToPrice(price) {
+                var priceSearch = price.value;
+                $.ajax({
+                    url: "/watchshop/searchbyajax",
+                    type: "get", //send it through get method
+                    data: {
+                        toprice: priceSearch
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("content");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+
+
+            }
+            function searchByFromPrice(price) {
+                var priceSearch = price.value;
+                $.ajax({
+                    url: "/watchshop/searchbyajax",
+                    type: "get", //send it through get method
+                    data: {
+                        fromprice: priceSearch
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("content");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+            }
+        </script>
     </body>
 </html>
