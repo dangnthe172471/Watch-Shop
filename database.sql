@@ -24,7 +24,7 @@ CREATE TABLE [dbo].[Account](
 	[Address] [varchar](255) NULL,
 	[status] [int] DEFAULT 0,
     [roleID] [int] NOT NULL,
-	[token] [varchar] null,
+	[token] [varchar](max) null,
     PRIMARY KEY CLUSTERED([id]ASC),
 	foreign key ([roleID]) references [dbo].[Role]([id]),
 );
