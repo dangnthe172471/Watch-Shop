@@ -7,7 +7,7 @@ GO
 
 CREATE TABLE [dbo].[Role](
 	[id] [int] IDENTITY(1,1),
-	[role] [nvarchar](50),
+	[role] [nvarchar](max),
 	[description] [nvarchar](max),
 	PRIMARY KEY CLUSTERED ([id] ASC)
 );
@@ -24,14 +24,14 @@ CREATE TABLE [dbo].[Account](
 	[Address] [varchar](255) NULL,
 	[status] [int] DEFAULT 0,
     [roleID] [int] NOT NULL,
-	[token] [varchar] null,
+	[token] [varchar](max) null,
     PRIMARY KEY CLUSTERED([id]ASC),
 	foreign key ([roleID]) references [dbo].[Role]([id]),
 );
 
 CREATE TABLE [dbo].[Category](
 	[cid] [int] IDENTITY(1,1) NOT NULL,
-	[cname] [nvarchar](50) NOT NULL,
+	[cname] [nvarchar](max) NOT NULL,
 	[type] [int],
 	[deleted] [int],
 	PRIMARY KEY CLUSTERED ([cid] ASC)
@@ -60,6 +60,7 @@ CREATE TABLE [dbo].[product](
 	[cateID2] [int] not NULL,
 	[cateID3] [int] not NULL,
 	[brandID] [int] not NULL,
+	[status] [int] DEFAULT 0,
 	PRIMARY KEY CLUSTERED ([id] ASC),
 	FOREIGN KEY([cateID1]) REFERENCES [dbo].[Category]([cid]),
 	FOREIGN KEY([cateID2]) REFERENCES [dbo].[Category]([cid]),
@@ -70,10 +71,10 @@ CREATE TABLE [dbo].[product](
 create table [dbo].[ImageProduct](
 	[id] [int]  IDENTITY(1,1),
 	[pid] [int]  NOT NULL,
-	[image1] [nvarchar](50) NULL,
-	[image2] [nvarchar](50) NULL,
-	[image3] [nvarchar](50) NULL,
-	[image4] [nvarchar](50) NULL,
+	[image1] [nvarchar](max) NULL,
+	[image2] [nvarchar](max) NULL,
+	[image3] [nvarchar](max) NULL,
+	[image4] [nvarchar](max) NULL,
 	FOREIGN KEY([pid]) REFERENCES [dbo].[product]([id]),
 	PRIMARY KEY CLUSTERED([id]),
 )
@@ -248,6 +249,7 @@ SET IDENTITY_INSERT [dbo].[Status] ON
 INSERT [dbo].[Status]([id], [status]) VALUES (1,N'Chờ giao hàng')
 INSERT [dbo].[Status]([id], [status]) VALUES (2,N'Đang giao hàng')
 INSERT [dbo].[Status]([id], [status]) VALUES (3,N'Hoàn thành')
+INSERT [dbo].[Status]([id], [status]) VALUES (4,N'Đã hủy')
 SET IDENTITY_INSERT [dbo].[Status] OFF
 
 INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2020-06-12' AS Date),7400,N'Ha Noi', 3)

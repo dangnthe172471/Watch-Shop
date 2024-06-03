@@ -50,7 +50,7 @@
                 </a>
             </div>
         </div>
-        
+
         <br>
         <section class="_1khoi bg-white">
             <div class="container">
@@ -150,6 +150,28 @@
             </div>
         </section>
         <br>
+        <div class="container" style="margin-bottom: 30px">
+            <div class="col-inner"> 
+                <div id="text-3185983446" class="text">
+                    <h2 class="uppercase">Thương hiệu đồng hồ nổi tiếng</h2>
+                    <style>
+                        #text-3185983446 {
+                            font-size: 0.75rem;
+                            text-align: center;
+                        }
+                    </style>
+                    <div class="row">
+                        <a href="search?bid=1" class="col-md-2" style="border: 1px solid black; margin-right: 120px;"><img src="img/logorolex.jpg" style="width: 100%;height: 95px"/></a>
+                        <a href="search?bid=2" class="col-md-2" style="border: 1px solid black; margin-right: 120px;"><img src="img/logocartier.jpg" style="width: 100%;height: 95px"/></a>
+                        <a href="search?bid=3" class="col-md-2" style="border: 1px solid black; margin-right: 120px;"><img src="img/logoAude.jpg" style="width: 100%;height: 95px"/></a>
+                        <a href="search?bid=4" class="col-md-2" style="border: 1px solid black;"> <img src="img/logoPatek.png" style="width: 100%;height: 95px"/></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="margin-bottom: 20px;">
+            <img src="img/footerhome.jpg" style="width: 100%"/>
+        </div>
         <jsp:include page="nav2.jsp" />       
     </body>
 </html>

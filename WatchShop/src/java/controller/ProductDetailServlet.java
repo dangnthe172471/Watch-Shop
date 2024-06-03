@@ -15,7 +15,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Account;
 import model.Brand;
 import model.Category;
 import model.Feedback;
@@ -89,6 +91,14 @@ public class ProductDetailServlet extends HttpServlet {
         List<Product> listP = pdao.listProductByPid(id);
         List<Brand> listB = bdao.getAllBrand();
         List<Category> listC = cadao.getAllCategory();
+        
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            request.removeAttribute("account");
+        } else if (cdao.checkFeedback(account.getId(), p.getId())) {
+            request.setAttribute("feedback", "1");
+        }
         
         // set data to jsp
         request.setAttribute("detail", p);
