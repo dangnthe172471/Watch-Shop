@@ -24,8 +24,8 @@ import model.Product;
  *
  * @author admin
  */
-@WebServlet(name = "SearchServlet", urlPatterns = {"/search"})
-public class SearchServlet extends HttpServlet {
+@WebServlet(name = "SearchByAjax", urlPatterns = {"/searchbyajax"})
+public class SearchByAjax extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +44,10 @@ public class SearchServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchServlet</title>");
+            out.println("<title>Servlet SearchByAjax</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SearchServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SearchByAjax at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,7 +65,6 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         // get data from html
         String[] cid_raw = request.getParameterValues("cid");
         String[] bid_raw = request.getParameterValues("bid");
@@ -129,26 +128,29 @@ public class SearchServlet extends HttpServlet {
         if (countP % 9 != 0) {
             endpage++;
         }
-        List<Brand> listB = bdao.getAllBrand();
-        List<Category> listC = cdao.getAllCategory();
         List<Product> listP = pdao.search(bid, cid, key, fromprice, toprice, fromdate, todate, sort, index);
-
-        // set data from jsp
-        request.setAttribute("fromdate", fromdate);
-        request.setAttribute("todate", todate);
-        request.setAttribute("fromprice", fromprice);
-        request.setAttribute("toprice", toprice);
-        request.setAttribute("key", key);
-        request.setAttribute("bid", bid);
-        request.setAttribute("cid", cid);
-        request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
-        request.setAttribute("listP", listP);
-        request.setAttribute("page", index);
-        request.setAttribute("sort", sort);
-        request.setAttribute("endP", endpage);
-        request.setAttribute("countP", countP);
-        request.getRequestDispatcher("search.jsp").forward(request, response);
+        PrintWriter out = response.getWriter();
+        for (Product o : listP) {
+            out.println("<div class=\"col-12 col-md-4 col-lg-4\">\n"
+                    + "                                        <div class=\"card\">\n"
+                    + "                                            <a href=\"detail?pid=" + o.getId() + "\" class=\"motsanpham\" style=\"text-decoration: none; color: black;\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n"
+                    + "                                                <img class=\"card-img-top anh\" src=\"" + o.getPimage().getImg1() + "\" style=\"height: 250px\">\n"
+                    + "                                                <div class=\"card-body noidungsp mt-3\">\n"
+                    + "                                                    <h3 class=\"card-title ten\">" + o.getName() + "</h3>\n"
+                    + "                                                    <div class=\"gia d-flex align-items-baseline\">\n"
+                    + "                                                        <div class=\"giamoi\">" + o.getPrice() + " $</div>\n"
+                    + "                                                        <div class=\"giacu text-muted\"><del>" + (o.getPrice() + 350) + " $</del></div>\n"
+                    + "                                                        <div class=\"sale\">-10%</div>\n"
+                    + "                                                    </div>\n"
+                    + "                                                    <div class=\"danhgia\">\n"
+                    + "                                                        Đã bán: " + o.getSold() + "\n"
+                    + "                                                        <span style=\"margin-left:70px\">" + o.getRate() + "<i class=\"fa fa-star\" style=\"color: yellow\"></i></span>\n"
+                    + "                                                    </div>\n"
+                    + "                                                </div>\n"
+                    + "                                            </a>\n"
+                    + "                                        </div> \n"
+                    + "                                    </div>    ");
+        }
     }
 
     /**
@@ -162,7 +164,7 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /**

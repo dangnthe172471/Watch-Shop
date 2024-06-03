@@ -62,7 +62,7 @@ public class DeleteBServlet extends HttpServlet {
             throws ServletException, IOException {
         String id = request.getParameter("bid");
         BrandDAO b = new BrandDAO();
-        b.deleteDataByBrandId(id);
+        b.blockBrandById(id);
         response.sendRedirect("brand");
     }
 
@@ -78,9 +78,10 @@ public class DeleteBServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BrandDAO b = new BrandDAO();
-        String id_raw = request.getParameter("bid");
         String name = request.getParameter("bname");
-        Brand brand = new Brand(id_raw, name);
+        String image = request.getParameter("image");
+        String description = request.getParameter("description");
+        Brand brand = new Brand(null, name, image, description, null);
         Brand check = b.getBrandByName(name);
         String err = "";
         if (name.isBlank()) {
@@ -97,6 +98,7 @@ public class DeleteBServlet extends HttpServlet {
         request.setAttribute("err", err);
         response.sendRedirect("brand");
     }
+    
 
     /**
      * Returns a short description of the servlet.

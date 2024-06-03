@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import model.Category;
 
 /**
@@ -59,7 +60,7 @@ public class AddCServlet extends HttpServlet {
     throws ServletException, IOException {
         String id = request.getParameter("cid");
         CategoryDAO c = new CategoryDAO();
-        c.deleteDataByCategoryId(id);
+        c.blockCategoryById(id);
         response.sendRedirect("category");
     } 
 
@@ -73,9 +74,9 @@ public class AddCServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String id_raw = request.getParameter("cid");
         String name = request.getParameter("cname");
-        Category cate = new Category(id_raw, name);
+        String type = request.getParameter("type");
+        Category cate = new Category("", name, type, "0");
         CategoryDAO c = new CategoryDAO();
         Category check = c.getCategoryByName(name);
         String err ="";
@@ -91,7 +92,7 @@ public class AddCServlet extends HttpServlet {
         }
         }
         request.setAttribute("err", err);
-        response.sendRedirect("category");
+        request.getRequestDispatcher("category").forward(request, response);
     }
     
 
