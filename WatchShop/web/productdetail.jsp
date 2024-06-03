@@ -111,15 +111,13 @@
                                     <p style="display: ${detail.cateID2 ==c.cid?'':'none'};margin: 15px 0"><span style="font-weight: bold">Chống nước:</span> ${c.cname}<p>
                                     </c:forEach>
                                     <c:forEach  items="${listC}" var="c">
-                                    <p style="display: ${detail.cateID3 ==c.cid?'':'none'};margin: 15px 0"><span style="font-weight: bold">Độ rộng dây đeo:</span> ${c.cname}<p>
+                                    <p style="display: ${detail.cateID3 ==c.cid?'':'none'};margin: 15px 0"><span style="font-weight: bold">Đường kính mặt số:</span> ${c.cname}<p>
                                     </c:forEach>
                                 <p style="margin: 15px 0"><span style="font-weight: bold">Kính:</span> Mineral Crystal (Kính cứng)</p> 
                                 <p style="margin: 15px 0"><span style="font-weight: bold">Chức năng:</span>  Lịch ngày – Lịch thứ</p> 
 
                                 <p style="margin: 15px 0">Bảo hành quốc tế: 1 năm</p> 
                                 <p style="margin: 15px 0">Bảo hành tại Watch Shop: 5 năm</p> 
-
-
                             </div>
                             <div class="col-md-7">
                                 <h4 style="margin-left: 15px; font-weight: bold"><i class="fa fa-file-text-o" style="font-size:24px;"></i> Mô tả sản phẩm</h4>
@@ -140,7 +138,7 @@
                                             <h6 style="margin-left: 10px;font-size:20px;color: red;margin-top: 10px;">${sessionScope.account.user}</h6>
                                         </div>
                                         <textarea style="height: 80px;width: 300px;margin-top: 10px;" name="content" placeholder="Viết đánh giá của bạn tại đây"></textarea>                              
-                         
+
                                         <select name="voted" style="margin: 10px 0">
                                             <option value="5" style="text-align: center">⭐⭐⭐⭐⭐</option>
                                             <option value="4" style="text-align: center">⭐⭐⭐⭐</option> 
