@@ -40,9 +40,10 @@
                         </a>
                     </div>
                     <div class="col-md-8 mt-5">
-                        <span class="container" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;" title="${o.description}">
-                            ${o.description}
-                        </span>
+                        <a href="ViewBlog.jsp?id=${o.id}"><span class="container" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;" title="${o.description}">
+                                ${o.description}
+                            </span>
+                        </a>
                     </div>
                 </div>
             </c:forEach>
