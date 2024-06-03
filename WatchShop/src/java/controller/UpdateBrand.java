@@ -60,17 +60,19 @@ public class UpdateBrand extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BrandDAO b = new BrandDAO();
-        String bname = request.getParameter("bname");
-        Brand brand = b.getBrandByName(bname);
-        if (brand != null) {
-            request.setAttribute("b", brand);
-            request.setAttribute("brandName", bname);
-            request.getRequestDispatcher("UpdateBrand.jsp").forward(request, response);
-
-        } else {
-            response.sendRedirect("updatebrand?error");
-        }
+//        BrandDAO b = new BrandDAO();
+//        String bname = request.getParameter("bname");
+//        String image = request.getParameter("image");
+//        String description = request.getParameter("description");
+//        Brand brand = b.getBrandByName(bname);
+//        if (brand != null) {
+//            request.setAttribute("b", brand);
+//            request.setAttribute("brandName", bname);
+//            request.getRequestDispatcher("UpdateBrand.jsp").forward(request, response);
+//
+//        } else {
+//            response.sendRedirect("updatebrand?error");
+//        }
     }
 
     /**
@@ -84,9 +86,12 @@ public class UpdateBrand extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id_raw = request.getParameter("bid");
+        String id = request.getParameter("bid");
         String name = request.getParameter("bname");
-        Brand brand = new Brand(id_raw, name);
+        String image = request.getParameter("image");
+        String description = request.getParameter("description");
+        
+        Brand brand = new Brand(id, name, image, description, "0");
         BrandDAO b = new BrandDAO();
         if (request.getParameter("update") != null) {
             b.updateBrand(brand);

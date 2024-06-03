@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import dal.CategoryDAO;
@@ -19,36 +18,39 @@ import model.Category;
  *
  * @author quyld
  */
-@WebServlet(name="UpdateCategory", urlPatterns={"/updatecate"})
+@WebServlet(name = "UpdateCategory", urlPatterns = {"/updatecate"})
 public class UpdateCategory extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateCategory</title>");  
+            out.println("<title>Servlet UpdateCategory</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateCategory at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpdateCategory at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -56,12 +58,13 @@ public class UpdateCategory extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -69,19 +72,19 @@ public class UpdateCategory extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String id_raw = request.getParameter("cid");
         String name = request.getParameter("cname");
-        Category cate = new Category(id_raw, name);
+        String type = request.getParameter("type");
+        Category cate = new Category(id_raw, name, type, "0");
         CategoryDAO c = new CategoryDAO();
-        if (request.getParameter("update") != null) {
-            c.updatecategory(cate);
-        }
+        c.updatecategory(cate);
         response.sendRedirect("category");
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
