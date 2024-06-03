@@ -22,17 +22,22 @@ public class EditBlogServlet extends HttpServlet {
         String action = request.getParameter("action");
         String idStr = request.getParameter("id");
 
-        if ("edit".equals(action) && idStr != null) {
+        // Fetch blog by id if idStr is not null
+        if (idStr != null && !idStr.isEmpty()) {
             int id = Integer.parseInt(idStr);
             Blog blog = blogDAO.getBlogById(id);
             request.setAttribute("blog", blog);
-        } else if ("delete".equals(action) && idStr != null) {
+        }
+
+        // Delete blog if action is delete
+        if ("delete".equals(action) && idStr != null) {
             int id = Integer.parseInt(idStr);
             blogDAO.deleteBlog(id);
             response.sendRedirect("editblog");
             return;
         }
 
+        // Get all blogs and forward the request
         List<Blog> listBl = blogDAO.getAllBlog();
         Collections.sort(listBl, Comparator.comparingInt(Blog::getId));
         request.setAttribute("listBl", listBl);
@@ -49,11 +54,18 @@ public class EditBlogServlet extends HttpServlet {
         String date = request.getParameter("date");
         String description = request.getParameter("description");
 
+        int status = 0;
+        String statusParam = request.getParameter("status");
+        if (statusParam != null && !statusParam.isEmpty()) {
+            status = Integer.parseInt(statusParam);
+        }
+
         Blog blog = new Blog();
         blog.setTitle(title);
         blog.setImage(image);
         blog.setDate(date);
         blog.setDescription(description);
+        blog.setStatus(status);
 
         if (idStr == null || idStr.isEmpty()) {
             blogDAO.addBlog(blog);

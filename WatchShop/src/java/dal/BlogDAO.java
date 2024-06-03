@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dal;
 
 import java.sql.PreparedStatement;
@@ -19,19 +15,33 @@ public class BlogDAO extends DBContext {
 
     public List<Blog> getAllBlog() {
         List<Blog> list = new ArrayList<>();
+<<<<<<< Updated upstream
         String sql = "select * from Blog \n"
                 + "order by Date desc";
+=======
+        String sql = "SELECT * FROM Blog ORDER BY date DESC";
+>>>>>>> Stashed changes
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
+<<<<<<< Updated upstream
                 list.add(new Blog(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5)));
+=======
+                list.add(new Blog(rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("image"),
+                        rs.getString("date"),
+                        rs.getString("description"),
+                        rs.getInt("status")));
+>>>>>>> Stashed changes
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         return list;
     }
@@ -43,7 +53,16 @@ public class BlogDAO extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
+<<<<<<< Updated upstream
                 return new Blog(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+=======
+                return new Blog(rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("image"),
+                        rs.getString("date"),
+                        rs.getString("description"),
+                        rs.getInt("status"));
+>>>>>>> Stashed changes
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,13 +71,14 @@ public class BlogDAO extends DBContext {
     }
 
     public void addBlog(Blog blog) {
-        String sql = "INSERT INTO Blog (title, image, date, description) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Blog (title, image, date, description, status) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, blog.getTitle());
             st.setString(2, blog.getImage());
             st.setString(3, blog.getDate());
             st.setString(4, blog.getDescription());
+            st.setInt(5, 1); // Set default status to 1 (waiting to be confirmed)
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,14 +86,15 @@ public class BlogDAO extends DBContext {
     }
 
     public void updateBlog(Blog blog) {
-        String sql = "UPDATE Blog SET title = ?, image = ?, date = ?, description = ? WHERE id = ?";
+        String sql = "UPDATE Blog SET title = ?, image = ?, date = ?, description = ?, status = ? WHERE id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, blog.getTitle());
             st.setString(2, blog.getImage());
             st.setString(3, blog.getDate());
             st.setString(4, blog.getDescription());
-            st.setInt(5, blog.getId());
+            st.setInt(5, blog.getStatus());
+            st.setInt(6, blog.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,7 +102,11 @@ public class BlogDAO extends DBContext {
     }
 
     public void deleteBlog(int id) {
+<<<<<<< Updated upstream
         String sql = "DELETE FROM Blog WHERE id = ?";
+=======
+        String sql = "UPDATE Blog SET status = 2 WHERE id = ?";
+>>>>>>> Stashed changes
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
@@ -89,5 +114,25 @@ public class BlogDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Blog> getAllPublishedBlogs() {
+        List<Blog> list = new ArrayList<>();
+        String sql = "SELECT * FROM Blog WHERE status = 1 ORDER BY date DESC";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new Blog(rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("image"),
+                        rs.getString("date"),
+                        rs.getString("description"),
+                        rs.getInt("status")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

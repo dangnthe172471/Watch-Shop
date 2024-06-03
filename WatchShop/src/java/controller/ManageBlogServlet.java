@@ -19,7 +19,7 @@ public class ManageBlogServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BlogDAO blogDAO = new BlogDAO();
-        List<Blog> listBl = blogDAO.getAllBlog();
+        List<Blog> listBl = blogDAO.getAllBlog(); 
         Collections.sort(listBl, Comparator.comparingInt(Blog::getId));
         request.setAttribute("listBl", listBl);
         request.getRequestDispatcher("ManageBlog.jsp").forward(request, response);
