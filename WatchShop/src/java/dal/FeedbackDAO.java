@@ -27,14 +27,6 @@ public class FeedbackDAO extends DBContext {
      * @param index is paging
      * @return list feedback of product
      */
-    public static void main(String[] args) {
-        FeedbackDAO fd = new FeedbackDAO();
-        List<Feedback> listF = fd.displayFeedback("6", 0);
-        for (Feedback feedback : listF) {
-            System.out.println(feedback);
-        }
-    }
-
     public List<Feedback> displayFeedback(String pid, int index) {
         List<Feedback> list = new ArrayList<>();
         String sql = """
@@ -80,12 +72,13 @@ public class FeedbackDAO extends DBContext {
                                 rs.getInt(28),
                                 rs.getInt(29),
                                 rs.getInt(30),
-                                new ImageProduct(rs.getInt(31),
-                                        rs.getInt(32),
-                                        rs.getString(33),
+                                rs.getInt(31),
+                                new ImageProduct(rs.getInt(32),
+                                        rs.getInt(33),
                                         rs.getString(34),
                                         rs.getString(35),
-                                        rs.getString(36)))));
+                                        rs.getString(36),
+                                        rs.getString(37)))));
             }
         } catch (SQLException e) {
         }
@@ -112,5 +105,29 @@ public class FeedbackDAO extends DBContext {
         } catch (SQLException e) {
         }
         return 0;
+    }
+
+    /**
+     * Check if the customer has purchased the product yet
+     *
+     * @param aid is id of account
+     * @param pid is id of product
+     * @return true or false
+     */
+    public Boolean checkFeedback(int aid, int pid) {
+        String sql = """
+                     select * from [Order] o  join OrderDetail od on (od.oid=o.id)
+                     where od.pid = ? and o.aid =?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, pid);
+            st.setInt(2, aid);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
     }
 }

@@ -21,51 +21,101 @@
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
         <script type="text/javascript" src="slick/slick.min.js"></script>
+        <style>
+            .button {
+                background: linear-gradient(#c72f3c,#6771db);
+                font-size: 25px;
+                border-radius: 12px;
+                margin: 0 70px;
+            }
+        </style>
     </head>
     <body>
         <jsp:include page="nav.jsp" />
 
         <div class="container">
             <div class="row">
-                <div class="col-sm-3" style="margin-top: 24px;">
+                <div class="col-sm-3" style="margin-top: 24px;border-right: 1px solid black">
                     <form action="search" style="margin-top: 20px;"> 
-                        <h5>Thương hiệu:</h5>
-                        <c:forEach items="${requestScope.listB}" var="b">
-                            <c:set var="isChecked" value="false" />
-                            <c:if test="${not empty requestScope.bid}">
-                                <c:forEach var="selectedBid" items="${requestScope.bid}">
-                                    <c:if test="${b.bid == selectedBid}">
-                                        <c:set var="isChecked" value="true" />
+                        <div>
+                            <h5>Thương hiệu:</h5>
+                            <c:forEach items="${requestScope.listB}" var="b">
+                                <c:set var="isChecked" value="false" />
+                                <c:if test="${not empty requestScope.bid}">
+                                    <c:forEach var="selectedBid" items="${requestScope.bid}">
+                                        <c:if test="${b.bid == selectedBid}">
+                                            <c:set var="isChecked" value="true" />
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
+                                <input ${isChecked ? 'checked' : ''} type="checkbox" value="${b.bid}" name="bid" onchange="this.form.submit()"/> ${b.bname}<br>
+                            </c:forEach>
+                        </div><br><hr>
+                        <div>
+                            <h5>Giới tính</h5> 
+                            <c:forEach items="${requestScope.listC}" var="c">
+                                <c:if test="${c.type==1}">
+                                    <c:set var="isChecked" value="false" />
+                                    <c:if test="${requestScope.cid!=null}">
+                                        <c:forEach var="selectedCid" items="${requestScope.cid}">
+                                            <c:if test="${c.cid == selectedCid}">
+                                                <c:set var="isChecked" value="true" />
+                                            </c:if>
+                                        </c:forEach>
                                     </c:if>
-                                </c:forEach>
-                            </c:if>
-                            <input ${isChecked ? 'checked' : ''} type="checkbox" value="${b.bid}" name="bid" onchange="this.form.submit()"/> ${b.bname}<br>
-                        </c:forEach>
+                                    <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.type==2?'Chống nước: ':''}${c.type==3?'Độ rộng dây đeo: ':''} ${c.cname}<br>
+                                </c:if>
+                            </c:forEach>
+                        </div><br><hr>
 
-                        <h5>Loại:</h5>
-                        <c:forEach items="${requestScope.listC}" var="c">
-                            <c:set var="isChecked" value="false" />
-                            <c:if test="${requestScope.cid!=null}">
-                                <c:forEach var="selectedCid" items="${requestScope.cid}">
-                                    <c:if test="${c.cid == selectedCid}">
-                                        <c:set var="isChecked" value="true" />
+                        <div>
+                            <h5>Mức độ chống nước</h5> 
+                            <c:forEach items="${requestScope.listC}" var="c">
+                                <c:if test="${c.type==2}">
+                                    <c:set var="isChecked" value="false" />
+                                    <c:if test="${requestScope.cid!=null}">
+                                        <c:forEach var="selectedCid" items="${requestScope.cid}">
+                                            <c:if test="${c.cid == selectedCid}">
+                                                <c:set var="isChecked" value="true" />
+                                            </c:if>
+                                        </c:forEach>
                                     </c:if>
-                                </c:forEach>
-                            </c:if>
-                            <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.type==2?'Chống nước: ':''}${c.type==3?'Độ rộng dây đeo: ':''} ${c.cname}<br>
-                        </c:forEach>
-                        <hr>
-                        <h5>Miêu tả</h5>
-                        <input type="text" name="key" value="${key != null ? key : ''}" placeholder="Nhập tên, miêu tả" ><br><hr>
-                        <h5>Giá</h5>       
-                        Từ: &nbsp;<input style="margin-bottom: 10px;" type="number" name="fromprice" value="${fromprice != null ? fromprice : ''}"><br>
-                        Đến:<input type="number" name="toprice" value="${toprice != null ? toprice : ''}"> <br>
-                        <hr>
-                        <h5>Ngày</h5>
-                        Từ ngày: <input type="date" name="fromdate" value="${fromdate != null ? fromdate : ''}" style="margin-left: 9px;margin-bottom: 10px;"> <br> 
-                        Đến ngày: <input type="date" name="todate" value="${todate != null ? todate : ''}"> <br> 
-                        <br> 
-                        <input type="submit" value="SEARCH">
+                                    <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.cname}<br>
+                                </c:if>
+                            </c:forEach>
+                        </div><br><hr>
+
+                        <div>
+                            <h5>Độ rộng dây đeo</h5> 
+                            <c:forEach items="${requestScope.listC}" var="c">
+                                <c:if test="${c.type==3}">
+                                    <c:set var="isChecked" value="false" />
+                                    <c:if test="${requestScope.cid!=null}">
+                                        <c:forEach var="selectedCid" items="${requestScope.cid}">
+                                            <c:if test="${c.cid == selectedCid}">
+                                                <c:set var="isChecked" value="true" />
+                                            </c:if>
+                                        </c:forEach>
+                                    </c:if>
+                                    <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.cname}<br>
+                                </c:if>
+                            </c:forEach>
+                        </div><br><hr>
+                        <div>
+                            <h5>Miêu tả</h5>
+                            <input type="text" name="key" value="${key != null ? key : ''}" placeholder="Nhập tên, mã sản phẩm" ><br>   
+                        </div><br><hr>
+                        <div>
+                            <h5>Giá</h5>       
+                            <label>Từ: </label><input style="margin-bottom: 10px;margin-left: 10px" type="number" name="fromprice" value="${fromprice != null ? fromprice : ''}"><br>
+                            <label>Đến:</label><input type="number" name="toprice" value="${toprice != null ? toprice : ''}"> <br>
+                        </div><br><hr>
+                        <div>
+                            <h5>Ngày</h5>
+                            <label>Từ ngày:</label><input type="date" name="fromdate" value="${fromdate != null ? fromdate : ''}" style="margin-left: 9px;margin-bottom: 10px;"> <br> 
+                            <label>Đến ngày:</label><input type="date" name="todate" value="${todate != null ? todate : ''}"> <br><br>
+                        </div>
+                        <button class="button" type="submit">Search</button>
                     </form>
                 </div>
 
@@ -94,27 +144,31 @@
                                     </select>                                    
                                 </form>
                                 <c:if test="${countP >= 9}">
-                                    <div class="clearfix row" style="margin: 10px -24px">
-                                        <div class="hint-text" style="margin-left: 40px;">Showing <b>9</b> out of <b>${countP}</b> entries</div>
-                                        <ul class="pagination" style="margin-left: 360px;">                                          
-                                            <c:forEach begin="1" end="${endP}" var="i">                                             
-                                                <li style="margin: -15px 5px;${page==i?'text-decoration: underline;':''}">
-                                                    <form action="search">
+                                    <form action="search">
+                                        <input type="hidden" value="${key}" name="key">
+                                        <input type="hidden" value="${fromdate}" name="todate">
+                                        <input type="hidden" value="${fromprice}" name="fromprice">
+                                        <input type="hidden" value="${todate}" name="todate">
+                                        <input type="hidden" value="${toprice}" name="toprice">
+                                        <input type="hidden" value="${sort}" name="sort">
+                                        <c:set var="i" value="${page}"/>
+                                        <div class="clearfix row" style="margin: 10px -24px">
+                                            <div class="hint-text" style="margin-left: 40px;">Showing <b>9</b> out of <b>${countP}</b> entries</div>
+                                            <ul class="pagination" style="margin-left: 300px;">  
+                                                <button name="index" value="${i-1}" type="${i>1?'submit':'button'}" style="width: 65px;height: 30px;border: 1px solid #007BFF;background-color: ${i>1?'white':'#9698ab'}">Previous</button>
+                                                <c:forEach begin="1" end="${endP}" var="i">                                             
+                                                    <li>
                                                         <c:forEach var="cidValue" items="${cid}">
                                                             <input type="hidden" value="${cidValue}" name="cid">
                                                         </c:forEach>
-                                                        <input type="hidden" value="${key}" name="key">
-                                                        <input type="hidden" value="${fromdate}" name="todate">
-                                                        <input type="hidden" value="${fromprice}" name="fromprice">
-                                                        <input type="hidden" value="${todate}" name="todate">
-                                                        <input type="hidden" value="${toprice}" name="toprice">
-                                                        <input type="hidden" value="${sort}" name="sort">
-                                                        <button name="index" value="${i}" type="submit" style="width: 25px;;border: none;background-color:${page==i?'orange':''}">${i}</button>
-                                                    </form>
-                                                </li>
-                                            </c:forEach>                                       
-                                        </ul>
-                                    </div>
+                                                        <button name="index" value="${i}" type="submit" style="width: 30px;height: 30px;margin: 0 2px;border: 1px solid #007BFF;background-color:${page==i?'#007BFF':'white'}">${i}</button>
+                                                    </li>
+                                                </c:forEach>  
+                                                <c:set var="i" value="${page}"/>
+                                                <button name="index" value="${i+1}" type="${i<endP?'submit':'button'}" style="width:65px;height: 30px;border: 1px solid #007BFF;background-color: ${i<endP?'white':'#9698ab'}">Next</button>
+                                            </ul>
+                                        </div>
+                                    </form>
                                 </c:if>
                             </div>
                             <div id="content" class="row col-12 col-md-12 col-lg-12">                       
