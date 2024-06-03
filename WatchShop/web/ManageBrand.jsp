@@ -40,23 +40,24 @@
             <main>
                 <div class="head-title">
                     <div class="left">
-                        <h1>Brand</h1>                      
+                        <h1>Thương Hiệu </h1>                      
                     </div>
                     <a class="btn-download, btn btn-primary addbtn">
-                        <span class="text">Add new brand</span>
+                        <span class="text">Thêm Thương Hiệu</span>
                     </a>
                 </div>
                 <div class="table-data">
                     <div class="order">
                         <div class="head">
-                            <h3>Manage</h3>
-                            <i class='bx bx-search' ></i>
-                            <i class='bx bx-filter' ></i>
+                            <h3>Quản Lý</h3>
+                            <!--<i class='bx bx-search' ></i>-->
+                            <a href="#"><i class='bx bx-filter' ></i></a> 
                         </div>
                         <form action="brand">
                             <table>
                                 <thead>
                                     <tr>
+                                        <th ></th>
                                         <th style="width: 200px;">Thương hiệu</th>
                                         <th style="width: 200px;">Hình ảnh</th>
                                         <th>Mô tả</th>
@@ -66,10 +67,11 @@
                                 <tbody>
                                     <c:forEach items="${listb}" var="b">
                                         <tr>
+                                            <td><p style="display: none ">${b.bid}</p></td>
                                             <td>${b.bname}</td> 
-                                            <td>
+                                            <td><p style="display: none ">${b.image}</p>
                                                 <img src="${b.image}" style="width: 150px;height: 150px;border-radius: 0" />
-                                            </td> 
+                                            </td>
                                             <td>
                                                 ${b.description}
                                             </td> 
@@ -86,52 +88,59 @@
                 </div>
             </main>
 
-            <!-- The Modal -->
+            <!-- The Modal Add -->
             <form action="deletebrand" method="post">
                 <div class="modal fade" id="addmodal">
                     <div class="modal-dialog">
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h4 class="modal-title">Add Brand</h4>
+                                <h4 class="modal-title">Thêm Thương Hiệu</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
 
                             <div class="modal-body">
-                                <label>Name</label>
+                                <label>Thương Hiệu</label>
                                 <input type="text" name="bname"> 
+                                <label>Ảnh</label>
+                                <input type="text" name="image">
+                                <label>Miêu Tả</label>
+                                <input type="text" name="description">
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button type="submit" name="add" class="btn btn-primary">Add Brand</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                                <button type="submit" name="add" class="btn btn-primary">Thêm</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
 
-            <!-- The Modal -->
+            <!-- The Modal Update-->
             <form action="updatebrand" method="post">
                 <div class="modal fade" id="editmodal">
                     <div class="modal-dialog">
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h4 class="modal-title">Edit Brand</h4>
+                                <h4 class="modal-title">Chỉnh sửa</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
 
                             <div class="modal-body">
-                                <label>ID</label>
-                                <input type="text" name="bid" id="update_id" readonly style="background: gray">
-                                <label>Name</label>
-                                <input type="text" name="bname" id="update_name"> 
+                                <input type="hidden" name="bid" id="update_id" >
+                                <label>Thương Hiệu</label>
+                                <input type="text" name="bname" id="update_name">
+                                <label>Ảnh</label>
+                                <input type="text" name="image" id="update_image">
+                                <label>Miêu Tả</label>
+                                <textarea class="form-control" id="update_description" name="description"></textarea>
+                                
                             </div>
-
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button type="submit" name="update" class="btn btn-primary">Update</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                                <button type="submit" name="update" class="btn btn-primary">Chỉnh sửa</button>
                             </div>
                         </div>
                     </div>
@@ -158,18 +167,21 @@
                         return $(this).text();
                     }).get();
                     console.log(data);
-                    $('#update_id').val(data[0]);
-                    $('#update_name').val(data[1]);
+                    $('#update_id').val(data[0].trim());
+                    $('#update_name').val(data[1].trim());
+                    $('#update_image').val(data[2].trim());
+                    $('#update_description').val(data[3].trim());
                 });
             });
         </script>
 
         <script type="text/javascript">
             function doDelete(bid) {
-                if (confirm('Are You Sure Delete Brand has ID: ' + bid + '?')) {
+                if (confirm('Bạn có muốn xóa Thương Hiệu này ?')) {
                     window.location = 'deletebrand?bid=' + bid;
                 }
             }
         </script>
     </body>
 </html>
+

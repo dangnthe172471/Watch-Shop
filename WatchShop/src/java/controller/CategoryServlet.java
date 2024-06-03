@@ -61,7 +61,7 @@ public class CategoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CategoryDAO c = new CategoryDAO();
-        List<Category> list = c.getAllCategory();
+        List<Category> list = c.getCategory();
         request.setAttribute("listc", list);
         request.setAttribute("tab", "3");
         request.getRequestDispatcher("ManageCategory.jsp").forward(request, response);
@@ -78,7 +78,7 @@ public class CategoryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doGet(request, response);
     }
 
     /**

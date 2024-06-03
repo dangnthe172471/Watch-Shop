@@ -60,7 +60,7 @@ public class BrandServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BrandDAO b = new BrandDAO();
-        List<Brand> listb = b.getAllBrand();
+        List<Brand> listb = b.getBrand();
         request.setAttribute("listb", listb);
         request.setAttribute("tab", "2");
         request.getRequestDispatcher("ManageBrand.jsp").forward(request, response);

@@ -36,20 +36,34 @@ public class CategoryDAO extends DBContext {
         }
         return list;
     }
-    
-    public static void main(String[] args) {
-        CategoryDAO cd= new CategoryDAO();
-        List<Category> c = cd.getAllCategory();
-        for (Category category : c) {
-            System.out.println(category.getCid());
+
+    public List<Category> getCategory() {
+        List<Category> list = new ArrayList<>();
+        String sql = "select * from category where deleted = 0";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Category c = new Category();
+                c.setCid(String.valueOf(rs.getInt(1)));
+                c.setCname(rs.getString(2));
+                c.setType(String.valueOf(rs.getInt(3)));
+                c.setDeleted(String.valueOf(rs.getInt(4)));
+                list.add(c);
+            }
+        } catch (SQLException e) {
+            //
         }
+        return list;
     }
 
     public void addCategory(Category c) {
         try {
-            String sql = "insert into category (cname) VALUES (?)";
+            String sql = "INSERT INTO [dbo].[Category]([cname],[type],[deleted]) VALUES (?,?,?)";
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, c.getCname());
+            st.setString(2, c.getType());
+            st.setString(3, c.getDeleted());
             st.executeUpdate();
         } catch (Exception e) {
             //
@@ -57,14 +71,26 @@ public class CategoryDAO extends DBContext {
     }
 
     public void updatecategory(Category c) {
-        String sql = "update category set cname=? where cid=?";
+        String sql = "UPDATE [dbo].[Category] SET [cname] = ?,[type] = ?,[deleted] = ? WHERE [cid] =?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(2, c.getCid());
+            st.setString(4, c.getCid());
             st.setString(1, c.getCname());
+            st.setString(2, c.getType());
+            st.setString(3, c.getDeleted());
             st.executeUpdate();
         } catch (SQLException e) {
 //
+        }
+    }
+
+    public void blockCategoryById(String cid) {
+        String sql = "UPDATE [dbo].[Category] SET [deleted] = 1 WHERE [cid] = ?;";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, cid);
+            st.executeUpdate();
+        } catch (Exception e) {
         }
     }
 

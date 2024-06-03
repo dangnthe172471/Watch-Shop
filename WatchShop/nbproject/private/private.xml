@@ -3,7 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/A/Ky5/SE1804-SWP/Watch-Shop/WatchShop/web/productdetail.jsp</file>
+            <file>file:/D:/DuAn/Watch-Shop/WatchShop/web/ManageCategory.jsp</file>
+            <file>file:/D:/DuAn/Watch-Shop/WatchShop/src/java/controller/AddCServlet.java</file>
+            <file>file:/D:/DuAn/Watch-Shop/WatchShop/web/nav.jsp</file>
+            <file>file:/D:/DuAn/Watch-Shop/WatchShop/src/java/dal/CategoryDAO.java</file>
         </group>
     </open-files>
 </project-private>
