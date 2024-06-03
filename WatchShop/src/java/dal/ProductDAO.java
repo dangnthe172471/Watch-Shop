@@ -47,12 +47,13 @@ public class ProductDAO extends DBContext {
                         rs.getInt(11),
                         rs.getInt(12),
                         rs.getInt(13),
-                        new ImageProduct(rs.getInt(14),
-                                rs.getInt(15),
-                                rs.getString(16),
+                        rs.getInt(14),
+                        new ImageProduct(rs.getInt(15),
+                                rs.getInt(16),
                                 rs.getString(17),
                                 rs.getString(18),
-                                rs.getString(19))));
+                                rs.getString(19),
+                                rs.getString(20))));
             }
         } catch (SQLException e) {
         }
@@ -87,12 +88,13 @@ public class ProductDAO extends DBContext {
                         rs.getInt(11),
                         rs.getInt(12),
                         rs.getInt(13),
-                        new ImageProduct(rs.getInt(14),
-                                rs.getInt(15),
-                                rs.getString(16),
+                        rs.getInt(14),
+                        new ImageProduct(rs.getInt(15),
+                                rs.getInt(16),
                                 rs.getString(17),
                                 rs.getString(18),
-                                rs.getString(19))));
+                                rs.getString(19),
+                                rs.getString(20))));
             }
         } catch (SQLException e) {
         }
@@ -127,12 +129,13 @@ public class ProductDAO extends DBContext {
                         rs.getInt(11),
                         rs.getInt(12),
                         rs.getInt(13),
-                        new ImageProduct(rs.getInt(14),
-                                rs.getInt(15),
-                                rs.getString(16),
+                        rs.getInt(14),
+                        new ImageProduct(rs.getInt(15),
+                                rs.getInt(16),
                                 rs.getString(17),
                                 rs.getString(18),
-                                rs.getString(19))));
+                                rs.getString(19),
+                                rs.getString(20))));
             }
         } catch (SQLException e) {
         }
@@ -268,12 +271,13 @@ public class ProductDAO extends DBContext {
                         rs.getInt(11),
                         rs.getInt(12),
                         rs.getInt(13),
-                        new ImageProduct(rs.getInt(14),
-                                rs.getInt(15),
-                                rs.getString(16),
+                        rs.getInt(14),
+                        new ImageProduct(rs.getInt(15),
+                                rs.getInt(16),
                                 rs.getString(17),
                                 rs.getString(18),
-                                rs.getString(19))));
+                                rs.getString(19),
+                                rs.getString(20))));
             }
         } catch (SQLException e) {
         }
@@ -406,12 +410,13 @@ public class ProductDAO extends DBContext {
                         rs.getInt(11),
                         rs.getInt(12),
                         rs.getInt(13),
-                        new ImageProduct(rs.getInt(14),
-                                rs.getInt(15),
-                                rs.getString(16),
+                        rs.getInt(14),
+                        new ImageProduct(rs.getInt(15),
+                                rs.getInt(16),
                                 rs.getString(17),
                                 rs.getString(18),
-                                rs.getString(19)));
+                                rs.getString(19),
+                                rs.getString(20)));
             }
         } catch (SQLException e) {
         }
@@ -458,12 +463,13 @@ public class ProductDAO extends DBContext {
                         rs.getInt(11),
                         rs.getInt(12),
                         rs.getInt(13),
-                        new ImageProduct(rs.getInt(14),
-                                rs.getInt(15),
-                                rs.getString(16),
+                        rs.getInt(14),
+                        new ImageProduct(rs.getInt(15),
+                                rs.getInt(16),
                                 rs.getString(17),
                                 rs.getString(18),
-                                rs.getString(19))));
+                                rs.getString(19),
+                                rs.getString(20))));
             }
         } catch (SQLException e) {
         }
@@ -492,12 +498,13 @@ public class ProductDAO extends DBContext {
                         rs.getInt(11),
                         rs.getInt(12),
                         rs.getInt(13),
-                        new ImageProduct(rs.getInt(14),
-                                rs.getInt(15),
-                                rs.getString(16),
+                        rs.getInt(14),
+                        new ImageProduct(rs.getInt(15),
+                                rs.getInt(16),
                                 rs.getString(17),
                                 rs.getString(18),
-                                rs.getString(19)));
+                                rs.getString(19),
+                                rs.getString(20)));
             }
         } catch (SQLException e) {
         }

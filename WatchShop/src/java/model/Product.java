@@ -25,12 +25,13 @@ public class Product {
     private int cateID2;
     private int cateID3;
     private int brandID;
+    private int status;
     private ImageProduct pimage;
 
     public Product() {
     }
 
-    public Product(int id, String code, String name, double price, int quantity, int sold, Date releaseDate, String description, double rate, int cateID1, int cateID2, int cateID3, int brandID, ImageProduct pimage) {
+    public Product(int id, String code, String name, double price, int quantity, int sold, Date releaseDate, String description, double rate, int cateID1, int cateID2, int cateID3, int brandID, int status, ImageProduct pimage) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -44,6 +45,7 @@ public class Product {
         this.cateID2 = cateID2;
         this.cateID3 = cateID3;
         this.brandID = brandID;
+        this.status = status;
         this.pimage = pimage;
     }
 
@@ -149,6 +151,14 @@ public class Product {
 
     public void setBrandID(int brandID) {
         this.brandID = brandID;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public ImageProduct getPimage() {
