@@ -10,7 +10,7 @@ package model;
  */
 public class Iconstant {
 
-    public static final String ggID = "202967964381- vdr2p7u64iqfnuau rsog7ilrdm7rnh54.apps. googleusercontent.com";
+    public static final String ggID = "202967964381-vdr2p7u64iqfnuau rsog7ilrdm7rnh54.apps. googleusercontent.com";
     public static final String ggSECRET = "GOCSPX-- hYpjG43wo8e2xXYkgK sQVKxLYsi";
     public static final String ggURI = "http://localhost:9999/watchshop/logingg";
     public static final String ggRantTYPE = "authorization_code";
