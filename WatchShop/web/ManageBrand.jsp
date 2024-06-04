@@ -46,6 +46,7 @@
                         <span class="text">Thêm Thương Hiệu</span>
                     </a>
                 </div>
+                <div class="centered-error">${err}</div>
                 <div class="table-data">
                     <div class="order">
                         <div class="head">
@@ -140,7 +141,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
-                                <button type="submit" name="update" class="btn btn-primary">Chỉnh sửa</button>
+                                <button type="submit" name="update" class="btn btn-primary">Cập nhật</button>
                             </div>
                         </div>
                     </div>

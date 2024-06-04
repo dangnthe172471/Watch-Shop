@@ -48,7 +48,7 @@
                         <span class="text">Thêm thể loại</span>
                     </a>
                 </div>
-                <div>${err}</div>
+                <div class="centered-error">${err}</div>
                 <div class="table-data">
                     <div class="order">
                         <div class="head">
@@ -95,7 +95,6 @@
                 <div class="modal fade" id="addmodal">
                     <div class="modal-dialog">
                         <div class="modal-content">
-
                             <div class="modal-header">
                                 <h4 class="modal-title">Thêm thể loại</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -110,10 +109,9 @@
                                 <label>Giá trị</label>
                                 <input type="text" name="cname">
                             </div>
-
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button type="submit" name="add" class="btn btn-primary">Add Category</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                                <button type="submit" name="add" class="btn btn-primary">Thêm</button>
                             </div>
                         </div>
                     </div>
@@ -144,8 +142,8 @@
                                 </select>  <br>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary">Cập nhật</button>
                             </div>
                         </div>
                     </div>

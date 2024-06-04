@@ -78,14 +78,20 @@ public class DeleteBServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BrandDAO b = new BrandDAO();
-        String name = request.getParameter("bname");
-        String image = request.getParameter("image");
-        String description = request.getParameter("description");
+        String name = request.getParameter("bname").trim();
+        String image = request.getParameter("image").trim();
+        String description = request.getParameter("description").trim();
         Brand brand = new Brand(null, name, image, description, null);
         Brand check = b.getBrandByName(name);
         String err = "";
         if (name.isBlank()) {
-            err = "Chưa có dữ liệu";
+            err = "Chưa có tên thương hiệu";
+        }
+        if (image.isBlank()) {
+            err = "Chưa có hình ảnh";
+        }
+        if (description.isBlank()) {
+            err = "Chưa có thông tin";
         } else {
             if (check != null) {
                 err = "Đã tồn tại";
@@ -98,7 +104,6 @@ public class DeleteBServlet extends HttpServlet {
         request.setAttribute("err", err);
         response.sendRedirect("brand");
     }
-    
 
     /**
      * Returns a short description of the servlet.

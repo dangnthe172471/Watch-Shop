@@ -61,7 +61,7 @@ public class BlogDAO extends DBContext {
             st.setString(2, blog.getImage());
             st.setString(3, blog.getDate());
             st.setString(4, blog.getDescription());
-            st.setInt(5, 1);
+            st.setInt(5, 0);
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -97,7 +97,7 @@ public class BlogDAO extends DBContext {
 
     public List<Blog> getAllPublishedBlogs() {
         List<Blog> list = new ArrayList<>();
-        String sql = "SELECT * FROM Blog WHERE status = 1 ORDER BY date DESC";
+        String sql = "SELECT * FROM Blog WHERE status = 1 ORDER BY id DESC";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
