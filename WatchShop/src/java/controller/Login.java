@@ -90,7 +90,7 @@ public class Login extends HttpServlet {
             return;
         }
 
-        String hashedPassword = Mahoa.toSHA1(password); 
+        String hashedPassword = Mahoa.toSHA1(password);
 
         AccountDAO da = new AccountDAO();
         Account account = da.checkAccount(username, hashedPassword);
@@ -98,19 +98,26 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
 
         if (account == null) {
-          request.setAttribute("error", "Account or password is incorrect!");
+            request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu sai!");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         } else {
             if (account.getStatus() == 1) {
-                request.setAttribute("error", "Account is blocked!");
+                request.setAttribute("error", "Tài khoản bị khóa, vui lòng liên hệ nhân viên để được hỗ trợ!");
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
                 return;
             }
 
             session.setAttribute("account", account);
+            //login ADMIN
+            if (account.getRoleID() == 1) {
+                request.getSession().setAttribute("account", account);
+                response.sendRedirect(request.getContextPath() + "/AdminManage.jsp");
+                return;
+            }
 
+            //login User
             Cookie cu = new Cookie("cuser", username);
-            Cookie cp = new Cookie("cpass", hashedPassword); 
+            Cookie cp = new Cookie("cpass", password);
             Cookie cr = new Cookie("crem", rem);
             if (rem != null) {
                 cu.setMaxAge(60 * 60 * 24 * 5);
@@ -128,48 +135,6 @@ public class Login extends HttpServlet {
         }
     }
 
-
-//    private void handleGoogleLogin(HttpServletRequest request, HttpServletResponse response, String code)
-//            throws ServletException, IOException {
-//        GoogleLogin gg = new GoogleLogin();
-//        String accessToken = gg.getToken(code);
-//
-//        if (accessToken == null || accessToken.isEmpty()) {
-//            request.getRequestDispatcher("login.jsp").forward(request, response);
-//            return;
-//        }
-//
-//        GoogleAccount acc = gg.getUserInfo(accessToken);
-//
-//        if (acc == null || acc.getEmail() == null) {
-//            request.getRequestDispatcher("login.jsp").forward(request, response);
-//            return;
-//        }
-//
-//        AccountDAO da = new AccountDAO();
-//        Account existingAccount = da.findAccountByEmail(acc.getEmail());
-//
-//        if (existingAccount == null) {
-//            HttpSession session = request.getSession();
-//            session.setAttribute("googleAccount", acc.getEmail());
-//            response.sendRedirect("Register.jsp");
-//        } else {
-//            HttpSession session = request.getSession();
-//            session.setAttribute("account", acc);
-//
-//            Cookie googleNameCookie = new Cookie("googleName", acc.getName());
-//            Cookie googleEmailCookie = new Cookie("googleEmail", acc.getEmail());
-//
-//            int cookieMaxAge = 60 * 60 * 24 * 5;
-//            googleNameCookie.setMaxAge(cookieMaxAge);
-//            googleEmailCookie.setMaxAge(cookieMaxAge);
-//
-//            response.addCookie(googleNameCookie);
-//            response.addCookie(googleEmailCookie);
-//
-//            response.sendRedirect(request.getContextPath() + "/home");
-//        }
-//    }
     /**
      * Returns a short description of the servlet.
      *
