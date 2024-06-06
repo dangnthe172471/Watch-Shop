@@ -83,32 +83,42 @@ public class AddCServlet extends HttpServlet {
         CategoryDAO c = new CategoryDAO();
         Category check = c.getCategoryByName(name);
         String err = "";
-        if (name.isBlank()) {
-            err = "Chưa có tên thương hiệu";
-        }
-        if (type.isBlank()) {
-            err = "Chưa có hình ảnh";
-        } else {
-            if (check != null) {
-                err = "Đã tồn tại";
+
+        if (request.getParameter("add") != null) {
+            if (name.isBlank()) {
+                err = "Chưa có tên thương hiệu";
+            } else if (type.isBlank()) {
+                err = "Chưa có hình ảnh";
             } else {
-                if (request.getParameter("add") != null) {
+                if (check != null) {
+                    err = "Dòng sản phẩm đã tồn tại";
+                } else {
                     c.addCategory(cate);
                 }
             }
+            if (!err.isEmpty()) {
+                request.getSession().setAttribute("err", err);
+                request.getSession().setAttribute("keepModalOpen", true);
+                response.sendRedirect("category");
+            } else {
+                request.getSession().setAttribute("name", name);
+                request.getSession().removeAttribute("err");
+                request.getSession().removeAttribute("keepModalOpen");
+                response.sendRedirect("category");
+            }
         }
-        request.setAttribute("err", err);
-        request.getRequestDispatcher("category").forward(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+        /**
+         * Returns a short description of the servlet.
+         *
+         * @return a String containing servlet description
+         */
+        @Override
+        public String getServletInfo
+        
+            () {
         return "Short description";
-    }// </editor-fold>
+        }// </editor-fold>
 
-}
+    }

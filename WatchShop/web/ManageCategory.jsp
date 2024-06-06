@@ -48,7 +48,6 @@
                         <span class="text">Thêm thể loại</span>
                     </a>
                 </div>
-                <div class="centered-error">${err}</div>
                 <div class="table-data">
                     <div class="order">
                         <div class="head">
@@ -62,7 +61,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th style="width: 200px">Thể loại</th>
-                                        <th>Chi tiết</th>
+                                        <th>Dòng sản phẩm</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -90,7 +89,7 @@
                 </div>
             </main>
 
-            <!-- The Modal -->
+            <!-- The Modal Add -->
             <form action="addcategory" method="post">
                 <div class="modal fade" id="addmodal">
                     <div class="modal-dialog">
@@ -106,11 +105,12 @@
                                     <option value="2">Độ chống nước</option>
                                     <option value="3">Đường kính mặt số</option>
                                 </select>  <br>
-                                <label>Giá trị</label>
-                                <input type="text" name="cname">
+                                <label>Dòng sản phẩm</label>
+                                <input type="text" name="cname" value="${name}">
                             </div>
+                            <div>${err}</div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
                                 <button type="submit" name="add" class="btn btn-primary">Thêm</button>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                 </div>
             </form>
 
-            <!-- The Modal -->
+            <!-- The Modal Update -->
             <form action="updatecate" method="post">
                 <div class="modal fade" id="editmodal">
                     <div class="modal-dialog">
@@ -130,7 +130,7 @@
                             <div class="modal-body">
                                 <label>ID</label>
                                 <input type="text" name="cid" id="update_id" readonly style="background: gray">
-                                <label>Chi Tiết</label>
+                                <label>Dòng sản phẩm</label>
                                 <input type="text" name="cname" id="update_name"> 
                             </div>
                             <div class="modal-body">
@@ -142,7 +142,7 @@
                                 </select>  <br>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
                                 <button type="submit" class="btn btn-primary">Cập nhật</button>
                             </div>
                         </div>
@@ -150,15 +150,25 @@
                 </div>
             </form>
         </section>
+                            
 
         <script>
-            $(document).ready(function () {
-                $('.addbtn').on('click', function () {
+            $(document).ready(function () {            
+                var error = "<%= session.getAttribute("err") %>";
+                var keepModalOpen = <%= session.getAttribute("keepModalOpen") != null %>;             
+                console.log("Error: " + error);
+                console.log("Keep modal open: " + keepModalOpen);   
+                if (keepModalOpen) {
                     $('#addmodal').modal('show');
-                    $tr = $(this).closest('tr');
+                }
+                $('.addbtn').click(function () {
+                    $('#addmodal').modal('show');
                 });
+
+            <% session.removeAttribute("err"); session.removeAttribute("keepModalOpen"); %>
             });
         </script>
+        
         <script>
             $(document).ready(function () {
                 $('.editbtn').on('click', function () {
@@ -168,9 +178,9 @@
                         return $(this).text();
                     }).get();
                     console.log(data);
-                    $('#update_id').val(data[0]);
-                    $('#update_name').val(data[2]);
-                    $('#update_type').val(data[4]);
+                    $('#update_id').val(data[0].trim());
+                    $('#update_name').val(data[2].trim());
+                    $('#update_type').val(data[4].trim());
                 });
             });
         </script>

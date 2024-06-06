@@ -93,6 +93,25 @@ public class CategoryDAO extends DBContext {
         } catch (Exception e) {
         }
     }
+    
+    public Category getCategoryByType(String type) {
+        String sql = "select * from category where type = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, type);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new Category(
+                        rs.getString("cid"),
+                        rs.getString("cname"),
+                        rs.getString("type"),
+                        rs.getString("deleted"));
+            }
+        } catch (Exception e) {
+            //
+        }
+        return null;
+    }
 
     public Category getCategoryByName(String cname) {
         String sql = "select * from category where cname = ?";

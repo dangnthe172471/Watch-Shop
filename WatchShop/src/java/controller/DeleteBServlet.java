@@ -77,31 +77,40 @@ public class DeleteBServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BrandDAO b = new BrandDAO();
         String name = request.getParameter("bname").trim();
         String image = request.getParameter("image").trim();
         String description = request.getParameter("description").trim();
-        Brand brand = new Brand(null, name, image, description, null);
-        Brand check = b.getBrandByName(name);
-        String err = "";
-        if (name.isBlank()) {
-            err = "Chưa có tên thương hiệu";
-        }
-        if (image.isBlank()) {
-            err = "Chưa có hình ảnh";
-        }
-        if (description.isBlank()) {
-            err = "Chưa có thông tin";
-        } else {
-            if (check != null) {
-                err = "Đã tồn tại";
-            } else {
-                if (request.getParameter("add") != null) {
-                    b.addBrand(brand);
-                }
+        BrandDAO b = new BrandDAO();
+        String err  = "";
+
+        if (name.isEmpty() || image.isEmpty() || description.isEmpty()) {
+            if (name.isEmpty()) {
+                err = "Chưa có tên thương hiệu. ";
             }
+            if (image.isEmpty()) {
+                err += "Chưa có ảnh. ";
+            }
+            if (description.isEmpty()) {
+                err += "Chưa có miêu tả. ";
+            }
+
+            request.getSession().setAttribute("err", err);
+            request.getSession().setAttribute("keepModalOpen", "add");
+            response.sendRedirect("brand");
+            return; 
         }
-        request.setAttribute("err", err);
+
+        Brand check = b.getBrandByName(name);
+        if (check != null) {
+            request.getSession().setAttribute("err", "Thương hiệu đã tồn tại.");
+            request.getSession().setAttribute("keepModalOpen", "add");
+            response.sendRedirect("brand");
+            return;
+        }
+
+        
+        Brand brand = new Brand( null,name, image, description,null);
+        b.addBrand(brand);
         response.sendRedirect("brand");
     }
 

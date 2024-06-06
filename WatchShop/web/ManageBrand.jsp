@@ -108,7 +108,7 @@
                                 <label>Miêu Tả</label>
                                 <input type="text" name="description">
                             </div>
-
+                            <div>${err}</div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
                                 <button type="submit" name="add" class="btn btn-primary">Thêm</button>
@@ -159,9 +159,21 @@
                                                         });
                                                     });
         </script>
+         <script>
+                                                    $(document).ready(function () {
+                                                        var error = "<%= session.getAttribute("err") %>";
+                                                        var modalOpen = "<%= session.getAttribute("keepModalOpen") %>";
+                                                        if (error && modalOpen === "add") {
+                                                            $('#addmodal').modal('show');
+                                                        }
+                                                        $('#addmodal').on('hidden.bs.modal', function (e) {
+            <% session.removeAttribute("err"); session.removeAttribute("keepModalOpen"); %>
+                                                        });
+                                                    });
+        </script>
         <script>
             $(document).ready(function () {
-                $('.editbtn').on('click', function () {
+                $('.editbtn').on('click', fun   ction () {
                     $('#editmodal').modal('show');
                     $tr = $(this).closest('tr');
                     var data = $tr.children("td").map(function () {
