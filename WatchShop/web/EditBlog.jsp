@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <<script type="text/javascript" src="js/blog-validation.js"></script>
+        <script type="text/javascript" src="js/blog-validation.js"></script>
     </head>
     <body>
         <div class="container">
@@ -35,12 +35,11 @@
                     <c:forEach var="blogItem" items="${listBl}">
                         <tr>
                             <td>${blogItem.id}</td>
-                            <td><span style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;">${blogItem.title}</span></td>
+                            <td><span style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;" title="${blogItem.title}">${blogItem.title}</span></td>
                             <td><img src="${blogItem.image}" style="width: 150px; height: 130px; " ></td>
                             <td>${blogItem.date}</td>
-                            <td><span style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;">${blogItem.description}</span></td>
+                            <td><span style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;" title="${blogItem.description}">${blogItem.description}</span></td>
                             <td>
-
                                 <c:choose>
                                     <c:when test="${blogItem.status == 0}">
                                         Chờ duyệt

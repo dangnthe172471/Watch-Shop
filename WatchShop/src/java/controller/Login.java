@@ -119,7 +119,7 @@ public class Login extends HttpServlet {
 
             session.setAttribute("account", account);
             //login ADMIN
-            if (account.getRoleID() == 1) {
+            if (account.getRoleID() == 1 || account.getRoleID() == 2) {
                 request.getSession().setAttribute("account", account);
                 response.sendRedirect(request.getContextPath() + "/AdminManage.jsp");
                 return;

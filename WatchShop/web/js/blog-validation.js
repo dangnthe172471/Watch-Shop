@@ -32,8 +32,8 @@ function validateImage() {
     var image = $("#image").val();
     if (image.trim() === '') {
         $("#imageError").text("Vui lòng nhập URL ảnh.");
-    } else if (!image.match(/^img\/.*\.jpg$/)) {
-        $("#imageError").text("Ảnh phải theo định dạng img/xxx.jpg.");
+    } else if (!image.match(/^.*\.(jpg|jpeg|png|webp)$/i)) {
+        $("#imageError").text("Ảnh phải theo định dạng .jpg, .jpeg, .png hoặc .webp");
     } else {
         $("#imageError").text("");
     }

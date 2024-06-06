@@ -151,8 +151,8 @@ SET IDENTITY_INSERT [dbo].[Role] OFF
 
 SET IDENTITY_INSERT [dbo].[Account] ON 
 INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES
-(1, N'admin',  N'CJlHD5VzqsB7h7T8nTQMPX/mIwQ=', N'bapthom3@gmail.com', N'0123456789',9999, 0, N'Bac Ninh', 1),
-(2, N'staff', N'CJlHD5VzqsB7h7T8nTQMPX/mIwQ=', N'bapthom3@gmail.com',N'0987654321',800, 1500, N'Ha Noi', 2),
+(1, N'admin',  N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'bapthom3@gmail.com', N'0123456789',9999, 0, N'Bac Ninh', 1),
+(2, N'staff', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'staff@gmail.com',N'0987654321',800, 1500, N'Ha Noi', 2),
 (3, N'user1', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'user1@gmail.com',N'0123654789',600, 2000, N'Sơn La', 4),
 (4, N'user2', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'user2@gmail.com',N'0123654789',800, 1000, N'Vinh Phuc', 4),
 (5, N'shiper1', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'shiper2@gmail.com',N'0147258369',2000, 2250, N'Hai Phong', 3),
