@@ -13,17 +13,19 @@ public class Blog {
     private int id;
     private String title, image, date, description;
     private int status;
+    private int created_by;
 
     public Blog() {
     }
 
-    public Blog(int id, String title, String image, String date, String description, int status) {
+    public Blog(int id, String title, String image, String date, String description, int status, int created_by) {
         this.id = id;
         this.title = title;
         this.image = image;
         this.date = date;
         this.description = description;
         this.status = status;
+        this.created_by = created_by;
     }
 
     public int getId() {
@@ -74,4 +76,11 @@ public class Blog {
         this.status = status;
     }
 
+    public int getCreated_by() {
+        return created_by;
+    }
+
+    public void setCreated_by(int created_by) {
+        this.created_by = created_by;
+    }
 }

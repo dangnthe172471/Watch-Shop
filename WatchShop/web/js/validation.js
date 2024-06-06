@@ -1,96 +1,121 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
- */
-
-
-function validatePassword() {
-    var password = document.getElementById("password").value;
-    var passwordMessageElement = document.getElementById("passwordMessage");
-    
-   
-    if (password.length < 8) {
-        passwordMessageElement.innerHTML = "Password must be at least 8 characters long.";
-        passwordMessageElement.style.color = "red";
-        return;
-    }
-    
-  
-    var hasUpperCase = /[A-Z]/.test(password);
-    var hasLowerCase = /[a-z]/.test(password);
-    var hasNumber = /\d/.test(password);
-    var hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    
-    if (!(hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar)) {
-        passwordMessageElement.innerHTML = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
-        passwordMessageElement.style.color = "red";
-        return;
-    }
-    
-   
-    passwordMessageElement.innerHTML = "Password is strong.";
-    passwordMessageElement.style.color = "green";
-}
-
-
 function validateEmail() {
     var email = document.getElementById("email").value;
     var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
     var emailMessageElement = document.getElementById("emailMessage");
-    
+
     if (emailRegex.test(email)) {
-        emailMessageElement.innerHTML = "Email is valid.";
+        emailMessageElement.innerHTML = "Email hợp lệ.";
         emailMessageElement.style.color = "green";
     } else {
-        emailMessageElement.innerHTML = "Email is not valid.";
+        emailMessageElement.innerHTML = "Email không đúng định dạng.";
         emailMessageElement.style.color = "red";
     }
 }
 
 function validatePhoneNumber() {
     var phoneNumber = document.getElementById("phoneNumber").value;
-    var phoneRegex = /^[0-9]{10,11}$/; 
+    var phoneRegex = /^[0-9]{10,11}$/; // Giả sử số điện thoại Việt Nam có 10 hoặc 11 chữ số
     var phoneMessageElement = document.getElementById("phoneMessage");
-    
+
     if (phoneRegex.test(phoneNumber)) {
-        phoneMessageElement.innerHTML = "Phone number is valid.";
+        phoneMessageElement.innerHTML = "Số điện thoại hợp lệ.";
         phoneMessageElement.style.color = "green";
     } else {
-        phoneMessageElement.innerHTML = "Phone number is not valid.";
+        phoneMessageElement.innerHTML = "Số điện thoại không đúng định dạng.";
         phoneMessageElement.style.color = "red";
     }
 }
 
-function checkEmpty() {
-    var email = document.getElementById("email").value;
-    var phoneNumber = document.getElementById("phoneNumber").value;
-    var emptyMessageElement = document.getElementById("emptyMessage");
-    
-    if (email === "" || phoneNumber === "") {
-        emptyMessageElement.innerHTML = "Fields cannot be empty.";
-        emptyMessageElement.style.color = "red";
+function validateUsername() {
+    var username = document.getElementById("username").value;
+    var usernameMessageElement = document.getElementById("usernameMessage");
+
+    if (username.trim() === "") {
+        usernameMessageElement.innerHTML = "Tên đăng nhập không được để trống.";
+        usernameMessageElement.style.color = "red";
     } else {
-        emptyMessageElement.innerHTML = "";
+        usernameMessageElement.innerHTML = "";
+    }
+}
+
+function validatePassword() {
+    var password = document.getElementById("password").value;
+    var passwordMessageElement = document.getElementById("passwordMessage");
+
+    // Kiểm tra mật khẩu phải có ít nhất 8 ký tự
+    if (password.length < 8) {
+        passwordMessageElement.innerHTML = "Mật khẩu phải có ít nhất 8 ký tự.";
+        passwordMessageElement.style.color = "red";
+    } else if (!/[A-Z]/.test(password)) {
+        passwordMessageElement.innerHTML = "Mật khẩu phải có ít nhất một chữ cái viết hoa.";
+        passwordMessageElement.style.color = "red";
+    } else if (!/[a-z]/.test(password)) {
+        passwordMessageElement.innerHTML = "Mật khẩu phải có ít nhất một chữ cái viết thường.";
+        passwordMessageElement.style.color = "red";
+    } else if (!/[0-9]/.test(password)) {
+        passwordMessageElement.innerHTML = "Mật khẩu phải có ít nhất một số.";
+        passwordMessageElement.style.color = "red";
+    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        passwordMessageElement.innerHTML = "Mật khẩu phải có ít nhất một ký tự đặc biệt.";
+        passwordMessageElement.style.color = "red";
+    } else {
+        passwordMessageElement.innerHTML = "";
+    }
+}
+
+function validateRepeatPassword() {
+    var password = document.getElementById("password").value;
+    var repeatPassword = document.getElementById("re_pass").value;
+    var repeatPasswordMessageElement = document.getElementById("repeatPasswordMessage");
+
+    if (password !== repeatPassword) {
+        repeatPasswordMessageElement.innerHTML = "Mật khẩu xác nhận không đúng.";
+        repeatPasswordMessageElement.style.color = "red";
+    } else {
+        repeatPasswordMessageElement.innerHTML = "";
+    }
+}
+
+function validateAddress() {
+    var address = document.getElementById("address").value;
+    var addressMessageElement = document.getElementById("addressMessage");
+
+    if (address.trim() === "") {
+        addressMessageElement.innerHTML = "địa chỉ nhận hàng không được để trống.";
+        addressMessageElement.style.color = "red";
+    } else {
+        addressMessageElement.innerHTML = "";
     }
 }
 
 function checkWhitespace() {
+    var username = document.getElementById("username").value;
     var email = document.getElementById("email").value;
     var phoneNumber = document.getElementById("phoneNumber").value;
+    var password = document.getElementById("password").value;
+    var repeatPassword = document.getElementById("re_pass").value;
+    var address = document.getElementById("address").value;
+
     var whitespaceMessageElement = document.getElementById("whitespaceMessage");
-    
-    if (/\s/.test(email) || /\s/.test(phoneNumber)) {
-        whitespaceMessageElement.innerHTML = "Fields cannot contain spaces.";
+
+    if (/\s/.test(username) || /\s/.test(email) || /\s/.test(phoneNumber) || /\s/.test(password) || /\s/.test(repeatPassword) || /\s/.test(address)) {
+        whitespaceMessageElement.innerHTML = "Các trường không thể chứa dấu cách.";
         whitespaceMessageElement.style.color = "red";
     } else {
         whitespaceMessageElement.innerHTML = "";
     }
 }
 
-function validateForm() {
-    validateEmail();
-    validatePhoneNumber();
-    checkEmpty();
-    checkWhitespace();
-    validatePassword();
+
+
+function onSubmitForm(event) {
+    validateForm();
+    var errorMessageElements = document.querySelectorAll('div[id$="Message"]');
+    for (var i = 0; i < errorMessageElements.length; i++) {
+        if (errorMessageElements[i].style.color === "red") {
+            event.preventDefault();
+            return false;
+        }
+    }
+    return true;
 }
