@@ -84,6 +84,11 @@ public class Login extends HttpServlet {
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
         String rem = request.getParameter("rem");
+        if (isEmpty(username) || isEmpty(password)) {
+            request.setAttribute("error", "Không được để trống tài khoản và mật khẩu");
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
+            return;
+        }
 
         if (username == null || password == null) {
             request.getRequestDispatcher("Login.jsp").forward(request, response);
@@ -106,6 +111,11 @@ public class Login extends HttpServlet {
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
                 return;
             }
+            if (containsWhitespace(username) || containsWhitespace(password)) {
+                request.setAttribute("error", "Tài khoản và mật khẩu không được có dấu cách.");
+                request.getRequestDispatcher("Login.jsp").forward(request, response);
+                return;
+            }
 
             session.setAttribute("account", account);
             //login ADMIN
@@ -114,6 +124,7 @@ public class Login extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/AdminManage.jsp");
                 return;
             }
+         
 
             //login User
             Cookie cu = new Cookie("cuser", username);
@@ -133,6 +144,14 @@ public class Login extends HttpServlet {
             response.addCookie(cr);
             response.sendRedirect(request.getContextPath() + "/home");
         }
+    }
+
+    private boolean isEmpty(String value) {
+        return value == null || value.trim().isEmpty();
+    }
+
+    private boolean containsWhitespace(String value) {
+        return value.contains(" ");
     }
 
     /**
