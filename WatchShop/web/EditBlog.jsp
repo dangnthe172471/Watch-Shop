@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <<script type="text/javascript" src="js/blog-validation.js"></script>
     </head>
     <body>
         <div class="container">
@@ -134,18 +135,22 @@
                                 <div class="form-group">
                                     <label for="title">Tên:</label>
                                     <input type="text" class="form-control" id="title" name="title" required>
+                                    <span id="titleError" class="error-message" style="color: red;"></span> <!-- Error message for title -->
                                 </div>
                                 <div class="form-group">
                                     <label for="image">URL Ảnh:</label>
                                     <input type="text" class="form-control" id="image" name="image" required>
+                                    <span id="imageError" class="error-message" style="color: red;"></span> <!-- Error message for image -->
                                 </div>
                                 <div class="form-group">
                                     <label for="date">Thời gian:</label>
                                     <input type="date" class="form-control" id="date" name="date" required>
+                                    <span id="dateError" class="error-message" style="color: red;"></span> <!-- Error message for date -->
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Nội dung:</label>
                                     <textarea class="form-control" id="description" name="description" required></textarea>
+                                    <span id="descriptionError" class="error-message" style="color: red;"></span> <!-- Error message for description -->
                                 </div>
                             </form>
                         </div>
@@ -156,6 +161,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -175,31 +181,4 @@
                     </div>
                 </div>
             </div>
-
-            <script>
-                function submitEditBlogForm(blogId) {
-                    var selectedStatus = $("#statusSelect" + blogId).val();
-                    $("#status" + blogId).val(selectedStatus);
-                    $("#editBlogForm" + blogId).submit();
-                }
-                function removeBlog(id) {
-                    $('#confirmDeleteModal').modal('show');
-                    $('#confirmDeleteButton').on('click', function () {
-                        $.ajax({
-                            type: "GET",
-                            url: 'editblog?action=delete&id=' + id,
-                            success: function (data) {
-                                $('#confirmDeleteModal').modal('hide');
-                                location.reload();
-                            },
-                            error: function (data) {
-                                console.log("Error occurred while deleting blog.");
-                            }
-                        });
-                    });
-                }
-                function submitAddBlogForm() {
-                    $("#addBlogForm").submit();
-                }
-            </script>
         </div>
