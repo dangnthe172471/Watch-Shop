@@ -22,23 +22,9 @@
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
         <script type="text/javascript" src="slick/slick.min.js"></script>
         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
-        <script type="text/javascript" src="js/showcart.js"></script>        
         <script type="text/javascript" src="js/main.js"></script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script> 
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js"></script>
-
-        <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
-        <!--<script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>        
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-        <style>
-            .thumb-img {
-                cursor: pointer;
-            }
-        </style>
     </head>
     <body>
         <jsp:include page="nav.jsp"/>
@@ -49,15 +35,15 @@
                     <div class="row">
                         <div class="col-md-6 khoianh">
                             <div class="anhto mb-4">
-                                <a class="active" href="detail?pid=${detail.id}" data-fancybox="thumb-img">
+                                <a class="active" href="detail?pid=${detail.id}" data-fancybox="thumb-img" style="cursor: pointer;">
                                     <img id="main-image" class="product-image" src="${detail.pimage.img1}" alt="" style="width: 520px;height: 580px;">
                                 </a>
                             </div>
                             <div class="list-anhchitiet d-flex mb-4" style="margin-left: 4rem;">
-                                <img class="thumb-img mr-3" src="${detail.pimage.img1}" class="img-fluid" alt="">
-                                <img class="thumb-img mr-3" src="${detail.pimage.img2}" class="img-fluid" alt="">
-                                <img class="thumb-img mr-3" src="${detail.pimage.img3}" class="img-fluid" alt="">
-                                <img class="thumb-img mr-3" src="${detail.pimage.img4}" class="img-fluid" alt="">
+                                <img class="thumb-img mr-3" src="${detail.pimage.img1}" class="img-fluid" style="cursor: pointer;">
+                                <img class="thumb-img mr-3" src="${detail.pimage.img2}" class="img-fluid" style="cursor: pointer;">
+                                <img class="thumb-img mr-3" src="${detail.pimage.img3}" class="img-fluid" style="cursor: pointer;">
+                                <img class="thumb-img mr-3" src="${detail.pimage.img4}" class="img-fluid" style="cursor: pointer;">
                             </div>
                         </div>
 
@@ -70,7 +56,6 @@
                                         <p style="margin: 15px 0;">Đánh giá: ${detail.rate}<i class="fa fa-star" style="color: blue"></i></p>
                                     </div>
                                     <div class="col-md-9">
-
                                         <div class="gia">
                                             <div style="color: red; font-size:30px; font-weight:bold;">${detail.price} $</div>
                                             <div style="margin: 15px 0;font-size: 16px">Ngày sản xuất: <input type="date" value="${detail.releaseDate}" readonly style="border: none"/> </div>
@@ -91,7 +76,7 @@
                                             </dd>                                       
                                         </div>
                                         <label class="font-weight-bold" style="color: red">Lượng hàng trong kho (${detail.quantity})</label>
-                                        <a href="#" onclick="buy('${detail.id}')" class="btn btn-primary" style="width:200px; color: white" >Chọn mua</a>
+                                        <a href="#" onclick="addCart('${detail.id}')" class="btn btn-primary" style="width:200px; color: white" >Chọn mua</a>
                                         <P>Gọi đặt mua: 0962900476 (8:00-21:30)</P>
                                     </div>
                                 </div>
@@ -146,7 +131,7 @@
                                             <option value="2" style="text-align: center">⭐⭐</option>
                                             <option value="1" style="text-align: center">⭐</option>                                                                     
                                         </select>
-                                        <div class="g-recaptcha" data-sitekey="6LePFu8pAAAAAGmtUh76Nc4A3dKyJG-S6ioyycBR"></div>
+                                        <div class="g-recaptcha" data-sitekey="6LePFu8pAAAAAGmtUh76Nc4A3dKyJG-S6ioyycBR" data-callback="hideWarning"></div>                                        
                                         <div style="color: red; display: none" id="uncheck">Vui lòng xác thực bạn không phải là robot</div>
                                         <input type="button" onclick="checkCaptcha()" value="Đánh giá" style="margin-top: 10px;">
                                         <input value="${detail.id}" type="hidden" name="pid">
@@ -227,7 +212,6 @@
         <br>
         <jsp:include page="nav2.jsp"/>
 
-        <!--captcha-->
         <script type="text/javascript">
             function checkCaptcha() {
                 var form = document.getElementById("feedback");
@@ -239,6 +223,34 @@
                 } else {
                     uncheck.style.display = "";
                 }
+            }
+
+            function hideWarning() {
+                var uncheck = document.getElementById("uncheck");
+                uncheck.style.display = "none";
+            }
+        </script>
+        <p style="color: springgreen;font-size: 14px;"></p>
+        <script type="text/javascript">
+            function addCart(id) {
+                // Tạo box thông báo
+                var notification = document.createElement('div');
+                notification.innerHTML = "Sản phẩm đã được thêm vào giỏ hàng !";
+                notification.style.position = 'fixed';
+                notification.style.fontSize = '15px';
+                notification.style.top = '15px';
+                notification.style.right = '25px';
+                notification.style.padding = '15px';
+                notification.style.backgroundColor = '#28a745';
+                notification.style.color = '#fff';
+                notification.style.borderRadius = '5px';
+                document.body.appendChild(notification);
+
+//                 Thực hiện hành động add to cart
+                setTimeout(function () {
+                    document.f.action = "buy?id=" + id;
+                    document.f.submit();
+                }, 800);
             }
         </script>
 
@@ -254,22 +266,12 @@
             });
         </script>
 
+        <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+        <!--<script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    
         <!--ckeditor-->
         <script>
             CKEDITOR.replace('content');
         </script>
-
-        <!--add to cart-->
-        <script type="text/javascript">
-            function buy(id) {
-                $.bootstrapGrowl("Thêm giỏ hàng thành công!", {
-                    type: "success"
-                });
-                setTimeout(function () {
-                    document.f.action = "buy?id=" + id;
-                    document.f.submit();
-                }, 800);
-            }
-        </script>  
     </body>
 </html>
