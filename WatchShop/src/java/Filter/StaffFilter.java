@@ -24,8 +24,8 @@ import model.Account;
  *
  * @author admin
  */
-@WebFilter(filterName = "ManagerFilter", servletNames = {"BrandServlet", "AddCServlet", "CategoryServlet", "DeleteBServlet", "UpdateBrand", "UpdateCategory"})
-public class ManagerFilter implements Filter {
+@WebFilter(filterName = "StaffFilter", servletNames = {"EditBlogServlet", "ManageBlogServlet",})
+public class StaffFilter implements Filter {
 
     private static final boolean debug = true;
 
@@ -34,13 +34,13 @@ public class ManagerFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public ManagerFilter() {
+    public StaffFilter() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("ManagerFilter:DoBeforeProcessing");
+            log("StaffFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -68,7 +68,7 @@ public class ManagerFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("ManagerFilter:DoAfterProcessing");
+            log("StaffFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -104,7 +104,7 @@ public class ManagerFilter implements Filter {
             throws IOException, ServletException {
 
         if (debug) {
-            log("ManagerFilter:doFilter()");
+            log("StaffFilter:doFilter()");
         }
 
         doBeforeProcessing(request, response);
@@ -117,7 +117,7 @@ public class ManagerFilter implements Filter {
         if (account == null) {
             req.getRequestDispatcher("home").forward(request, response);
         } else {
-            if (account.getRoleID() != 1) {
+            if (account.getRoleID() == 3 || account.getRoleID() == 4) {
                 req.getRequestDispatcher("home").forward(request, response);
             }
         }
@@ -177,7 +177,7 @@ public class ManagerFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("ManagerFilter:Initializing filter");
+                log("StaffFilter:Initializing filter");
             }
         }
     }
@@ -188,9 +188,9 @@ public class ManagerFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("ManagerFilter()");
+            return ("StaffFilter()");
         }
-        StringBuffer sb = new StringBuffer("ManagerFilter(");
+        StringBuffer sb = new StringBuffer("StaffFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

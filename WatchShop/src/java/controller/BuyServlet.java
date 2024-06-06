@@ -82,7 +82,6 @@ public class BuyServlet extends HttpServlet {
         Cart cart = null;
         Object o = session.getAttribute("cart");
         ProductDAO dao = new ProductDAO();
-        OrderDAO odao = new OrderDAO();
         // có rồi
         if (o != null) {
             cart = (Cart) o;
@@ -92,14 +91,11 @@ public class BuyServlet extends HttpServlet {
         String tnmum = request.getParameter("num");
         String id = request.getParameter("id");
         int num;
-        try {
-            num = Integer.parseInt(tnmum);
-            Product p = dao.getProductByID(id);
-            double price = p.getPrice();
-            Item t = new Item(p, num, price);
-            cart.addItem(t);
-        } catch (NumberFormatException e) {
-        }
+        num = Integer.parseInt(tnmum);
+        Product p = dao.getProductByID(id);
+        double price = p.getPrice();
+        Item t = new Item(p, num, price);
+        cart.addItem(t);
         List<Item> list = cart.getItems();
         double totalMoney = 0;
         for (Item item : list) {

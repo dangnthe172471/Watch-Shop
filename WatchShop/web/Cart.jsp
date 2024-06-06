@@ -57,7 +57,7 @@
                                     <c:forEach items="${o.items}" var="i">
                                         <div class="cart-item d-flex">
                                             <a href="detail?pid=${i.product.id}" class="img">
-                                                <img src="${i.product.image}" class="img-fluid" style="height: 100px;width: 150px;">
+                                                <img src="${i.product.pimage.img1}" class="img-fluid" style="height: 100px;width: 150px;">
                                             </a>
                                             <div class="item-caption d-flex w-100">
                                                 <div class="item-info ml-2">

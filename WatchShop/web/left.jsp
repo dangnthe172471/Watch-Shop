@@ -38,36 +38,53 @@
                 <span class="text">Watch Shop</span>
             </a>
             <ul class="side-menu top">
-                <li class="${tab==null?'active':''}">
-                    <a href="AdminManage.jsp">
-                        <i class='bx bxs-dashboard' ></i>
-                        <span class="text">Thống kê</span>
-                    </a>
-                </li>
-                <li class="${tab==2?'active':''}">
-                    <a href="brand">
-                        <i class='bx bxs-shopping-bag-alt' ></i>
-                        <span class="text">Thương hiệu</span>
-                    </a>
-                </li>
-                <li class="${tab==3?'active':''}">
-                    <a href="category">
-                        <i class='bx bxs-doughnut-chart' ></i>
-                        <span class="text">Loại</span>
-                    </a>
-                </li>
-                <li class="${tab==4?'active':''}">
-                    <a href="manageblog">
-                        <i class='bx bxs-message-dots' ></i>
-                        <span class="text">Tin tức</span>
-                    </a>
-                </li>
-                <li class="${tab==5?'active':''}">
-                    <a href="#">
-                        <i class='bx bxs-group' ></i>
-                        <span class="text">Sản phẩm</span>
-                    </a>
-                </li>
+                <c:if test="${sessionScope.account.roleID==1}">
+                    <li class="${tab==null?'active':''}">
+                        <a href="AdminManage.jsp">
+                            <i class='bx bxs-dashboard' ></i>
+                            <span class="text">Thống kê</span>
+                        </a>
+                    </li>
+                    <li class="${tab==2?'active':''}">
+                        <a href="brand">
+                            <i class='bx bxs-shopping-bag-alt' ></i>
+                            <span class="text">Thương hiệu</span>
+                        </a>
+                    </li>
+                    <li class="${tab==3?'active':''}">
+                        <a href="category">
+                            <i class='bx bxs-doughnut-chart' ></i>
+                            <span class="text">Loại</span>
+                        </a>
+                    </li>
+                    <li class="${tab==4?'active':''}">
+                        <a href="manageblog">
+                            <i class='bx bxs-message-dots' ></i>
+                            <span class="text">Tin tức</span>
+                        </a>
+                    </li>
+                    <li class="${tab==5?'active':''}">
+                        <a href="#">
+                            <i class='bx bxs-group' ></i>
+                            <span class="text">Sản phẩm</span>
+                        </a>
+                    </li>
+                </c:if>
+                     <c:if test="${sessionScope.account.roleID==2}">
+                    <li class="${tab==null?'active':''}">
+                        <a href="AdminManage.jsp">
+                            <i class='bx bxs-dashboard' ></i>
+                            <span class="text">Thống kê</span>
+                        </a>
+                    </li>
+                    <li class="${tab==4?'active':''}">
+                        <a href="manageblog">
+                            <i class='bx bxs-message-dots' ></i>
+                            <span class="text">Tin tức</span>
+                        </a>
+                    </li>
+                    </li>
+                </c:if>
             </ul>
         </section>
         <section id="content">
@@ -75,9 +92,9 @@
                 <i class='bx bx-menu' ></i>  
                 <ul class="navbar-nav" style="margin-left: 600px;">
                     <div class="dropdown row" style="margin-left: 10px">
-                            <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="AdminManage.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${sessionScope.account.user}</a></li> 
-                            <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="changepass" style="display:inline-block">Change Password</a></li> 
-                            <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
+                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="AdminManage.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${sessionScope.account.user}</a></li> 
+                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="changepass" style="display:inline-block">Change Password</a></li> 
+                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
                     </div>
                     <c:set var="size" value="${sessionScope.size}"/>
                     <div style="margin-left: 10px">
