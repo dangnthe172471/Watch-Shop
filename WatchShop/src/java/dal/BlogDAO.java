@@ -24,6 +24,7 @@ public class BlogDAO extends DBContext {
                 list.add(new Blog(rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("image"),
+                        rs.getString("image2"),
                         rs.getString("date"),
                         rs.getString("description"),
                         rs.getInt("status"),
@@ -45,6 +46,7 @@ public class BlogDAO extends DBContext {
                 return new Blog(rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("image"),
+                        rs.getString("image2"),
                         rs.getString("date"),
                         rs.getString("description"),
                         rs.getInt("status"),
@@ -57,15 +59,16 @@ public class BlogDAO extends DBContext {
     }
 
     public void addBlog(Blog blog) {
-        String sql = "INSERT INTO Blog (title, image, date, description, status, created_by) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Blog (title, image,image2, date, description, status, created_by) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, blog.getTitle());
             st.setString(2, blog.getImage());
-            st.setString(3, blog.getDate());
-            st.setString(4, blog.getDescription());
-            st.setInt(5, blog.getStatus());
-            st.setInt(6, blog.getCreated_by());
+            st.setString(3, blog.getImage2());
+            st.setString(4, blog.getDate());
+            st.setString(5, blog.getDescription());
+            st.setInt(6, blog.getStatus());
+            st.setInt(7, blog.getCreated_by());
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,15 +76,16 @@ public class BlogDAO extends DBContext {
     }
 
     public void updateBlog(Blog blog) {
-        String sql = "UPDATE Blog SET title = ?, image = ?, date = ?, description = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE Blog SET title = ?, image = ?,image2 = ?, date = ?, description = ?, status = ? WHERE id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, blog.getTitle());
             st.setString(2, blog.getImage());
-            st.setString(3, blog.getDate());
-            st.setString(4, blog.getDescription());
-            st.setInt(5, blog.getStatus());
-            st.setInt(6, blog.getId());
+            st.setString(3, blog.getImage2());
+            st.setString(4, blog.getDate());
+            st.setString(5, blog.getDescription());
+            st.setInt(6, blog.getStatus());
+            st.setInt(7, blog.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,6 +113,7 @@ public class BlogDAO extends DBContext {
                 list.add(new Blog(rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("image"),
+                        rs.getString("image2"),
                         rs.getString("date"),
                         rs.getString("description"),
                         rs.getInt("status"),

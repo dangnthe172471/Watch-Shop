@@ -11,17 +11,18 @@ package model;
 public class Blog {
 
     private int id;
-    private String title, image, date, description;
+    private String title, image, image2, date, description;
     private int status;
     private int created_by;
 
     public Blog() {
     }
 
-    public Blog(int id, String title, String image, String date, String description, int status, int created_by) {
+    public Blog(int id, String title, String image1, String image2, String date, String description, int status, int created_by) {
         this.id = id;
         this.title = title;
-        this.image = image;
+        this.image = image1;
+        this.image2 = image2;
         this.date = date;
         this.description = description;
         this.status = status;
@@ -50,6 +51,14 @@ public class Blog {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
     }
 
     public String getDate() {
@@ -83,4 +92,5 @@ public class Blog {
     public void setCreated_by(int created_by) {
         this.created_by = created_by;
     }
+
 }
