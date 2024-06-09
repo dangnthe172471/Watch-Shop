@@ -3,8 +3,9 @@
     Created on : May 8, 2024, 6:38:56 PM
     Author     : admin
 --%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -57,7 +58,7 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="gia">
-                                            <div style="color: red; font-size:30px; font-weight:bold;">${detail.price} $</div>
+                                            <div style="color: red; font-size:30px; font-weight:bold;"><fmt:formatNumber value="${detail.price}"/> vnđ</div>
                                             <div style="margin: 15px 0;font-size: 16px">Ngày sản xuất: <input type="date" value="${detail.releaseDate}" readonly style="border: none"/> </div>
                                             <div style="margin: 15px 0;font-size: 16px">Đã bán: <b>${detail.sold}</b> </div>
                                         </div>
@@ -69,13 +70,22 @@
                                                 <li>Thay pin miễn phí và tặng móc khóa cho mọi đơn hàng</li>
                                             </ul>
                                         </div>
-                                        <div class="soluong d-flex">
-                                            <label class="font-weight-bold">Số lượng: </label>
-                                            <dd>
-                                                <input type="number" name="num" style="width:70px;" min="1" max="${detail.quantity}" value="1" >
-                                            </dd>                                       
-                                        </div>
-                                        <label class="font-weight-bold" style="color: red">Lượng hàng trong kho (${detail.quantity})</label>
+                                        <c:set var="o" value="${sessionScope.cart}"/>
+                                        <c:forEach items="${o.items}" var="i">
+                                            <c:if test="${i.product.id==detail.id}">
+                                                <div class="soluong d-flex">
+                                                    <label class="font-weight-bold">Số lượng: </label>
+                                                    <dd>
+
+
+                                                        <input type="number" name="num" style="width:70px;" min="1" max="${detail.quantity-i.quantity}" value="1" >
+
+
+                                                    </dd>                                       
+                                                </div>
+                                                        <label class="font-weight-bold" style="color: black">Lượng hàng trong kho: ${detail.quantity}<br>Giỏ hàng bạn đang có: ${i.quantity}</label>
+                                            </c:if>
+                                        </c:forEach>
                                         <a href="#" onclick="addCart('${detail.id}')" class="btn btn-primary" style="width:200px; color: white" >Chọn mua</a>
                                         <P>Gọi đặt mua: 0962900476 (8:00-21:30)</P>
                                     </div>
@@ -187,16 +197,16 @@
             <h2>Sản phẩm bạn có thể thích</h2>
             <div class="row col-12 col-md-12 col-lg-12">                  
                 <c:forEach items="${listP}" var="o">                                 
-                    <div class="col-12 col-md-3 col-lg-3">
+                    <div class="col-12 col-md-3 col-lg-3" style="width: 500px;">
                         <div class="card">
                             <a href="detail?pid=${o.id}" class="motsanpham" style="text-decoration: none; color: black;" data-toggle="tooltip" data-placement="bottom">
                                 <img class="card-img-top anh" src="${o.pimage.img1}" style="height: 250px">
                                 <div class="card-body noidungsp mt-3">
+                                    <div class="sale">-10%</div>
                                     <h3 class="card-title ten">${o.name}</h3>
                                     <div class="gia d-flex align-items-baseline">
-                                        <div class="giamoi">${o.price} $</div>
-                                        <div class="giacu text-muted"><del>${o.price+350} $</del></div>
-                                        <div class="sale">-10%</div>
+                                        <div class="giamoi"><fmt:formatNumber value="${o.price}"/>vnđ</div>
+                                        <div class="giacu text-muted"><del><fmt:formatNumber value="${o.price*1.1}"/>vnđ</del></div>
                                     </div>
                                     <div class="danhgia">
                                         Đã bán: ${o.sold}

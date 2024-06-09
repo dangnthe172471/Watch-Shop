@@ -15,9 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.List;
-import model.Brand;
-import model.Category;
 import model.Product;
 
 /**
@@ -136,11 +135,11 @@ public class SearchByAjax extends HttpServlet {
                     + "                                            <a href=\"detail?pid=" + o.getId() + "\" class=\"motsanpham\" style=\"text-decoration: none; color: black;\" data-toggle=\"tooltip\" data-placement=\"bottom\">\n"
                     + "                                                <img class=\"card-img-top anh\" src=\"" + o.getPimage().getImg1() + "\" style=\"height: 250px\">\n"
                     + "                                                <div class=\"card-body noidungsp mt-3\">\n"
+                    + "                                                        <div class=\"sale\">-10%</div>\n"
                     + "                                                    <h3 class=\"card-title ten\">" + o.getName() + "</h3>\n"
                     + "                                                    <div class=\"gia d-flex align-items-baseline\">\n"
-                    + "                                                        <div class=\"giamoi\">" + o.getPrice() + " $</div>\n"
-                    + "                                                        <div class=\"giacu text-muted\"><del>" + (o.getPrice() + 350) + " $</del></div>\n"
-                    + "                                                        <div class=\"sale\">-10%</div>\n"
+                    + "                                                        <div class=\"giamoi\">" + formatNumber(o.getPrice()) + " vnđ</div>\n"
+                    + "                                                        <div class=\"giacu text-muted ml-1\"><del>" + formatNumber(o.getPrice() + 350) + " vnđ</del></div>\n"
                     + "                                                    </div>\n"
                     + "                                                    <div class=\"danhgia\">\n"
                     + "                                                        Đã bán: " + o.getSold() + "\n"
@@ -151,6 +150,11 @@ public class SearchByAjax extends HttpServlet {
                     + "                                        </div> \n"
                     + "                                    </div>    ");
         }
+    }
+
+    private static String formatNumber(double number) {
+        DecimalFormat formatter = new DecimalFormat("#,###,###.###");
+        return formatter.format(number);
     }
 
     /**
