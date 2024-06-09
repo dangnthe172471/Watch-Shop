@@ -3,9 +3,9 @@
     Created on : May 8, 2024, 11:53:58 AM
     Author     : admin
 --%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -145,11 +145,11 @@
                                             <a href="detail?pid=${o.id}" class="motsanpham" style="text-decoration: none; color: black;" data-toggle="tooltip" data-placement="bottom">
                                                 <img class="card-img-top anh" src="${o.pimage.img1}" style="height: 250px">
                                                 <div class="card-body noidungsp mt-3">
+                                                    <div class="sale" style="margin-bottom: 50px;">-10%</div>
                                                     <h3 class="card-title ten">${o.name}</h3>
                                                     <div class="gia d-flex align-items-baseline">
-                                                        <div class="giamoi">${o.price} $</div>
-                                                        <div class="giacu text-muted"><del>${o.price+350} $</del></div>
-                                                        <div class="sale">-10%</div>
+                                                        <div class="giamoi"><fmt:formatNumber value="${o.price}"/> vnđ</div>
+                                                        <div class="giacu text-muted ml-1"><del><fmt:formatNumber value="${o.price*1.1}"/> vnđ</del></div>
                                                     </div>
                                                     <div class="danhgia">
                                                         Đã bán: ${o.sold}

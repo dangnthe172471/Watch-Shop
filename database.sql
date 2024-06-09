@@ -13,53 +13,53 @@ CREATE TABLE [dbo].[Role](
 );
 
 CREATE TABLE [dbo].[Account](
-	[id] [int] IDENTITY(1,1) NOT NULL,
+	[id] [int] IDENTITY(1,1),
 	[avatar] [varchar](255) DEFAULT N'img/avata.jpg',
-    [user] [varchar](255) NOT NULL,
-    [pass] [varchar](255) Not NULL,
-	[email] [varchar](255) NULL,
-	[phone] [varchar](255) NULL,
+    [user] [varchar](255),
+    [pass] [varchar](255),
+	[email] [varchar](255),
+	[phone] [varchar](255),
 	[amount] [money] DEFAULT 0,
     [bought] [int] DEFAULT 0,
-	[Address] [varchar](255) NULL,
+	[Address] [varchar](255),
 	[status] [int] DEFAULT 0,
-    [roleID] [int] NOT NULL,
-	[token] [varchar](max) null,
+    [roleID] [int],
+	[token] [varchar](max),
     PRIMARY KEY CLUSTERED([id]ASC),
 	foreign key ([roleID]) references [dbo].[Role]([id]),
 );
 
 CREATE TABLE [dbo].[Category](
-	[cid] [int] IDENTITY(1,1) NOT NULL,
-	[cname] [nvarchar](max) NOT NULL,
+	[cid] [int] IDENTITY(1,1),
+	[cname] [nvarchar](max),
 	[type] [int],
 	[deleted] [int],
 	PRIMARY KEY CLUSTERED ([cid] ASC)
 );
 
 CREATE TABLE [dbo].[brand] (
-	[bid] [int] IDENTITY(1,1) NOT NULL,
-	[bname] [nvarchar](max) NOT NULL,
-	[image][nvarchar](max) NOT NULL,
-	[description] [nvarchar](max) NULL,
+	[bid] [int] IDENTITY(1,1),
+	[bname] [nvarchar](max),
+	[image][nvarchar](max),
+	[description] [nvarchar](max),
 	[deleted] [int],
 	PRIMARY KEY CLUSTERED ([bid] ASC)
 );
 
 CREATE TABLE [dbo].[product](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[code] [nvarchar](max) NULL,
-	[name] [nvarchar](max) NULL,
-	[price] [money] NULL,
-	[quantity] [int] NULL,
-	[sold] [int] NULL,
-	[releaseDate] [date] NULL,
-	[description] [nvarchar](max) NULL,
+	[id] [int] IDENTITY(1,1),
+	[code] [nvarchar](max),
+	[name] [nvarchar](max),
+	[price] [float],
+	[quantity] [int],
+	[sold] [int],
+	[releaseDate] [date],
+	[description] [nvarchar](max),
 	[rate][float],
-	[cateID1] [int] not NULL,
-	[cateID2] [int] not NULL,
-	[cateID3] [int] not NULL,
-	[brandID] [int] not NULL,
+	[cateID1] [int],
+	[cateID2] [int],
+	[cateID3] [int],
+	[brandID] [int],
 	[status] [int] DEFAULT 0,
 	PRIMARY KEY CLUSTERED ([id] ASC),
 	FOREIGN KEY([cateID1]) REFERENCES [dbo].[Category]([cid]),
@@ -70,22 +70,20 @@ CREATE TABLE [dbo].[product](
 
 create table [dbo].[ImageProduct](
 	[id] [int]  IDENTITY(1,1),
-	[pid] [int]  NOT NULL,
-	[image1] [nvarchar](max) NULL,
-	[image2] [nvarchar](max) NULL,
-	[image3] [nvarchar](max) NULL,
-	[image4] [nvarchar](max) NULL,
+	[pid] [int] ,
+	[image1] [nvarchar](max),
+	[image2] [nvarchar](max),
+	[image3] [nvarchar](max),
+	[image4] [nvarchar](max),
 	FOREIGN KEY([pid]) REFERENCES [dbo].[product]([id]),
 	PRIMARY KEY CLUSTERED([id]),
 )
-
 
 CREATE TABLE [dbo].[Status](
 	[id] [int]  IDENTITY(1,1),
 	[status] [nvarchar](max),
 	PRIMARY KEY CLUSTERED([id]),
 ) ON [PRIMARY]
-
 
 CREATE TABLE [dbo].[Order](
 	[id] [int]  IDENTITY(1,1),
@@ -130,19 +128,33 @@ CREATE TABLE [dbo].[Feedback](
 ) ON [PRIMARY]
 go
 CREATE TABLE [dbo].[Blog](
-	[id] [int] IDENTITY(1,1) NOT NULL,	
-	[title] [nvarchar](max) NULL,
-	[image] [nvarchar](max) NULL,
-	[image2] [nvarchar](max) NULL,
-	[Date] [date] NULL,
-	[description] [nvarchar](max) NULL,
+	[id] [int] IDENTITY(1,1),	
+	[title] [nvarchar](max),
+	[image] [nvarchar](max),
+	[image2] [nvarchar](max),
+	[Date] [date],
+	[description] [nvarchar](max),
 	[status] [int],
 	[created_by] [int], 
 	PRIMARY KEY CLUSTERED ([id] ASC),
 	foreign key ([created_by]) references [dbo].[Account]([id]),
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY];
 go
-
+CREATE TABLE [dbo].[payment](
+	[id] [int] IDENTITY(1,1),	
+	[vnp_TxnRef] [nvarchar](max),
+	[vnp_Amount] [nvarchar](max),
+	[vnp_OrderInfo] [nvarchar](max),
+	[vnp_ResponseCode] [nvarchar](max),
+	[vnp_TransactionNo] [nvarchar](max),
+	[vnp_BankCode] [nvarchar](max),
+	[vnp_PayDate] [nvarchar](max), 
+	[vnp_TransactionStatus] [nvarchar](max), 
+	[aid] [int],
+	PRIMARY KEY CLUSTERED ([id] ASC),
+	foreign key ([aid]) references [dbo].[Account]([id]),
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY];
+go
 SET IDENTITY_INSERT [dbo].[Role] ON
 INSERT [dbo].[Role]([id], [Role], [description]) VALUES 
 (1, N'Admin', N'Người lãnh đạo, quản lý tổ chức, đóng vai trò là quản trị viên hệ thống'),
@@ -182,55 +194,55 @@ INSERT [dbo].[Category] ([cid], [cname],[type],[deleted]) VALUES
 SET IDENTITY_INSERT [dbo].[Category] OFF
 
 INSERT [dbo].[product] ([code], [name], [price], [quantity] ,[sold], [releaseDate], [description],[rate], [cateID1], [cateID2], [cateID3], [brandID]) VALUES 
-(N'RLX001',N'Rolex COSMOGRAPH DAYTONA', 3550, 2000, 1000, CAST(N'2023-06-12' AS Date), N'Rolex Cosmograph Daytona là một trong những biểu tượng không thể phủ nhận trong thế giới đồng hồ thể thao cao cấp. Được giới thiệu lần đầu vào năm 1963, Daytona nhanh chóng trở thành biểu tượng của tốc độ và sự chính xác. Với thiết kế đặc trưng của mặt số có 3 sub-dials và bezel có thể xoay, nó không chỉ là một chiếc đồng hồ mà còn là biểu tượng của phong cách và sự sang trọng.<br><br>
+(N'RLX001',N'Rolex COSMOGRAPH DAYTONA', 89000000, 2000, 1000, CAST(N'2023-06-12' AS Date), N'Rolex Cosmograph Daytona là một trong những biểu tượng không thể phủ nhận trong thế giới đồng hồ thể thao cao cấp. Được giới thiệu lần đầu vào năm 1963, Daytona nhanh chóng trở thành biểu tượng của tốc độ và sự chính xác. Với thiết kế đặc trưng của mặt số có 3 sub-dials và bezel có thể xoay, nó không chỉ là một chiếc đồng hồ mà còn là biểu tượng của phong cách và sự sang trọng.<br><br>
 Được thiết kế để đáp ứng nhu cầu của các tay đua, Cosmograph Daytona của Rolex sở hữu một bộ máy cơ chuyên nghiệp và chính xác, cho phép đo thời gian đến từng phần nhỏ nhất. Mỗi chi tiết trên chiếc đồng hồ này đều được chăm chút tỉ mỉ, từ vỏ thép không gỉ, vàng hoặc các kim loại quý khác, đến các chi tiết nhỏ như các chỉ số và kim của mặt số.<br><br>
 Ngoài tính năng đo thời gian, Daytona còn được biết đến với sự đa dạng về màu sắc và vật liệu, từ các phiên bản cổ điển với mặt số trắng vàng hoặc đen, đến các phiên bản hiện đại với mặt số màu xanh lá cây hoặc đỏ. Bất kỳ ai đeo một chiếc Cosmograph Daytona cũng có thể tự tin khẳng định phong cách của mình trong mọi tình huống, từ sân đua đến bữa tiệc sang trọng.<br><br>
 Với sự kết hợp hoàn hảo giữa tính năng và kiểu dáng, Rolex Cosmograph Daytona không chỉ là một chiếc đồng hồ mà còn là biểu tượng của sự thành công và đẳng cấp.', 4.8, 2,3,6, 1),
 
-(N'RLX002',N'Rolex YACHT-MASTER 42', 3650, 1500, 1200, CAST(N'2023-12-12' AS Date), N'Rolex Yacht-Master 42 là một trong những phiên bản đặc biệt của dòng Yacht-Master của Rolex, nổi tiếng với sự kết hợp hoàn hảo giữa tính năng thể thao và phong cách sang trọng. Với kích thước lớn hơn so với các phiên bản trước đó, chiếc đồng hồ này mang lại sự ấn tượng mạnh mẽ trên cổ tay và đồng thời tôn lên vẻ đẳng cấp và quý phái.<br><br>
+(N'RLX002',N'Rolex YACHT-MASTER 42', 92000000, 1500, 1200, CAST(N'2023-12-12' AS Date), N'Rolex Yacht-Master 42 là một trong những phiên bản đặc biệt của dòng Yacht-Master của Rolex, nổi tiếng với sự kết hợp hoàn hảo giữa tính năng thể thao và phong cách sang trọng. Với kích thước lớn hơn so với các phiên bản trước đó, chiếc đồng hồ này mang lại sự ấn tượng mạnh mẽ trên cổ tay và đồng thời tôn lên vẻ đẳng cấp và quý phái.<br><br>
 Vỏ và dây đeo của Yacht-Master 42 có thể làm từ các vật liệu cao cấp như thép không gỉ Oystersteel, vàng Everose 18ct hoặc bạch kim 18ct, tạo nên sự đa dạng trong lựa chọn phong cách. Mặt số được thiết kế cẩn thận với các chỉ số và kim loại quý, đồng hồ còn đi kèm với bezel xoay có thể điều chỉnh, giúp đo lường thời gian và các chức năng liên quan đến lễ hội biển.<br><br>
 Với bộ máy cơ tự động Rolex calibre 3235, Yacht-Master 42 không chỉ đảm bảo độ chính xác cao mà còn có khả năng chống nước đến độ sâu 100 mét (330 feet), phù hợp cho các hoạt động trên biển. Chiếc đồng hồ này không chỉ là một phụ kiện thể thao mà còn là biểu tượng của sự hiện đại và đẳng cấp trong thế giới đồng hồ cao cấp.',4.7, 2,4,6,2),
 
-(N'CTR001',N'Đồng Hồ Santos de Carter WSSA0061', 3500, 1500, 800, CAST(N'2023-03-19' AS Date), N'Đồng hồ Santos de Cartier WSSA0061 là một biểu tượng của sự tinh tế và đẳng cấp từ nhà sản xuất đồng hồ danh tiếng Cartier. Thiết kế của nó lấy cảm hứng từ phiên bản ban đầu được sáng tạo bởi Louis Cartier cho người bạn thân của mình, Alberto Santos-Dumont, một nhà hàng không nổi tiếng.<br><br>
+(N'CTR001',N'Đồng Hồ Santos de Carter WSSA0061', 87500000, 1500, 800, CAST(N'2023-03-19' AS Date), N'Đồng hồ Santos de Cartier WSSA0061 là một biểu tượng của sự tinh tế và đẳng cấp từ nhà sản xuất đồng hồ danh tiếng Cartier. Thiết kế của nó lấy cảm hứng từ phiên bản ban đầu được sáng tạo bởi Louis Cartier cho người bạn thân của mình, Alberto Santos-Dumont, một nhà hàng không nổi tiếng.<br><br>
 Với vỏ hình vuông và góc bo tròn, cùng với mặt số trắng bạc đơn giản nhưng tinh tế, chiếc đồng hồ này thể hiện sự thanh lịch và hiện đại. Dây đeo bằng da cá sấu cải tiến mang lại sự thoải mái và sang trọng cho người đeo.<br><br>
 Santos de Cartier WSSA0061 được trang bị bộ máy cơ tự động, đảm bảo tính chính xác và độ tin cậy. Đồng hồ cũng có khả năng chống nước đến mức độ nhất định, làm cho nó trở thành một lựa chọn lý tưởng không chỉ cho việc đeo',4.5, 1,5,8,3),
 
-(N'APT001',N'Đồng Hồ Audemars Piguet 41mm Royal Oak Blue Dial Automatic', 2000, 1000, 900, CAST(N'2023-03-14' AS Date), N'Đồng Hồ Audemars Piguet 41mm Royal Oak Blue Dial Automatic là một biểu tượng của sự tinh tế và sang trọng từ nhà sản xuất đồng hồ Thụy Sĩ nổi tiếng. Royal Oak là dòng sản phẩm đặc biệt của Audemars Piguet, được giới thiệu vào năm 1972 và nhanh chóng trở thành một trong những biểu tượng của ngành công nghiệp đồng hồ cao cấp.<br><br>
+(N'APT001',N'Đồng Hồ Audemars Piguet 41mm Royal Oak Blue Dial Automatic', 60000000, 1000, 900, CAST(N'2023-03-14' AS Date), N'Đồng Hồ Audemars Piguet 41mm Royal Oak Blue Dial Automatic là một biểu tượng của sự tinh tế và sang trọng từ nhà sản xuất đồng hồ Thụy Sĩ nổi tiếng. Royal Oak là dòng sản phẩm đặc biệt của Audemars Piguet, được giới thiệu vào năm 1972 và nhanh chóng trở thành một trong những biểu tượng của ngành công nghiệp đồng hồ cao cấp.<br><br>
 Với vỏ thép không gỉ 41mm, đồng hồ này có kích thước vừa phải, phù hợp với cả nam và nữ. Mặt số màu xanh lam tinh tế với các chỉ số và kim loại quý làm nổi bật vẻ đẳng cấp và lịch lãm của chiếc đồng hồ. Vỏ và dây đeo của Royal Oak',4.9, 1,3,8,4),
 
-(N'APT002',N'Đồng Hồ Audemars Piguet Royal Oak Selfwinding Chronograph', 3600, 2000, 1500, CAST(N'2023-01-12' AS Date), N'Đồng Hồ Audemars Piguet Royal Oak Selfwinding Chronograph là một biểu tượng của sự tinh tế và hiệu suất từ thương hiệu đồng hồ đẳng cấp Audemars Piguet. Royal Oak là một trong những dòng sản phẩm phổ biến nhất của hãng, với thiết kế độc đáo và sang trọng.<br><br>
+(N'APT002',N'Đồng Hồ Audemars Piguet Royal Oak Selfwinding Chronograph', 90000000, 2000, 1500, CAST(N'2023-01-12' AS Date), N'Đồng Hồ Audemars Piguet Royal Oak Selfwinding Chronograph là một biểu tượng của sự tinh tế và hiệu suất từ thương hiệu đồng hồ đẳng cấp Audemars Piguet. Royal Oak là một trong những dòng sản phẩm phổ biến nhất của hãng, với thiết kế độc đáo và sang trọng.<br><br>
 Chiếc đồng hồ này được trang bị chức năng chronograph tự động, cho phép người đeo đo lường thời gian trong các hoạt động thể thao hoặc trong cuộc sống hàng ngày. Với vỏ thép không gỉ hoặc vàng, Royal Oak Selfwinding Chronograph thể hiện sự bền bỉ và đẳng cấp.<br><br>
 Mặt số có thể có nhiều màu sắc và chi tiết khác nhau, nhưng vẫn giữ được sự tinh tế và độc đáo của dòng Royal Oak. Dây đeo có thể là thép không gỉ hoặc da cá sấu, tùy thuộc vào phiên bản cụ thể.<br><br>
 Với sự kết hợp hoàn hảo giữa tính năng và thiết kế, đồng hồ Audemars Piguet Royal Oak Selfwinding Chronograph là một lựa chọn lý tưởng cho những người yêu thích đồng hồ cao cấp và độc đáo',4.8, 1,4,7,1),
 
-(N'RLX003',N'Rolex 1908', 3700, 700, 2000, CAST(N'2024-01-30' AS Date), N'Rolex 1908 là một trong những mảnh ghép quan trọng trong hành trình phát triển của hãng đồng hồ danh tiếng này. Năm 1908, Rolex đã đặt nền móng cho sự nghiên cứu và phát triển về độ chính xác và độ bền bỉ của các thiết bị đo thời gian, tạo ra những tiêu chuẩn mới trong ngành công nghiệp đồng hồ. Sự cam kết này đã điểm đặc biệt cho Rolex và làm nên tên tuổi của họ trong thế giới đồng hồ cao cấp. <br><br>
+(N'RLX003',N'Rolex 1908', 93000000, 700, 2000, CAST(N'2024-01-30' AS Date), N'Rolex 1908 là một trong những mảnh ghép quan trọng trong hành trình phát triển của hãng đồng hồ danh tiếng này. Năm 1908, Rolex đã đặt nền móng cho sự nghiên cứu và phát triển về độ chính xác và độ bền bỉ của các thiết bị đo thời gian, tạo ra những tiêu chuẩn mới trong ngành công nghiệp đồng hồ. Sự cam kết này đã điểm đặc biệt cho Rolex và làm nên tên tuổi của họ trong thế giới đồng hồ cao cấp. <br><br>
 Từ khi thành lập, Rolex đã không ngừng tiến xa hơn trong việc phát triển và cải tiến công nghệ đồng hồ, từ việc chế tạo ra những bộ máy cơ chính xác đến việc thiết kế các thiết kế vỏ độc đáo và tinh tế. Rolex 1908 đóng vai trò là cột mốc quan trọng trong hành trình không ngừng của hãng để đem lại những chiếc đồng hồ tinh tế và đáng tin cậy nhất cho người đeo trên toàn thế giới.',4.6, 2,5,6,4),
 
-(N'PTH001',N'Đồng hồ Patek Philippe Nautilus', 3880, 800, 500, CAST(N'2023-08-15' AS Date), N'Đồng hồ Patek Philippe Nautilus là một biểu tượng của sự tinh tế và sang trọng từ thương hiệu đồng hồ xa xỉ Patek Philippe. Được giới thiệu lần đầu vào năm 1976, Nautilus nhanh chóng trở thành một trong những mẫu đồng hồ thể thao cao cấp được ưa chuộng nhất trên thị trường.<br><br>
+(N'PTH001',N'Đồng hồ Patek Philippe Nautilus', 97000000, 800, 500, CAST(N'2023-08-15' AS Date), N'Đồng hồ Patek Philippe Nautilus là một biểu tượng của sự tinh tế và sang trọng từ thương hiệu đồng hồ xa xỉ Patek Philippe. Được giới thiệu lần đầu vào năm 1976, Nautilus nhanh chóng trở thành một trong những mẫu đồng hồ thể thao cao cấp được ưa chuộng nhất trên thị trường.<br><br>
 Thiết kế của Nautilus nổi bật với vỏ hình chiếc thuyền và mặt số dạng tinh tế, mang lại vẻ đẳng cấp và sang trọng. Dòng Nautilus thường được làm từ các vật liệu cao cấp như thép không gỉ, vàng hoặc bạch kim, kết hợp cùng với dây đeo chất lượng cao như dây đeo thép hoặc dây đeo da cá sấu.<br><br>
 Bên trong, Nautilus thường được trang bị bộ máy cơ tự động hoặc cơ quang, đảm bảo độ chính xác và độ tin cậy. Với sự kết hợp hoàn hảo giữa thiết kế tinh tế và tính năng cao cấp, đồng hồ Patek Philippe Nautilus không chỉ là một phụ kiện mà còn là biểu tượng của sự thượng lưu và đẳng cấp trong thế giới đồng hồ cao cấp.',4.4, 2,3,7,2),
 
-(N'CTR002',N'Đồng Hồ Cartier Santos WSSA0030', 3750, 500, 600, CAST(N'2023-11-12' AS Date), N'Đồng Hồ Cartier Santos WSSA0030 là một biểu tượng của sự tinh tế và đẳng cấp từ nhà sản xuất đồng hồ danh tiếng Cartier. Santos là một trong những dòng sản phẩm đáng chú ý nhất của Cartier, với thiết kế độc đáo và lịch lãm.<br><br>
+(N'CTR002',N'Đồng Hồ Cartier Santos WSSA0030', 94000000, 500, 600, CAST(N'2023-11-12' AS Date), N'Đồng Hồ Cartier Santos WSSA0030 là một biểu tượng của sự tinh tế và đẳng cấp từ nhà sản xuất đồng hồ danh tiếng Cartier. Santos là một trong những dòng sản phẩm đáng chú ý nhất của Cartier, với thiết kế độc đáo và lịch lãm.<br><br>
 Với vỏ và dây đeo bằng thép không gỉ, đồng hồ Santos WSSA0030 mang lại vẻ ngoài mạnh mẽ và bền bỉ, phù hợp cho cả các hoạt động thể thao và các dịp trang trọng. Mặt số màu bạc với các chỉ số và kim loại quý tạo ra một diện mạo đẳng cấp và sang trọng.<br><br>
 Bên trong, Santos WSSA0030 được trang bị bộ máy cơ tự động, đảm bảo tính chính xác và độ tin cậy. Thiết kế này không chỉ mang lại sự tiện dụng mà còn thể hiện phong cách và đẳng cấp đặc trưng của thương hiệu Cartier.<br><br>
 Với sự kết hợp hoàn hảo giữa kiểu dáng tinh tế và tính năng cao cấp, đồng hồ Cartier Santos WSSA0030 là một lựa chọn lý tưởng cho những người đam mê đồng hồ cao cấp và đẳng cấp.',4.7, 1,4,7,3),
 
-(N'PTR002',N'Đồng hồ Patek Philippe Complications', 3150, 800, 600, CAST(N'2023-05-21' AS Date), N'Đồng hồ Patek Philippe Complications User là một biểu tượng của sự tinh tế và tinh thần sáng tạo từ nhà sản xuất đồng hồ xa xỉ Patek Philippe. Với dòng sản phẩm Complications, Patek Philippe không chỉ mang đến sự đẳng cấp mà còn thể hiện sự phức tạp và khả năng sáng tạo trong thiết kế và công nghệ đồng hồ.<br><br>
+(N'PTR002',N'Đồng hồ Patek Philippe Complications', 78000000, 800, 600, CAST(N'2023-05-21' AS Date), N'Đồng hồ Patek Philippe Complications User là một biểu tượng của sự tinh tế và tinh thần sáng tạo từ nhà sản xuất đồng hồ xa xỉ Patek Philippe. Với dòng sản phẩm Complications, Patek Philippe không chỉ mang đến sự đẳng cấp mà còn thể hiện sự phức tạp và khả năng sáng tạo trong thiết kế và công nghệ đồng hồ.<br><br>
 Với vỏ và dây đeo được làm từ các vật liệu cao cấp như vàng hoặc bạch kim, đồng hồ Patek Philippe Complications User mang lại sự sang trọng và đẳng cấp đặc trưng của thương hiệu. Mặt số được thiết kế tinh xảo với các chỉ số và kim loại quý, tạo nên một diện mạo lịch lãm và sang trọng.<br><br>
 Bên cạnh đó, với các tính năng phức tạp như lịch thứ, lịch ngày, và một số tính năng khác, đồng hồ Complications User không chỉ là một phụ kiện mà còn là một công cụ hữu ích trong cuộc sống hàng ngày của người sử dụng.<br><br>
 Với sự kết hợp hoàn hảo giữa tính năng cao cấp và kiểu dáng đẳng cấp, đồng hồ Patek Philippe Complications User là lựa chọn lý tưởng cho những người đam mê đồng hồ cao cấp và đòi hỏi tính ứng dụng cao trong mọi tình huống.',4.5, 2,5,8,1),
 
-(N'APT003',N'Đồng Hồ AP Royal Oak Concept Flying Tourbillon', 3550, 2000, 1250, CAST(N'2024-01-12' AS Date), N'Đồng Hồ AP Royal Oak Concept Flying Tourbillon là một biểu tượng của sự sáng tạo và đẳng cấp từ thương hiệu đồng hồ cao cấp Audemars Piguet. Royal Oak Concept là dòng sản phẩm độc đáo, thường được biết đến với các tính năng và công nghệ tiên tiến.<br><br>
+(N'APT003',N'Đồng Hồ AP Royal Oak Concept Flying Tourbillon', 88000000, 2000, 1250, CAST(N'2024-01-12' AS Date), N'Đồng Hồ AP Royal Oak Concept Flying Tourbillon là một biểu tượng của sự sáng tạo và đẳng cấp từ thương hiệu đồng hồ cao cấp Audemars Piguet. Royal Oak Concept là dòng sản phẩm độc đáo, thường được biết đến với các tính năng và công nghệ tiên tiến.<br><br>
 Với vỏ và dây đeo được làm từ các vật liệu cao cấp như titan hoặc cermet, đồng hồ AP Royal Oak Concept Flying Tourbillon mang lại sự hiện đại và sang trọng. Thiết kế của nó thường mang phong cách công nghệ, với các đường viền sắc nét và các chi tiết tinh xảo.<br><br>
 Các tính năng tiên tiến như Flying Tourbillon, một cơ chế phức tạp giúp cải thiện độ chính xác của đồng hồ, làm cho Royal Oak Concept trở thành một biểu tượng của sự chuyên môn và đẳng cấp trong thế giới đồng hồ cao cấp.<br><br>
 Với sự kết hợp hoàn hảo giữa công nghệ và thiết kế đột phá, đồng hồ AP Royal Oak Concept Flying Tourbillon là một lựa chọn lý tưởng cho những người yêu thích đồng hồ cao cấp và đam mê sự đổi mới.',4.8, 1,3,8,2),
 
-(N'CTR003',N'Đồng Hồ Cartier Santos W2SA0007', 3850, 1500, 1500, CAST(N'2023-05-30' AS Date), N'Đồng Hồ Cartier Santos W2SA0007 là một biểu tượng của sự tinh tế và sang trọng từ thương hiệu đồng hồ danh tiếng Cartier. Santos là một trong những dòng sản phẩm đáng chú ý nhất của Cartier, với thiết kế độc đáo và lịch lãm.<br><br>
+(N'CTR003',N'Đồng Hồ Cartier Santos W2SA0007', 96000000, 1500, 1500, CAST(N'2023-05-30' AS Date), N'Đồng Hồ Cartier Santos W2SA0007 là một biểu tượng của sự tinh tế và sang trọng từ thương hiệu đồng hồ danh tiếng Cartier. Santos là một trong những dòng sản phẩm đáng chú ý nhất của Cartier, với thiết kế độc đáo và lịch lãm.<br><br>
 Với vỏ và dây đeo bằng thép không gỉ, đồng hồ Santos W2SA0007 mang lại vẻ ngoài mạnh mẽ và bền bỉ, phù hợp cho cả các hoạt động thể thao và các dịp trang trọng. Mặt số màu bạc với các chỉ số và kim loại quý tạo ra một diện mạo đẳng cấp và sang trọng.<br><br>
 Bên trong, Santos W2SA0007 được trang bị bộ máy cơ tự động, đảm bảo tính chính xác và độ tin cậy. Thiết kế này không chỉ mang lại sự tiện dụng mà còn thể hiện phong cách và đẳng cấp đặc trưng của thương hiệu Cartier.<br><br>
 Với sự kết hợp hoàn hảo giữa kiểu dáng tinh tế và tính năng cao cấp, đồng hồ Cartier Santos W2SA0007 là một lựa chọn lý tưởng cho những người đam mê đồng hồ cao cấp và đẳng cấp.',4.9, 1,4,7,4),
 
-(N'PTR003',N'Đồng hồ Patek Philippe Perpetual Calendar', 3500, 2500, 800, CAST(N'2022-07-17' AS Date), N'Đồng hồ Patek Philippe Perpetual Calendar là một tác phẩm nghệ thuật của sự tinh tế và độ chính xác từ nhà sản xuất đồng hồ cao cấp Patek Philippe. Với dòng sản phẩm Perpetual Calendar, Patek Philippe mang lại sự kết hợp tuyệt vời giữa thiết kế đẳng cấp và tính năng cao cấp.<br><br>
+(N'PTR003',N'Đồng hồ Patek Philippe Perpetual Calendar', 88000000, 2500, 800, CAST(N'2022-07-17' AS Date), N'Đồng hồ Patek Philippe Perpetual Calendar là một tác phẩm nghệ thuật của sự tinh tế và độ chính xác từ nhà sản xuất đồng hồ cao cấp Patek Philippe. Với dòng sản phẩm Perpetual Calendar, Patek Philippe mang lại sự kết hợp tuyệt vời giữa thiết kế đẳng cấp và tính năng cao cấp.<br><br>
 Thiết kế của Perpetual Calendar thường mang đậm dấu ấn của Patek Philippe với vỏ vàng hoặc bạch kim, kết hợp cùng với mặt số tinh tế và các chỉ số kim cương. Đồng hồ này không chỉ là một công cụ đo thời gian mà còn là một biểu tượng của phong cách và đẳng cấp.<br><br>
 Tính năng chính của Perpetual Calendar là khả năng hiển thị ngày, tháng và năm mà không cần điều chỉnh thủ công, thậm chí trong các năm nhuận. Điều này là nhờ vào cơ chế phức tạp và chính xác của bộ máy cơ tự động bên trong.<br><br>
 Với sự kết hợp hoàn hảo giữa kiểu dáng đẳng cấp và tính năng thông minh, đồng hồ Patek Philippe Perpetual Calendar là một biểu tượng của sự sang trọng và tinh tế trong thế giới đồng hồ cao cấp.',4.9, 2,5,6,3)
@@ -256,27 +268,27 @@ INSERT [dbo].[Status]([id], [status]) VALUES (3,N'Hoàn thành')
 INSERT [dbo].[Status]([id], [status]) VALUES (4,N'Đã hủy')
 SET IDENTITY_INSERT [dbo].[Status] OFF
 
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2020-06-12' AS Date),7400,N'Ha Noi', 3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2021-05-05' AS Date),10650,N'Hai phong',3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2021-10-12' AS Date),3700,N'Hue',3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2021-12-12' AS Date),10500,N'Bac Giang',3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2022-01-05' AS Date),7300,N'Hai Duong',3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2022-03-12' AS Date),7400,N'Bac Ninh',3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2022-08-05' AS Date),7100,N'Ninh Binh',2)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2022-12-12' AS Date),3700,N'Cao Bang',2)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2023-01-12' AS Date),10500,N'Ca Mau',1)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2023-02-05' AS Date),14600,N'Ha Long',1)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2020-06-12' AS Date),186000000,N'Ha Noi', 3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2021-05-05' AS Date),264000000,N'Hai phong',3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2021-10-12' AS Date),93000000,N'Hue',3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2021-12-12' AS Date),264000000,N'Bac Giang',3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2022-01-05' AS Date),184000000,N'Hai Duong',3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2022-03-12' AS Date),186000000,N'Bac Ninh',3)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2022-08-05' AS Date),176000000,N'Ninh Binh',2)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2022-12-12' AS Date),93000000,N'Cao Bang',2)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2023-01-12' AS Date),264000000,N'Ca Mau',1)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2023-02-05' AS Date),368000000,N'Ha Long',1)
 
-INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (1,6,2,3700)
-INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (2,10,3,3550)
-INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (3,6,1,3700)
-INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (4,12,3,3500)
-INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (5,2,2,3650)
-INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (6,6,2,3700)
-INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (7,10,2,3550)
-INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (8,6,1,3700)
-INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (9,12,3,3500)
-INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (10,2,4,3650)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (1,6,2,93000000)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (2,10,3,88000000)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (3,6,1,93000000)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (4,12,3,88000000)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (5,2,2,92000000)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (6,6,2,93000000)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (7,10,2,88000000)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (8,6,1,93000000)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (9,12,3,88000000)
+INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (10,2,4,92000000)
 
 INSERT [dbo].[ShippingHistory]([oid],[aid]) VALUES (1,5)
 INSERT [dbo].[ShippingHistory]([oid],[aid]) VALUES (2,5)
@@ -451,3 +463,8 @@ INSERT [dbo].[Blog]([id], [title], [image], [image2], [Date], [description], [st
 (4, N'Đồng Hồ Tsar Bomba: Sức mạnh bùng nổ',N'img/blog4.jpg',N'img/blog4-1.jpg', CAST(N'2022-12-13' AS Date), N'Đồng hồ Tsar Bomba được tạo ra như một sự tôn vinh đầy tôn trọng đối với loại bom hạt nhân cùng tên từ thế kỷ 20. Sự tái hiện này không chỉ là một tín hiệu về khả năng kỹ thuật mà còn thể hiện lòng kính trọng với lịch sử và sự phát triển của loài người trong việc kiểm soát và sử dụng sức mạnh.<br><br>Đồng hồ Tsar Bomba đặc biệt bởi thiết kế độc đáo của nó. Với mặt số và vỏ được chế tác cẩn thận, nó mang trong mình hình ảnh và ý nghĩa của bom Tsar Bomba.<br><br>Đồng hồ Tsar Bomba không chỉ là một tác phẩm nghệ thuật mà còn là một biểu hiện của kỹ thuật tinh xảo. Được trang bị các tính năng hiện đại, sản phẩm được sự dụng bộ máy Nhật có độ chính xác cao, chống nước tốt, kính Sapphire nguyên khối chống xước hoàn hảo, dây đeo Silicon siêu bền bất chấp mưa, nắng và bẻ cong. Nó không chỉ là một chiếc đồng hồ đẹp mắt mà còn là một công cụ hoàn hảo để đo thời gian với độ tin cậy cao. Điểm đặc biệt của chiếc đồng hồ Tsar Bomba đó chính là sự phong cách, phá cách, mang lại nhiều trải nghiệm mới lạ cho khách hàng sử dụng với những BST thiết kế đặc biệt có thể thay thế dễ dàng núm, mặt, dây tạo nên những chiếc đồng hồ độc đáo, mang phong cách cá nhân.',1,2),
 (5, N'BST đồng hồ đeo tay đẳng cấp triệu đô của CR7' ,N'img/blog5.jpg',N'img/blog5-1.jpg',CAST(N'2012-07-06' AS Date), N'CR7 được coi là một trong những cầu thủ xuất sắc nhất thế giới. Và là một trong những cầu thủ vĩ đại nhất mọi thời đại.<br><br>CR7 còn khiến công chúng nể phục, ngưỡng mộ vì gu thời trang đẳng cấp, xa xỉ cực chất. Đặc biệt CR7 còn sở hữu bộ sưu tập đồng hồ khủng mà bất cứ ai cũng phải mê đắm.<br><br>Đồng hồ Franck Muller Invisible Baguette Diamonds Imperial Tourbillon<br><br>CR7 cùng bạn gái Georgina Rodriguez tham gia sự sự kiện. CR7 đeo đồng hồ kim cương Franck Muller, 424 viên kim cương trắng và đỏ được xếp thành hình vòng cung ở mặt số, bên ngoài bọc lớp vỏ vàng trắng. Đồng hồ có giá khoảng 2 triệu EUR tương đương 54,7 tỷ đồng',1,2)
 SET IDENTITY_INSERT [dbo].[Blog] OFF
+
+/*
+INSERT INTO [dbo].[payment]([vnp_TxnRef],[vnp_Amount],[vnp_OrderInfo],[vnp_ResponseCode],[vnp_TransactionNo],[vnp_BankCode],[vnp_PayDate],[vnp_TransactionStatus],[aid])
+VALUES(N'36374457',N'1000000',N'Thanh toan don hang:36374457',N'24',N'0',N'VNPAY',N'2024-06-09',N'00',3)
+*/

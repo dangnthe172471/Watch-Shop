@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -52,7 +53,7 @@
         </div>
 
         <br>
-        <section class="_1khoi bg-white">
+        <section class="_1khoi bg-white mt-2">
             <div class="container">
                 <div class="noidung" style=" width: 100%;">
                     <div class="row">
@@ -68,8 +69,8 @@
                                     <div class="card-body noidungsp mt-3">
                                         <h3 class="card-title ten">${o.name}</h3>
                                         <div class="gia d-flex align-items-baseline">
-                                            <div class="giamoi">${o.price} $</div>
-                                            <div class="giacu text-muted"><del>${o.price+350} $</del></div>
+                                            <div class="giamoi"><fmt:formatNumber value="${o.price}"/> vnđ</div>
+                                            <div class="giacu text-muted ml-1"><del><fmt:formatNumber value="${o.price*1.1}"/> vnđ</del></div>
                                             <div class="sale">-10%</div>
                                         </div>
                                         <div class="danhgia">
@@ -84,7 +85,7 @@
             </div>
         </section>
 
-        <section class="_1khoi combohot mt-4">
+        <section class="_1khoi">
             <div class="container">
                 <div class="noidung bg-white" style=" width: 100%;">
                     <div class="row">
@@ -96,13 +97,12 @@
                         <c:forEach var="o" items="${listP2}">
                             <div class="card">
                                 <a href="detail?pid=${o.id}" class="motsanpham" style="text-decoration: none; color: black;" data-toggle="tooltip" data-placement="bottom">
-                                    <img class="card-img-top anh" src="${o.pimage.img1}"  style="height: 250px">
+                                    <img class="card-img-top anh" src="${o.pimage.img1}" style="height: 250px">
                                     <div class="card-body noidungsp mt-3">
                                         <h3 class="card-title ten">${o.name}</h3>
-
                                         <div class="gia d-flex align-items-baseline">
-                                            <div class="giamoi">${o.price} $</div>
-                                            <div class="giacu text-muted"><del>${o.price+350} $</del></div>
+                                            <div class="giamoi"><fmt:formatNumber value="${o.price}"/> vnđ</div>
+                                            <div class="giacu text-muted ml-1"><del><fmt:formatNumber value="${o.price*1.1}"/> vnđ</del></div>
                                             <div class="sale">-10%</div>
                                         </div>
                                         <div class="danhgia">
@@ -117,7 +117,7 @@
             </div>
         </section>
 
-        <section class="_1khoi combohot mt-4">
+        <section class="_1khoi" style="margin-top: 25px;">
             <div class="container">
                 <div class="noidung bg-white" style=" width: 100%;">
                     <div class="row">
@@ -129,13 +129,12 @@
                         <c:forEach var="o" items="${listP3}">
                             <div class="card">
                                 <a href="detail?pid=${o.id}" class="motsanpham" style="text-decoration: none; color: black;" data-toggle="tooltip" data-placement="bottom">
-                                    <img class="card-img-top anh" src="${o.pimage.img1}"  style="height: 250px">
+                                    <img class="card-img-top anh" src="${o.pimage.img1}" style="height: 250px">
                                     <div class="card-body noidungsp mt-3">
                                         <h3 class="card-title ten">${o.name}</h3>
-
                                         <div class="gia d-flex align-items-baseline">
-                                            <div class="giamoi">${o.price} $</div>
-                                            <div class="giacu text-muted"><del>${o.price+350} $</del></div>
+                                            <div class="giamoi"><fmt:formatNumber value="${o.price}"/> vnđ</div>
+                                            <div class="giacu text-muted ml-1"><del><fmt:formatNumber value="${o.price*1.1}"/> vnđ</del></div>
                                             <div class="sale">-10%</div>
                                         </div>
                                         <div class="danhgia">
