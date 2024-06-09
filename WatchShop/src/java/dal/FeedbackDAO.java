@@ -130,4 +130,24 @@ public class FeedbackDAO extends DBContext {
         }
         return false;
     }
+
+    public void AddFeedback(int aid, int pid, String content, int voted) {
+        String sql = """
+                     INSERT INTO [dbo].[Feedback]([aid],[pid],[content],[voted])
+                     VALUES(?,?,?,?)
+                     UPDATE [dbo].[product]
+                     SET [rate] = (SELECT ROUND(AVG(voted), 2) FROM Feedback where pid = ?)
+                     WHERE id=?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, aid);
+            st.setInt(2, pid);
+            st.setString(3, content);
+            st.setInt(4, voted);
+            st.setInt(5, pid);
+            st.setInt(6, pid);
+            st.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
 }

@@ -153,7 +153,7 @@
                                                     </div>
                                                     <div class="danhgia">
                                                         Đã bán: ${o.sold}
-                                                        <span style="margin-left:70px">${o.rate}<i class="fa fa-star" style="color: yellow"></i></span>
+                                                        <span style="margin-left:60px">${o.rate}<i class="fa fa-star" style="color: yellow"></i></span>
                                                     </div>
                                                 </div>
                                             </a>

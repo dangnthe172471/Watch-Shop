@@ -59,8 +59,10 @@
                                     <div class="col-md-9">
                                         <div class="gia">
                                             <div style="color: red; font-size:30px; font-weight:bold;"><fmt:formatNumber value="${detail.price}"/> vnđ</div>
-                                            <div style="margin: 15px 0;font-size: 16px">Ngày sản xuất: <input type="date" value="${detail.releaseDate}" readonly style="border: none"/> </div>
-                                            <div style="margin: 15px 0;font-size: 16px">Đã bán: <b>${detail.sold}</b> </div>
+                                            <div style="margin: 15px 0;font-size: 16px">
+                                                Ngày sản xuất: <fmt:formatDate value="${detail.releaseDate}" pattern="dd-MM-yyyy"/>      
+                                            </div>
+                                            <div style="margin: 15px 0;font-size: 16px">Đã bán: <b>${detail.sold}</b> sản phẩm</div>
                                         </div>
                                         <div class="uudai my-3">
                                             <h6 class="header font-weight-bold">Khuyến mãi & Ưu đãi tại Watch Shop</h6>
@@ -134,13 +136,12 @@
                             <h4>Đánh giá</h4>
                             <c:if test="${sessionScope.account.roleID==4}">
                                 <c:if test="${feedback==1}">
-                                    <form action="comment" style="margin-top: 20px;" id="feedback">
+                                    <form action="feedback" style="margin-top: 20px;" id="feedback">
                                         <div style="display: flex; align-items: center; padding-left: 10px;">
                                             <img src="${sessionScope.account.avatar}" style="width: 40px;height: 40px;border-radius: 50%;"/>
                                             <h6 style="margin-left: 10px;font-size:20px;color: red;margin-top: 10px;">${sessionScope.account.user}</h6>
                                         </div>
-                                        <textarea style="height: 80px;width: 300px;margin-top: 10px;" name="content" placeholder="Viết đánh giá của bạn tại đây"></textarea>                              
-
+                                        <textarea style="height: 80px;width: 300px;margin-top: 10px;" name="content"></textarea>                              
                                         <select name="voted" style="margin: 10px 0">
                                             <option value="5" style="text-align: center">⭐⭐⭐⭐⭐</option>
                                             <option value="4" style="text-align: center">⭐⭐⭐⭐</option> 
@@ -254,9 +255,9 @@
                 var notification = document.createElement('div');
                 notification.innerHTML = "Sản phẩm đã được thêm vào giỏ hàng !";
                 notification.style.position = 'fixed';
-                notification.style.fontSize = '15px';
-                notification.style.top = '15px';
-                notification.style.right = '25px';
+                notification.style.fontSize = '22px';
+                notification.style.top = '5px';
+                notification.style.right = '45px';
                 notification.style.padding = '15px';
                 notification.style.backgroundColor = '#28a745';
                 notification.style.color = '#fff';
