@@ -19,7 +19,7 @@ CREATE TABLE [dbo].[Account](
     [pass] [varchar](255),
 	[email] [varchar](255),
 	[phone] [varchar](255),
-	[amount] [money] DEFAULT 0,
+	[amount] [float] DEFAULT 0,
     [bought] [int] DEFAULT 0,
 	[Address] [varchar](255),
 	[status] [int] DEFAULT 0,
@@ -166,11 +166,11 @@ SET IDENTITY_INSERT [dbo].[Role] OFF
 SET IDENTITY_INSERT [dbo].[Account] ON 
 INSERT [dbo].[Account] ([id], [user], [pass],[email] ,[phone], [amount], [bought], [Address], [roleID]) VALUES
 (1, N'admin',  N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'bapthom3@gmail.com', N'0123456789',9999, 0, N'Bac Ninh', 1),
-(2, N'staff', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'staff@gmail.com',N'0987654321',800, 1500, N'Ha Noi', 2),
-(3, N'user1', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'user1@gmail.com',N'0123654789',600, 2000, N'Sơn La', 4),
-(4, N'user2', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'user2@gmail.com',N'0123654789',800, 1000, N'Vinh Phuc', 4),
-(5, N'shiper1', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'shiper2@gmail.com',N'0147258369',2000, 2250, N'Hai Phong', 3),
-(6, N'shiper2', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'shiper2@gmail.com',N'0963258741',1500, 1000, N'Hung Yen', 3)
+(2, N'staff', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'staff@gmail.com',N'0987654321',0, 0, N'Ha Noi', 2),
+(3, N'user1', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'user1@gmail.com',N'0123654789',125000000, 2000, N'Sơn La', 4),
+(4, N'user2', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'user2@gmail.com',N'0123654789',150000000, 1000, N'Vinh Phuc', 4),
+(5, N'shiper1', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'shiper2@gmail.com',N'0147258369',0, 0, N'Hai Phong', 3),
+(6, N'shiper2', N'6NWFIsI1V5KNFeeazNcq35qxRUE=', N'shiper2@gmail.com',N'0963258741',0, 0, N'Hung Yen', 3)
 SET IDENTITY_INSERT [dbo].[Account] OFF
 
 SET IDENTITY_INSERT [dbo].[brand] ON 
@@ -465,6 +465,6 @@ INSERT [dbo].[Blog]([id], [title], [image], [image2], [Date], [description], [st
 SET IDENTITY_INSERT [dbo].[Blog] OFF
 
 /*
-INSERT INTO [dbo].[payment]([vnp_TxnRef],[vnp_Amount],[vnp_OrderInfo],[vnp_ResponseCode],[vnp_TransactionNo],[vnp_BankCode],[vnp_PayDate],[vnp_TransactionStatus],[aid])
+INSERT INTO [dbo].[payment]([vnp_TxnRef], [vnp_Amount], [vnp_OrderInfo], [vnp_ResponseCode], [vnp_TransactionNo], [vnp_BankCode], [vnp_PayDate], [vnp_TransactionStatus], [aid])
 VALUES(N'36374457',N'1000000',N'Thanh toan don hang:36374457',N'24',N'0',N'VNPAY',N'2024-06-09',N'00',3)
 */
