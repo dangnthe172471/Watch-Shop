@@ -71,21 +71,28 @@
                                             </ul>
                                         </div>
                                         <c:set var="o" value="${sessionScope.cart}"/>
-                                        <c:forEach items="${o.items}" var="i">
-                                            <c:if test="${i.product.id==detail.id}">
-                                                <div class="soluong d-flex">
-                                                    <label class="font-weight-bold">Số lượng: </label>
-                                                    <dd>
-
-
-                                                        <input type="number" name="num" style="width:70px;" min="1" max="${detail.quantity-i.quantity}" value="1" >
-
-
-                                                    </dd>                                       
-                                                </div>
-                                                        <label class="font-weight-bold" style="color: black">Lượng hàng trong kho: ${detail.quantity}<br>Giỏ hàng bạn đang có: ${i.quantity}</label>
+                                        <c:if test="${sessionScope.cart == null}">
+                                            <div class="soluong d-flex">
+                                                <label class="font-weight-bold">Số lượng: </label>
+                                                <dd>
+                                                    <input type="number" name="num" style="width:70px;" min="1" max="${detail.quantity}" value="1" >
+                                                </dd>                                       
+                                            </div>
+                                            <label class="font-weight-bold" style="color: black">Lượng hàng trong kho: ${detail.quantity}<br>Giỏ hàng bạn đang có: 0</label>
                                             </c:if>
-                                        </c:forEach>
+                                            <c:if test="${sessionScope.cart != null}">
+                                                <c:forEach items="${o.items}" var="i">
+                                                    <c:if test="${i.product.id==detail.id}">
+                                                    <div class="soluong d-flex">
+                                                        <label class="font-weight-bold">Số lượng: </label>
+                                                        <dd>
+                                                            <input type="number" name="num" style="width:70px;" min="1" max="${detail.quantity-i.quantity}" value="1" >
+                                                        </dd>                                       
+                                                    </div>
+                                                    <label class="font-weight-bold" style="color: black">Lượng hàng trong kho: ${detail.quantity}<br>Giỏ hàng bạn đang có: ${i.quantity}</label>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:if>
                                         <a href="#" onclick="addCart('${detail.id}')" class="btn btn-primary" style="width:200px; color: white" >Chọn mua</a>
                                         <P>Gọi đặt mua: 0962900476 (8:00-21:30)</P>
                                     </div>

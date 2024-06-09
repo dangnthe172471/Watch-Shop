@@ -95,34 +95,42 @@
         </div>
 
         <div id="showcart" style="margin-right: 120px;margin-top: -5px;width: 325px;">
-            <a style="margin-left: 280px;font-size: 24px;color: red" onclick="showCart()"><i class="fa fa-close"></i></a>
-            <div>
-                <table style="border-collapse: collapse;width: 100%">
-                    <tbody>
-                        <c:set var="o" value="${sessionScope.cart}"/>
-                        <c:forEach items="${o.items}" var="i">
-                            <tr> 
-                                <td class="img-style"><a href="detail?pid=${i.product.id}"><img src="${i.product.pimage.img1}" width="80px" height="60px"></a></td>
-                                <td style="margin: 0; padding: 3px;">
-                                    <a href="detail?pid=${i.product.id}"><p style="color: red; margin: 0;"><fmt:formatNumber value="${i.price}"/> vnđ X ${i.quantity} </p>
-                                        <p style="font-size: 14px; margin: 0; padding-top:3px;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;" title="${i.product.name}">
-                                            ${i.product.name}
-                                        </p>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="process?type=remove&id=${i.product.id}"><i class="fa fa-times text-danger"></i></a>
-                                </td>
-                            </tr>  
-                        </c:forEach>           
-                    </tbody>
-                </table>
-            </div>
-            <br>
-            <hr>
-            <div style="padding-bottom:20px; color:red;">
-                Tổng giá: <b style="font-size: 20px;"><fmt:formatNumber value="${totalMoney}"/> vnđ</b>
-            </div>
+            <c:set var="o" value="${sessionScope.cart}"/>
+            <c:if test="${sessionScope.cart == null}">
+                Chưa có sản phẩm nào trong giỏ hàng!
+                <br>
+                <hr>
+            </c:if>
+            <c:if test="${sessionScope.cart != null}">
+                <a style="margin-left: 280px;font-size: 24px;color: red" onclick="showCart()"><i class="fa fa-close"></i></a>
+                <div>
+                    <table style="border-collapse: collapse;width: 100%">
+                        <tbody>
+                            <c:forEach items="${o.items}" var="i">
+                                <tr> 
+                                    <td class="img-style"><a href="detail?pid=${i.product.id}"><img src="${i.product.pimage.img1}" width="80px" height="60px"></a></td>
+                                    <td style="margin: 0; padding: 3px;">
+                                        <a href="detail?pid=${i.product.id}"><p style="color: red; margin: 0;"><fmt:formatNumber value="${i.price}"/> vnđ X ${i.quantity} </p>
+                                            <p style="font-size: 14px; margin: 0; padding-top:3px;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;" title="${i.product.name}">
+                                                ${i.product.name}
+                                            </p>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="process?type=remove&id=${i.product.id}"><i class="fa fa-times text-danger"></i></a>
+                                    </td>
+                                </tr>  
+                            </c:forEach>           
+                        </tbody>
+                    </table>
+                </div>
+
+                <br>
+                <hr>
+                <div style="padding-bottom:20px; color:red;">
+                    Tổng giá: <b style="font-size: 20px;"><fmt:formatNumber value="${totalMoney}"/> vnđ</b>
+                </div>
+            </c:if>
             <div class="select-button">
                 <a class="dropdown-item nutdangky text-center mb-2" href="Cart.jsp">View cart</a>
             </div>
