@@ -127,6 +127,18 @@
                             <div class="row col-12 col-md-12 col-lg-12">
                                 <h3 style="color: red;padding: 15px">Danh sách sản phẩm</h3>    
                                 <form action="search" style="margin-top: 20px; margin-left: 180px;">
+                                    <c:forEach var="bidValue" items="${bid}">
+                                        <input type="hidden" value="${bidValue}" name="bid">
+                                    </c:forEach>
+                                    <c:forEach var="cidValue" items="${cid}">
+                                        <input type="hidden" value="${cidValue}" name="cid">
+                                    </c:forEach>
+                                    <input type="hidden" value="${key}" name="key">
+                                    <input type="hidden" value="${fromdate}" name="todate">
+                                    <input type="hidden" value="${fromprice}" name="fromprice">
+                                    <input type="hidden" value="${todate}" name="todate">
+                                    <input type="hidden" value="${toprice}" name="toprice">
+
                                     <select name="sort" onchange="this.form.submit()" style="margin-left: 150px">
                                         <option ${sort == 0 ? 'selected' : ''} value="0">--NONE--</option>
                                         <option ${sort == 1 ? 'selected' : ''} value="1">Giá ↑</option>
@@ -162,6 +174,12 @@
                                 </c:forEach>  
                                 <c:if test="${countP >= 9}">
                                     <form action="search">
+                                        <c:forEach var="bidValue" items="${bid}">
+                                            <input type="hidden" value="${bidValue}" name="bid">
+                                        </c:forEach>
+                                        <c:forEach var="cidValue" items="${cid}">
+                                            <input type="hidden" value="${cidValue}" name="cid">
+                                        </c:forEach>
                                         <input type="hidden" value="${key}" name="key">
                                         <input type="hidden" value="${fromdate}" name="todate">
                                         <input type="hidden" value="${fromprice}" name="fromprice">

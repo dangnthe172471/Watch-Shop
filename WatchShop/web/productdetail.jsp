@@ -17,6 +17,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/product-item.css">
+        <link rel="stylesheet" href="css/detail.css">
         <link rel="stylesheet" href="css/home.css">
         <link rel="stylesheet" href="css/nav.css">
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
@@ -25,7 +26,6 @@
         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script> 
-
     </head>
     <body>
         <jsp:include page="nav.jsp"/>
@@ -37,7 +37,8 @@
                         <div class="col-md-6 khoianh">
                             <div class="anhto mb-4">
                                 <a class="active" href="detail?pid=${detail.id}" data-fancybox="thumb-img" style="cursor: pointer;">
-                                    <img id="main-image" class="product-image" src="${detail.pimage.img1}" alt="" style="width: 520px;height: 580px;">
+                                    <img id="main-image" class="product-image" src="${detail.pimage.img1}" alt="" style="width: 520px;
+                                         height: 580px;">
                                 </a>
                             </div>
                             <div class="list-anhchitiet d-flex mb-4" style="margin-left: 4rem;">
@@ -48,7 +49,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-5 khoithongtin" style="margin-left: 50px;margin-top: 30px;">
+                        <div class="col-md-5 khoithongtin" style="margin-left: 50px;
+                             margin-top: 30px;">
                             <form name="f" action="" method="post">
                                 <div class="row">
                                     <div class="col-md-12 header">
@@ -58,11 +60,15 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="gia">
-                                            <div style="color: red; font-size:30px; font-weight:bold;"><fmt:formatNumber value="${detail.price}"/> vnđ</div>
-                                            <div style="margin: 15px 0;font-size: 16px">
+                                            <div style="color: red;
+                                                 font-size:30px;
+                                                 font-weight:bold;"><fmt:formatNumber value="${detail.price}"/> vnđ</div>
+                                            <div style="margin: 15px 0;
+                                                 font-size: 16px">
                                                 Ngày sản xuất: <fmt:formatDate value="${detail.releaseDate}" pattern="dd-MM-yyyy"/>      
                                             </div>
-                                            <div style="margin: 15px 0;font-size: 16px">Đã bán: <b>${detail.sold}</b> sản phẩm</div>
+                                            <div style="margin: 15px 0;
+                                                 font-size: 16px">Đã bán: <b>${detail.sold}</b> sản phẩm</div>
                                         </div>
                                         <div class="uudai my-3">
                                             <h6 class="header font-weight-bold">Khuyến mãi & Ưu đãi tại Watch Shop</h6>
@@ -71,31 +77,27 @@
                                                 <li><b>Đổi trả hàng nhanh chóng khi gặp lỗi </b></li>
                                                 <li>Thay pin miễn phí và tặng móc khóa cho mọi đơn hàng</li>
                                             </ul>
+                                        </div>    
+
+                                        <div class="soluong d-flex">
+                                            <label class="font-weight-bold">Số lượng: </label>
+                                            <dd>
+                                                <input type="number" name="num" style="width:70px;" min="1" value="1" id="numInput"
+                                                       max="${sessionScope.cart.getItemById(detail.id)!=null?(detail.quantity-sessionScope.cart.getQuantityById(detail.id)):(detail.quantity)}">
+                                            </dd> 
                                         </div>
-                                        <c:set var="o" value="${sessionScope.cart}"/>
-                                        <c:if test="${sessionScope.cart == null}">
-                                            <div class="soluong d-flex">
-                                                <label class="font-weight-bold">Số lượng: </label>
-                                                <dd>
-                                                    <input type="number" name="num" style="width:70px;" min="1" max="${detail.quantity}" value="1" >
-                                                </dd>                                       
-                                            </div>
-                                            <label class="font-weight-bold" style="color: black">Lượng hàng trong kho: ${detail.quantity}<br>Giỏ hàng bạn đang có: 0</label>
-                                            </c:if>
-                                            <c:if test="${sessionScope.cart != null}">
-                                                <c:forEach items="${o.items}" var="i">
-                                                    <c:if test="${i.product.id==detail.id}">
-                                                    <div class="soluong d-flex">
-                                                        <label class="font-weight-bold">Số lượng: </label>
-                                                        <dd>
-                                                            <input type="number" name="num" style="width:70px;" min="1" max="${detail.quantity-i.quantity}" value="1" >
-                                                        </dd>                                       
-                                                    </div>
-                                                    <label class="font-weight-bold" style="color: black">Lượng hàng trong kho: ${detail.quantity}<br>Giỏ hàng bạn đang có: ${i.quantity}</label>
-                                                    </c:if>
-                                                </c:forEach>
-                                            </c:if>
-                                        <a href="#" onclick="addCart('${detail.id}')" class="btn btn-primary" style="width:200px; color: white" >Chọn mua</a>
+                                        <div style="display: none;
+                                             color: red" id="errCart">
+                                            Vui lòng kiểm tra lại số lượng!<br> 
+                                            (Sản phẩm đã hết hoặc giỏ hàng bạn đầy) 
+                                        </div>
+                                        <label class="font-weight-bold" style="color: black">
+                                            Lượng hàng trong kho: ${detail.quantity} <br>
+                                            Giỏ hàng của bạn đã có: ${sessionScope.cart.getItemById(detail.id)!=null?sessionScope.cart.getQuantityById(detail.id):0}
+                                        </label>
+
+                                        <a href="#" onclick="addCart('${detail.id}')" class="btn btn-primary" style="width:200px;
+                                           color: white" >Chọn mua</a>
                                         <P>Gọi đặt mua: 0962900476 (8:00-21:30)</P>
                                     </div>
                                 </div>
@@ -103,19 +105,24 @@
                         </div>
                         <div class="row">
                             <div class="col-md-5">
-                                <h5 style="font-weight: bold;"><i class="fa fa-address-card-o" style="font-size:24px"></i> Thông tin sản phẩm</h5>
+                                <h5 style="font-weight: bold;
+                                    animation: "><i class="fa fa-address-card-o" style="font-size:24px"></i> Thông tin sản phẩm</h5>
                                 <c:forEach  items="${listB}" var="c">
-                                    <p style="display: ${detail.brandID ==c.bid?'':'none'};margin: 15px 0"><span style="font-weight: bold">Thương hiệu:</span> ${c.bname}<p>
+                                    <p style="display: ${detail.brandID ==c.bid?'':'none'};
+                                       margin: 15px 0"><span style="font-weight: bold">Thương hiệu:</span> ${c.bname}<p>
                                     </c:forEach>
                                 <p style="margin: 15px 0"><span style="font-weight: bold">Số hiệu sản phẩm:</span> ${detail.code}</p> 
                                 <c:forEach  items="${listC}" var="c">
-                                    <p style="display: ${detail.cateID1 ==c.cid?'':'none'};margin: 15px 0"><span style="font-weight: bold">Giới tính:</span> ${c.cname}<p>
+                                    <p style="display: ${detail.cateID1 ==c.cid?'':'none'};
+                                       margin: 15px 0"><span style="font-weight: bold">Giới tính:</span> ${c.cname}<p>
                                     </c:forEach>
                                     <c:forEach  items="${listC}" var="c">
-                                    <p style="display: ${detail.cateID2 ==c.cid?'':'none'};margin: 15px 0"><span style="font-weight: bold">Chống nước:</span> ${c.cname}<p>
+                                    <p style="display: ${detail.cateID2 ==c.cid?'':'none'};
+                                       margin: 15px 0"><span style="font-weight: bold">Chống nước:</span> ${c.cname}<p>
                                     </c:forEach>
                                     <c:forEach  items="${listC}" var="c">
-                                    <p style="display: ${detail.cateID3 ==c.cid?'':'none'};margin: 15px 0"><span style="font-weight: bold">Đường kính mặt số:</span> ${c.cname}<p>
+                                    <p style="display: ${detail.cateID3 ==c.cid?'':'none'};
+                                       margin: 15px 0"><span style="font-weight: bold">Đường kính mặt số:</span> ${c.cname}<p>
                                     </c:forEach>
                                 <p style="margin: 15px 0"><span style="font-weight: bold">Kính:</span> Mineral Crystal (Kính cứng)</p> 
                                 <p style="margin: 15px 0"><span style="font-weight: bold">Chức năng:</span>  Lịch ngày – Lịch thứ</p> 
@@ -124,7 +131,8 @@
                                 <p style="margin: 15px 0">Bảo hành tại Watch Shop: 5 năm</p> 
                             </div>
                             <div class="col-md-7">
-                                <h4 style="margin-left: 15px; font-weight: bold"><i class="fa fa-file-text-o" style="font-size:24px;"></i> Mô tả sản phẩm</h4>
+                                <h4 style="margin-left: 15px;
+                                    font-weight: bold"><i class="fa fa-file-text-o" style="font-size:24px;"></i> Mô tả sản phẩm</h4>
                                 <div class="tab-content" id="nav-tabContent">
                                     <div class="tab-pane fade show active ml-3" id="nav-gioithieu" role="tabpanel" aria-labelledby="nav-gioithieu-tab">
                                         <p>${detail.description}</p>
@@ -137,11 +145,20 @@
                             <c:if test="${sessionScope.account.roleID==4}">
                                 <c:if test="${feedback==1}">
                                     <form action="feedback" style="margin-top: 20px;" id="feedback">
-                                        <div style="display: flex; align-items: center; padding-left: 10px;">
-                                            <img src="${sessionScope.account.avatar}" style="width: 40px;height: 40px;border-radius: 50%;"/>
-                                            <h6 style="margin-left: 10px;font-size:20px;color: red;margin-top: 10px;">${sessionScope.account.user}</h6>
+                                        <div style="display: flex;
+                                             align-items: center;
+                                             padding-left: 10px;">
+                                            <img src="${sessionScope.account.avatar}" style="width: 40px;
+                                                 height: 40px;
+                                                 border-radius: 50%;"/>
+                                            <h6 style="margin-left: 10px;
+                                                font-size:20px;
+                                                color: red;
+                                                margin-top: 10px;">${sessionScope.account.user}</h6>
                                         </div>
-                                        <textarea style="height: 80px;width: 300px;margin-top: 10px;" name="content"></textarea>                              
+                                        <textarea style="height: 80px;
+                                                  width: 300px;
+                                                  margin-top: 10px;" name="content"></textarea>                              
                                         <select name="voted" style="margin: 10px 0">
                                             <option value="5" style="text-align: center">⭐⭐⭐⭐⭐</option>
                                             <option value="4" style="text-align: center">⭐⭐⭐⭐</option> 
@@ -150,7 +167,8 @@
                                             <option value="1" style="text-align: center">⭐</option>                                                                     
                                         </select>
                                         <div class="g-recaptcha" data-sitekey="6LePFu8pAAAAAGmtUh76Nc4A3dKyJG-S6ioyycBR" data-callback="hideWarning"></div>                                        
-                                        <div style="color: red; display: none" id="uncheck">Vui lòng xác thực bạn không phải là robot</div>
+                                        <div style="color: red;
+                                             display: none" id="uncheck">Vui lòng xác thực bạn không phải là robot</div>
                                         <input type="button" onclick="checkCaptcha()" value="Đánh giá" style="margin-top: 10px;">
                                         <input value="${detail.id}" type="hidden" name="pid">
                                         <input value="${sessionScope.account.id}" type="hidden" name="aid">
@@ -163,34 +181,72 @@
                             <c:if test="${sessionScope.account.roleID!=4}">
                                 <span style="font-size: 18px;">Vui lòng <a href="login" style="color: red"> đăng nhập </a> tài khoản khách hàng để đánh giá!</span>
                             </c:if>
-                            <div>                                        
-                                <c:forEach items="${listCo}" var="co">
-                                    <div style="display: flex; align-items: center; padding-left: 10px;border: 0.5px solid black;margin-bottom: 10px;">
-                                        <img src="${co.account.avatar}" style="width: 50px;height: 50px;border-radius: 50%"/>
-                                        <h6 style="margin-left: 10px;font-size:20px; padding-top: 10px;color: red">${co.account.user} <span style="font-size:18px; font-weight: normal; color: black">(${co.voted}⭐)</span><br><span style="font-size:18px; font-weight: normal; color: black">${co.content}</span></h6>
-                                    </div>
-                                </c:forEach>
-                            </div>
+                            <c:forEach items="${listCo}" var="co">
+                                <div style="display: flex;
+                                     align-items: center;
+                                     padding-left: 10px;
+                                     border: 0.5px solid black;
+                                     margin-bottom: 10px;">
+                                    <img src="${co.account.avatar}" style="width: 50px;
+                                         height: 50px;
+                                         border-radius: 50%"/>
+                                    <h6 class="khung" style="margin-left: 10px;
+                                        font-size:20px;
+                                        padding-top: 10px;
+                                        color: red;
+                                        width: 950px">${co.account.user} 
+                                        <span style="font-size:18px;
+                                              color: black">(${co.voted}⭐)</span><br>
+                                        <c:forEach items="${listE}" var="o">
+                                            <c:if test="${o.id == co.id}">
+                                                <ul class="main-menu">
+                                                    <li style="margin-left: 950px;
+                                                        margin-top: -25px;"> <i class="icon fa fa-bars" style="color: black"></i>
+                                                        <ul class="sub-menu" style="background: cornsilk">
+                                                            <li><a href="#" style="color: black"><i class='fas fa-trash-alt'></i> Delete</a></li>
+                                                            <li><a href="#" style="color: black"><i class='fas fa-pencil-alt'></i>Edit</a></li>
+                                                        </ul>
+                                                    </li>   
+                                                </ul>
+                                            </c:if>
+                                        </c:forEach>
+                                        <span style="font-size:18px;
+                                              color: black;">${co.content}</span>
+                                    </h6>
+                                </div>
+                            </c:forEach>
                             <div class="clearfix row" >
                                 <c:if test="${countP >= 4}">
-                                    <div class="hint-text" style="margin-top: 22px;margin-left: 10px;">Showing <b>4</b> comment of <b>${countP}</b> feedback</div>
+                                    <div class="hint-text" style="margin-top: 22px;
+                                         margin-left: 10px;">Showing <b>4</b> comment of <b>${countP}</b> feedback</div>
                                 </c:if>
                                 <c:if test="${countP < 4}">
-                                    <div class="hint-text" style="margin-top: 22px;margin-left: 10px;">Showing <b>${countP}</b> comment of <b>${countP}</b> feedback</div>
+                                    <div class="hint-text" style="margin-top: 22px;
+                                         margin-left: 10px;">Showing <b>${countP}</b> comment of <b>${countP}</b> feedback</div>
                                 </c:if>  
                                 <c:if test="${endP > 1}">
                                     <form action="detail">
                                         <input type="hidden" value="${detail.id}" name="pid">
                                         <c:set var="i" value="${page}"/>
-                                        <ul class="pagination" style="margin-left: 145px;margin-top: 15px;">  
-                                            <button name="index" value="${i-1}" type="${i>1?'submit':'button'}" style="width: 88px;height: 38px;border: 1px solid black;background-color: ${i>1?'white':'#9698ab'}">Previous</button>
+                                        <ul class="pagination" style="margin-left: 145px;
+                                            margin-top: 15px;">  
+                                            <button name="index" value="${i-1}" type="${i>1?'submit':'button'}" style="width: 88px;
+                                                    height: 38px;
+                                                    border: 1px solid black;
+                                                    background-color: ${i>1?'white':'#9698ab'}">Previous</button>
                                             <c:forEach begin="1" end="${endP}" var="i">                                             
                                                 <li>
-                                                    <button name="index" value="${i}" type="submit" style="width: 35px;height: 38px;border: 1px solid black;background-color:${page==i?'#007BFF':'white'}">${i}</button>
+                                                    <button name="index" value="${i}" type="submit" style="width: 35px;
+                                                            height: 38px;
+                                                            border: 1px solid black;
+                                                            background-color:${page==i?'#007BFF':'white'}">${i}</button>
                                                 </li>
                                             </c:forEach>  
                                             <c:set var="i" value="${page}"/>
-                                            <button name="index" value="${i+1}" type="${i<endP?'submit':'button'}" style="width: 58px;height: 38px;border: 1px solid black;background-color: ${i<endP?'white':'#9698ab'}">Next</button>
+                                            <button name="index" value="${i+1}" type="${i<endP?'submit':'button'}" style="width: 58px;
+                                                    height: 38px;
+                                                    border: 1px solid black;
+                                                    background-color: ${i<endP?'white':'#9698ab'}">Next</button>
                                         </ul>
                                     </form>
                                 </c:if>
@@ -207,7 +263,8 @@
                 <c:forEach items="${listP}" var="o">                                 
                     <div class="col-12 col-md-3 col-lg-3" style="width: 500px;">
                         <div class="card">
-                            <a href="detail?pid=${o.id}" class="motsanpham" style="text-decoration: none; color: black;" data-toggle="tooltip" data-placement="bottom">
+                            <a href="detail?pid=${o.id}" class="motsanpham" style="text-decoration: none;
+                               color: black;" data-toggle="tooltip" data-placement="bottom">
                                 <img class="card-img-top anh" src="${o.pimage.img1}" style="height: 250px">
                                 <div class="card-body noidungsp mt-3">
                                     <div class="sale">-10%</div>
@@ -227,6 +284,10 @@
                 </c:forEach>                               
             </div>
         </section>
+        <div id="notification" class="notification">
+            Sản phẩm đã được thêm vào giỏ hàng !
+            <div class="timeline"></div>
+        </div>
         <br>
         <jsp:include page="nav2.jsp"/>
 
@@ -248,27 +309,27 @@
                 uncheck.style.display = "none";
             }
         </script>
-        <p style="color: springgreen;font-size: 14px;"></p>
         <script type="text/javascript">
             function addCart(id) {
-                // Tạo box thông báo
-                var notification = document.createElement('div');
-                notification.innerHTML = "Sản phẩm đã được thêm vào giỏ hàng !";
-                notification.style.position = 'fixed';
-                notification.style.fontSize = '22px';
-                notification.style.top = '5px';
-                notification.style.right = '45px';
-                notification.style.padding = '15px';
-                notification.style.backgroundColor = '#28a745';
-                notification.style.color = '#fff';
-                notification.style.borderRadius = '5px';
-                document.body.appendChild(notification);
+                var input = document.getElementById("numInput");
+                var maxValue = parseInt(input.getAttribute("max"));
+                var error = document.getElementById("errCart");
+                if (maxValue <= 0) {
+                    error.style.display = '';
+                    return;
+                } else {
+                    if (parseInt(input.value) > maxValue) {
+                        input.value = maxValue;
+                    }
+                    // Tạo box thông báo
+                    var notification = document.getElementById('notification');
+                    notification.style.display = 'block';
 
-//                 Thực hiện hành động add to cart
-                setTimeout(function () {
-                    document.f.action = "buy?id=" + id;
-                    document.f.submit();
-                }, 800);
+                    setTimeout(function () {
+                        document.f.action = "buy?id=" + id;
+                        document.f.submit();
+                    }, 1500);
+                }
             }
         </script>
 
