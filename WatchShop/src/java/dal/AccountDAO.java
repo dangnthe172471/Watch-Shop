@@ -222,4 +222,23 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
+    public void updateAccountAvatar(Account account) {
+        String sql = "UPDATE Account SET avatar = ? WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            // Thêm tiền tố "/img/" vào avatar nếu chưa có
+            String avatarPath = account.getAvatar();
+            if (!avatarPath.startsWith("img/")) {
+                avatarPath = "img/" + avatarPath;
+            }
+
+            st.setString(1, avatarPath);
+            st.setInt(2, account.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("updateAccountAvatar: " + e.getMessage());
+        }
+    }
+
 }
