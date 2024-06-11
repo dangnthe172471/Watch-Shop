@@ -204,4 +204,14 @@ public class FeedbackDAO extends DBContext {
         }
         return list;
     }
+
+    public void deleteFeedback(String id) {
+        String sql = "delete from [feedback] where id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
 }

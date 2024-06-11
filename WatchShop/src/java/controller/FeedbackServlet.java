@@ -58,15 +58,26 @@ public class FeedbackServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String aid_raw = request.getParameter("aid");
+        FeedbackDAO fdao = new FeedbackDAO();
+        String id = request.getParameter("id");
+        String type = request.getParameter("type");
         String pid_raw = request.getParameter("pid");
+        int pid = Integer.parseInt(pid_raw);
+        if (type.equals("delete")) {
+            fdao.deleteFeedback(id);
+            response.sendRedirect("detail?pid=" + pid);
+            return;
+        }
+        String aid_raw = request.getParameter("aid");
         String content = request.getParameter("content");
         String voted_raw = request.getParameter("voted");
         int aid = Integer.parseInt(aid_raw);
-        int pid = Integer.parseInt(pid_raw);
         int voted = Integer.parseInt(voted_raw);
-        FeedbackDAO fdao = new FeedbackDAO();
-        fdao.AddFeedback(aid, pid, content, voted);
+        if (type.equals("feedback")) {
+            fdao.AddFeedback(aid, pid, content, voted);
+        } else if (type.equals("update")) {
+            fdao.deleteFeedback(id);
+        }
         response.sendRedirect("detail?pid=" + pid);
     }
 

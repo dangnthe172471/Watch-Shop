@@ -172,6 +172,7 @@
                                         <input type="button" onclick="checkCaptcha()" value="Đánh giá" style="margin-top: 10px;">
                                         <input value="${detail.id}" type="hidden" name="pid">
                                         <input value="${sessionScope.account.id}" type="hidden" name="aid">
+                                        <input value="feedback" type="hidden" name="type">
                                     </form><br>
                                 </c:if>
                                 <c:if test="${feedback!=1}">
@@ -181,6 +182,7 @@
                             <c:if test="${sessionScope.account.roleID!=4}">
                                 <span style="font-size: 18px;">Vui lòng <a href="login" style="color: red"> đăng nhập </a> tài khoản khách hàng để đánh giá!</span>
                             </c:if>
+                            <br><hr>
                             <c:forEach items="${listCo}" var="co">
                                 <div style="display: flex;
                                      align-items: center;
@@ -203,8 +205,8 @@
                                                     <li style="margin-left: 950px;
                                                         margin-top: -25px;"> <i class="icon fa fa-bars" style="color: black"></i>
                                                         <ul class="sub-menu" style="background: cornsilk">
-                                                            <li><a href="#" style="color: black"><i class='fas fa-trash-alt'></i> Delete</a></li>
-                                                            <li><a href="#" style="color: black"><i class='fas fa-pencil-alt'></i>Edit</a></li>
+                                                            <li><a href="#"  onclick="deleteFeedback(event, '${o.id}', '${o.product.id}')"  style="color: black"><i class="fa fa-trash-o" style="color: red"></i> Delete</a></li>
+                                                            <li><a href="#" style="color: black"><i class="fa fa-pencil" style="color: springgreen"></i> Edit</a></li>
                                                         </ul>
                                                     </li>   
                                                 </ul>
@@ -292,6 +294,16 @@
         <jsp:include page="nav2.jsp"/>
 
         <script type="text/javascript">
+            function deleteFeedback(event, id, pid) {
+                event.preventDefault();
+                if (confirm("Bạn có chắc muốn xóa feedback này ?")) {
+                    window.location = "feedback?type=delete&id=" + id + "&pid=" + pid;
+                } else {
+                }
+            }
+        </script>
+
+        <script type="text/javascript">
             function checkCaptcha() {
                 var form = document.getElementById("feedback");
                 var uncheck = document.getElementById("uncheck");
@@ -324,7 +336,6 @@
                     // Tạo box thông báo
                     var notification = document.getElementById('notification');
                     notification.style.display = 'block';
-
                     setTimeout(function () {
                         document.f.action = "buy?id=" + id;
                         document.f.submit();

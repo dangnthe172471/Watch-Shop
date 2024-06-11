@@ -54,3 +54,7 @@
     background: linear-gradient(90deg, purple, violet); /* Màu tím cho line */
     animation: slide-timeline 2.9s linear infinite; /* Thay đổi thời gian animation thành 1.5s */
 }
+
+.khung p{
+    word-wrap: break-word;
+}
