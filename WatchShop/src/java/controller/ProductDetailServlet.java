@@ -99,9 +99,20 @@ public class ProductDetailServlet extends HttpServlet {
             request.removeAttribute("account");
         } else if (cdao.checkFeedback(account.getId(), p.getId())) {
             request.setAttribute("feedback", "1");
-            List<Feedback> listE = cdao.EditFeedback(account.getId(), p.getId());
+            List<Feedback> listE = cdao.checkEditFeedback(account.getId(), p.getId());
             request.setAttribute("listE", listE);
         }
+        int star1 = cdao.countFeedbackByStar("1", id);
+        int star2 = cdao.countFeedbackByStar("2",id);
+        int star3 = cdao.countFeedbackByStar("3",id);
+        int star4 = cdao.countFeedbackByStar("4",id);
+        int star5 = cdao.countFeedbackByStar("5",id);
+        
+        request.setAttribute("star1", star1);
+        request.setAttribute("star2", star2);
+        request.setAttribute("star3", star3);
+        request.setAttribute("star4", star4);
+        request.setAttribute("star5", star5);
         // set data to jsp
         request.setAttribute("detail", p);
         request.setAttribute("listP", listP);

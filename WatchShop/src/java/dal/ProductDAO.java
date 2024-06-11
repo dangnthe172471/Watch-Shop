@@ -464,7 +464,7 @@ public class ProductDAO extends DBContext {
     public List<Product> listProductByPid(String pid) {
         List<Product> list = new ArrayList<>();
         String sql = """
-                        select top 4 *
+                    select top 4 *
                         from product p inner join ImageProduct [pi] on(p.id=[pi].[pid])
                         inner join brand b on (b.bid=p.brandID)
                         inner join category c1 on (c1.cid=p.cateID1)
@@ -472,11 +472,11 @@ public class ProductDAO extends DBContext {
                         inner join category c3 on (c3.cid=p.cateID3)
                         where b.deleted=0 AND (c1.deleted = 0 AND c2.deleted = 0 AND c3.deleted = 0)
                         and p.[status]=0
-                        and BrandID = (select (BrandID) from Product where id = ? ) 
+                        and ( BrandID = (select (BrandID) from Product where id = ? ) 
                         Or cateID1 = (select (cateID1) from Product where id = ? )
                         Or cateID2 = (select (cateID2) from Product where id = ? )
-                        Or cateID3 = (select (cateID3) from Product where id = ? )
-                        AND p.[id] <> ?
+                        Or cateID3 = (select (cateID3) from Product where id = ? ))
+                        AND p.[id] != ?
                         Order by sold desc
                      """;
         try {

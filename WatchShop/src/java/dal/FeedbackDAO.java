@@ -151,7 +151,7 @@ public class FeedbackDAO extends DBContext {
         }
     }
 
-    public List<Feedback> EditFeedback(int aid, int pid) {
+    public List<Feedback> checkEditFeedback(int aid, int pid) {
         List<Feedback> list = new ArrayList<>();
         String sql = """
                      select * FROM [feedback] f 
@@ -213,5 +213,146 @@ public class FeedbackDAO extends DBContext {
             st.executeUpdate();
         } catch (SQLException e) {
         }
+    }
+
+    public Feedback getFeedbackById(String id) {
+        String sql = """
+                     select * FROM [feedback] f 
+                     INNER JOIN [Account] a ON (a.[id] = f.[aid])
+                     INNER JOIN (Product p inner join ImageProduct [ip] on (p.id=[ip].pid)) ON (p.[id] = f.[pid])
+                     where f.[id] = ? """;
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new Feedback(rs.getInt(1),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        new Account(rs.getInt(6),
+                                rs.getString(7),
+                                rs.getString(8),
+                                rs.getString(9),
+                                rs.getString(10),
+                                rs.getString(11),
+                                rs.getDouble(12),
+                                rs.getInt(13),
+                                rs.getString(14),
+                                rs.getInt(15),
+                                rs.getInt(16),
+                                rs.getString(17)),
+                        new Product(rs.getInt(18),
+                                rs.getString(19),
+                                rs.getString(20),
+                                rs.getDouble(21),
+                                rs.getInt(22),
+                                rs.getInt(23),
+                                rs.getDate(24),
+                                rs.getString(25),
+                                rs.getDouble(26),
+                                rs.getInt(27),
+                                rs.getInt(28),
+                                rs.getInt(29),
+                                rs.getInt(30),
+                                rs.getInt(31),
+                                new ImageProduct(rs.getInt(32),
+                                        rs.getInt(33),
+                                        rs.getString(34),
+                                        rs.getString(35),
+                                        rs.getString(36),
+                                        rs.getString(37))));
+            }
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    public void updateFeedback(String id, String content, double voted) {
+        String sql = """
+                    UPDATE [dbo].[Feedback]
+                    SET [content] = ?
+                       ,[voted] = ?
+                    WHERE [id] = ?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, content);
+            st.setDouble(2, voted);
+            st.setString(3, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+
+    public int countFeedbackByStar(String star, String pid) {
+        String sql = """
+                    SELECT COUNT(*) 
+                    from feedback f
+                    INNER JOIN (Product p inner join ImageProduct [ip] on (p.id=[ip].pid)) ON (p.[id] = f.[pid])
+                    where f.[voted] = ? and p.[id] = ?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, star);
+            st.setString(2, pid);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+
+    public List<Feedback> listFeedbackByStar(String star, String pid) {
+        List<Feedback> list = new ArrayList<>();
+        String sql = """
+                     select * FROM [feedback] f 
+                     INNER JOIN [Account] a ON (a.[id] = f.[aid])
+                     INNER JOIN (Product p inner join ImageProduct [ip] on (p.id=[ip].pid)) ON (p.[id] = f.[pid])
+                     where  p.[id]= ? and f.[voted]=? """;
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, pid);
+            st.setString(2, star);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new Feedback(rs.getInt(1),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        new Account(rs.getInt(6),
+                                rs.getString(7),
+                                rs.getString(8),
+                                rs.getString(9),
+                                rs.getString(10),
+                                rs.getString(11),
+                                rs.getDouble(12),
+                                rs.getInt(13),
+                                rs.getString(14),
+                                rs.getInt(15),
+                                rs.getInt(16),
+                                rs.getString(17)),
+                        new Product(rs.getInt(18),
+                                rs.getString(19),
+                                rs.getString(20),
+                                rs.getDouble(21),
+                                rs.getInt(22),
+                                rs.getInt(23),
+                                rs.getDate(24),
+                                rs.getString(25),
+                                rs.getDouble(26),
+                                rs.getInt(27),
+                                rs.getInt(28),
+                                rs.getInt(29),
+                                rs.getInt(30),
+                                rs.getInt(31),
+                                new ImageProduct(rs.getInt(32),
+                                        rs.getInt(33),
+                                        rs.getString(34),
+                                        rs.getString(35),
+                                        rs.getString(36),
+                                        rs.getString(37)))));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
     }
 }
