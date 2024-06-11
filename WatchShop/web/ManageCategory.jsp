@@ -55,6 +55,14 @@
                             <!--<i class='bx bx-search' ></i>-->
                             <i class='bx bx-filter' ></i>
                         </div>
+                        <div class="nav-bg">
+                            <nav class="container" style="padding:0px ">
+                                <ul class="main-menu">
+                                    <li><a style="padding-right: 0px" href="category">Danh sách</a></li>
+                                    <li style="margin-left: 30px;"><a href="BlockC.jsp">Danh sách Tạm Ẩn</a></li>               
+                                </ul>
+                            </nav>
+                        </div>
                         <form action="category">
                             <table>
                                 <thead>

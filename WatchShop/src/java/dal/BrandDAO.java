@@ -58,6 +58,27 @@ public class BrandDAO extends DBContext {
         }
         return list;
     }
+    
+    public List<Brand> getBrandBlock() {
+        List<Brand> list = new ArrayList<>();
+
+        try {
+            String sql = "select * from brand where deleted = 1";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Brand b = new Brand();
+                b.setBid(String.valueOf(rs.getInt(1)));
+                b.setBname(rs.getString(2));
+                b.setImage(rs.getString(3));
+                b.setDescription(rs.getString(4));
+                b.setDeleted(String.valueOf(rs.getInt(5)));
+                list.add(b);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
 
     public void addBrand(Brand b) {
         try {
