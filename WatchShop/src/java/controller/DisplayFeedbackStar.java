@@ -4,7 +4,10 @@
  */
 package controller;
 
+import dal.BrandDAO;
+import dal.CategoryDAO;
 import dal.FeedbackDAO;
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,14 +15,20 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.Account;
+import model.Brand;
+import model.Category;
 import model.Feedback;
+import model.Product;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "FeedbackServlet", urlPatterns = {"/feedback"})
-public class FeedbackServlet extends HttpServlet {
+@WebServlet(name = "DisplayFeedbackStar", urlPatterns = {"/feedbackbystar"})
+public class DisplayFeedbackStar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +47,10 @@ public class FeedbackServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet FeedbackServlet</title>");
+            out.println("<title>Servlet DisplayFeedbackStar</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet FeedbackServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DisplayFeedbackStar at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,30 +69,45 @@ public class FeedbackServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         FeedbackDAO fdao = new FeedbackDAO();
-        String id = request.getParameter("id");
-        String type = request.getParameter("type");
-        if (type.equals("edit")) {
-            Feedback feeback = fdao.getFeedbackById(id);
-            request.setAttribute("feeback", feeback);
-            request.getRequestDispatcher("EditFeedback.jsp").forward(request, response);
-            return;
+        ProductDAO pdao = new ProductDAO();
+        BrandDAO bdao = new BrandDAO();
+        CategoryDAO cdao = new CategoryDAO();
+        String star = request.getParameter("star");
+        String id = request.getParameter("pid");
+
+        List<Feedback> listCo = fdao.listFeedbackByStar(star, id);
+        Product p = pdao.getProductByID(id);
+        List<Product> listP = pdao.listProductByPid(id);
+        List<Brand> listB = bdao.getAllBrand();
+        List<Category> listC = cdao.getAllCategory();
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            request.removeAttribute("account");
+        } else if (fdao.checkFeedback(account.getId(), p.getId())) {
+            request.setAttribute("feedback", "1");
+            List<Feedback> listE = fdao.checkEditFeedback(account.getId(), p.getId());
+            request.setAttribute("listE", listE);
         }
-        String pid_raw = request.getParameter("pid");
-        int pid = Integer.parseInt(pid_raw);
-        if (type.equals("delete")) {
-            fdao.deleteFeedback(id);
-            response.sendRedirect("detail?pid=" + pid);
-            return;
-        }
-        if (type.equals("feedback")) {
-            String aid_raw = request.getParameter("aid");
-            String content = request.getParameter("content");
-            String voted_raw = request.getParameter("voted");
-            int aid = Integer.parseInt(aid_raw);
-            int voted = Integer.parseInt(voted_raw);
-            fdao.AddFeedback(aid, pid, content, voted);
-            response.sendRedirect("detail?pid=" + pid);
-        }
+
+        int star1 = fdao.countFeedbackByStar("1", id);
+        int star2 = fdao.countFeedbackByStar("2", id);
+        int star3 = fdao.countFeedbackByStar("3", id);
+        int star4 = fdao.countFeedbackByStar("4", id);
+        int star5 = fdao.countFeedbackByStar("5", id);
+
+        request.setAttribute("star1", star1);
+        request.setAttribute("star2", star2);
+        request.setAttribute("star3", star3);
+        request.setAttribute("star4", star4);
+        request.setAttribute("star5", star5);
+        // set data to jsp
+        request.setAttribute("detail", p);
+        request.setAttribute("listP", listP);
+        request.setAttribute("listB", listB);
+        request.setAttribute("listC", listC);
+        request.setAttribute("listCo", listCo);
+        request.getRequestDispatcher("productdetail.jsp").forward(request, response);
     }
 
     /**
@@ -97,21 +121,7 @@ public class FeedbackServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String type = request.getParameter("type");
-        String pid_raw = request.getParameter("pid");
-        int pid = Integer.parseInt(pid_raw);
-        if (type.equals("back")) {
-            response.sendRedirect("detail?pid=" + pid);
-            return;
-        }
-        FeedbackDAO fdao = new FeedbackDAO();
-        if (type.equals("update")) {
-            String id = request.getParameter("id");
-            String content = request.getParameter("content");
-            double voted = Double.parseDouble(request.getParameter("voted"));
-            fdao.updateFeedback(id, content, voted);
-            response.sendRedirect("detail?pid=" + pid);
-        }
+        processRequest(request, response);
     }
 
     /**
