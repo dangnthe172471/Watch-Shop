@@ -1,0 +1,77 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 11, 2024, 5:03:46 AM
+    Author     : dung2
+*/
+
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+.profile-label {
+    font-weight: bold;
+}
+.profile-value {
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+label {
+    text-align: right;
+}
+.input-group {
+    margin-left: 0;
+}
+.input-group-prepend {
+    margin-right: 0;
+}
+@media (min-width: 768px) {
+    .col-sm-8 {
+        flex: 0 0 66.66667%;
+        max-width: 66.66667%;
+    }
+    .col-sm-4 {
+        flex: 0 0 33.33333%;
+        max-width: 33.33333%;
+    }
+}
+.profile-picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Chiều cao của màn hình */
+}
+.profile-picture-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-picture {
+    position: relative;
+}
+
+.profile-value img {
+    display: block;
+}
+
+.file-info {
+    margin-top: 10px;
+    text-align: center;
+}
+.profile-picture img {
+    width: 200px; /* Kích thước của khung avatar */
+    height: 200px;
+    object-fit: cover; /* Cắt ảnh để phù hợp với kích thước */
+    border-radius: 50%; /* Bo tròn ảnh */
+}

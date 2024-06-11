@@ -69,3 +69,13 @@
 .fa-css{
     margin: 0px 0px 0px 5px;
 }
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    margin-right: 10px; 
+}
+
