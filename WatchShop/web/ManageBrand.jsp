@@ -46,13 +46,20 @@
                         <span class="text">Thêm Thương Hiệu</span>
                     </a>
                 </div>
-                <div class="centered-error">${err}</div>
                 <div class="table-data">
                     <div class="order">
                         <div class="head">
                             <h3>Quản Lý</h3>
                             <!--<i class='bx bx-search' ></i>-->
                             <a href="#"><i class='bx bx-filter' ></i></a> 
+                        </div>
+                        <div class="nav-bg">
+                            <nav class="container" style="padding:0px ">
+                                <ul class="main-menu">
+                                    <li><a style="padding-right: 0px" href="brand">Danh sách</a></li>
+                                    <li style="margin-left: 30px;"><a href="blockb">Danh sách Tạm Ẩn</a></li>                  
+                                </ul>
+                            </nav>
                         </div>
                         <form action="brand">
                             <table>
@@ -137,7 +144,7 @@
                                 <input type="text" name="image" id="update_image">
                                 <label>Miêu Tả</label>
                                 <textarea class="form-control" id="update_description" name="description"></textarea>
-                                
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
@@ -153,46 +160,46 @@
         <script src="js/script.js"></script>
         <script>
                                                     $(document).ready(function () {
-                                                        $('.addbtn').on('click', function () {
-                                                            $('#addmodal').modal('show');
-                                                            $tr = $(this).closest('tr');
-                                                        });
+                                                    $('.addbtn').on('click', function () {
+                                                    $('#addmodal').modal('show');
+                                                    $tr = $(this).closest('tr');
                                                     });
-        </script>
-         <script>
-                                                    $(document).ready(function () {
-                                                        var error = "<%= session.getAttribute("err") %>";
-                                                        var modalOpen = "<%= session.getAttribute("keepModalOpen") %>";
-                                                        if (error && modalOpen === "add") {
-                                                            $('#addmodal').modal('show');
-                                                        }
-                                                        $('#addmodal').on('hidden.bs.modal', function (e) {
-            <% session.removeAttribute("err"); session.removeAttribute("keepModalOpen"); %>
-                                                        });
                                                     });
         </script>
         <script>
             $(document).ready(function () {
-                $('.editbtn').on('click', fun   ction () {
-                    $('#editmodal').modal('show');
-                    $tr = $(this).closest('tr');
-                    var data = $tr.children("td").map(function () {
-                        return $(this).text();
-                    }).get();
-                    console.log(data);
-                    $('#update_id').val(data[0].trim());
-                    $('#update_name').val(data[1].trim());
-                    $('#update_image').val(data[2].trim());
-                    $('#update_description').val(data[3].trim());
-                });
+            var error = "<%= session.getAttribute("err") %>";
+            var modalOpen = "<%= session.getAttribute("keepModalOpen") %>";
+            if (error && modalOpen === "add") {
+            $('#addmodal').modal('show');
+            }
+            $('#addmodal').on('hidden.bs.modal', function (e) {
+            <% session.removeAttribute("err"); session.removeAttribute("keepModalOpen"); %>
+            });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+            $('.editbtn').on('click', fun   ction () {
+            $('#editmodal').modal('show');
+            $tr = $(this).closest('tr');
+            var data = $tr.children("td").map(function () {
+            return $(this).text();
+            }).get();
+            console.log(data);
+            $('#update_id').val(data[0].trim());
+            $('#update_name').val(data[1].trim());
+            $('#update_image').val(data[2].trim());
+            $('#update_description').val(data[3].trim());
+            });
             });
         </script>
 
         <script type="text/javascript">
             function doDelete(bid) {
-                if (confirm('Bạn có muốn xóa Thương Hiệu này ?')) {
-                    window.location = 'deletebrand?bid=' + bid;
-                }
+            if (confirm('Bạn có muốn xóa Thương Hiệu này ?')) {
+            window.location = 'deletebrand?bid=' + bid;
+            }
             }
         </script>
     </body>

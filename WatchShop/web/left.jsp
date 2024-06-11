@@ -83,6 +83,19 @@
                             <span class="text">Tin tức</span>
                         </a>
                     </li>
+                </c:if>
+                    <c:if test="${sessionScope.account.roleID==3}">
+                    <li class="${tab==null?'active':''}">
+                        <a href="AdminManage.jsp">
+                            <i class='bx bxs-dashboard' ></i>
+                            <span class="text">Thống kê</span>
+                        </a>
+                    </li>
+                    <li class="${tab==6?'active':''}">
+                        <a href="ShipperManagement.jsp">
+                            <i class='bx bxs-message-dots' ></i>
+                            <span class="text">Danh sách đơn</span>
+                        </a>
                     </li>
                 </c:if>
             </ul>
