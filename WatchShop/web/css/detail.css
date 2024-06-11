@@ -1,0 +1,60 @@
+@keyframes slide {
+    0% {
+        right: -100%;
+    }
+    10% {
+        right: 45px;
+    }
+    90% {
+        right: 45px;
+    }
+    100% {
+        right: -100%;
+    }
+}
+
+@keyframes slide-timeline {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.notification {
+    display: none;
+    position: fixed;
+    font-size: 22px;
+    top: 5px;
+    right: 45px;
+    padding: 15px;
+    background: linear-gradient(90deg, #a8e063 60%, #28a745 100%);
+    color: white;
+    border-radius: 10px;
+    animation: slide 1.6s linear;
+}
+
+.timeline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    overflow: hidden;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, purple, violet); /* Màu tím cho line */
+    animation: slide-timeline 2.9s linear infinite; /* Thay đổi thời gian animation thành 1.5s */
+}
+
+.khung p{
+    word-wrap: break-word;
+}

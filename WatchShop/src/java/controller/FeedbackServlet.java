@@ -4,10 +4,7 @@
  */
 package controller;
 
-import dal.BrandDAO;
-import dal.CategoryDAO;
 import dal.FeedbackDAO;
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,21 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Account;
-import model.Brand;
-import model.Cart;
-import model.Category;
-import model.Feedback;
-import model.Product;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "ProductDetailServlet", urlPatterns = {"/detail"})
-public class ProductDetailServlet extends HttpServlet {
+@WebServlet(name = "FeedbackServlet", urlPatterns = {"/feedback"})
+public class FeedbackServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,10 +37,10 @@ public class ProductDetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductDetailServlet</title>");
+            out.println("<title>Servlet FeedbackServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProductDetailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FeedbackServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -69,49 +58,27 @@ public class ProductDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // get data from html
-        String id = request.getParameter("pid");
-        String indexpage = request.getParameter("index");
-
-        // get data from dao
-        ProductDAO pdao = new ProductDAO();
-        FeedbackDAO cdao = new FeedbackDAO();
-        BrandDAO bdao = new BrandDAO();
-        CategoryDAO cadao = new CategoryDAO();
-        if (indexpage == null) {
-            indexpage = "1";
+        FeedbackDAO fdao = new FeedbackDAO();
+        String id = request.getParameter("id");
+        String type = request.getParameter("type");
+        String pid_raw = request.getParameter("pid");
+        int pid = Integer.parseInt(pid_raw);
+        if (type.equals("delete")) {
+            fdao.deleteFeedback(id);
+            response.sendRedirect("detail?pid=" + pid);
+            return;
         }
-        int index = Integer.parseInt(indexpage);
-        int countP = cdao.countFeedbackByPid(id);
-        int endpage = countP / 4;
-        if (countP % 4 != 0) {
-            endpage++;
+        String aid_raw = request.getParameter("aid");
+        String content = request.getParameter("content");
+        String voted_raw = request.getParameter("voted");
+        int aid = Integer.parseInt(aid_raw);
+        int voted = Integer.parseInt(voted_raw);
+        if (type.equals("feedback")) {
+            fdao.AddFeedback(aid, pid, content, voted);
+        } else if (type.equals("update")) {
+            fdao.deleteFeedback(id);
         }
-        List<Feedback> listCo = cdao.displayFeedback(id, index);
-        Product p = pdao.getProductByID(id);
-        List<Product> listP = pdao.listProductByPid(id);
-        List<Brand> listB = bdao.getAllBrand();
-        List<Category> listC = cadao.getAllCategory();
-
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("account");
-        if (account == null) {
-            request.removeAttribute("account");
-        } else if (cdao.checkFeedback(account.getId(), p.getId())) {
-            request.setAttribute("feedback", "1");
-            List<Feedback> listE = cdao.EditFeedback(account.getId(), p.getId());
-            request.setAttribute("listE", listE);
-        }
-        // set data to jsp
-        request.setAttribute("detail", p);
-        request.setAttribute("listP", listP);
-        request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
-        request.setAttribute("listCo", listCo);
-        request.setAttribute("page", index);
-        request.setAttribute("countP", countP);
-        request.setAttribute("endP", endpage);
-        request.getRequestDispatcher("productdetail.jsp").forward(request, response);
+        response.sendRedirect("detail?pid=" + pid);
     }
 
     /**
@@ -125,7 +92,7 @@ public class ProductDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /**

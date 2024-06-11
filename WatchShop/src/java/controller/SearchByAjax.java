@@ -143,7 +143,7 @@ public class SearchByAjax extends HttpServlet {
                     + "                                                    </div>\n"
                     + "                                                    <div class=\"danhgia\">\n"
                     + "                                                        Đã bán: " + o.getSold() + "\n"
-                    + "                                                        <span style=\"margin-left:70px\">" + o.getRate() + "<i class=\"fa fa-star\" style=\"color: yellow\"></i></span>\n"
+                    + "                                                        <span style=\"margin-left:60px\">" + o.getRate() + "<i class=\"fa fa-star\" style=\"color: yellow\"></i></span>\n"
                     + "                                                    </div>\n"
                     + "                                                </div>\n"
                     + "                                            </a>\n"
