@@ -81,7 +81,7 @@
                                         <div class="soluong d-flex">
                                             <label class="font-weight-bold">Số lượng: </label>
                                             <dd>
-                                                <input type="number" name="num" style="width:70px;" min="1" value="1" id="numInput"
+                                                <input type="number" name="num" style="width:70px;" min="1" value="1" id="numInput" class="NumInput" oninput="checkNum(this)"
                                                        max="${sessionScope.cart.getItemById(detail.id)!=null?(detail.quantity-sessionScope.cart.getQuantityById(detail.id)):(detail.quantity)}">
                                             </dd> 
                                         </div>
@@ -163,7 +163,8 @@
                             <c:if test="${sessionScope.account.roleID!=4}">
                                 <span style="font-size: 18px;">Vui lòng <a href="login" style="color: red"> đăng nhập </a> tài khoản khách hàng để đánh giá!</span>
                             </c:if>                                                              
-                            <br><i class="fa fa-caret-down fa-css" onclick="listVoted()" style="margin-left: 1050px;font-size: 30px;"></i><hr>
+                            <br><i class="fa fa-toggle-left" id="icon" onclick="listVoted()" style="margin-left: 1025px;font-size: 20px;"></i>
+                            <hr>
                             <div id="listVoted"  class="row" style="margin-left: 0px;margin-top: -35px;margin-bottom: 30px;display: none">
                                 <div style="border: 1px solid black" class="col-md-2"><a href="feedbackbystar?star=1&pid=${detail.id}" style="color: gray">1⭐(${star1} đánh giá)</a></div></a>
                                 <div style="border: 1px solid black; margin-left: 40px" class="col-md-2"><a href="feedbackbystar?star=2&pid=${detail.id}" style="color: gray">2⭐(${star2} đánh giá)</a></div>
@@ -256,6 +257,18 @@
         <br>
         <jsp:include page="nav2.jsp"/>
         <script src="js/detail.js"></script>
+        <script>
+                                                                function checkNum(input) {
+                                                                    var maxValue = parseInt(input.getAttribute("max"));
+                                                                    var value = parseInt(input.value);
+                                                                    if (value > maxValue) {
+                                                                        input.value = maxValue;
+                                                                    } else if (value < 1) {
+                                                                        input.value = 1;
+                                                                    }
+                                                                }
+        </script>
+
 
         <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
         <!--<script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>-->

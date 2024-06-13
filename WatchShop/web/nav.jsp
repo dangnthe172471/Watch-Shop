@@ -52,8 +52,8 @@
                                 <c:if test="${sessionScope.account.roleID == 1}">
                                     <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="AdminManage.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account.user}</a></li> 
                                     </c:if>
-                                    <c:if test="${sessionScope.account.roleID == 3}">
-                                    <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="AdminManage.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account.user}</a></li> 
+                                    <c:if test="${sessionScope.account.roleID != 1}">
+                                    <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="profile" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account.user}</a></li> 
                                     </c:if>
                                     
                                 <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="changepass" style="display:inline-block">Change Password</a></li> 
@@ -97,12 +97,12 @@
 
         <div id="showcart" style="margin-right: 120px;margin-top: -5px;width: 325px;">
             <c:set var="o" value="${sessionScope.cart}"/>
-            <c:if test="${sessionScope.cart == null}">
+            <c:if test="${size == 0}">
                 Chưa có sản phẩm nào trong giỏ hàng!
                 <br>
                 <hr>
             </c:if>
-            <c:if test="${sessionScope.cart != null}">
+            <c:if test="${size != 0}">
                 <a style="margin-left: 280px;font-size: 24px;color: red" onclick="showCart()"><i class="fa fa-close"></i></a>
                 <div>
                     <table style="border-collapse: collapse;width: 100%">
@@ -118,7 +118,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="process?type=remove&id=${i.product.id}"><i class="fa fa-times text-danger"></i></a>
+                                        <a href="process?type=remove&pid=${i.product.id}"><i class="fa fa-times text-danger"></i></a>
                                     </td>
                                 </tr>  
                             </c:forEach>           

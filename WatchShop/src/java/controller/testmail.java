@@ -4,27 +4,25 @@
  */
 package controller;
 
-import dal.BrandDAO;
-import dal.CategoryDAO;
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Brand;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import model.Cart;
-import model.Category;
-import model.Product;
+import model.Email;
 
 /**
  *
  * @author admin
  */
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "testmail", urlPatterns = {"/testmail"})
+public class testmail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +41,10 @@ public class HomeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeServlet</title>");
+            out.println("<title>Servlet testmail</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet testmail at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,32 +62,23 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        // get data from dao
-        ProductDAO pdao = new ProductDAO();
-        BrandDAO bdao = new BrandDAO();
-        CategoryDAO cdao = new CategoryDAO();
-
-        List<Brand> listB = bdao.getAllBrand();
-        List<Category> listC = cdao.getAllCategory();
-        List<Product> listP1 = pdao.listProductLast();
-        List<Product> listP2 = pdao.listProductBySold();
-        List<Product> listP3 = pdao.listProductByPrice();
-
-        int size = 0;
-        Object sizeObj = session.getAttribute("size");
-        if (sizeObj != null) {
-            size = (int) sizeObj;
+        HttpSession session = request.getSession(true);
+        Cart cart = null;
+        Object o = session.getAttribute("cart");
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        if (o != null) {
+            cart = (Cart) o;
+            Email handleEmail = new Email();
+            String sub = handleEmail.subjectOrder("dang");
+            String msg = handleEmail.messageOrder(currentDateTime, formatNumber(cart.getTotalMoney()), "0123456789", "name", "VN", cart);
+            handleEmail.sendEmail(sub, msg, "bapthom3@gmail.com");
+            request.getRequestDispatcher("login").forward(request, response);
         }
+    }
 
-        // set data to jsp
-        session.setAttribute("size", size);
-        request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
-        request.setAttribute("listP1", listP1);
-        request.setAttribute("listP2", listP2);
-        request.setAttribute("listP3", listP3);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+    private static String formatNumber(double number) {
+        DecimalFormat formatter = new DecimalFormat("#,###,###.###");
+        return formatter.format(number);
     }
 
     /**
