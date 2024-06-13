@@ -4,27 +4,27 @@
  */
 package controller;
 
-import dal.BrandDAO;
-import dal.CategoryDAO;
+import dal.OrderDAO;
 import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Brand;
 import model.Cart;
-import model.Category;
+import model.Item;
 import model.Product;
 
 /**
  *
  * @author admin
  */
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "ProcessServlet", urlPatterns = {"/process"})
+public class ProcessServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +43,10 @@ public class HomeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeServlet</title>");
+            out.println("<title>Servlet ProcessServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProcessServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,31 +65,63 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        // get data from dao
-        ProductDAO pdao = new ProductDAO();
-        BrandDAO bdao = new BrandDAO();
-        CategoryDAO cdao = new CategoryDAO();
-
-        List<Brand> listB = bdao.getAllBrand();
-        List<Category> listC = cdao.getAllCategory();
-        List<Product> listP1 = pdao.listProductLast();
-        List<Product> listP2 = pdao.listProductBySold();
-        List<Product> listP3 = pdao.listProductByPrice();
-
-        int size = 0;
-        Object sizeObj = session.getAttribute("size");
-        if (sizeObj != null) {
-            size = (int) sizeObj;
+        Cart cart = null;
+        Object o = session.getAttribute("cart");
+        ProductDAO dao = new ProductDAO();
+        OrderDAO odao = new OrderDAO();
+        // có rồi
+        if (o != null) {
+            cart = (Cart) o;
+        } else {
+            cart = new Cart();
         }
-
-        // set data to jsp
-        session.setAttribute("size", size);
-        request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
-        request.setAttribute("listP1", listP1);
-        request.setAttribute("listP2", listP2);
-        request.setAttribute("listP3", listP3);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        String tnum = request.getParameter("num");
+        if (tnum == null || tnum.equals("")) {
+            tnum = "0";
+        }
+        String pid = request.getParameter("pid");
+        String type = request.getParameter("type");
+        if (type == null) {
+            type = "change";
+        }
+        int id, num;
+        id = Integer.parseInt(pid);
+        num = Integer.parseInt(tnum);
+        if (type.equals("remove")) {
+            cart.removeItem(id);
+        } else if (type.equals("sub")) {
+            if (cart.getQuantityById(id) <= 1) {
+                cart.removeItem(id);
+            } else {
+                Product p = dao.getProductByID(pid);
+                double price = p.getPrice();
+                Item t = new Item(p, -1, price);
+                cart.addItem(t);
+            }
+        } else if (type.equals("add")) {
+            Product p = dao.getProductByID(pid);
+            double price = p.getPrice();
+            Item t = new Item(p, 1, price);
+            cart.addItem(t);
+        } else {
+            if (num == 0) {
+                cart.removeItem(id);
+            } else {
+                Product p = dao.getProductByID(pid);
+                double price = p.getPrice();
+                Item t = new Item(p, num - cart.getQuantityById(id), price);
+                cart.addItem(t);
+            }
+        }
+        List<Item> list = cart.getItems();
+        double totalMoney = 0;
+        for (Item item : list) {
+            totalMoney += item.getPrice() * item.getQuantity();
+        }
+        session.setAttribute("totalMoney", totalMoney);
+        session.setAttribute("cart", cart);
+        session.setAttribute("size", list.size());
+        response.sendRedirect(request.getHeader("referer"));
     }
 
     /**

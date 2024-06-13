@@ -41,10 +41,8 @@ public class OrderDAO extends DBContext {
                 int oid = rs.getInt(1);
                 for (Item i : cart.getItems()) {
                     String sql2 = """
-                                  INSERT [dbo].[OrderLine]([oid],[pid],[quantity],[price]) Values (?,?,?,?)
+                                  INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) Values (?,?,?,?)
                                   Update [dbo].[product] set [quantity]=?,[sold]=?
-                                  where [id]=?
-                                  Update [dbo].[Account] set [amount]=?,[bought]=?
                                   where [id]=?""";
 
                     PreparedStatement st2 = connection.prepareStatement(sql2);
@@ -55,13 +53,26 @@ public class OrderDAO extends DBContext {
                     st2.setInt(5, i.getProduct().getQuantity() - i.getQuantity());
                     st2.setInt(6, i.getProduct().getSold() + i.getQuantity());
                     st2.setInt(7, i.getProduct().getId());
-                    st2.setDouble(8, u.getAmount() - cart.getTotalMoney());
-                    st2.setInt(9, u.getBought() + i.getQuantity());
-                    st2.setInt(10, u.getId());
                     st2.executeUpdate();
                 }
             }
         } catch (SQLException e) {
+        }
+    }
+
+    public void updateAmount(Account u, Cart cart) {
+        for (Item i : cart.getItems()) {
+            String sql = """
+                    Update [dbo].[Account] set [amount]=?,[bought]=?
+                    where [id]=?""";
+            try {
+                PreparedStatement st = connection.prepareStatement(sql);
+                st.setDouble(1, u.getAmount() - cart.getTotalMoney());
+                st.setInt(2, u.getBought() + i.getQuantity());
+                st.setInt(3, u.getId());
+                st.executeUpdate();
+            } catch (SQLException e) {
+            }
         }
     }
 }

@@ -4,27 +4,28 @@
  */
 package controller;
 
-import dal.BrandDAO;
-import dal.CategoryDAO;
+import dal.OrderDAO;
 import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Brand;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import model.Account;
 import model.Cart;
-import model.Category;
-import model.Product;
+import model.Email;
 
 /**
  *
  * @author admin
  */
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "CheckoutServlet", urlPatterns = {"/checkout"})
+public class CheckoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +44,10 @@ public class HomeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeServlet</title>");
+            out.println("<title>Servlet CheckoutServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CheckoutServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,32 +65,13 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        // get data from dao
-        ProductDAO pdao = new ProductDAO();
-        BrandDAO bdao = new BrandDAO();
-        CategoryDAO cdao = new CategoryDAO();
-
-        List<Brand> listB = bdao.getAllBrand();
-        List<Category> listC = cdao.getAllCategory();
-        List<Product> listP1 = pdao.listProductLast();
-        List<Product> listP2 = pdao.listProductBySold();
-        List<Product> listP3 = pdao.listProductByPrice();
-
-        int size = 0;
-        Object sizeObj = session.getAttribute("size");
-        if (sizeObj != null) {
-            size = (int) sizeObj;
+        String pttt = request.getParameter("pttt");
+        if (pttt.equals("ttweb")) {
+            doPost(request, response);
         }
-
-        // set data to jsp
-        session.setAttribute("size", size);
-        request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
-        request.setAttribute("listP1", listP1);
-        request.setAttribute("listP2", listP2);
-        request.setAttribute("listP3", listP3);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        if (pttt.equals("ttpay")) {
+//            request.getRequestDispatcher("vnpay_pay.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -103,7 +85,49 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession(true);
+        Cart cart = null;
+        Object o = session.getAttribute("cart");
+        OrderDAO odao = new OrderDAO();
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String address = request.getParameter("address");
+        String note = request.getParameter("note");
+        if (note == null) {
+            note = "";
+        }
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        // có rồi
+        if (o != null) {
+            cart = (Cart) o;
+            Account acount = null;
+            Object a = session.getAttribute("account");
+            if (a != null) {
+                acount = (Account) a;
+                if (acount.getAmount() >= cart.getTotalMoney()) {
+                    odao.addOrder(acount, cart, address);
+                    odao.updateAmount(acount, cart);
+                    Email handleEmail = new Email();
+                    String sub = handleEmail.subjectOrder(name);
+                    String msg = handleEmail.messageOrder(currentDateTime, formatNumber(cart.getTotalMoney()), phone, name, address, cart);
+                    handleEmail.sendEmail(sub, msg, email);
+                    session.removeAttribute("cart");
+                    session.setAttribute("size", 0);
+                    response.sendRedirect("home");
+                } else {
+                    request.setAttribute("mess", "Tài khoản của bạn không đủ");
+                    request.getRequestDispatcher("Cart.jsp").forward(request, response);
+                }
+            } else {
+                response.sendRedirect("login");
+            }
+        }
+    }
+
+    private static String formatNumber(double number) {
+        DecimalFormat formatter = new DecimalFormat("#,###,###.###");
+        return formatter.format(number);
     }
 
     /**

@@ -51,8 +51,8 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background: linear-gradient(90deg, purple, violet); /* Màu tím cho line */
-    animation: slide-timeline 2.9s linear infinite; /* Thay đổi thời gian animation thành 1.5s */
+    background: linear-gradient(90deg, purple, violet);
+    animation: slide-timeline 2s linear infinite;
 }
 
 .khung p{

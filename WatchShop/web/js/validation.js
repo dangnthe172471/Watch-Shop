@@ -105,7 +105,17 @@ function checkWhitespace() {
         whitespaceMessageElement.innerHTML = "";
     }
 }
+function validateFullName() {
+    var username = document.getElementById("fullname").value;
+    var usernameMessageElement = document.getElementById("fullnameMessage");
 
+    if (username.trim() === "") {
+        usernameMessageElement.innerHTML = "Tên nhận hàng không được để trống.";
+        usernameMessageElement.style.color = "red";
+    } else {
+        usernameMessageElement.innerHTML = "";
+    }
+}
 
 
 function onSubmitForm(event) {
