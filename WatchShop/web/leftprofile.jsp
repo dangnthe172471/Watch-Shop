@@ -35,7 +35,7 @@
     </head>
     <body>
         <section id="sidebar">
-            <a href="ProfileUser.jsp" class="brand" style="margin-left: 60px;">
+            <a href="home" class="brand" style="margin-left: 60px;">
                 <span class="text">Watch Shop</span>
             </a>
             <ul class="side-menu top">
