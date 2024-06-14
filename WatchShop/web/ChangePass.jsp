@@ -49,8 +49,9 @@
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
-                            <h5>Mật khẩu cũ</h5>
-                            <input class="input" type="password"  name="opass" >
+                            <h5>Mật khẩu cũ  <div id="oldPasswordMessage"></div></h5>
+                           <input class="input" type="password" name="opass" id="opass" oninput="validateOldPassword(),checkWhitespace()">
+                           
                         </div>
                     </div>
                     <div class="input-div one">
@@ -58,9 +59,9 @@
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
-                            <h5>Mật khẩu mới</h5>
+                            <h5>Mật khẩu mới<div id="passwordMessage"></div></h5>
                             <input class="input" type="password" name="pass" id="password" oninput="validatePassword(),checkWhitespace()">
-                            <div id="passwordMessage"></div>
+                            
                         </div>
                     </div>
                     <div class="input-div two">
@@ -68,9 +69,9 @@
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
-                            <h5>Nhập lại mật khẩu mới</h5>
+                            <h5>Nhập lại mật khẩu mới <div id="repeatPasswordMessage"></div></h5>
                             <input class="input" type="password" name="rpass" id="re_pass" oninput="validateRepeatPassword(),checkWhitespace()">
-                            <div id="repeatPasswordMessage"></div>
+                           
                         </div>
                     </div>
                     
@@ -87,5 +88,4 @@
                         <script type="text/javascript" src="js/validation.js"></script>
         <script type="text/javascript" src="js/login.js"></script>
     </body>
-
 </html>
