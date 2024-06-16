@@ -123,8 +123,10 @@ public class Login extends HttpServlet {
                 request.getSession().setAttribute("account", account);
                 response.sendRedirect(request.getContextPath() + "/AdminManage.jsp");
                 return;
+            } else if (account.getRoleID() == 3) {
+                request.getSession().setAttribute("account", account);
+                response.sendRedirect(request.getContextPath() + "/HomeShiper.jsp");
             }
-         
 
             //login User
             Cookie cu = new Cookie("cuser", username);
