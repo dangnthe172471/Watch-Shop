@@ -254,6 +254,32 @@
             Sản phẩm đã được thêm vào giỏ hàng !
             <div class="timeline" id="timeline"></div>
         </div>
+
+
+        <div id="deleteFeedback" style="position: fixed;top: 50px;left: 600px;display: none">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Xác nhận xóa</h4>
+                        <button type="button" class="close" onclick="deleteFeedback(event, '${o.id}', '${o.product.id}')" data-dismiss="modal">&times;</button>
+                    </div>
+                    <form action="feedback">
+                        <div class="modal-body">
+                            <h5 class="modal-title">Bạn có chắc muốn xóa đánh giá này ?</h5>
+                            <input type="" name="id" id="feedback_id">
+                            <input type="" name="pid" id="feedback_pid">
+                            <input type="" name="type" value="delete">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="deleteFeedback(event, '${o.id}', '${o.product.id}')" data-dismiss="modal">Hủy</button>
+                            <button type="submit" name="update" class="btn btn-danger">Xóa</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <br>
         <jsp:include page="nav2.jsp"/>
         <script src="js/detail.js"></script>
@@ -268,7 +294,21 @@
                                                                     }
                                                                 }
         </script>
-
+        <script>
+            function deleteFeedback(event, id, pid) {
+                event.preventDefault();
+                var x = document.getElementById('deleteFeedback');
+                if (x.style.display === "") {
+                    x.style.display = "none";
+                } else {
+                    x.style.display = "";
+                    var feedback_id = document.getElementById('feedback_id');
+                    var feedback_pid = document.getElementById('feedback_pid');
+                    feedback_id.value = id;
+                    feedback_pid.value = pid;
+                }
+            }
+        </script>
 
         <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
         <!--<script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>-->

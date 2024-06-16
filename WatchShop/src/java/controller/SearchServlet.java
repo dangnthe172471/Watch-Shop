@@ -117,9 +117,9 @@ public class SearchServlet extends HttpServlet {
         index = Integer.parseInt(indexpage);
         sort = (sort_raw == null) ? 0 : Integer.parseInt(sort_raw);
         fromprice = (fromprice_raw == null || fromprice_raw.equals(""))
-                ? null : Double.valueOf(fromprice_raw);
+                ? null : Double.valueOf(fromprice_raw.replace(".", "").replace(",", "."));
         toprice = (toprice_raw == null || toprice_raw.equals(""))
-                ? null : Double.valueOf(toprice_raw);
+                ? null : Double.valueOf(toprice_raw.replace(".", "").replace(",", "."));
         fromdate = (fromdate_raw == null || fromdate_raw.equals(""))
                 ? null : Date.valueOf(fromdate_raw);
         todate = (todate_raw == null || todate_raw.equals(""))
@@ -136,8 +136,8 @@ public class SearchServlet extends HttpServlet {
         // set data from jsp
         request.setAttribute("fromdate", fromdate);
         request.setAttribute("todate", todate);
-        request.setAttribute("fromprice", fromprice);
-        request.setAttribute("toprice", toprice);
+        request.setAttribute("fromprice", fromprice_raw);
+        request.setAttribute("toprice", toprice_raw);
         request.setAttribute("key", key);
         request.setAttribute("bid", bid);
         request.setAttribute("cid", cid);

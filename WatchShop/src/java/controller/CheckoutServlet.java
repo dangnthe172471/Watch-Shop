@@ -114,7 +114,7 @@ public class CheckoutServlet extends HttpServlet {
                     handleEmail.sendEmail(sub, msg, email);
                     session.removeAttribute("cart");
                     session.setAttribute("size", 0);
-                    response.sendRedirect("home");
+                    response.sendRedirect("thanks.jsp");
                 } else {
                     request.setAttribute("mess", "Tài khoản của bạn không đủ");
                     request.getRequestDispatcher("Cart.jsp").forward(request, response);

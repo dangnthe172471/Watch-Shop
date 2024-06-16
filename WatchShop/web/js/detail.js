@@ -11,16 +11,6 @@
 }
 
 /* global grecaptcha */
-
-function deleteFeedback(event, id, pid) {
-    event.preventDefault();
-    if (confirm("Bạn có chắc muốn xóa feedback này ?")) {
-        window.location = "feedback?type=delete&id=" + id + "&pid=" + pid;
-    } else {
-    }
-}
-
-
 function checkCaptcha() {
     var form = document.getElementById("feedback");
     var uncheck = document.getElementById("uncheck");
