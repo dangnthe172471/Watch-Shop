@@ -38,6 +38,11 @@
                 <span class="text">Watch Shop</span>
             </a>
             <ul class="side-menu top">
+                <div class="user-info" >
+                    <img src="${account.avatar}" alt="Avatar" style="max-width: 60px; max-height: 60px; border-radius: 50%; border: 2px solid #ccc;">
+                    <p>${account.user}</p>
+                </div><br>
+                <hr>
                 <c:if test="${sessionScope.account.roleID==1}">
                     <li class="${tab==null?'active':''}">
                         <a href="AdminManage.jsp">
@@ -70,7 +75,7 @@
                         </a>
                     </li>
                 </c:if>
-                     <c:if test="${sessionScope.account.roleID==2}">
+                <c:if test="${sessionScope.account.roleID==2}">
                     <li class="${tab==null?'active':''}">
                         <a href="AdminManage.jsp">
                             <i class='bx bxs-dashboard' ></i>
@@ -81,6 +86,21 @@
                         <a href="manageblog">
                             <i class='bx bxs-message-dots' ></i>
                             <span class="text">Tin tức</span>
+                        </a>
+                    </li>
+                    </li>
+                </c:if>
+                <c:if test="${sessionScope.account.roleID==3}">
+                    <li class="${tab==null?'active':''}">
+                        <a href="HomeShiper.jsp">
+                            <i class='bx bxs-dashboard' ></i>
+                            <span class="text">Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="${tab==4?'active':''}">
+                        <a href="manageblog">
+                            <i class='bx bxs-message-dots' ></i>
+                            <span class="text">Lịch sử giao hàng</span>
                         </a>
                     </li>
                     </li>

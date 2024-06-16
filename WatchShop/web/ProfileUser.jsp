@@ -61,13 +61,13 @@
                                 <div class="profile-value">${account.email}</div> 
                             </div>
                             <div class="form-group">
-                                <label class="profile-label">Số điện thoại:</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" value="${account.phone}">
+                                <label class="profile-label">Số điện thoại: </label>
+                                <div class="profile-value">${account.phone}</div> 
                             </div>
 
                             <div class="form-group">
-                                <div class="profile-label">Địa chỉ nhận hàng:</div>
-                                <input type="text" class="form-control" id="address" name="address" value="${account.address}" >
+                                <div class="profile-label">Địa chỉ nhận hàng(mặc định):</div>
+                                <div class="profile-value">${account.address}</div> 
                             </div>
 
                             <div class="form-group">
