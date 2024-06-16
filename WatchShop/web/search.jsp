@@ -109,13 +109,13 @@
                         </div><br><hr>
                         <div>
                             <h5>Giá</h5>
-                            <label>Từ: </label><input oninput="searchByFromPrice(this)" style="margin-bottom: 10px;margin-left: 10px" type="number" name="fromprice" value="${fromprice != null ? fromprice : ''}" ><br>
-                            <label>Đến:</label><input oninput="searchByToPrice(this)" type="number" name="toprice" value="${toprice != null ? toprice : ''}"> <br>
+                            <label>Từ: </label><input id="fromprice" oninput="searchByFromPrice(this)" style="margin-bottom: 10px;margin-left: 10px" type="text" name="fromprice" value="${fromprice != null ? fromprice : ''}" ><br>
+                            <label>Đến:</label><input id="toprice" oninput="searchByToPrice(this)" type="text" name="toprice" value="${toprice != null ? toprice : ''}"> <br>
                         </div><br><hr>
                         <div>
                             <h5>Ngày</h5>
-                            <label>Từ ngày:</label><input type="date" name="fromdate" value="${fromdate != null ? fromdate : ''}" style="margin-left: 9px;margin-bottom: 10px;"> <br> 
-                            <label>Đến ngày:</label><input type="date" name="todate" value="${todate != null ? todate : ''}"> <br><br>
+                            <label>Từ ngày:</label><input type="date" oninput="searchByFromDate(this)" name="fromdate" value="${fromdate != null ? fromdate : ''}" style="margin-left: 9px;margin-bottom: 10px;"> <br> 
+                            <label>Đến ngày:</label><input type="date" oninput="searchByToDate(this)" name="todate" value="${todate != null ? todate : ''}"> <br><br>
                         </div>
                         <button class="button" type="submit">Search</button>
                     </form>
@@ -217,6 +217,25 @@
         <br> 
         <jsp:include page="nav2.jsp" />  
         <script>
+            const fromPriceInput = document.getElementById("fromprice");
+            const toPriceInput = document.getElementById("toprice");
+            function formatCurrencyInput(inputElement) {
+                inputElement.addEventListener("input", function (e) {
+                    let value = e.target.value;
+                    value = value.replace(/[^0-9]/g, "");
+
+                    if (value === "") {
+                        e.target.value = "";
+                        return;
+                    }
+
+                    e.target.value = parseInt(value).toLocaleString("vi-VN");
+                });
+            }
+            formatCurrencyInput(fromPriceInput);
+            formatCurrencyInput(toPriceInput);
+        </script>
+        <script>
             function searchByKey(param) {
                 var keySearch = param.value;
                 $.ajax({
@@ -251,8 +270,6 @@
                         //Do Something to handle error
                     }
                 });
-
-
             }
             function searchByFromPrice(price) {
                 var priceSearch = price.value;
@@ -261,6 +278,40 @@
                     type: "get", //send it through get method
                     data: {
                         fromprice: priceSearch
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("content");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+            }
+            function searchByFromDate(date) {
+                var dateSearch = date.value;
+                $.ajax({
+                    url: "/watchshop/searchbyajax",
+                    type: "get", //send it through get method
+                    data: {
+                        fromdate: dateSearch
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("content");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+            }
+                function searchByToDate(date) {
+                var dateSearch = date.value;
+                $.ajax({
+                    url: "/watchshop/searchbyajax",
+                    type: "get", //send it through get method
+                    data: {
+                        todate: dateSearch
                     },
                     success: function (data) {
                         var row = document.getElementById("content");
