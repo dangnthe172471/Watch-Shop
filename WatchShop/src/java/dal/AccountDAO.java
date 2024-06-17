@@ -127,16 +127,15 @@ public class AccountDAO extends DBContext {
     }
 
     public Account forgotAccount(String user, String email) {
-        String sql = """
-                       select * from account
-                       where [user]=? and [email] = ?""";
+        String sql = "SELECT * FROM account WHERE [user] = ? AND [email] = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, user);
             st.setString(2, email);
-            ResultSet rs = st.executeQuery();
+            rs = st.executeQuery();
             while (rs.next()) {
-                return new Account(rs.getInt(1),
+                return new Account(
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -147,7 +146,8 @@ public class AccountDAO extends DBContext {
                         rs.getString(9),
                         rs.getInt(10),
                         rs.getInt(11),
-                        rs.getString(12));
+                        rs.getString(12)
+                );
             }
         } catch (SQLException e) {
         }
