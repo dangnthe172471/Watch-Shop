@@ -34,6 +34,7 @@
                     <h2>Thay Đổi Mật Khẩu</h2>
                     <p>Bạn cần thay đổi mật khẩu của bạn</p>
                     <h3 style="color: red" ">${requestScope.error}</h3>
+                    <h3 style="color: black" ">${requestScope.mess}</h3>
                     <div id="whitespaceMessage"></div>
                     <div class="input-div one">
                         <div class="i">
