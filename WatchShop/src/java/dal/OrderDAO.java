@@ -18,17 +18,18 @@ import model.Item;
  */
 public class OrderDAO extends DBContext {
 
-    public void addOrder(Account u, Cart cart, String address) {
+    public void addOrder(Account u, Cart cart, String address, String note) {
         LocalDate curDate = java.time.LocalDate.now();
         String date = curDate.toString();
         try {
             // add vào bảng Order
-            String sql = "INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) Values (?,?,?,?,1)";
+            String sql = "INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address],[note], [sid]) Values (?,?,?,?,?,1)";
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, u.getId());
             st.setString(2, date);
             st.setDouble(3, cart.getTotalMoney());
             st.setString(4, address);
+            st.setString(5, note);
             st.executeUpdate();
 
             // lấy ra id order vừa add

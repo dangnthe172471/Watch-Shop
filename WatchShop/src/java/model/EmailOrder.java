@@ -4,22 +4,22 @@
  */
 package model;
 
-import java.time.LocalDateTime;
 import jakarta.mail.Authenticator;
-import jakarta.mail.PasswordAuthentication;
-import java.util.Properties;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
+import jakarta.mail.PasswordAuthentication;
 import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
+import java.util.Properties;
 
 /**
  *
- * @author dung2
+ * @author admin
  */
-public class Email {
+public class EmailOrder {
 
     private final String eFrom = "watchshop1804@gmail.com";
     private final String ePass = "krhq vohz saxg chlc";
@@ -75,13 +75,9 @@ public class Email {
         return "Hi, " + fullName + ", thanks for your order from Watch Shop!";
     }
 
-    public String forgotAccount(String fullName) {
-        return "Hi, " + fullName + ", gửi bạn mật khẩu!";
-    }
-
     // nội dung
-    public String messagePass(LocalDateTime date, String name, String pass) {
-        return """
+    public static String messageOrder(LocalDateTime date, String totalMoney, String phone, String name, String address, String note, Cart cart) {
+        String content = """
                <!DOCTYPE html>
                <html lang="en">
                <head>
@@ -95,7 +91,6 @@ public class Email {
                      margin: 0;
                      padding: 0;
                    }
-               
                    .email-container {
                      max-width: 600px;
                      margin: 20px auto;
@@ -104,23 +99,19 @@ public class Email {
                      overflow: hidden;
                      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                    }
-               
                    .header {
                      background-color: #3498db;
                      color: #fff;
                      padding: 20px;
                      text-align: center;
                    }
-               
                    .content {
                      padding: 20px;
                      border: 5px solid #3498db;
                    }
-               
                     .content p{
                                color: black;
                     }
-               
                    .discount-code {
                      background-color: #e74c3c;
                      color: #fff;
@@ -130,7 +121,6 @@ public class Email {
                      font-size: 20px;
                      border-radius: 4px;
                    }
-               
                    .footer {
                      background-color: #3498db;
                      color: #fff;
@@ -142,14 +132,22 @@ public class Email {
                <body>
                  <div class="email-container">
                    <div class="header">
-                    <h1>Watch Shop</h1>
-                    <h4>Cấp lại mật khẩu!</h4>
+                    <h1>Shoes Shop</h1>
+                    <h4>Xác nhận đặt hàng thành công!</h4>
                     </div>
                    <div class="content">
-                     <p>Thời gian cấp lại mật khẩu: """ + date + "</p>\n"
-                + "<p>Tên tài khoản: " + name + "</p>\n"
-                + "<p>Mật khẩu: " + pass + "</p>\n"
-                + "<p>Cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của Watch Shop!</p>\n"
+                     <h3>Chi tiết đơn hàng:</h3>
+                     <p style="font-weight: bold">Thời gian đặt hàng: """ + date + "</p>\n"
+                + "<p style=\"font-weight: bold\">Người đặt hàng: " + name + "</p>\n"
+                + " <p style=\"font-weight: bold\">Sản phẩm: </p>\n";
+        for (Item i : cart.getItems()) {
+            content += "<p>" + i.getProduct().getName() + " &nbsp;&nbsp;X&nbsp;&nbsp; " + i.getQuantity() + " Sản phẩm </p>\n";
+        }
+        content += "<p style=\"font-weight: bold\">Tổng tiền đơn hàng: " + totalMoney + " vnđ</p>\n"
+                + "<p style=\"font-weight: bold\">Số điện thoại: " + phone + "</p>\n"
+                + "<p style=\"font-weight: bold\">Địa chỉ: " + address + "</p>\n"
+                + "<p style=\"font-weight: bold\">Ghi chú: " + note + "</p>\n"
+                + "<p>Cảm ơn bạn đã tin tưởng và đặt hàng tại Watch Shop!</p>\n"
                 + "<p>Mọi thắc mắc xin liên hệ với chúng tôi qua:</p><P>Hotline: 0962900476 hoặc Email: watchshop1804@gmail.com.</p>\n"
                 + "<p>Chúng tôi sẽ cố gắng phản hồi bạn sớm nhất có thể!</p>\n"
                 + "</div>\n"
@@ -158,5 +156,6 @@ public class Email {
                 + "</div>\n"
                 + "</body>\n"
                 + "</html>";
+        return content;
     }
 }
