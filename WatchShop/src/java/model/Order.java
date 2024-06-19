@@ -13,7 +13,7 @@ public class Order {
     private int oid;
     private String date;
     private double totalMoney;
-    private String address;
+    private String email, phone, address;
     private String note;
     private int sid;
     private Account account;
@@ -21,10 +21,12 @@ public class Order {
     public Order() {
     }
 
-    public Order(int oid, String date, double totalMoney, String address, String note, int sid, Account account) {
+    public Order(int oid, String date, double totalMoney, String email, String phone, String address, String note, int sid, Account account) {
         this.oid = oid;
         this.date = date;
         this.totalMoney = totalMoney;
+        this.email = email;
+        this.phone = phone;
         this.address = address;
         this.note = note;
         this.sid = sid;
@@ -53,6 +55,22 @@ public class Order {
 
     public void setTotalMoney(double totalMoney) {
         this.totalMoney = totalMoney;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getAddress() {
