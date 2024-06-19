@@ -5,7 +5,6 @@
 package controller;
 
 import dal.OrderDAO;
-import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,7 +17,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import model.Account;
 import model.Cart;
-import model.Email;
+import model.EmailOrder;
 
 /**
  *
@@ -68,8 +67,21 @@ public class CheckoutServlet extends HttpServlet {
         String pttt = request.getParameter("pttt");
         if (pttt.equals("ttweb")) {
             doPost(request, response);
-        }
-        if (pttt.equals("ttpay")) {
+        } else if (pttt.equals("ttpay")) {
+            HttpSession session = request.getSession();
+            String name = request.getParameter("name");
+            String phone = request.getParameter("phone");
+            String email = request.getParameter("email");
+            String address = request.getParameter("address");
+            String note = request.getParameter("note");
+            if (note == null) {
+                note = "";
+            }
+            session.setAttribute("name", name);
+            session.setAttribute("phone", phone);
+            session.setAttribute("email", email);
+            session.setAttribute("address", address);
+            session.setAttribute("note", note);
 //            request.getRequestDispatcher("vnpay_pay.jsp").forward(request, response);
         }
     }
@@ -106,11 +118,11 @@ public class CheckoutServlet extends HttpServlet {
             if (a != null) {
                 acount = (Account) a;
                 if (acount.getAmount() >= cart.getTotalMoney()) {
-                    odao.addOrder(acount, cart, address);
+                    odao.addOrder(acount, cart, address, note);
                     odao.updateAmount(acount, cart);
-                    Email handleEmail = new Email();
+                    EmailOrder handleEmail = new EmailOrder();
                     String sub = handleEmail.subjectOrder(name);
-                    String msg = handleEmail.messageOrder(currentDateTime, formatNumber(cart.getTotalMoney()), phone, name, address, cart);
+                    String msg = handleEmail.messageOrder(currentDateTime, formatNumber(cart.getTotalMoney()), phone, name, address, note, cart);
                     handleEmail.sendEmail(sub, msg, email);
                     session.removeAttribute("cart");
                     session.setAttribute("size", 0);

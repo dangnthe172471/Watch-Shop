@@ -193,9 +193,6 @@
                                                 <button name="index" value="${i-1}" type="${i>1?'submit':'button'}" style="width: 65px;height: 30px;border: 1px solid #007BFF;background-color: ${i>1?'white':'#9698ab'}">Previous</button>
                                                 <c:forEach begin="1" end="${endP}" var="i">                                             
                                                     <li>
-                                                        <c:forEach var="cidValue" items="${cid}">
-                                                            <input type="hidden" value="${cidValue}" name="cid">
-                                                        </c:forEach>
                                                         <button name="index" value="${i}" type="submit" style="width: 30px;height: 30px;margin: 0 2px;border: 1px solid #007BFF;background-color:${page==i?'#007BFF':'white'}">${i}</button>
                                                     </li>
                                                 </c:forEach>  
@@ -255,7 +252,7 @@
             }
 
             function searchByToPrice(price) {
-                var priceSearch = price.value;
+                var priceSearch = price.value.replace(/[^0-9]/g, "");
                 $.ajax({
                     url: "/watchshop/searchbyajax",
                     type: "get", //send it through get method
@@ -272,7 +269,7 @@
                 });
             }
             function searchByFromPrice(price) {
-                var priceSearch = price.value;
+                var priceSearch = price.value.replace(/[^0-9]/g, "");
                 $.ajax({
                     url: "/watchshop/searchbyajax",
                     type: "get", //send it through get method

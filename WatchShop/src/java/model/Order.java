@@ -14,17 +14,19 @@ public class Order {
     private String date;
     private double totalMoney;
     private String address;
+    private String note;
     private int sid;
     private Account account;
 
     public Order() {
     }
 
-    public Order(int oid, String date, double totalMoney, String address, int sid, Account account) {
+    public Order(int oid, String date, double totalMoney, String address, String note, int sid, Account account) {
         this.oid = oid;
         this.date = date;
         this.totalMoney = totalMoney;
         this.address = address;
+        this.note = note;
         this.sid = sid;
         this.account = account;
     }
@@ -59,6 +61,14 @@ public class Order {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public int getSid() {

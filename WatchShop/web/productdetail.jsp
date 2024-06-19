@@ -267,9 +267,9 @@
                     <form action="feedback">
                         <div class="modal-body">
                             <h5 class="modal-title">Bạn có chắc muốn xóa đánh giá này ?</h5>
-                            <input type="" name="id" id="feedback_id">
-                            <input type="" name="pid" id="feedback_pid">
-                            <input type="" name="type" value="delete">
+                            <input type="hidden" name="id" id="feedback_id">
+                            <input type="hidden" name="pid" id="feedback_pid">
+                            <input type="hidden" name="type" value="delete">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" onclick="deleteFeedback(event, '${o.id}', '${o.product.id}')" data-dismiss="modal">Hủy</button>
@@ -284,15 +284,15 @@
         <jsp:include page="nav2.jsp"/>
         <script src="js/detail.js"></script>
         <script>
-                                                                function checkNum(input) {
-                                                                    var maxValue = parseInt(input.getAttribute("max"));
-                                                                    var value = parseInt(input.value);
-                                                                    if (value > maxValue) {
-                                                                        input.value = maxValue;
-                                                                    } else if (value < 1) {
-                                                                        input.value = 1;
-                                                                    }
-                                                                }
+                                function checkNum(input) {
+                                    var maxValue = parseInt(input.getAttribute("max"));
+                                    var value = parseInt(input.value);
+                                    if (value > maxValue) {
+                                        input.value = maxValue;
+                                    } else if (value < 1) {
+                                        input.value = 1;
+                                    }
+                                }
         </script>
         <script>
             function deleteFeedback(event, id, pid) {

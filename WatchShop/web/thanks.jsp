@@ -44,6 +44,7 @@
     </head>
     <body>
         <jsp:include page="nav.jsp"/>
+        <c:if test="${vnp_TransactionStatus==null}">
             <div class="container" style="text-align: center;margin: 50px auto;width: 50%;border: 1px solid #f0f0f0;padding: 20px;border-radius: 10px;background-color: #fdfdfd;">
                 <div class="header" style="background-color: #fca82d;padding: 10px;font-size: 24px;font-weight: bold;color: white;">ĐẶT HÀNG THÀNH CÔNG</div>
                 <div class="message">
@@ -53,6 +54,103 @@
                 </div>
                 <a href="home" class="button">QUAY LẠI TRANG CHỦ</a>
             </div>        
+        </c:if>
+        <c:if test="${vnp_TransactionStatus!=null && vnp_TransactionStatus =='00'}">
+            <div class="container" style="text-align: center;margin: 0px auto;width: 50%;border: 1px solid #f0f0f0;padding: 20px;border-radius: 10px;background-color: #fdfdfd;">
+                <div class="header" style="background-color: #fca82d;padding: 10px;font-size: 24px;font-weight: bold;color: white;">ĐẶT HÀNG THÀNH CÔNG</div>
+                <div class="message" style="text-align: left">
+                    Chúc mừng bạn đã hoàn tất đơn hàng.<br>
+                    Chúng tôi sẽ kiểm tra và liên hệ giao hàng đến bạn trong thời gian sớm nhất!<br>
+                    Để xem lại đơn hàng, vui lòng <a href="#" class="link">nhấn vào đây</a>.
+                </div><br><hr>
+                <div class="header clearfix">
+                    <h3 class="text-muted">KẾT QUẢ THANH TOÁN</h3>
+                </div>
+                <div class="table-responsive" style="text-align: left">
+                    <div class="form-group">
+                        <label >Mã giao dịch thanh toán:</label>
+                        <label>${vnp_TxnRef}</label>
+                    </div>    
+                    <div class="form-group">
+                        <label >Số tiền:</label>
+                        <label>${vnp_Amount}</label>
+                    </div>  
+                    <div class="form-group">
+                        <label >Mô tả giao dịch:</label>
+                        <label>${vnp_OrderInfo}</label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Mã lỗi thanh toán:</label>
+                        <label>${vnp_ResponseCode}</label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Mã giao dịch tại CTT VNPAY-QR:</label>
+                        <label>${vnp_TransactionNo}</label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Mã ngân hàng thanh toán:</label>
+                        <label>${vnp_BankCode}</label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Thời gian thanh toán:</label>
+                        <label>${vnp_PayDate}</label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Tình trạng giao dịch:</label>
+                        <label style="color: ${vnp_TransactionStatus.equals("00")?'springgreen':'red'} ">
+                            ${vnp_TransactionStatus.equals("00")?'Hoàn Thành':'Chưa hoàn thành'}</label>
+                    </div> 
+                </div> 
+                <a href="home" class="button">QUAY LẠI TRANG CHỦ</a>
+            </div> 
+        </c:if>
+        <c:if test="${vnp_TransactionStatus!=null && vnp_TransactionStatus != '00'}">
+            <div class="container" style="text-align: center;margin: 0px auto;width: 50%;border: 1px solid #f0f0f0;padding: 20px;border-radius: 10px;background-color: #fdfdfd;">
+                <div class="header" style="background-color: #fca82d;padding: 10px;font-size: 24px;font-weight: bold;color: white;">ĐẶT HÀNG THẤT BẠI</div>
+                <div class="message" style="color: red; margin-left: -20px;font-size: 19px;" >
+                    Đơn hàng của bạn chưa được thanh toán thành công xin vui lòng hãy kiểm tra lại!.<br>
+                </div><br><hr>
+                <div class="header clearfix">
+                    <h3 class="text-muted">KẾT QUẢ THANH TOÁN</h3>
+                </div>
+                <div class="table-responsive" style="text-align: left">
+                    <div class="form-group">
+                        <label >Mã giao dịch thanh toán:</label>
+                        <label>${vnp_TxnRef}</label>
+                    </div>    
+                    <div class="form-group">
+                        <label >Số tiền:</label>
+                        <label>${vnp_Amount}</label>
+                    </div>  
+                    <div class="form-group">
+                        <label >Mô tả giao dịch:</label>
+                        <label>${vnp_OrderInfo}</label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Mã lỗi thanh toán:</label>
+                        <label>${vnp_ResponseCode}</label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Mã giao dịch tại CTT VNPAY-QR:</label>
+                        <label>${vnp_TransactionNo}</label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Mã ngân hàng thanh toán:</label>
+                        <label>${vnp_BankCode}</label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Thời gian thanh toán:</label>
+                        <label>${vnp_PayDate}</label>
+                    </div> 
+                    <div class="form-group">
+                        <label >Tình trạng giao dịch:</label>
+                        <label style="color: ${vnp_TransactionStatus.equals("00")?'springgreen':'red'} ">
+                            ${vnp_TransactionStatus.equals("00")?'Hoàn Thành':'Chưa hoàn thành'}</label>
+                    </div> 
+                </div>
+                <a href="home" class="button">QUAY LẠI TRANG CHỦ</a>
+            </div> 
+        </c:if>
         <jsp:include page="nav2.jsp"/>
     </body>
 </html>

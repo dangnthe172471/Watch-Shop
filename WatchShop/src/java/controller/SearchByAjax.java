@@ -115,9 +115,9 @@ public class SearchByAjax extends HttpServlet {
         index = Integer.parseInt(indexpage);
         sort = (sort_raw == null) ? 0 : Integer.parseInt(sort_raw);
         fromprice = (fromprice_raw == null || fromprice_raw.equals(""))
-                ? null : Double.valueOf(fromprice_raw.replace(".", "").replace(",", "."));
+                ? null : Double.valueOf(fromprice_raw.replace(".", ""));
         toprice = (toprice_raw == null || toprice_raw.equals(""))
-                ? null : Double.valueOf(toprice_raw.replace(".", "").replace(",", "."));
+                ? null : Double.valueOf(toprice_raw.replace(".", ""));
         fromdate = (fromdate_raw == null || fromdate_raw.equals(""))
                 ? null : Date.valueOf(fromdate_raw);
         todate = (todate_raw == null || todate_raw.equals(""))
