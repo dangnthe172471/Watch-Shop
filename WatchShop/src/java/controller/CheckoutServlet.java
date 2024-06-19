@@ -118,7 +118,7 @@ public class CheckoutServlet extends HttpServlet {
             if (a != null) {
                 acount = (Account) a;
                 if (acount.getAmount() >= cart.getTotalMoney()) {
-                    odao.addOrder(acount, cart, address, note);
+                    odao.addOrder(acount, cart, email, phone, address, note);
                     odao.updateAmount(acount, cart);
                     EmailOrder handleEmail = new EmailOrder();
                     String sub = handleEmail.subjectOrder(name);

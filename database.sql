@@ -90,6 +90,8 @@ CREATE TABLE [dbo].[Order](
 	[aid] [int],
 	[date] [date],
 	[totalMoney] [float],
+	[email] [nvarchar](max),
+	[phone] [nvarchar](max),
 	[address] [nvarchar](max),
 	[note] [nvarchar](max),
 	[sid] [int],
@@ -289,16 +291,17 @@ INSERT [dbo].[Status]([id], [status]) VALUES (3,N'Hoàn thành')
 INSERT [dbo].[Status]([id], [status]) VALUES (4,N'Đã hủy')
 SET IDENTITY_INSERT [dbo].[Status] OFF
 
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2020-06-12' AS Date),64000000,N'Ha Noi', 3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2021-05-05' AS Date),90000000,N'Hai phong',3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2021-10-12' AS Date),32000000,N'Hue',3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2021-12-12' AS Date),90000000,N'Bac Giang',3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2022-01-05' AS Date),62000000,N'Hai Duong',3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2022-03-12' AS Date),64000000,N'Bac Ninh',3)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2022-08-05' AS Date),60000000,N'Ninh Binh',2)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2022-12-12' AS Date),32000000,N'Cao Bang',2)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (3, CAST(N'2023-01-12' AS Date),90000000,N'Ca Mau',1)
-INSERT [dbo].[Order] ([aid], [date], [totalMoney], [address], [sid]) VALUES (4, CAST(N'2023-02-05' AS Date),124000000,N'Ha Long',1)
+INSERT [dbo].[Order] ([aid], [date], [totalMoney], [email] , [phone], [address], [sid]) VALUES 
+(3, CAST(N'2020-06-12' AS Date), 64000000, N'user1@gmail.com', N'0123456789', N'Ha Noi', 3),
+(3, CAST(N'2021-05-05' AS Date), 90000000, N'user1@gmail.com', N'0123456789', N'Hai phong',3),
+(4, CAST(N'2021-10-12' AS Date), 32000000, N'user2@gmail.com', N'0123456789', N'Hue',3),
+(4, CAST(N'2021-12-12' AS Date), 90000000, N'user2@gmail.com', N'0123456789', N'Bac Giang',3),
+(3, CAST(N'2022-01-05' AS Date), 62000000, N'user1@gmail.com', N'0123456789', N'Hai Duong',3),
+(4, CAST(N'2022-03-12' AS Date), 64000000, N'user2@gmail.com', N'0123456789', N'Bac Ninh',3),
+(4, CAST(N'2022-08-05' AS Date), 60000000, N'user2@gmail.com', N'0123456789', N'Ninh Binh',2),
+(3, CAST(N'2022-12-12' AS Date), 32000000, N'user1@gmail.com', N'0123456789', N'Cao Bang',2),
+(3, CAST(N'2023-01-12' AS Date), 90000000, N'user1@gmail.com', N'0123456789', N'Ca Mau',1),
+(4, CAST(N'2023-02-05' AS Date), 124000000, N'user2@gmail.com', N'0123456789', N'Ha Long',1)
 
 INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (1,6,2,32000000)
 INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (2,10,3,30000000)

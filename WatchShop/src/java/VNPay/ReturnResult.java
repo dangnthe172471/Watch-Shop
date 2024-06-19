@@ -118,7 +118,7 @@ public class ReturnResult extends HttpServlet {
                     Payment p = new Payment("", vnp_TxnRef, vnp_Amount, vnp_OrderInfo, vnp_ResponseCode, vnp_TransactionNo, vnp_BankCode, vnp_PayDateDTB, vnp_TransactionStatus, acount.getId());
                     padao.addPayment(p);
                     if (vnp_TransactionStatus.equals("00")) {
-                        odao.addOrder(acount, cart, address, note);
+                        odao.addOrder(acount, cart, email, phone, address, note);
                         EmailOrder handleEmail = new EmailOrder();
                         String sub = handleEmail.subjectOrder(name);
                         String msg = handleEmail.messageOrder(currentDateTime, formatNumber(cart.getTotalMoney()), phone, name, address, note, cart);
