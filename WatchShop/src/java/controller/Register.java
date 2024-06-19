@@ -86,7 +86,7 @@ public class Register extends HttpServlet {
         String address = request.getParameter("address");
 
         // Server-side validation for empty fields
-        if (isEmpty(username) || isEmpty(password) || isEmpty(repassword) || isEmpty(email) || isEmpty(phone) || isEmpty(address)) {
+        if (isEmpty(username) || isEmpty(password) || isEmpty(repassword) || isEmpty(email) || isEmpty(phone) ) {
             request.setAttribute("error", "Không được để trống.");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
             return;

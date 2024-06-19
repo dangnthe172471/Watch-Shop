@@ -75,8 +75,16 @@
                 </form>
             </div>
         </div>
+        <%
+String message = (String) request.getAttribute("message");
+if (message != null) {
+        %>
+        <p><%= message %></p>
+        <%
+            }
+        %>
 
-        
+
         <script type="text/javascript" src="js/login.js"></script>
     </body>
 </html>

@@ -241,4 +241,19 @@ public class AccountDAO extends DBContext {
         }
     }
 
+    public boolean updateContact(String email, String newEmail, String newPhone) {
+        String sql = "UPDATE account SET email = ?, phone = ? WHERE email = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, newEmail);
+            st.setString(2, newPhone);
+            st.setString(3, email);
+            int rowsAffected = st.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            System.err.println("Error updating contact information: " + ex.getMessage());
+            return false;
+        }
+    }
+
 }
