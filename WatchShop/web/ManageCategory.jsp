@@ -22,6 +22,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/home.css">        
         <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="css/shipper.css">
+        <link rel="stylesheet" href="css/search-mana.css">
         <link rel="stylesheet" href="css/update-brand.css">
         <script type="text/javascript" src="js/main.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
@@ -52,14 +54,16 @@
                     <div class="order">
                         <div class="head">
                             <h3>Quản Lý</h3>
-                            <!--<i class='bx bx-search' ></i>-->
-                            <i class='bx bx-filter' ></i>
+                            <form action="" id="search-box">
+                                <input type="text" id="search-text" placeholder="Tìm kiếm theo thể loại ">
+                                <button id="search-btn"><i class='bx bx-search'></i></button>
+                            </form> 
                         </div>
-                        <div class="nav-bg">
-                            <nav class="container" style="padding:0px ">
-                                <ul class="main-menu">
+                        <div class="nav-bgg" >
+                            <nav class="containerr" style="padding:0px ; width: 30%">
+                                <ul class="main-menuu">
                                     <li><a style="padding-right: 0px" href="category">Danh sách</a></li>
-                                    <li style="margin-left: 30px;"><a href="BlockC.jsp">Danh sách Tạm Ẩn</a></li>               
+                                    <li style="margin-left: 30px;"><a href="blockc">Danh sách Xóa</a></li>               
                                 </ul>
                             </nav>
                         </div>
@@ -67,7 +71,7 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
+                                        <th style="padding-left: 7px">Id</th>
                                         <th style="width: 200px">Thể loại</th>
                                         <th>Dòng sản phẩm</th>
                                         <th></th>
@@ -158,14 +162,14 @@
                 </div>
             </form>
         </section>
-                            
+
 
         <script>
-            $(document).ready(function () {            
+            $(document).ready(function () {
                 var error = "<%= session.getAttribute("err") %>";
-                var keepModalOpen = <%= session.getAttribute("keepModalOpen") != null %>;             
+                var keepModalOpen = <%= session.getAttribute("keepModalOpen") != null %>;
                 console.log("Error: " + error);
-                console.log("Keep modal open: " + keepModalOpen);   
+                console.log("Keep modal open: " + keepModalOpen);
                 if (keepModalOpen) {
                     $('#addmodal').modal('show');
                 }
@@ -176,7 +180,7 @@
             <% session.removeAttribute("err"); session.removeAttribute("keepModalOpen"); %>
             });
         </script>
-        
+
         <script>
             $(document).ready(function () {
                 $('.editbtn').on('click', function () {

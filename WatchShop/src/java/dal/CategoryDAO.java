@@ -56,6 +56,26 @@ public class CategoryDAO extends DBContext {
         }
         return list;
     }
+    
+    public List<Category> getCategoryBlock() {
+        List<Category> list = new ArrayList<>();
+        String sql = "select * from category where deleted = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Category c = new Category();
+                c.setCid(String.valueOf(rs.getInt(1)));
+                c.setCname(rs.getString(2));
+                c.setType(String.valueOf(rs.getInt(3)));
+                c.setDeleted(String.valueOf(rs.getInt(4)));
+                list.add(c);
+            }
+        } catch (SQLException e) {
+            //
+        }
+        return list;
+    }
 
     public void addCategory(Category c) {
         try {
@@ -94,6 +114,15 @@ public class CategoryDAO extends DBContext {
         }
     }
     
+    public void restoreCategoryById(String cid) {
+        String sql = "UPDATE [dbo].[Category] SET [deleted] = 0 WHERE [cid] = ?;";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, cid);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
     public Category getCategoryByType(String type) {
         String sql = "select * from category where type = ?";
         try {

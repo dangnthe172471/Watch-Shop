@@ -21,6 +21,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/home.css">        
         <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="css/shipper.css">
         <link rel="stylesheet" href="css/update-brand.css">
         <script type="text/javascript" src="js/main.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
@@ -39,6 +40,10 @@
         <jsp:include page="left.jsp" />
         <section id="content">
             <main>
+                <div class="head-title">
+                    <div class="left">
+                        <h1>Thể Loại</h1>                      
+                    </div>
                 <div class="table-data">
                     <div class="order">
                         <div class="head">
@@ -46,25 +51,26 @@
                             <!--<i class='bx bx-search' ></i>-->
                             <i class='bx bx-filter' ></i>
                         </div>
-                        <div class="nav-bg">
-                            <nav class="container" >
-                                <ul class="main-menu">
+                        <div class="nav-bgg">
+                            <nav class="containerr" style="padding:0px ; width: 30%" >
+                                <ul class="main-menuu">
                                     <li><a style="padding-right: 0px" href="category">Danh sách</a></li>
-                                    <li style="margin-left: 30px;"><a href="#">Danh sách Tạm Ẩn</a></li>               
+                                    <li style="margin-left: 30px;"><a href="blockc">Danh sách Xóa</a></li>               
                                 </ul>
                             </nav>
                         </div>
-                        <form action="category">
+                        <form action="blockc">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th style="padding-left: 7px">Id</th>
+                                        <th>Id</th>
                                         <th style="width: 200px">Thể loại</th>
                                         <th>Dòng sản phẩm</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${listc}" var="c">
+                                    <c:forEach items="${listblockc}" var="c">
                                         <tr>
                                             <td>${c.cid}</td>
                                             <td>
@@ -73,8 +79,8 @@
                                                 ${c.type==3?'Đường kính mặt số':''}
                                             </td>
                                             <td>${c.cname}</td> 
-                                            <td><a  class="btn btn-primary editbtn"><i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;
-                                                <a href="#" onclick="doDelete('${c.cid}')"><i class="fa fa-trash"></i></a>
+                                            <td>
+                                                <a href="#" onclick="doRestore('${c.cid}')"><i class="fa fa-trash"></i></a>
                                             </td>
                                             <td><P style="display: none">${c.type}</p></td>
                                         </tr> 
@@ -87,5 +93,13 @@
                 </div>
             </main>
         </section>
+        <script type="text/javascript">
+            function doRestore(cid) {
+                if (confirm('Bạn muốn khôi phục thể loại này ?')) {
+                    window.location = 'restorec?cid=' + cid;
+                }
+            }
+        </script>
+        <script src="js/script.js"></script>
     </body>
 </html>

@@ -21,6 +21,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/home.css">        
         <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="css/shipper.css">
         <link rel="stylesheet" href="css/update-brand.css">
         <script type="text/javascript" src="js/main.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
@@ -50,11 +51,11 @@
                             <!--<i class='bx bx-search' ></i>-->
                             <a href="#"><i class='bx bx-filter' ></i></a> 
                         </div>
-                        <div class="nav-bg">
-                            <nav class="container" style="padding:0px ">
-                                <ul class="main-menu">
+                        <div class="nav-bgg">
+                            <nav class="containerr" style="padding:0px ; width: 30%">
+                                <ul class="main-menuu">
                                     <li><a style="padding-right: 0px" href="brand">Danh sách</a></li>
-                                    <li style="margin-left: 30px;"><a href="blockb">Danh sách Tạm Ẩn</a></li>               
+                                    <li style="margin-left: 30px;"><a href="blockb">Danh sách Xóa</a></li>               
                                 </ul>
                             </nav>
                         </div>
@@ -62,13 +63,14 @@
                             <table>
                                 <thead>
                                     <tr>
+                                        <th style="width: 0px"></th>
                                         <th style="width: 200px; padding-left: 5px">Thương hiệu</th>
                                         <th style="width: 200px;">Hình ảnh</th>
                                         <th style="width: 100px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${listb}" var="b">
+                                    <c:forEach items="${listblock}" var="b">
                                         <tr>
                                             <td><p style="display: none ">${b.bid}</p></td>
                                             <td>${b.bname}</td> 
@@ -76,7 +78,7 @@
                                                 <img src="${b.image}" style="width: 150px;height: 150px;border-radius: 0" />
                                             </td>
                                             <td>
-                                                <a href="#" onclick="doDelete('${b.bid}')"><i class="fa fa-trash"></i></a>
+                                                <a href="#" onclick="doRestore('${b.bid}')"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr> 
                                     </c:forEach>
@@ -88,5 +90,13 @@
                 </div>
             </main>
         </section>
+        <script type="text/javascript">
+            function doRestore(bid) {
+                if (confirm('Bạn muốn khôi phục thương hiệu này ?')) {
+                    window.location = 'restoreb?bid=' + bid;
+                }
+            }
+        </script>
+        <script src="js/script.js"></script>
     </body>
 </html>

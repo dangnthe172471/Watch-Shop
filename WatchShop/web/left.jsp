@@ -96,26 +96,11 @@
                             <span class="text">Thống kê</span>
                         </a>
                     </li>
-                    <li class="${tab==6?'active':''}">
+                    <li class="${tab==2?'active':''}">
                         <a href="ShipperManagement.jsp">
                             <i class='bx bxs-message-dots' ></i>
                             <span class="text">Danh sách đơn</span>
                         </a>
-                    </li>
-                </c:if>
-                <c:if test="${sessionScope.account.roleID==3}">
-                    <li class="${tab==null?'active':''}">
-                        <a href="HomeShiper.jsp">
-                            <i class='bx bxs-dashboard' ></i>
-                            <span class="text">Trang chủ</span>
-                        </a>
-                    </li>
-                    <li class="${tab==4?'active':''}">
-                        <a href="manageblog">
-                            <i class='bx bxs-message-dots' ></i>
-                            <span class="text">Lịch sử giao hàng</span>
-                        </a>
-                    </li>
                     </li>
                 </c:if>
             </ul>
