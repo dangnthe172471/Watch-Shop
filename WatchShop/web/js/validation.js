@@ -11,6 +11,19 @@ function validateEmail() {
         emailMessageElement.style.color = "red";
     }
 }
+function validateEmails() {
+    var email = document.getElementById("newEmail").value; // Sửa đổi id thành "newEmail"
+    var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
+    var emailMessageElement = document.getElementById("emailMessage");
+
+    if (emailRegex.test(email)) {
+        emailMessageElement.innerHTML = "Email hợp lệ.";
+        emailMessageElement.style.color = "green";
+    } else {
+        emailMessageElement.innerHTML = "Email không đúng định dạng.";
+        emailMessageElement.style.color = "red";
+    }
+}
 
 function validatePhoneNumber() {
     var phoneNumber = document.getElementById("phoneNumber").value;

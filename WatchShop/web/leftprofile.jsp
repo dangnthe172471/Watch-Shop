@@ -31,7 +31,12 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        
+        <style>
+            .bg-blue {
+                background-color: #2196F3;
+                color: white;
+            }
+        </style>
     </head>
     <body>
         <section id="sidebar">
@@ -40,11 +45,11 @@
             </a>
             <ul class="side-menu top">
                 <div class="user-info" >
-                    <img src="${account.avatar}" alt="Avatar" style="max-width: 60px; max-height: 60px; border-radius: 50%; border: 2px solid #ccc;">
+                    <img src="${account.avatar}" alt="Avatar" id="avatarImg" style="max-width: 60px; max-height: 60px; border-radius: 50%; border: 2px solid #ccc;" data-toggle="modal" data-target="#avatarModal">
                     <p>${account.user}</p>
                 </div><br>
                 <hr>
-                
+
                 <c:if test="${sessionScope.account.roleID==4}">
                     <li class="${tab==null?'active':''}">
                         <a href="ProfileUser.jsp">
@@ -104,5 +109,21 @@
                 </ul>
             </nav>
         </section>
+
+        <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="avatarModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-blue">
+                        <h5 class="modal-title" id="avatarModalLabel">Avatar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img src="${account.avatar}" alt="Avatar" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
