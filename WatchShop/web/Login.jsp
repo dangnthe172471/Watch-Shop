@@ -83,8 +83,16 @@ if (message != null) {
         <%
             }
         %>
-
-
         <script type="text/javascript" src="js/login.js"></script>
+        <script type="text/javascript">
+            window.addEventListener('load', function () {
+                const inputFields = document.querySelectorAll('.input');
+                inputFields.forEach(function (input) {
+                    if (input.value.trim() !== '') {
+                        input.focus();
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

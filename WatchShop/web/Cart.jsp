@@ -159,27 +159,27 @@
                                                  aria-labelledby="step1header" class="stepscontent">
                                                 <div class="card-body">
                                                     <div class="form-label-group"><div id="fullnameMessage"></div>
-                                                        <input type="text" id="fullname" class="form-control" value="${sessionScope.account.user}"
+                                                        <input type="text" id="fullname" class="form-control" value="${sessionScope.name!=null?sessionScope.name:sessionScope.account.user}"
                                                                placeholder="Nhập họ và tên" name="name" required autofocus oninput="validateFullName(),checkWhitespace()">
                                                     </div>
                                                     <div class="form-label-group">
-                                                        <input type="text" id="phoneNumber" class="form-control" value="${sessionScope.account.phone}" 
+                                                        <input type="text" id="phoneNumber" class="form-control" value="${sessionScope.phone!=null?sessionScope.phone:sessionScope.account.phone}" 
                                                                placeholder="Nhập số điện thoại" name="phone" required oninput="validatePhoneNumber(),checkWhitespace()">
                                                         <div id="phoneMessage"></div>
                                                     </div>
                                                     <div class="form-label-group">
-                                                        <input type="email" id="email" class="form-control" value="${sessionScope.account.email}" 
+                                                        <input type="email" id="email" class="form-control" value="${sessionScope.email!=null?sessionScope.email:sessionScope.account.email}" 
                                                                placeholder="Nhập địa chỉ email" name="email" required oninput="validateEmail(),checkWhitespace()">
                                                         <div id="emailMessage"></div>
                                                     </div>
                                                     <div class="form-label-group">
-                                                        <input type="text" id="address" class="form-control" value="${sessionScope.account.address}" 
+                                                        <input type="text" id="address" class="form-control" value="${sessionScope.address!=null?sessionScope.address:sessionScope.account.address}" 
                                                                placeholder="Nhập Địa chỉ giao hàng" name="address" required oninput="validateAddress(),checkWhitespace()">
                                                         <div id="addressMessage"></div>
                                                     </div>                                                  
                                                     <div class="form-label-group">
                                                         <textarea type="text" id="inputNote" class="form-control"
-                                                                  placeholder="Nhập ghi chú (Nếu có)" name="note"></textarea>
+                                                                  placeholder="Nhập ghi chú (Nếu có)" name="note">${sessionScope.note!=null?sessionScope.note:''}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
