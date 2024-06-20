@@ -73,9 +73,6 @@
                                             <img src="${c.image}" class="blog-image" style="border-radius: 0;
                                                  width: 150px;
                                                  height: 150px;">
-                                            <img src="${c.image2}" class="blog-image" style="border-radius: 0;
-                                                 width: 150px;
-                                                 height: 150px;">
                                         </td>   
                                         <td>${c.date}</td>
                                         <td>

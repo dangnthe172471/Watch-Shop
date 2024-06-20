@@ -40,7 +40,7 @@
                     <div class="form-group">
                         <label for="amount" style="font-size: 20px">Số tiền:  <fmt:formatNumber value="${totalMoney}"/> vnđ</label>
                         <fmt:formatNumber value="${totalMoney}" type="number" groupingUsed="false" maxFractionDigits="0" var="formattedTotalMoney" />
-                        <input value="${formattedTotalMoney}" class="form-control" data-val="true" data-val-number="The field Amount must be a number." data-val-required="The Amount field is required." id="amount" name="amount" />
+                        <input value="${formattedTotalMoney}" type="hidden" class="form-control" data-val="true" data-val-number="The field Amount must be a number." data-val-required="The Amount field is required." id="amount" name="amount" />
                     </div>
                     <h4>Chọn phương thức thanh toán</h4>
                     <div class="form-group">

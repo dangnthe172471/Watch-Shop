@@ -58,48 +58,46 @@
                             <c:forEach items="${requestScope.listC}" var="c">
                                 <c:if test="${c.type==1}">
                                     <c:set var="isChecked" value="false" />
-                                    <c:if test="${requestScope.cid!=null}">
-                                        <c:forEach var="selectedCid" items="${requestScope.cid}">
+                                    <c:if test="${requestScope.cid1!=null}">
+                                        <c:forEach var="selectedCid" items="${requestScope.cid1}">
                                             <c:if test="${c.cid == selectedCid}">
                                                 <c:set var="isChecked" value="true" />
                                             </c:if>
                                         </c:forEach>
                                     </c:if>
-                                    <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.type==2?'Chống nước: ':''}${c.type==3?'Độ rộng dây đeo: ':''} ${c.cname}<br>
+                                    <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid1" onchange="this.form.submit()"/> ${c.type==2?'Chống nước: ':''}${c.type==3?'Độ rộng dây đeo: ':''} ${c.cname}<br>
                                 </c:if>
                             </c:forEach>
                         </div><br><hr>
-
                         <div>
                             <h5>Mức độ chống nước</h5> 
                             <c:forEach items="${requestScope.listC}" var="c">
                                 <c:if test="${c.type==2}">
                                     <c:set var="isChecked" value="false" />
-                                    <c:if test="${requestScope.cid!=null}">
-                                        <c:forEach var="selectedCid" items="${requestScope.cid}">
+                                    <c:if test="${requestScope.cid2!=null}">
+                                        <c:forEach var="selectedCid" items="${requestScope.cid2}">
                                             <c:if test="${c.cid == selectedCid}">
                                                 <c:set var="isChecked" value="true" />
                                             </c:if>
                                         </c:forEach>
                                     </c:if>
-                                    <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.cname}<br>
+                                    <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid2" onchange="this.form.submit()"/> ${c.type==2?'Chống nước: ':''}${c.type==3?'Độ rộng dây đeo: ':''} ${c.cname}<br>
                                 </c:if>
                             </c:forEach>
                         </div><br><hr>
-
                         <div>
                             <h5>Đường kính mặt số</h5> 
                             <c:forEach items="${requestScope.listC}" var="c">
                                 <c:if test="${c.type==3}">
                                     <c:set var="isChecked" value="false" />
-                                    <c:if test="${requestScope.cid!=null}">
-                                        <c:forEach var="selectedCid" items="${requestScope.cid}">
+                                    <c:if test="${requestScope.cid3!=null}">
+                                        <c:forEach var="selectedCid" items="${requestScope.cid3}">
                                             <c:if test="${c.cid == selectedCid}">
                                                 <c:set var="isChecked" value="true" />
                                             </c:if>
                                         </c:forEach>
                                     </c:if>
-                                    <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid" onchange="this.form.submit()"/> ${c.cname}<br>
+                                    <input ${isChecked ? 'checked' : ''} type="checkbox" value="${c.cid}" name="cid3" onchange="this.form.submit()"/> ${c.type==2?'Chống nước: ':''}${c.type==3?'Độ rộng dây đeo: ':''} ${c.cname}<br>
                                 </c:if>
                             </c:forEach>
                         </div><br><hr>
@@ -130,8 +128,14 @@
                                     <c:forEach var="bidValue" items="${bid}">
                                         <input type="hidden" value="${bidValue}" name="bid">
                                     </c:forEach>
-                                    <c:forEach var="cidValue" items="${cid}">
-                                        <input type="hidden" value="${cidValue}" name="cid">
+                                    <c:forEach var="cidValue" items="${cid1}">
+                                        <input type="hidden" value="${cidValue}" name="cid1">
+                                    </c:forEach>
+                                    <c:forEach var="cidValue" items="${cid2}">
+                                        <input type="hidden" value="${cidValue}" name="cid2">
+                                    </c:forEach>
+                                    <c:forEach var="cidValue" items="${cid3}">
+                                        <input type="hidden" value="${cidValue}" name="cid3">
                                     </c:forEach>
                                     <input type="hidden" value="${key}" name="key">
                                     <input type="hidden" value="${fromdate}" name="todate">
@@ -177,8 +181,14 @@
                                         <c:forEach var="bidValue" items="${bid}">
                                             <input type="hidden" value="${bidValue}" name="bid">
                                         </c:forEach>
-                                        <c:forEach var="cidValue" items="${cid}">
-                                            <input type="hidden" value="${cidValue}" name="cid">
+                                        <c:forEach var="cidValue" items="${cid1}">
+                                            <input type="hidden" value="${cidValue}" name="cid1">
+                                        </c:forEach>
+                                        <c:forEach var="cidValue" items="${cid2}">
+                                            <input type="hidden" value="${cidValue}" name="cid2">
+                                        </c:forEach>
+                                        <c:forEach var="cidValue" items="${cid3}">
+                                            <input type="hidden" value="${cidValue}" name="cid3">
                                         </c:forEach>
                                         <input type="hidden" value="${key}" name="key">
                                         <input type="hidden" value="${fromdate}" name="todate">
@@ -302,7 +312,7 @@
                     }
                 });
             }
-                function searchByToDate(date) {
+            function searchByToDate(date) {
                 var dateSearch = date.value;
                 $.ajax({
                     url: "/watchshop/searchbyajax",
@@ -320,5 +330,12 @@
                 });
             }
         </script>
-    </body>
+        <!--<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>-->
+    <df-messenger
+        intent="WELCOME"
+        chat-title="WatchShop"
+        agent-id="07d6d881-7f37-481b-b15f-58830e1c2667"
+        language-code="vi"
+        ></df-messenger>
+</body>
 </html>

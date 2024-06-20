@@ -82,7 +82,7 @@ public class CheckoutServlet extends HttpServlet {
             session.setAttribute("email", email);
             session.setAttribute("address", address);
             session.setAttribute("note", note);
-//            request.getRequestDispatcher("vnpay_pay.jsp").forward(request, response);
+            request.getRequestDispatcher("vnpay_pay.jsp").forward(request, response);
         }
     }
 

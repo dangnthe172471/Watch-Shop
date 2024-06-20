@@ -19,11 +19,6 @@ import model.ImageProduct;
  */
 public class ProductDAO extends DBContext {
 
-    /**
-     * get list 5 new product
-     *
-     * @return list new product
-     */
     public List<Product> listProductLast() {
         List<Product> list = new ArrayList<>();
         String sql = """
@@ -65,11 +60,6 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
-    /**
-     * get list 5 product by sold
-     *
-     * @return list product by sold
-     */
     public List<Product> listProductBySold() {
         List<Product> list = new ArrayList<>();
         String sql = """
@@ -81,7 +71,7 @@ public class ProductDAO extends DBContext {
                        inner join category c3 on (c3.cid=p.cateID3)
                        where b.deleted=0 AND (c1.deleted = 0 AND c2.deleted = 0 AND c3.deleted = 0)
                        and p.[status]=0
-                       order by sold""";
+                       order by sold desc""";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -112,11 +102,6 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
-    /**
-     * get list5 product by price
-     *
-     * @return list product by price
-     */
     public List<Product> listProductByPrice() {
         List<Product> list = new ArrayList<>();
         String sql = """
@@ -158,22 +143,8 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-
-    /**
-     * search for a product by its attributes
-     *
-     * @param bid is brandID of product
-     * @param cid is CategoryID of product
-     * @param key is keyword for search
-     * @param fromprice is min price
-     * @param toprice is max price
-     * @param fromdate is from date
-     * @param todate is to date
-     * @param sort is sort its attributes
-     * @param index is paging
-     * @return list product after
-     */
-    public List<Product> search(int[] bid, int[] cid, String key, Double fromprice, Double toprice, Date fromdate, Date todate, int sort, int index) {
+    
+    public List<Product> search(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, Double fromprice, Double toprice, Date fromdate, Date todate, int sort, int index) {
         List<Product> list = new ArrayList<>();
         String sql = """
                        select *
@@ -185,59 +156,46 @@ public class ProductDAO extends DBContext {
                        where b.deleted=0 AND (c1.deleted = 0 AND c2.deleted = 0 AND c3.deleted = 0)
                        and p.[status]=0 """;
 
-        // if array is not null and first values is not 0
         if (bid != null && bid[0] != 0) {
             sql += " and p.[brandID] in (";
-
-            // add values of array bid to string sql
             for (int i = 0; i < bid.length; i++) {
                 sql += bid[i] + ",";
             }
-
-            // remove ',' end
             if (sql.endsWith(",")) {
                 sql = sql.substring(0, sql.length() - 1);
             }
             sql += ")";
         }
-
-        // if array is not null and first values is not 0
-        if (cid != null && cid[0] != 0) {
-            sql += " and ( p.[cateID1] in (";
-            // add values of array bid to string sql
-            for (int i = 0; i < cid.length; i++) {
-                sql += cid[i] + ",";
+        if (cid1 != null && cid1[0] != 0) {
+            sql += " and p.[cateID1] in (";
+            for (int i = 0; i < cid1.length; i++) {
+                sql += cid1[i] + ",";
             }
-            // remove ',' end
             if (sql.endsWith(",")) {
                 sql = sql.substring(0, sql.length() - 1);
             }
             sql += ")";
-
-            sql += " OR p.[cateID2] in (";
-            // add values of array bid to string sql
-            for (int i = 0; i < cid.length; i++) {
-                sql += cid[i] + ",";
-            }
-            // remove ',' end
-            if (sql.endsWith(",")) {
-                sql = sql.substring(0, sql.length() - 1);
-            }
-            sql += ")";
-
-            sql += " OR p.[cateID3] in (";
-            // add values of array bid to string sql
-            for (int i = 0; i < cid.length; i++) {
-                sql += cid[i] + ",";
-            }
-            // remove ',' end
-            if (sql.endsWith(",")) {
-                sql = sql.substring(0, sql.length() - 1);
-            }
-            sql += ") )";
         }
-
-        // if attributes is not null add attributes to string sql
+        if (cid2 != null && cid2[0] != 0) {
+            sql += " and p.[cateID2] in (";
+            for (int i = 0; i < cid2.length; i++) {
+                sql += cid2[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
+        if (cid3 != null && cid3[0] != 0) {
+            sql += " and p.[cateID3] in (";
+            for (int i = 0; i < cid3.length; i++) {
+                sql += cid3[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
         if (key != null) {
             sql += " and ( p.[code] like N'%" + key + "%' or p.[name]  like N'%" + key + "%' )";
         }
@@ -305,20 +263,8 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-
-    /**
-     * count number of products after searching
-     *
-     * @param bid is brandID of product
-     * @param cid is CategoryID of product
-     * @param key is keyword for search
-     * @param fromprice is min price
-     * @param toprice is max price
-     * @param fromdate is from date
-     * @param todate is to date
-     * @return Number of products after searching
-     */
-    public int countSearchProduct(int[] bid, int[] cid, String key, Double fromprice, Double toprice, Date fromdate, Date todate) {
+    
+    public int countSearchProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, Double fromprice, Double toprice, Date fromdate, Date todate) {
         String sql = """
                     SELECT COUNT(*) 
                     from product p inner join ImageProduct [pi] on(p.id=[pi].[pid])
@@ -328,60 +274,47 @@ public class ProductDAO extends DBContext {
                     inner join category c3 on (c3.cid=p.cateID3)
                     where b.deleted=0 AND (c1.deleted = 0 AND c2.deleted = 0 AND c3.deleted = 0)
                     and p.[status]=0""";
-
-        // if array is not null and first values is not 0
         if (bid != null && bid[0] != 0) {
             sql += " and p.[brandID] in (";
-
-            // add values of array bid to string sql
             for (int i = 0; i < bid.length; i++) {
                 sql += bid[i] + ",";
             }
-
-            // remove ',' end
             if (sql.endsWith(",")) {
                 sql = sql.substring(0, sql.length() - 1);
             }
             sql += ")";
         }
-
-        // if array is not null and first values is not 0
-        if (cid != null && cid[0] != 0) {
-            sql += " and ( p.[cateID1] in (";
-            // add values of array bid to string sql
-            for (int i = 0; i < cid.length; i++) {
-                sql += cid[i] + ",";
+        if (cid1 != null && cid1[0] != 0) {
+            sql += " and p.[cateID1] in (";
+            for (int i = 0; i < cid1.length; i++) {
+                sql += cid1[i] + ",";
             }
-            // remove ',' end
+
             if (sql.endsWith(",")) {
                 sql = sql.substring(0, sql.length() - 1);
             }
             sql += ")";
-
-            sql += " OR p.[cateID2] in (";
-            // add values of array bid to string sql
-            for (int i = 0; i < cid.length; i++) {
-                sql += cid[i] + ",";
-            }
-            // remove ',' end
-            if (sql.endsWith(",")) {
-                sql = sql.substring(0, sql.length() - 1);
-            }
-            sql += ")";
-
-            sql += " OR p.[cateID3] in (";
-            // add values of array bid to string sql
-            for (int i = 0; i < cid.length; i++) {
-                sql += cid[i] + ",";
-            }
-            // remove ',' end
-            if (sql.endsWith(",")) {
-                sql = sql.substring(0, sql.length() - 1);
-            }
-            sql += ") )";
         }
-
-        // if attributes is not null add attributes to string sql
+        if (cid2 != null && cid2[0] != 0) {
+            sql += " and p.[cateID2] in (";
+            for (int i = 0; i < cid2.length; i++) {
+                sql += cid2[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
+        if (cid3 != null && cid3[0] != 0) {
+            sql += " and p.[cateID3] in (";
+            for (int i = 0; i < cid3.length; i++) {
+                sql += cid3[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
         if (key != null) {
             sql += " and ( p.[code] like N'%" + key + "%' or p.[name]  like N'%" + key + "%' )";
         }
@@ -408,12 +341,6 @@ public class ProductDAO extends DBContext {
         return 0;
     }
 
-    /**
-     * get product by id
-     *
-     * @param id is ID of product
-     * @return product
-     */
     public Product getProductByID(String id) {
         String sql = """
                        select *
@@ -455,12 +382,6 @@ public class ProductDAO extends DBContext {
         return null;
     }
 
-    /**
-     * get list top 4 product by product ID
-     *
-     * @param pid is id of product
-     * @return list product by product ID
-     */
     public List<Product> listProductByPid(String pid) {
         List<Product> list = new ArrayList<>();
         String sql = """
@@ -512,5 +433,195 @@ public class ProductDAO extends DBContext {
         } catch (SQLException e) {
         }
         return list;
+    }
+
+    public List<Product> getAllProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, int sort, int index) {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+                        select *
+                        from product p inner join ImageProduct [pi] on(p.id=[pi].[pid])
+                        inner join brand b on (b.bid=p.brandID)
+                        inner join category c1 on (c1.cid=p.cateID1)
+                        inner join category c2 on (c2.cid=p.cateID2)
+                        inner join category c3 on (c3.cid=p.cateID3)
+                        where 1=1 
+                     """;
+        if (bid != null && bid[0] != 0) {
+            sql += " and p.[brandID] in (";
+            for (int i = 0; i < bid.length; i++) {
+                sql += bid[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
+        if (cid1 != null && cid1[0] != 0) {
+            sql += " and p.[cateID1] in (";
+            for (int i = 0; i < cid1.length; i++) {
+                sql += cid1[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
+        if (cid2 != null && cid2[0] != 0) {
+            sql += " and p.[cateID2] in (";
+            for (int i = 0; i < cid2.length; i++) {
+                sql += cid2[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
+        if (cid3 != null && cid3[0] != 0) {
+            sql += " and p.[cateID3] in (";
+            for (int i = 0; i < cid3.length; i++) {
+                sql += cid3[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
+        if (key != null) {
+            sql += " and ( p.[code] like N'%" + key + "%' or p.[name]  like N'%" + key + "%' )";
+        }
+        if (sort == 0) {
+            sql += " \n order by p.[id]";
+        }
+        if (sort == 1) {
+            sql += "\n order by p.[code]";
+        }
+        if (sort == 2) {
+            sql += "\n order by p.[code] desc";
+        }
+        if (sort == 3) {
+            sql += "\n order by p.[name]";
+        }
+        if (sort == 4) {
+            sql += "\n order by p.[name] desc";
+        }
+        if (sort == 5) {
+            sql += "\n order by p.[price]";
+        }
+        if (sort == 6) {
+            sql += "\n order by p.[price] desc";
+        }
+        if (sort == 7) {
+            sql += "\n order by p.[quantity]";
+        }
+        if (sort == 8) {
+            sql += "\n order by p.[quantity] desc";
+        }
+        if (sort == 9) {
+            sql += "\n order by p.[sold]";
+        }
+        if (sort == 10) {
+            sql += "\n order by p.[sold] desc";
+        }
+        if (sort == 11) {
+            sql += "\n order by p.[releaseDate]";
+        }
+        if (sort == 12) {
+            sql += "\n order by p.[releaseDate] desc";
+        }
+        sql += "\nOFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, (index - 1) * 6);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getDate(7),
+                        rs.getString(8),
+                        rs.getDouble(9),
+                        rs.getInt(10),
+                        rs.getInt(11),
+                        rs.getInt(12),
+                        rs.getInt(13),
+                        rs.getInt(14),
+                        new ImageProduct(rs.getInt(15),
+                                rs.getInt(16),
+                                rs.getString(17),
+                                rs.getString(18),
+                                rs.getString(19),
+                                rs.getString(20))));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public int countManageProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key) {
+        String sql = """
+                    SELECT COUNT(*) 
+                    from product p inner join ImageProduct [pi] on(p.id=[pi].[pid])
+                    inner join brand b on (b.bid=p.brandID)
+                    inner join category c1 on (c1.cid=p.cateID1)
+                    inner join category c2 on (c2.cid=p.cateID2)
+                    inner join category c3 on (c3.cid=p.cateID3)
+                    where b.deleted=0 AND (c1.deleted = 0 AND c2.deleted = 0 AND c3.deleted = 0)
+                    and p.[status]=0""";
+
+        if (bid != null && bid[0] != 0) {
+            sql += " and p.[brandID] in (";
+            for (int i = 0; i < bid.length; i++) {
+                sql += bid[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
+        if (cid1 != null && cid1[0] != 0) {
+            sql += " and p.[cateID1] in (";
+            for (int i = 0; i < cid1.length; i++) {
+                sql += cid1[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
+        if (cid2 != null && cid2[0] != 0) {
+            sql += " and p.[cateID2] in (";
+            for (int i = 0; i < cid2.length; i++) {
+                sql += cid2[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
+        if (cid3 != null && cid3[0] != 0) {
+            sql += " and p.[cateID3] in (";
+            for (int i = 0; i < cid3.length; i++) {
+                sql += cid3[i] + ",";
+            }
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
+            sql += ")";
+        }
+        if (key != null) {
+            sql += " and ( p.[code] like N'%" + key + "%' or p.[name]  like N'%" + key + "%' )";
+        }
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
     }
 }
