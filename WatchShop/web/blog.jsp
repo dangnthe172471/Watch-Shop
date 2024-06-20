@@ -49,5 +49,12 @@
             </c:forEach>
         </div>
         <jsp:include page="nav2.jsp"/>
-    </body>
+        <!--<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>-->
+    <df-messenger
+        intent="WELCOME"
+        chat-title="WatchShop"
+        agent-id="07d6d881-7f37-481b-b15f-58830e1c2667"
+        language-code="vi"
+        ></df-messenger>
+</body>
 </html>

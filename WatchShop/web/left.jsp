@@ -69,7 +69,7 @@
                         </a>
                     </li>
                     <li class="${tab==5?'active':''}">
-                        <a href="#">
+                        <a href="manageproduct">
                             <i class='bx bxs-group' ></i>
                             <span class="text">Sản phẩm</span>
                         </a>
@@ -89,7 +89,7 @@
                         </a>
                     </li>
                 </c:if>
-                    <c:if test="${sessionScope.account.roleID==3}">
+                <c:if test="${sessionScope.account.roleID==3}">
                     <li class="${tab==null?'active':''}">
                         <a href="AdminManage.jsp">
                             <i class='bx bxs-dashboard' ></i>
@@ -123,23 +123,10 @@
         <section id="content">
             <nav class="navbar navbar-expand-md bg-white navbar-light">
                 <i class='bx bx-menu' ></i>  
-                <ul class="navbar-nav" style="margin-left: 600px;">
+                <ul class="navbar-nav" style="margin-left: 850px;">
                     <div class="dropdown row" style="margin-left: 10px">
                         <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="AdminManage.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${sessionScope.account.user}</a></li> 
-                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="changepass" style="display:inline-block">Change Password</a></li> 
                         <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
-                    </div>
-                    <c:set var="size" value="${sessionScope.size}"/>
-                    <div style="margin-left: 10px">
-                        <li class="nav-item giohang">
-                            <a href="Cart.jsp" class="btn btn-secondary rounded-circle">
-                                <i class="fa fa-shopping-cart"></i>
-                                <c:if test="${size>0}">
-                                    <div class="cart-amount">${size}</div>
-                                </c:if>
-                            </a>
-                            <a href="Cart.jsp" class="nav-link text-dark text-uppercase" style="display:inline-block">Giỏ hàng</a>
-                        </li>
                     </div>
                 </ul>
             </nav>

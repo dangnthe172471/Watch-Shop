@@ -65,7 +65,9 @@ public class SearchByAjax extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // get data from html
-        String[] cid_raw = request.getParameterValues("cid");
+        String[] cid_raw1 = request.getParameterValues("cid1");
+        String[] cid_raw2 = request.getParameterValues("cid2");
+        String[] cid_raw3 = request.getParameterValues("cid3");
         String[] bid_raw = request.getParameterValues("bid");
         String key = request.getParameter("key");
         String fromprice_raw = request.getParameter("fromprice");
@@ -75,7 +77,9 @@ public class SearchByAjax extends HttpServlet {
 
         Double fromprice, toprice;
         Date fromdate, todate;
-        int[] cid = null;
+        int[] cid1 = null;
+        int[] cid2 = null;
+        int[] cid3 = null;
         int[] bid = null;
 
         // get data from dao
@@ -94,12 +98,22 @@ public class SearchByAjax extends HttpServlet {
         }
 
         // If the string array is not null, then convert the string array to an int array
-        if (cid_raw != null) {
-            cid = new int[cid_raw.length];
-
-            // convert the string array to an int array
-            for (int i = 0; i < cid.length; i++) {
-                cid[i] = Integer.parseInt(cid_raw[i]);
+        if (cid_raw1 != null) {
+            cid1 = new int[cid_raw1.length];
+            for (int i = 0; i < cid1.length; i++) {
+                cid1[i] = Integer.parseInt(cid_raw1[i]);
+            }
+        }
+        if (cid_raw2 != null) {
+            cid2 = new int[cid_raw2.length];
+            for (int i = 0; i < cid2.length; i++) {
+                cid2[i] = Integer.parseInt(cid_raw2[i]);
+            }
+        }
+        if (cid_raw3 != null) {
+            cid3 = new int[cid_raw3.length];
+            for (int i = 0; i < cid3.length; i++) {
+                cid3[i] = Integer.parseInt(cid_raw3[i]);
             }
         }
 
@@ -122,12 +136,12 @@ public class SearchByAjax extends HttpServlet {
                 ? null : Date.valueOf(fromdate_raw);
         todate = (todate_raw == null || todate_raw.equals(""))
                 ? null : Date.valueOf(todate_raw);
-        int countP = pdao.countSearchProduct(bid, cid, key, fromprice, toprice, fromdate, todate);
+        int countP = pdao.countSearchProduct(bid, cid1, cid2, cid3, key, fromprice, toprice, fromdate, todate);
         int endpage = countP / 9;
         if (countP % 9 != 0) {
             endpage++;
         }
-        List<Product> listP = pdao.search(bid, cid, key, fromprice, toprice, fromdate, todate, sort, index);
+        List<Product> listP = pdao.search(bid, cid1, cid2, cid3, key, fromprice, toprice, fromdate, todate, sort, index);
         PrintWriter out = response.getWriter();
         for (Product o : listP) {
             out.println("<div class=\"col-12 col-md-4 col-lg-4\">\n"

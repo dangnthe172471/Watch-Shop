@@ -14,7 +14,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Date;
 import java.util.List;
 import model.Brand;
 import model.Category;
@@ -24,8 +23,8 @@ import model.Product;
  *
  * @author admin
  */
-@WebServlet(name = "SearchServlet", urlPatterns = {"/search"})
-public class SearchServlet extends HttpServlet {
+@WebServlet(name = "MangeProductServlet", urlPatterns = {"/manageproduct"})
+public class MangeProductServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +43,10 @@ public class SearchServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchServlet</title>");
+            out.println("<title>Servlet MangeProductServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SearchServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet MangeProductServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,32 +64,24 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        // get data from html
+        ProductDAO pdao = new ProductDAO();
+        BrandDAO bdao = new BrandDAO();
+        CategoryDAO cadao = new CategoryDAO();
+        String sort_raw = request.getParameter("sort");
         String[] cid_raw1 = request.getParameterValues("cid1");
         String[] cid_raw2 = request.getParameterValues("cid2");
         String[] cid_raw3 = request.getParameterValues("cid3");
         String[] bid_raw = request.getParameterValues("bid");
         String key = request.getParameter("key");
-        String fromprice_raw = request.getParameter("fromprice");
-        String toprice_raw = request.getParameter("toprice");
-        String fromdate_raw = request.getParameter("fromdate");
-        String todate_raw = request.getParameter("todate");
-
-        Double fromprice, toprice;
-        Date fromdate, todate;
         int[] cid1 = null;
         int[] cid2 = null;
         int[] cid3 = null;
         int[] bid = null;
 
-        // get data from dao
-        ProductDAO pdao = new ProductDAO();
-        BrandDAO bdao = new BrandDAO();
-        CategoryDAO cdao = new CategoryDAO();
-
         if (bid_raw != null) {
             bid = new int[bid_raw.length];
+
+            // convert the string array to an int array
             for (int i = 0; i < bid.length; i++) {
                 bid[i] = Integer.parseInt(bid_raw[i]);
             }
@@ -98,69 +89,63 @@ public class SearchServlet extends HttpServlet {
 
         if (cid_raw1 != null) {
             cid1 = new int[cid_raw1.length];
+
+            // convert the string array to an int array
             for (int i = 0; i < cid1.length; i++) {
                 cid1[i] = Integer.parseInt(cid_raw1[i]);
             }
         }
         if (cid_raw2 != null) {
             cid2 = new int[cid_raw2.length];
+
+            // convert the string array to an int array
             for (int i = 0; i < cid2.length; i++) {
                 cid2[i] = Integer.parseInt(cid_raw2[i]);
             }
         }
         if (cid_raw3 != null) {
             cid3 = new int[cid_raw3.length];
+
+            // convert the string array to an int array
             for (int i = 0; i < cid3.length; i++) {
                 cid3[i] = Integer.parseInt(cid_raw3[i]);
             }
         }
 
-        // get data from html
-        String sort_raw = request.getParameter("sort");
+        if (sort_raw == null) {
+            sort_raw = "0";
+        }
+        int sort = Integer.parseInt(sort_raw);
         String indexpage = request.getParameter("index");
-        int sort, index;
+        int index;
         if (indexpage == null) {
             indexpage = "1";
         }
 
         // convert the values
         index = Integer.parseInt(indexpage);
-        sort = (sort_raw == null) ? 0 : Integer.parseInt(sort_raw);
-        fromprice = (fromprice_raw == null || fromprice_raw.equals(""))
-                ? null : Double.valueOf(fromprice_raw.replace(".", ""));
-        toprice = (toprice_raw == null || toprice_raw.equals(""))
-                ? null : Double.valueOf(toprice_raw.replace(".", ""));
-        fromdate = (fromdate_raw == null || fromdate_raw.equals(""))
-                ? null : Date.valueOf(fromdate_raw);
-        todate = (todate_raw == null || todate_raw.equals(""))
-                ? null : Date.valueOf(todate_raw);
-        int countP = pdao.countSearchProduct(bid, cid1, cid2, cid3, key, fromprice, toprice, fromdate, todate);
-        int endpage = countP / 9;
-        if (countP % 9 != 0) {
+        int countP = pdao.countManageProduct(bid, cid1, cid2, cid3, key);
+        int endpage = countP / 6;
+        if (countP % 6 != 0) {
             endpage++;
         }
+        List<Product> listP = pdao.getAllProduct(bid, cid1, cid2, cid3, key, sort, index);
         List<Brand> listB = bdao.getAllBrand();
-        List<Category> listC = cdao.getAllCategory();
-        List<Product> listP = pdao.search(bid, cid1, cid2, cid3, key, fromprice, toprice, fromdate, todate, sort, index);
-
-        // set data from jsp
-        request.setAttribute("fromdate", fromdate);
-        request.setAttribute("todate", todate);
-        request.setAttribute("fromprice", fromprice_raw);
-        request.setAttribute("toprice", toprice_raw);
-        request.setAttribute("key", key);
+        List<Category> listC = cadao.getAllCategory();
+        request.setAttribute("listP", listP);
+        request.setAttribute("listB", listB);
+        request.setAttribute("listC", listC);
         request.setAttribute("bid", bid);
         request.setAttribute("cid1", cid1);
         request.setAttribute("cid2", cid2);
         request.setAttribute("cid3", cid3);
-        request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
-        request.setAttribute("listP", listP);
+        request.setAttribute("key", key);
         request.setAttribute("page", index);
         request.setAttribute("sort", sort);
         request.setAttribute("endP", endpage);
         request.setAttribute("countP", countP);
-        request.getRequestDispatcher("search.jsp").forward(request, response);
+        request.setAttribute("tab", "5");
+        request.getRequestDispatcher("ManageProduct.jsp").forward(request, response);
     }
 
     /**
@@ -174,7 +159,7 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /**
