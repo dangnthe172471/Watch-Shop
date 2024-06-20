@@ -12,6 +12,7 @@ public class Order {
 
     private int oid;
     private String date;
+    private String user;
     private double totalMoney;
     private String email, phone, address;
     private String note;
@@ -21,9 +22,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(int oid, String date, double totalMoney, String email, String phone, String address, String note, int sid, Account account) {
+    public Order(int oid, String date,String user, double totalMoney, String email, String phone, String address, String note, int sid, Account account) {
         this.oid = oid;
         this.date = date;
+        this.user = user;
         this.totalMoney = totalMoney;
         this.email = email;
         this.phone = phone;
@@ -47,6 +49,13 @@ public class Order {
 
     public void setDate(String date) {
         this.date = date;
+    }
+    public String getUser() {
+        return user;
+    }
+
+    public void getUser(String user) {
+        this.user = user;
     }
 
     public double getTotalMoney() {

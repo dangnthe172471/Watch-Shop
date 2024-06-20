@@ -94,7 +94,7 @@
                         </div>
                         <div>
                             <h5>Địa chỉ nhận hàng <div id="addressMessage"></div></h5>
-                            <input class="input" type="text" id="address" name="address" oninput="validateAddress(),checkWhitespace()">                            
+                            <input class="input" type="text" id="address" name="address" oninput="validateAddress()">                            
                         </div>
                     </div><br>
                     <h3 style="color: red">${requestScope.error}</h3>

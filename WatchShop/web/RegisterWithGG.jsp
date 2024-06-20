@@ -84,7 +84,7 @@
                         </div>
                         <div>
                             <h5>Địa Chỉ</h5>
-                            <input class="input" type="text" id="address" name="address" oninput="validateAddress(),checkWhitespace()">  
+                            <input class="input" type="text" id="address" name="address" oninput="validateAddress()">  
                             <div id="addressMessage"></div>
                         </div>
                     </div>
