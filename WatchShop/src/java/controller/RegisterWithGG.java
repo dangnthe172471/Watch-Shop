@@ -82,7 +82,7 @@ public class RegisterWithGG extends HttpServlet {
         String address = request.getParameter("address");
         String token = request.getParameter("token");
         // Server-side validation for empty fields
-        if (isEmpty(username) || isEmpty(password) || isEmpty(email) || isEmpty(phone) || isEmpty(address)) {
+        if (isEmpty(username) || isEmpty(password) || isEmpty(email) || isEmpty(phone) ) {
             request.setAttribute("error", "Không được để trống.");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
             return;

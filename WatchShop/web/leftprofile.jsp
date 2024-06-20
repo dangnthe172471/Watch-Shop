@@ -59,9 +59,9 @@
                         </a>
                     </li>
                     <li class="${tab==3?'active':''}">
-                        <a href="historyoder">
+                        <a href="confirm.jsp">
                             <i class='bx bxs-doughnut-chart' ></i>
-                            <span class="text">Lịch sử mua hàng</span>
+                            <span class="text">Thay đổi thông tin</span>
                         </a>
                     </li>
                     <li class="${tab==4?'active':''}">
@@ -86,8 +86,7 @@
                 <i class='bx bx-menu' ></i>  
                 <ul class="navbar-nav" style="margin-left: 600px;">
                     <div class="dropdown row" style="margin-left: 10px">
-                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="AdminManage.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${sessionScope.account.user}</a></li> 
-                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="changepass" style="display:inline-block">Change Password</a></li> 
+                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="ProfileUser.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${sessionScope.account.user}</a></li> 
                         <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
                     </div>
                     <c:set var="size" value="${sessionScope.size}"/>

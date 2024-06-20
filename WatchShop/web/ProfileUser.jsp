@@ -58,7 +58,10 @@
 
                             <div class="form-group">
                                 <label class="profile-label">Email:</label>
-                                <div class="profile-value">${account.email}</div> 
+                                <div class="profile-value">${account.email}
+                                    <a href="confirm.jsp" class="btn btn-info">Thay đổi</a>
+                                </div> 
+    
                             </div>
                             <div class="form-group">
                                 <label class="profile-label">Số điện thoại: </label>
@@ -77,7 +80,7 @@
                         </div>
 
                         <div style="width: 0.5px; height: 300px; background-color: #ccc;"></div>
-                        
+
                         <div class="form-group col-sm-4">
                             <form action="updateavatar" method="post" enctype="multipart/form-data">
 
@@ -96,9 +99,9 @@
                                 </div>
                                 <div class="file-info">Dung lượng file tối đa 1 MB, Định dạng: .JPEG, .PNG</div> 
                                 <div class="file-info">
-                                     <h5 style="color: red" ">${requestScope.error}</h5>
+                                    <h5 style="color: red" ">${requestScope.error}</h5>
                                 </div>
-                               
+
 
                             </form>
                         </div>
@@ -115,32 +118,7 @@
 
 
 
-        <footer>
-            <br>
-            <div class="container" style="margin-bottom: 30px">
-                <div class="col-inner"> 
-                    <div id="text-3185983446" class="text">
-                        <h2 class="uppercase">Thương hiệu đồng hồ nổi tiếng</h2>
-                        <style>
-                            #text-3185983446 {
-                                font-size: 0.75rem;
-                                text-align: center;
-                            }
-                        </style>
-                        <div class="row">
-                            <a href="search?bid=1" class="col-md-2" style="border: 1px solid black; margin-right: 120px;"><img src="img/logorolex.jpg" style="width: 100%;height: 95px"/></a>
-                            <a href="search?bid=2" class="col-md-2" style="border: 1px solid black; margin-right: 120px;"><img src="img/logocartier.jpg" style="width: 100%;height: 95px"/></a>
-                            <a href="search?bid=3" class="col-md-2" style="border: 1px solid black; margin-right: 120px;"><img src="img/logoAude.jpg" style="width: 100%;height: 95px"/></a>
-                            <a href="search?bid=4" class="col-md-2" style="border: 1px solid black;"> <img src="img/logoPatek.png" style="width: 100%;height: 95px"/></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container" style="margin-bottom: 20px;">
-                <img src="img/footerhome.jpg" style="width: 100%"/>
-            </div>
-            <jsp:include page="nav2.jsp" /> 
-        </footer>
+
 
         <!-- CONTENT -->
         <script src="js/script.js"></script>

@@ -81,7 +81,7 @@ function validateAddress() {
     var addressMessageElement = document.getElementById("addressMessage");
 
     if (address.trim() === "") {
-        addressMessageElement.innerHTML = "địa chỉ nhận hàng không được để trống.";
+        addressMessageElement.innerHTML = "địa chỉ nhận hàng có thể để trống.";
         addressMessageElement.style.color = "red";
     } else {
         addressMessageElement.innerHTML = "";

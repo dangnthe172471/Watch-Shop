@@ -56,6 +56,7 @@
                                     <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="profile" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${account.user}</a></li> 
                                     </c:if>
                                     
+                                <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="confirm.jsp" style="display:inline-block">Change Information</a></li> 
                                 <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="changepass" style="display:inline-block">Change Password</a></li> 
                                 <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
                                 </c:if>
