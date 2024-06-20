@@ -38,6 +38,7 @@
                 reader.readAsDataURL(event.target.files[0]);
             }
         </script>
+        
     </head>
     <body>
         <div>
@@ -50,6 +51,20 @@
                             <h5>Quản lý thông tin hồ sơ để bảo mật tài khoản</h5>
                         </div>
                     </div><br>
+                    <!-- Success or Error Messages -->
+                    <c:if test="${not empty param.update}">
+                        <c:choose>
+                            <c:when test="${param.update eq 'success'}">
+                                <div class="alert alert-success">Địa chỉ đã được cập nhật thành công.</div>
+                            </c:when>
+                            <c:when test="${param.update eq 'error'}">
+                                <div class="alert alert-danger">Có lỗi xảy ra khi cập nhật địa chỉ. Vui lòng thử lại.</div>
+                            </c:when>
+                            <c:when test="${param.update eq 'invalid'}">
+                                <div class="alert alert-warning">Địa chỉ không hợp lệ. Vui lòng nhập lại.</div>
+                            </c:when>
+                        </c:choose>
+                    </c:if>
 
                     <div class="form-row">
                         <div class="form-group col-sm-7">
@@ -61,7 +76,7 @@
                                 <div class="profile-value">${account.email}
                                     <a href="confirm.jsp" class="btn btn-info">Thay đổi</a>
                                 </div> 
-    
+
                             </div>
                             <div class="form-group">
                                 <label class="profile-label">Số điện thoại: </label>
@@ -69,8 +84,25 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="profile-label">Địa chỉ nhận hàng(mặc định):</div>
-                                <div class="profile-value">${account.address}</div> 
+                                <label class="profile-label">Địa chỉ nhận hàng (mặc định):</label>
+                                <div class="profile-value">${account.address}</div>
+                                <form action="updateaddress" method="post">
+                                    <c:choose>
+                                        <c:when test="${empty account.address}">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control w-50" name="newAddress" placeholder="Nhập địa chỉ mới" required>
+                                                <button type="submit" class="btn btn-info mt-2">Thêm</button>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control w-50" name="newAddress" placeholder="Nhập địa chỉ mới" required>
+                                                <button type="submit" class="btn btn-info mt-2">Thay đổi</button>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </form>
+
                             </div>
 
                             <div class="form-group">
@@ -105,12 +137,7 @@
 
                             </form>
                         </div>
-
-
                     </div>
-
-
-
                 </main>
                 <!-- MAIN -->
             </section>

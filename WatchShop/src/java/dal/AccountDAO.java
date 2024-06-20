@@ -256,4 +256,18 @@ public class AccountDAO extends DBContext {
         }
     }
 
+    public boolean updateAccountAddress(Account account) {
+        String sql = "UPDATE Account SET Address = ? WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, account.getAddress());
+            st.setInt(2, account.getId());
+            int rowsAffected = st.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("updateAccountAddress: " + e.getMessage());
+            return false;
+        }
+    }
+
 }
