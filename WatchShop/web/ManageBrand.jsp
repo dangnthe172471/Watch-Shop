@@ -21,6 +21,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/home.css">        
         <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="css/shipper.css">
+        <link rel="stylesheet" href="css/search-mana.css">
         <link rel="stylesheet" href="css/update-brand.css">
         <script type="text/javascript" src="js/main.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
@@ -50,14 +52,16 @@
                     <div class="order">
                         <div class="head">
                             <h3>Quản Lý</h3>
-                            <!--<i class='bx bx-search' ></i>-->
-                            <a href="#"><i class='bx bx-filter' ></i></a> 
+                            <form action="" id="search-box">
+                                <input type="text" id="search-text" placeholder="Tìm kiếm theo thương hiệu ">
+                                <button id="search-btn"><i class='bx bx-search'></i></button>
+                            </form> 
                         </div>
-                        <div class="nav-bg">
-                            <nav class="container" style="padding:0px ">
-                                <ul class="main-menu">
-                                    <li><a style="padding-right: 0px" href="brand">Danh sách</a></li>
-                                    <li style="margin-left: 30px;"><a href="blockb">Danh sách Tạm Ẩn</a></li>                  
+                        <div class="nav-bgg">
+                            <nav class="containerr" style="padding:0px ; width: 30%">
+                                <ul class="main-menuu">
+                                    <li><a style="padding-left: 7px" href="brand">Danh sách</a></li>
+                                    <li style="margin-left: 30px;"><a href="blockb">Danh sách Xóa</a></li>                  
                                 </ul>
                             </nav>
                         </div>

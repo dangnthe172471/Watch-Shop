@@ -121,6 +121,16 @@ public class BrandDAO extends DBContext {
         } catch (Exception e) {
         }
     }
+    
+    public void restoreBrandById(String bid) {
+        String sql = "UPDATE [dbo].[brand] SET [deleted] = 0 WHERE [bid] = ?;";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, bid);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
 
     public void updateBrand(Brand b) {
         String sql = "UPDATE [dbo].[brand] SET [bname] = ?, [image]=?, [description]=? WHERE [bid]=?";

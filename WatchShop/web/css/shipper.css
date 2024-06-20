@@ -1,0 +1,55 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 19, 2024, 9:58:55 PM
+    Author     : quyld
+*/
+
+.nav-bgg {
+    background-color: #f8f9fa; /* Light grey background */
+    padding: 20px 0; /* Padding around the container */
+}
+
+/* Container styling */
+nav.containerr {
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Main menu styling */
+ul.main-menuu {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Display list items in a row */
+    justify-content: flex-start; /* Align items to the start */
+}
+
+/* Individual list item styling */
+ul.main-menuu li {
+    margin-left: 30px; /* Space between menu items */
+}
+
+ul.main-menuu li:first-child {
+    margin-left: 0; /* Remove margin from the first item */
+}
+
+/* Anchor tag styling */
+ul.main-menuu li a {
+    text-decoration: none; /* Remove underline from links */
+    color: #333; /* Dark text color */
+    padding: 10px 15px; /* Padding for clickable area */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+ul.main-menuu li a:hover {
+    background-color: #e9ecef; /* Light grey background on hover */
+    color: #007bff; /* Change text color on hover */
+}
+
+/* Specific style for the first link */
+ul.main-menuu li:first-child a {
+    padding-right: 0; /* No right padding for the first link */
+}

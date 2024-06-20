@@ -1,0 +1,28 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 20, 2024, 1:37:56 PM
+    Author     : quyld
+*/
+
+#search-box{
+                background:#fff;
+                border-radius: 30px;
+            }
+            #search-box #search-text{
+                border: none;
+                outline: none;
+                background: none;
+                padding: 10px 15px;
+                font-size: 18px;
+            }
+            #search-box #search-btn{
+                background-color: #fff;
+                cursor: pointer;
+                border: none;
+                padding: 15px;
+                border-radius: 50%;
+                height:12px ;
+            }

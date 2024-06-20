@@ -8,9 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import model.Account;
 import model.Cart;
 import model.Item;
+import model.Order;
 
 /**
  *
@@ -77,5 +80,86 @@ public class OrderDAO extends DBContext {
             } catch (SQLException e) {
             }
         }
+    }
+
+    public List<Order> getOrderPending() {
+        List<Order> list = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 1";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Order o = new Order();
+                Account a = new Account(rs.getInt(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getDouble(16), rs.getInt(17), rs.getString(18), rs.getInt(19), rs.getInt(20), rs.getString(21));
+                o.setOid(rs.getInt(1));
+                o.setAccount(a);
+                o.getUser(a.getUser());
+                o.setDate(rs.getString(3));
+                o.setTotalMoney(rs.getDouble(4));
+                o.setEmail(rs.getString(5));
+                o.setPhone(rs.getString(6));
+                o.setAddress(rs.getString(7));
+                o.setNote(rs.getString(8));
+                o.setSid(rs.getInt(9));
+                list.add(o);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
+    public List<Order> getOrderAccept() {
+        List<Order> list = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 3";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Order o = new Order();
+                Account a = new Account(rs.getInt(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getDouble(16), rs.getInt(17), rs.getString(18), rs.getInt(19), rs.getInt(20), rs.getString(21));
+                o.setOid(rs.getInt(1));
+                o.setAccount(a);
+                o.getUser(a.getUser());
+                o.setDate(rs.getString(3));
+                o.setTotalMoney(rs.getDouble(4));
+                o.setEmail(rs.getString(5));
+                o.setPhone(rs.getString(6));
+                o.setAddress(rs.getString(7));
+                o.setNote(rs.getString(8));
+                o.setSid(rs.getInt(9));
+                list.add(o);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
+    public List<Order> getOrderCompleted() {
+        List<Order> list = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 2";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Order o = new Order();
+                Account a = new Account(rs.getInt(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getDouble(16), rs.getInt(17), rs.getString(18), rs.getInt(19), rs.getInt(20), rs.getString(21));
+                o.setOid(rs.getInt(1));
+                o.setAccount(a);
+                o.getUser(a.getUser());
+                o.setDate(rs.getString(3));
+                o.setTotalMoney(rs.getDouble(4));
+                o.setEmail(rs.getString(5));
+                o.setPhone(rs.getString(6));
+                o.setAddress(rs.getString(7));
+                o.setNote(rs.getString(8));
+                o.setSid(rs.getInt(9));
+                list.add(o);
+            }
+        } catch (Exception e) {
+        }
+        return list;
     }
 }

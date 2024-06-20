@@ -1,6 +1,6 @@
 <%-- 
-    Document   : ShipperManagement
-    Created on : Jun 11, 2024, 12:57:12 PM
+    Document   : ShipperCompleted
+    Created on : Jun 19, 2024, 8:00:29 PM
     Author     : quyld
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -35,18 +35,17 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        
     </head>
     <body>
-        <jsp:include page="left.jsp" />
+       <jsp:include page="left.jsp" />
         <section id="content">
             <main>
                 <div class="head-title">
                     <div class="left">
-                        <h1>Danh sách đơn</h1>                      
+                        <h1>Đơn nhận</h1>                      
                     </div>
                 </div>
-
+                
                 <div class="table-data">
                     <div class="order">
                         <div class="nav-bgg">
@@ -59,12 +58,13 @@
                                 </ul>
                             </nav>
                         </div>
-                        <!--                        <div class="head">
-                                                    <h3>Danh sách</h3>
-                                                    <i class='bx bx-search' ></i>
-                                                    <a href="#"><i class='bx bx-filter' ></i></a> 
-                                                </div>-->
-                        <form action="listorder">
+<!--                        <div class="head">
+                            <h3>Danh sách</h3>
+                            <i class='bx bx-search' ></i>
+                            <a href="#"><i class='bx bx-filter' ></i></a> 
+                        </div>-->
+                        
+                        <form action="listordercompleted">
                             <table>
                                 <thead>
                                     <tr>
@@ -72,11 +72,11 @@
                                         <th>Khách hàng</th>
                                         <th>Sđt</th>
                                         <th>Email</th>
-                                        <th style="width: 100px">Address</th>
-                                        <th style="width: 180px">TotalMoney</th>
-                                        <th style="width: 200px">Note</th>
-                                        <th style="width: 60px;"></th>
-                                    </tr>
+                                        <th>Address</th>
+                                        <th>TotalMoney</th>
+                                        <th>Note</th>
+                                        
+                                        <th style="width: 100px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -102,7 +102,6 @@
                 </div>
             </main>
 
-            <script src="js/script.js"></script>
+        <script src="js/script.js"></script>
     </body>
 </html>
-

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : ShipperManagement
-    Created on : Jun 11, 2024, 12:57:12 PM
+    Document   : ShipperAccept
+    Created on : Jun 19, 2024, 7:59:11 PM
     Author     : quyld
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Watch Shop</title>
         <!-- Boxicons -->
@@ -35,22 +36,22 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        
     </head>
     <body>
-        <jsp:include page="left.jsp" />
+       <jsp:include page="left.jsp" />
         <section id="content">
             <main>
                 <div class="head-title">
                     <div class="left">
-                        <h1>Danh sách đơn</h1>                      
+                        <h1>Đơn hoàn thành</h1>                      
                     </div>
                 </div>
-
+                
                 <div class="table-data">
+                    
                     <div class="order">
                         <div class="nav-bgg">
-                            <nav class="containerr" style="padding-left: 0px" >
+                            <nav class="containerr" style="padding-left: 0px">
                                 <ul class="main-menuu">
                                     <li><a style="padding-right: 0px" href="listorder">Danh sách đơn</a></li>
                                     <li style="margin-left: 30px;"><a href="listordercompleted">Đơn nhận</a></li>               
@@ -59,12 +60,13 @@
                                 </ul>
                             </nav>
                         </div>
-                        <!--                        <div class="head">
-                                                    <h3>Danh sách</h3>
-                                                    <i class='bx bx-search' ></i>
-                                                    <a href="#"><i class='bx bx-filter' ></i></a> 
-                                                </div>-->
-                        <form action="listorder">
+<!--                        <div class="head">
+                            <h3>Danh sách</h3>
+                            <i class='bx bx-search' ></i>
+                            <a href="#"><i class='bx bx-filter' ></i></a> 
+                        </div>-->
+                        
+                        <form action="listorderaccept">
                             <table>
                                 <thead>
                                     <tr>
@@ -72,18 +74,18 @@
                                         <th>Khách hàng</th>
                                         <th>Sđt</th>
                                         <th>Email</th>
-                                        <th style="width: 100px">Address</th>
-                                        <th style="width: 180px">TotalMoney</th>
-                                        <th style="width: 200px">Note</th>
-                                        <th style="width: 60px;"></th>
-                                    </tr>
+                                        <th>Address</th>
+                                        <th>TotalMoney</th>
+                                        <th>Note</th>
+                                        
+                                        <th style="width: 100px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${order}" var="o">
                                         <tr>
                                             <td><p style="display: none ">${o.oid}</p></td>
-                                            <td>${o.user}</td> 
+                                            <td>${o.account}</td> 
                                             <td>${o.phone}</td>
                                             <td>${o.email}</td>
                                             <td>${o.address}</td>
@@ -102,7 +104,6 @@
                 </div>
             </main>
 
-            <script src="js/script.js"></script>
+        <script src="js/script.js"></script>
     </body>
 </html>
-
