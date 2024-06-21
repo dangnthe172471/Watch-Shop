@@ -80,8 +80,6 @@ public class MangeProductServlet extends HttpServlet {
 
         if (bid_raw != null) {
             bid = new int[bid_raw.length];
-
-            // convert the string array to an int array
             for (int i = 0; i < bid.length; i++) {
                 bid[i] = Integer.parseInt(bid_raw[i]);
             }
@@ -89,24 +87,18 @@ public class MangeProductServlet extends HttpServlet {
 
         if (cid_raw1 != null) {
             cid1 = new int[cid_raw1.length];
-
-            // convert the string array to an int array
             for (int i = 0; i < cid1.length; i++) {
                 cid1[i] = Integer.parseInt(cid_raw1[i]);
             }
         }
         if (cid_raw2 != null) {
             cid2 = new int[cid_raw2.length];
-
-            // convert the string array to an int array
             for (int i = 0; i < cid2.length; i++) {
                 cid2[i] = Integer.parseInt(cid_raw2[i]);
             }
         }
         if (cid_raw3 != null) {
             cid3 = new int[cid_raw3.length];
-
-            // convert the string array to an int array
             for (int i = 0; i < cid3.length; i++) {
                 cid3[i] = Integer.parseInt(cid_raw3[i]);
             }
@@ -122,7 +114,6 @@ public class MangeProductServlet extends HttpServlet {
             indexpage = "1";
         }
 
-        // convert the values
         index = Integer.parseInt(indexpage);
         int countP = pdao.countManageProduct(bid, cid1, cid2, cid3, key);
         int endpage = countP / 6;
@@ -159,7 +150,7 @@ public class MangeProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doGet(request, response);
     }
 
     /**

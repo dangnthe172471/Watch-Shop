@@ -43,7 +43,7 @@
                     <div class="order">
                         <div class="head">
                             <h3>Quản Lý</h3>
-                            <form action="manageproduct">
+                            <form action="manageproduct" method="post">
                                 <c:forEach var="bidValue" items="${bid}">
                                     <input type="hidden" value="${bidValue}" name="bid">
                                 </c:forEach>
@@ -76,7 +76,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 30px; text-align: center;">
-                                        <form action="manageproduct">
+                                        <form action="manageproduct" method="post">
                                             <input value="${key}" name="key" type="hidden">
                                             <c:forEach var="bidValue" items="${bid}">
                                                 <input type="hidden" value="${bidValue}" name="bid">
@@ -99,8 +99,8 @@
                                         </form>
                                     </th>
 
-                                    <th style="width: 165px;text-align: center">
-                                        <form action="manageproduct">
+                                    <th style="width: 160px;text-align: center">
+                                        <form action="manageproduct" method="post">
                                             <input value="${key}" name="key" type="hidden">
                                             <c:forEach var="bidValue" items="${bid}">
                                                 <input type="hidden" value="${bidValue}" name="bid">
@@ -123,7 +123,7 @@
                                         </form>                                        
                                     </th>
                                     <th style="width: 130px;text-align: center">
-                                        <form action="manageproduct">
+                                        <form action="manageproduct" method="post">
                                             <input value="${key}" name="key" type="hidden">
                                             <input value="${sort}" name="sort" type="hidden">
                                             <ul class="main-menu" style="text-align: left"> 
@@ -147,7 +147,7 @@
                                         </form>
                                     </th>
                                     <th style="width: 150px;text-align: center">
-                                        <form action="manageproduct">
+                                        <form action="manageproduct" method="post">
                                             <input value="${key}" name="key" type="hidden">
                                             <input value="${sort}" name="sort" type="hidden">
                                             <ul class="main-menu" style="text-align: left;"> 
@@ -198,7 +198,7 @@
                                         </form>
                                     </th>
                                     <th style="width: 125px;text-align: center">
-                                        <form action="manageproduct">
+                                        <form action="manageproduct" method="post">
                                             <input value="${key}" name="key" type="hidden">
                                             <c:forEach var="bidValue" items="${bid}">
                                                 <input type="hidden" value="${bidValue}" name="bid">
@@ -220,7 +220,7 @@
                                             </button>
                                         </form>
                                     <th style="width: 120px;text-align: center">
-                                        <form action="manageproduct">
+                                        <form action="manageproduct" method="post">
                                             <input value="${key}" name="key" type="hidden">
                                             <c:forEach var="bidValue" items="${bid}">
                                                 <input type="hidden" value="${bidValue}" name="bid">
@@ -243,7 +243,7 @@
                                         </form>
                                     </th>
                                     <th style="width: 80px;text-align: center">
-                                        <form action="manageproduct">
+                                        <form action="manageproduct" method="post">
                                             <input value="${key}" name="key" type="hidden">
                                             <c:forEach var="bidValue" items="${bid}">
                                                 <input type="hidden" value="${bidValue}" name="bid">
@@ -265,7 +265,7 @@
                                             </button>
                                         </form>
                                     <th style="width: 120px;text-align: center">
-                                        <form action="manageproduct">
+                                        <form action="manageproduct" method="post">
                                             <input value="${key}" name="key" type="hidden">
                                             <c:forEach var="bidValue" items="${bid}">
                                                 <input type="hidden" value="${bidValue}" name="bid">
@@ -295,7 +295,18 @@
                                     <tr>
                                         <td style="text-align: left;display: table-cell;vertical-align: middle;">${o.code}</td>
                                         <td><span style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;font-size: 14px;" title="${o.name}">${o.name}</span>
-                                            <img src=" ${o.pimage.img1}" style="border-radius: 0px; width: 160px; height: 200px;"/>
+
+                                            <div class="khoianh">
+                                                <div class="anhto mb-2">
+                                                    <img id="main-image" class="product-image" src="${o.pimage.img1}" style="width: 100%;height: 200px;border-radius: 0%">
+                                                </div>
+                                                <div class="list-anhchitiet d-flex">
+                                                    <img class="thumb-img mr-3" src="${o.pimage.img1}" class="img-fluid" style="cursor: pointer;">
+                                                    <img class="thumb-img mr-3" src="${o.pimage.img2}" class="img-fluid" style="cursor: pointer;">
+                                                    <img class="thumb-img mr-3" src="${o.pimage.img3}" class="img-fluid" style="cursor: pointer;">
+                                                    <img class="thumb-img mr-3" src="${o.pimage.img4}" class="img-fluid" style="cursor: pointer;">
+                                                </div>
+                                            </div>
                                         </td>                                               
                                         <td style="text-align: center">
                                             <c:forEach items="${listB}" var="b">
@@ -326,7 +337,7 @@
 
                 </div>
                 <c:if test="${countP >= 6}">                                                
-                    <form action="manageproduct">
+                    <form action="manageproduct" method="post">
                         <c:forEach var="bidValue" items="${bid}">
                             <input type="hidden" value="${bidValue}" name="bid">
                         </c:forEach>
@@ -364,65 +375,6 @@
             </main>
         </section>
         <script src="js/script.js"></script>
-        <script>
-                                                function sortTable(n) {
-                                                    const table = document.getElementById("manageproduct");
-                                                    let rows, switching, i, x, y, shouldSwitch, dir, switchCount = 0;
-                                                    switching = true;
-                                                    dir = "asc";
-
-                                                    while (switching) {
-                                                        switching = false;
-                                                        rows = table.rows;
-
-                                                        for (i = 1; i < (rows.length - 1); i++) {
-                                                            shouldSwitch = false;
-                                                            x = rows[i].getElementsByTagName("TD")[n];
-                                                            y = rows[i + 1].getElementsByTagName("TD")[n];
-
-                                                            if (dir === "asc") {
-                                                                if (n === 3) { // Nếu là cột Price
-                                                                    if (parseInt(x.innerHTML.replace(/\./g, '')) > parseInt(y.innerHTML.replace(/\./g, ''))) {
-                                                                        shouldSwitch = true;
-                                                                        break;
-                                                                    }
-                                                                } else if (n === 2) {
-                                                                    if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
-                                                                        shouldSwitch = true;
-                                                                        break;
-                                                                    }
-                                                                } else {
-                                                                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                                                                        shouldSwitch = true;
-                                                                        break;
-                                                                    }
-                                                                }
-                                                            } else if (dir === "desc") {
-                                                                if (n === 2) {
-                                                                    if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
-                                                                        shouldSwitch = true;
-                                                                        break;
-                                                                    }
-                                                                } else {
-                                                                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                                                                        shouldSwitch = true;
-                                                                        break;
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                        if (shouldSwitch) {
-                                                            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                                                            switching = true;
-                                                            switchCount++;
-                                                        } else {
-                                                            if (switchCount === 0 && dir === "asc") {
-                                                                dir = "desc";
-                                                                switching = true;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-        </script>
+        <script src="js/mngproduct.js"></script>        
     </body>
 </html>
