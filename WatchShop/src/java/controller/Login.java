@@ -125,7 +125,7 @@ public class Login extends HttpServlet {
                 return;
             } else if (account.getRoleID() == 3) {
                 request.getSession().setAttribute("account", account);
-                response.sendRedirect(request.getContextPath() + "/HomeShiper.jsp");
+                response.sendRedirect(request.getContextPath() + "/listorder");
             }
 
             //login User

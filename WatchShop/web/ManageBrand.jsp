@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="css/search-mana.css">
         <link rel="stylesheet" href="css/update-brand.css">
         <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/brand.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
         <script type="text/javascript" src="slick/slick.min.js"></script>  
@@ -101,54 +102,57 @@
             </main>
 
             <!-- The Modal Add -->
-            <form action="deletebrand" method="post">
+            <form action="addbrand" method="post" id="addBrandForm">
                 <div class="modal fade" id="addmodal">
                     <div class="modal-dialog">
                         <div class="modal-content">
-
                             <div class="modal-header">
                                 <h4 class="modal-title">Thêm Thương Hiệu</h4>
+                                
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
-
                             <div class="modal-body">
+                                <span id="whitespaceMessage" class="text-danger"></span><br/>
                                 <label>Thương Hiệu</label>
-                                <input type="text" name="bname"> 
-                                <label>Ảnh</label>
-                                <input type="text" name="image">
-                                <label>Miêu Tả</label>
-                                <input type="text" name="description">
+                                <span id="brandNameError" class="text-danger"></span>
+                                
+                                <input type="text" name="bname" id="bname" oninput="checkWhitespace()"> 
+
+                                <label>Ảnh:</label>
+                                <span id="brandImageError" class="text-danger"></span>
+                                <input type="file" name="image" id="bimage" oninput="checkWhitespace()"><br/>
+
+                                <label>Miêu Tả </label><span id="brandDescriptionError" class="text-danger"></span><br/>
+                                <textarea style="width: 450px" type="text" name="description" id="bdescription" oninput="checkWhitespace()"></textarea>
+                                
                             </div>
-                            <div>${err}</div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
-                                <button type="submit" name="add" class="btn btn-primary">Thêm</button>
+                                <button type="button" onclick="submitAddBrandForm()" class="btn btn-primary">Thêm</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
 
-            <!-- The Modal Update-->
-            <form action="updatebrand" method="post">
+            <!-- The Modal Update -->
+            <form action="updatebrand" method="post" id="editBrandForm">
                 <div class="modal fade" id="editmodal">
                     <div class="modal-dialog">
                         <div class="modal-content">
-
                             <div class="modal-header">
                                 <h4 class="modal-title">Chỉnh sửa</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
-
                             <div class="modal-body">
-                                <input type="hidden" name="bid" id="update_id" >
+                                <input type="hidden" name="bid" id="update_id">
                                 <label>Thương Hiệu</label>
                                 <input type="text" name="bname" id="update_name">
                                 <label>Ảnh</label>
                                 <input type="text" name="image" id="update_image">
                                 <label>Miêu Tả</label>
                                 <textarea class="form-control" id="update_description" name="description"></textarea>
-
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
@@ -163,49 +167,39 @@
 
         <script src="js/script.js"></script>
         <script>
-                                                    $(document).ready(function () {
-                                                    $('.addbtn').on('click', function () {
-                                                    $('#addmodal').modal('show');
-                                                    $tr = $(this).closest('tr');
-                                                    });
-                                                    });
+                                    $(document).ready(function () {
+                                        $('.addbtn').on('click', function () {
+                                            $('#addmodal').modal('show');
+                                            $tr = $(this).closest('tr');
+                                        });
+                                    });
         </script>
         <script>
             $(document).ready(function () {
-            var error = "<%= session.getAttribute("err") %>";
-            var modalOpen = "<%= session.getAttribute("keepModalOpen") %>";
-            if (error && modalOpen === "add") {
-            $('#addmodal').modal('show');
-            }
-            $('#addmodal').on('hidden.bs.modal', function (e) {
-            <% session.removeAttribute("err"); session.removeAttribute("keepModalOpen"); %>
-            });
-            });
-        </script>
-        <script>
-            $(document).ready(function () {
-            $('.editbtn').on('click', fun   ction () {
-            $('#editmodal').modal('show');
-            $tr = $(this).closest('tr');
-            var data = $tr.children("td").map(function () {
-            return $(this).text();
-            }).get();
-            console.log(data);
-            $('#update_id').val(data[0].trim());
-            $('#update_name').val(data[1].trim());
-            $('#update_image').val(data[2].trim());
-            $('#update_description').val(data[3].trim());
-            });
+                $('.editbtn').on('click', function () {
+                    $('#editmodal').modal('show');
+                    $tr = $(this).closest('tr');
+                    var data = $tr.children("td").map(function () {
+                        return $(this).text();
+                    }).get();
+                    console.log(data);
+                    $('#update_id').val(data[0].trim());
+                    $('#update_name').val(data[1].trim());
+                    $('#update_image').val(data[2].trim());
+                    $('#update_description').val(data[3].trim());
+                });
             });
         </script>
 
         <script type="text/javascript">
             function doDelete(bid) {
-            if (confirm('Bạn có muốn xóa Thương Hiệu này ?')) {
-            window.location = 'deletebrand?bid=' + bid;
-            }
+                if (confirm('Bạn có muốn xóa Thương Hiệu này ?')) {
+                    window.location = 'deletebrand?bid=' + bid;
+                }
             }
         </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>
 

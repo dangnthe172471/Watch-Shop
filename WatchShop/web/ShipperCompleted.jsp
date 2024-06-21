@@ -15,7 +15,6 @@
         <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
         <!-- My CSS -->
         <link rel="stylesheet" href="css/manage.css">
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -29,7 +28,6 @@
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
         <script type="text/javascript" src="slick/slick.min.js"></script>  
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -37,7 +35,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
-       <jsp:include page="left.jsp" />
+        <jsp:include page="left.jsp" />
         <section id="content">
             <main>
                 <div class="head-title">
@@ -45,7 +43,7 @@
                         <h1>Đơn nhận</h1>                      
                     </div>
                 </div>
-                
+
                 <div class="table-data">
                     <div class="order">
                         <div class="nav-bgg">
@@ -54,16 +52,16 @@
                                     <li><a style="padding-right: 0px" href="listorder">Danh sách đơn</a></li>
                                     <li style="margin-left: 30px;"><a href="listordercompleted">Đơn nhận</a></li>               
                                     <li style="margin-left: 30px;"><a href="listorderaccept">Đơn Hoàn Thành</a></li>               
-                                    <li style="margin-left: 30px;"><a href="blockc">Đơn Hủy</a></li>               
+                                    <li style="margin-left: 30px;"><a href="listordercaneled">Đơn Hủy</a></li>               
                                 </ul>
                             </nav>
                         </div>
-<!--                        <div class="head">
-                            <h3>Danh sách</h3>
-                            <i class='bx bx-search' ></i>
-                            <a href="#"><i class='bx bx-filter' ></i></a> 
-                        </div>-->
-                        
+                        <!--                        <div class="head">
+                                                    <h3>Danh sách</h3>
+                                                    <i class='bx bx-search' ></i>
+                                                    <a href="#"><i class='bx bx-filter' ></i></a> 
+                                                </div>-->
+
                         <form action="listordercompleted">
                             <table>
                                 <thead>
@@ -72,11 +70,10 @@
                                         <th>Khách hàng</th>
                                         <th>Sđt</th>
                                         <th>Email</th>
-                                        <th>Address</th>
-                                        <th>TotalMoney</th>
-                                        <th>Note</th>
-                                        
-                                        <th style="width: 100px;"></th>
+                                        <th style="width: 100px">Address</th>
+                                        <th style="width: 180px">TotalMoney</th>
+                                        <th style="width: 200px">Note</th>
+                                        <th style="width: 60px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,7 +87,8 @@
                                             <td><fmt:formatNumber value="${o.totalMoney}"/></td>
                                             <td></td> 
                                             <td>
-                                                <a href="#" onclick="doDelete('${b.bid}')"><i class="fa fa-trash"></i></a>
+                                                <a href="#" onclick="doCAccept('${o.oid}')"><i class="fa fa-check-square"></i></a>&nbsp;&nbsp;
+                                                <a href="#" onclick="doCanceled('${o.oid}')"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr> 
                                     </c:forEach>
@@ -101,7 +99,20 @@
                     </div>                  
                 </div>
             </main>
-
-        <script src="js/script.js"></script>
+            <script type="text/javascript">
+                function doCAccept(oid) {
+                    if (confirm('Xác nhận đơn hàng giao thành công')) {
+                        window.location = 'accept?oid=' + oid;
+                    }
+                }
+            </script>
+            <script type="text/javascript">
+                function doCanceled(oid) {
+                    if (confirm('Xác nhận hủy đơn hàng')) {
+                        window.location = 'canceled?oid=' + oid;
+                    }
+                }
+            </script>
+            <script src="js/script.js"></script>
     </body>
 </html>
