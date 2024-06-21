@@ -73,6 +73,8 @@ public class CheckoutServlet extends HttpServlet {
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
             String address = request.getParameter("address");
+            String dateShip = request.getParameter("dateShip");
+            String timeShip = request.getParameter("timeShip");
             String note = request.getParameter("note");
             if (note == null) {
                 note = "";
@@ -81,6 +83,8 @@ public class CheckoutServlet extends HttpServlet {
             session.setAttribute("phone", phone);
             session.setAttribute("email", email);
             session.setAttribute("address", address);
+            session.setAttribute("dateShip", dateShip);
+            session.setAttribute("timeShip", timeShip);
             session.setAttribute("note", note);
             request.getRequestDispatcher("vnpay_pay.jsp").forward(request, response);
         }
@@ -105,6 +109,9 @@ public class CheckoutServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         String address = request.getParameter("address");
+        String dateShip = request.getParameter("dateShip");
+        String timeShip = request.getParameter("timeShip");
+
         String note = request.getParameter("note");
         if (note == null) {
             note = "";
@@ -118,7 +125,7 @@ public class CheckoutServlet extends HttpServlet {
             if (a != null) {
                 acount = (Account) a;
                 if (acount.getAmount() >= cart.getTotalMoney()) {
-                    odao.addOrder(acount, cart, email, phone, address, note);
+                    odao.addOrder(acount, cart, email, phone, address, note, dateShip, timeShip);
                     odao.updateAmount(acount, cart);
                     EmailOrder handleEmail = new EmailOrder();
                     String sub = handleEmail.subjectOrder(name);

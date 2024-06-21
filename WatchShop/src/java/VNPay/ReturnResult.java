@@ -79,6 +79,8 @@ public class ReturnResult extends HttpServlet {
         String email = (String) session.getAttribute("email");
         String address = (String) session.getAttribute("address");
         String note = (String) session.getAttribute("note");
+        String dateShip = (String) session.getAttribute("dateShip");
+        String timeShip = (String) session.getAttribute("timeShip");
         if (note == null) {
             note = "";
         }
@@ -118,7 +120,7 @@ public class ReturnResult extends HttpServlet {
                     Payment p = new Payment("", vnp_TxnRef, vnp_Amount, vnp_OrderInfo, vnp_ResponseCode, vnp_TransactionNo, vnp_BankCode, vnp_PayDateDTB, vnp_TransactionStatus, acount.getId());
                     padao.addPayment(p);
                     if (vnp_TransactionStatus.equals("00")) {
-                        odao.addOrder(acount, cart, email, phone, address, note);
+                        odao.addOrder(acount, cart, email, phone, address, note, dateShip, timeShip);
                         EmailOrder handleEmail = new EmailOrder();
                         String sub = handleEmail.subjectOrder(name);
                         String msg = handleEmail.messageOrder(currentDateTime, formatNumber(cart.getTotalMoney()), phone, name, address, note, cart);

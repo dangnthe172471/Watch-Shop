@@ -75,28 +75,30 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th style="width: 7px"></th>
-                                        <th>Khách hàng</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Email</th>
+                                      
+                                        <th style="width: 100px">Khách hàng</th>
+                                        <th style="width: 100px">Số điện thoại</th>
+                                        <th style="width: 120px">Email</th>
                                         <th style="width: 100px">Địa chỉ</th>
-                                        <th style="width: 180px">Tổng tiền</th>
-                                        <th style="width: 200px">Ngày đặt</th>
-                                        <th style="width: 200px">Ghi chú</th>
+                                        <th style="width: 150px">Tổng tiền</th>
+                                        <th style="width: 180px">Ngày đặt</th>
+                                        <th style="width: 180px">Ngày muốn giao</th>
+                                        <th style="width: 180px">Thời gian muốn giao</th>
+                                        <th style="width: 180px">Ghi chú</th>
                                         <th style="width: 60px;"></th>
-                                    </tr>
-                                    </tr>
+                                    </tr>                                   
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${order}" var="o">
                                         <tr>
-                                            <td><p style="display: none ">${o.oid}</p></td>
-                                            <td>${o.user}</td> 
+                                            <td>${o.account.user}</td> 
                                             <td>${o.phone}</td>
                                             <td>${o.email}</td>
                                             <td>${o.address}</td>
                                             <td><fmt:formatNumber value="${o.totalMoney}"/></td>
                                             <td>${o.date}</td>
+                                            <td>${o.dateShip}</td>
+                                            <td>${o.timeShip}</td>
                                             <td></td> 
                                             <td>
                                                 <a href="#" onclick="doOrder('${o.oid}')"><i class="fa fa-shopping-bag"></i></a>
