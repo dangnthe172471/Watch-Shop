@@ -288,9 +288,10 @@ INSERT [dbo].[ImageProduct]([pid],[image1],[image2],[image3],[image4]) VALUES
 
 SET IDENTITY_INSERT [dbo].[Status] ON 
 INSERT [dbo].[Status]([id], [status]) VALUES (1,N'Chờ giao hàng')
-INSERT [dbo].[Status]([id], [status]) VALUES (2,N'Đang giao hàng')
-INSERT [dbo].[Status]([id], [status]) VALUES (3,N'Hoàn thành')
-INSERT [dbo].[Status]([id], [status]) VALUES (4,N'Đã hủy')
+INSERT [dbo].[Status]([id], [status]) VALUES (2,N'Đã nhận đơn')
+INSERT [dbo].[Status]([id], [status]) VALUES (3,N'Đang giao hàng')
+INSERT [dbo].[Status]([id], [status]) VALUES (4,N'Hoàn thành')
+INSERT [dbo].[Status]([id], [status]) VALUES (5,N'Đã hủy')
 SET IDENTITY_INSERT [dbo].[Status] OFF
 
 INSERT [dbo].[Order] ([aid], [date], [dateShip],[timeShip], [totalMoney], [email] , [phone], [address], [sid]) VALUES 
