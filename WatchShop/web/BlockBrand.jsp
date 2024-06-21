@@ -78,7 +78,7 @@
                                                 <img src="${b.image}" style="width: 150px;height: 150px;border-radius: 0" />
                                             </td>
                                             <td>
-                                                <a href="#" onclick="doRestore('${b.bid}')"><i class="fa fa-trash"></i></a>
+                                                <a href="#" onclick="doRestore('${b.bid}')"><i class="material-icons">restore</i></a>
                                             </td>
                                         </tr> 
                                     </c:forEach>

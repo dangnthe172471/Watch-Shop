@@ -22,8 +22,10 @@
         <link rel="stylesheet" href="css/home.css">        
         <link rel="stylesheet" href="css/nav.css">
         <link rel="stylesheet" href="css/shipper.css">
+        <link rel="stylesheet" href="css/search-ship.css">
         <link rel="stylesheet" href="css/update-brand.css">
         <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/search-ship.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
         <script type="text/javascript" src="slick/slick.min.js"></script>  
@@ -51,28 +53,33 @@
                                 <ul class="main-menuu">
                                     <li><a style="padding-right: 0px" href="listorder">Danh sách đơn</a></li>
                                     <li style="margin-left: 30px;"><a href="listordercompleted">Đơn nhận</a></li>               
-                                    <li style="margin-left: 30px;"><a href="listorderaccept">Đơn Hoàn Thành</a></li>               
-                                    <li style="margin-left: 30px;"><a href="listordercaneled">Đơn Hủy</a></li>               
+                                    <li style="margin-left: 30px;"><a href="listorderaccept">Đơn Hoàn Thành</a></li>         
                                 </ul>
                             </nav>
                         </div>
-                        <!--                        <div class="head">
-                                                    <h3>Danh sách</h3>
-                                                    <i class='bx bx-search' ></i>
-                                                    <a href="#"><i class='bx bx-filter' ></i></a> 
-                                                </div>-->
-
+                        <div class="search-container">
+                            <form action="">
+                                <input type="text" id="search-customer" placeholder="Tìm kiếm theo khách hàng">
+                            </form>
+                            <form action="">
+                                <input type="text" id="search-sdt" placeholder="Tìm kiếm theo số điện thoại">
+                            </form>
+                            <form action="">
+                                <input type="text" id="search-address" placeholder="Tìm kiếm theo địa chỉ">
+                            </form>
+                        </div>
                         <form action="listordercompleted">
                             <table>
                                 <thead>
                                     <tr>
                                         <th style="width: 7px"></th>
                                         <th>Khách hàng</th>
-                                        <th>Sđt</th>
+                                        <th>Số điện thoại</th>
                                         <th>Email</th>
-                                        <th style="width: 100px">Address</th>
-                                        <th style="width: 180px">TotalMoney</th>
-                                        <th style="width: 200px">Note</th>
+                                        <th style="width: 100px">Địa chỉ</th>
+                                        <th style="width: 180px">Tổng tiền</th>
+                                        <th style="width: 180px">Ngày đặt</th>
+                                        <th style="width: 200px">Ghi chú</th>
                                         <th style="width: 60px;"></th>
                                     </tr>
                                 </thead>
@@ -85,6 +92,7 @@
                                             <td>${o.email}</td>
                                             <td>${o.address}</td>
                                             <td><fmt:formatNumber value="${o.totalMoney}"/></td>
+                                            <td>${o.date}</td>
                                             <td></td> 
                                             <td>
                                                 <a href="#" onclick="doCAccept('${o.oid}')"><i class="fa fa-check-square"></i></a>&nbsp;&nbsp;
