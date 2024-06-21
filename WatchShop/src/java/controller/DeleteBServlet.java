@@ -81,24 +81,24 @@ public class DeleteBServlet extends HttpServlet {
         String image = request.getParameter("image").trim();
         String description = request.getParameter("description").trim();
         BrandDAO b = new BrandDAO();
-        String err  = "";
-
-        if (name.isEmpty() || image.isEmpty() || description.isEmpty()) {
-            if (name.isEmpty()) {
-                err = "Chưa có tên thương hiệu. ";
-            }
-            if (image.isEmpty()) {
-                err += "Chưa có ảnh. ";
-            }
-            if (description.isEmpty()) {
-                err += "Chưa có miêu tả. ";
-            }
-
-            request.getSession().setAttribute("err", err);
-            request.getSession().setAttribute("keepModalOpen", "add");
-            response.sendRedirect("brand");
-            return; 
-        }
+//        String err  = "";
+//
+//        if (name.isEmpty() || image.isEmpty() || description.isEmpty()) {
+//            if (name.isEmpty()) {
+//                err = "Chưa có tên thương hiệu. ";
+//            }
+//            if (image.isEmpty()) {
+//                err += "Chưa có ảnh. ";
+//            }
+//            if (description.isEmpty()) {
+//                err += "Chưa có miêu tả. ";
+//            }
+//
+//            request.getSession().setAttribute("err", err);
+//            request.getSession().setAttribute("keepModalOpen", "add");
+//            response.sendRedirect("brand");
+//            return; 
+//        }
 
         Brand check = b.getBrandByName(name);
         if (check != null) {

@@ -13,15 +13,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.Order;
 
 /**
  *
  * @author quyld
  */
-@WebServlet(name="ListOrderCanceledServlet", urlPatterns={"/listordercaneled"})
-public class ListOrderCanceledServlet extends HttpServlet {
+@WebServlet(name="CanceledServlet", urlPatterns={"/canceled"})
+public class CanceledServlet extends HttpServlet {
+   
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -31,10 +30,10 @@ public class ListOrderCanceledServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListOrderCanceledServlet</title>");  
+            out.println("<title>Servlet CanceledServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ListOrderCanceledServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet CanceledServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -43,12 +42,10 @@ public class ListOrderCanceledServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        String id = request.getParameter("oid");
         OrderDAO o = new OrderDAO();
-        List <Order> listorder = o.getOrderCanceled();
-        request.setAttribute("order", listorder);
-        request.setAttribute("tab", "3");
-        request.getRequestDispatcher("ShipperManagement.jsp").forward(request, response);
+        o.CanceledOrderId(id);
+        response.sendRedirect("listordercompleted");
     } 
-
 
 }

@@ -26,6 +26,7 @@
         <link rel="stylesheet" href="css/search-mana.css">
         <link rel="stylesheet" href="css/update-brand.css">
         <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/category.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
         <script type="text/javascript" src="slick/slick.min.js"></script>  
@@ -102,7 +103,7 @@
             </main>
 
             <!-- The Modal Add -->
-            <form action="addcategory" method="post">
+            <form action="addcategory" method="post" id="addCategoryForm">
                 <div class="modal fade" id="addmodal">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -116,14 +117,15 @@
                                     <option value="1">Giới tính</option>
                                     <option value="2">Độ chống nước</option>
                                     <option value="3">Đường kính mặt số</option>
-                                </select>  <br>
+                                </select><br>
                                 <label>Dòng sản phẩm</label>
-                                <input type="text" name="cname" value="${name}">
+                                <input type="text" name="cname" id="cname" oninput="checkWhitespace()">
+                                <span id="categoryNameError" class="text-danger"></span>
+                                <span id="whitespaceMessage" class="text-danger"></span>
                             </div>
-                            <div>${err}</div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
-                                <button type="submit" name="add" class="btn btn-primary">Thêm</button>
+                                <button type="button" name="add" class="btn btn-primary" onclick="submitAddCategoryForm()">Thêm</button>
                             </div>
                         </div>
                     </div>
@@ -131,7 +133,7 @@
             </form>
 
             <!-- The Modal Update -->
-            <form action="updatecate" method="post">
+            <form action="updatecate" method="post" id="editCategoryForm">
                 <div class="modal fade" id="editmodal">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -143,7 +145,8 @@
                                 <label>ID</label>
                                 <input type="text" name="cid" id="update_id" readonly style="background: gray">
                                 <label>Dòng sản phẩm</label>
-                                <input type="text" name="cname" id="update_name"> 
+                                <input type="text" name="cname" id="update_name">
+                                <span id="editCategoryNameError" class="text-danger"></span>
                             </div>
                             <div class="modal-body">
                                 <label>Loại</label>
@@ -151,7 +154,7 @@
                                     <option value="1">Giới tính</option>
                                     <option value="2">Độ chống nước</option>
                                     <option value="3">Đường kính mặt số</option>
-                                </select>  <br>
+                                </select><br>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
@@ -161,26 +164,17 @@
                     </div>
                 </div>
             </form>
-        </section>
 
+        </section>
 
         <script>
             $(document).ready(function () {
-                var error = "<%= session.getAttribute("err") %>";
-                var keepModalOpen = <%= session.getAttribute("keepModalOpen") != null %>;
-                console.log("Error: " + error);
-                console.log("Keep modal open: " + keepModalOpen);
-                if (keepModalOpen) {
+                $('.addbtn').on('click', function () {
                     $('#addmodal').modal('show');
-                }
-                $('.addbtn').click(function () {
-                    $('#addmodal').modal('show');
+                    $tr = $(this).closest('tr');
                 });
-
-            <% session.removeAttribute("err"); session.removeAttribute("keepModalOpen"); %>
             });
         </script>
-
         <script>
             $(document).ready(function () {
                 $('.editbtn').on('click', function () {
