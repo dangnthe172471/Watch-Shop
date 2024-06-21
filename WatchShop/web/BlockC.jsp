@@ -26,6 +26,7 @@
         <script type="text/javascript" src="js/main.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script type="text/javascript" src="slick/slick.min.js"></script>  
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -80,7 +81,7 @@
                                             </td>
                                             <td>${c.cname}</td> 
                                             <td>
-                                                <a href="#" onclick="doRestore('${c.cid}')"><i class="fa fa-trash"></i></a>
+                                                <a href="#" onclick="doRestore('${c.cid}')"><i class="material-icons">restore</i></a>
                                             </td>
                                             <td><P style="display: none">${c.type}</p></td>
                                         </tr> 

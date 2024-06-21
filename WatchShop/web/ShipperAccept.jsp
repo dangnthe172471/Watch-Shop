@@ -51,8 +51,7 @@
                                 <ul class="main-menuu">
                                     <li><a style="padding-right: 0px" href="listorder">Danh sách đơn</a></li>
                                     <li style="margin-left: 30px;"><a href="listordercompleted">Đơn nhận</a></li>               
-                                    <li style="margin-left: 30px;"><a href="listorderaccept">Đơn Hoàn Thành</a></li>               
-                                    <li style="margin-left: 30px;"><a href="listordercaneled">Đơn Hủy</a></li>               
+                                    <li style="margin-left: 30px;"><a href="listorderaccept">Đơn Hoàn Thành</a></li>              
                                 </ul>
                             </nav>
                         </div>

@@ -91,12 +91,6 @@
                 </c:if>
                 <c:if test="${sessionScope.account.roleID==3}">
                     <li class="${tab==null?'active':''}">
-                        <a href="AdminManage.jsp">
-                            <i class='bx bxs-dashboard' ></i>
-                            <span class="text">Thống kê</span>
-                        </a>
-                    </li>
-                    <li class="${tab==2?'active':''}">
                         <a href="listorder">
                             <i class='bx bxs-message-dots' ></i>
                             <span class="text">Danh sách đơn</span>

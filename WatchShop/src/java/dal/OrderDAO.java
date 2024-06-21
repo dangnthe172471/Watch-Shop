@@ -115,7 +115,7 @@ public class OrderDAO extends DBContext {
         List<Order> list = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 1";
+            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 1 order by date desc";
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -142,7 +142,7 @@ public class OrderDAO extends DBContext {
         List<Order> list = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 3";
+            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 3 order by date desc";
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -169,7 +169,7 @@ public class OrderDAO extends DBContext {
         List<Order> list = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 2";
+            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 2 order by date desc";
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
