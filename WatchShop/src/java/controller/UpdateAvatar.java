@@ -82,13 +82,27 @@ public class UpdateAvatar extends HttpServlet {
     public static final int AVATAR_HEIGHT = 200;
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Account account = (Account) request.getSession().getAttribute("account");
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    Account account = (Account) request.getSession().getAttribute("account");
 
-        if (account == null) {
-            response.sendRedirect("login.jsp");
-            return;
+    if (account == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+
+    String avatarUrl = request.getParameter("avatarUrl");
+    if (avatarUrl != null && !avatarUrl.isEmpty()) {
+        if (isValidImageUrl(avatarUrl)) {
+            account.setAvatar(avatarUrl);
+            AccountDAO accountDAO = new AccountDAO();
+            accountDAO.updateAccountAvatar(account);
+            request.getSession().setAttribute("account", account);
+            response.sendRedirect("ProfileUser.jsp");
+        } else {
+            request.setAttribute("error", "Đường dẫn ảnh không hợp lệ.");
+            request.getRequestDispatcher("ProfileUser.jsp").forward(request, response);
         }
+    } else {
         Part filePart = request.getPart("profilePicture");
 
         if (filePart == null || filePart.getSize() == 0) {
@@ -108,7 +122,6 @@ public class UpdateAvatar extends HttpServlet {
             String filePath = uploadFilePath + File.separator + fileName;
             filePart.write(filePath);
 
-            // Cắt và thay đổi kích thước ảnh
             String avatarPath = UPLOAD_DIR + "/" + "avatar_" + fileName;
             BufferedImage originalImage = ImageIO.read(new File(filePath));
             int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
@@ -124,6 +137,19 @@ public class UpdateAvatar extends HttpServlet {
             response.sendRedirect("ProfileUser.jsp");
         }
     }
+}
+
+    private boolean isValidImageUrl(String url) {
+        // Check if the URL ends with common image file extensions
+        String[] allowedExtensions = {".jpg", ".jpeg", ".png"};
+        for (String ext : allowedExtensions) {
+            if (url.toLowerCase().endsWith(ext)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private String extractFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");

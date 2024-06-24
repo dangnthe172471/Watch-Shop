@@ -39,6 +39,7 @@
             }
         </script>
         
+
     </head>
     <body>
         <div>
@@ -57,7 +58,7 @@
                             <c:when test="${param.update eq 'success'}">
                                 <div class="alert alert-success">Địa chỉ đã được cập nhật thành công.</div>
                             </c:when>
-                            <c:when test="${param.update eq 'error'}">
+                            <c:when test="${param.update eq 'errorr'}">
                                 <div class="alert alert-danger">Có lỗi xảy ra khi cập nhật địa chỉ. Vui lòng thử lại.</div>
                             </c:when>
                             <c:when test="${param.update eq 'invalid'}">
@@ -125,6 +126,10 @@
                                     </div>
                                     <div class="file-info"> <label for="profilePicture" class="choose-file">Chọn Ảnh</label></div>
 
+                                </div>
+                                <div class="form-group">
+                                    <label for="avatarUrl">Hoặc dán đường dẫn ảnh (URL):</label>
+                                    <input type="text" class="form-control" id="avatarUrl" name="avatarUrl" placeholder="Nhập đường dẫn ảnh">
                                 </div>
                                 <div class="col-sm-12 text-center">
                                     <button type="submit" class="btn btn-primary">Lưu</button>
