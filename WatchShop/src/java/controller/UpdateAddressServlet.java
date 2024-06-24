@@ -89,7 +89,7 @@ public class UpdateAddressServlet extends HttpServlet {
                 session.setAttribute("account", account);
                 response.sendRedirect("ProfileUser.jsp?update=success"); 
             } else {
-                response.sendRedirect("ProfileUser.jsp?update=error"); 
+                response.sendRedirect("ProfileUser.jsp?update=errorr"); 
             }
         } else {
             session.setAttribute("error", "Vui lòng nhập địa chỉ mới.");
