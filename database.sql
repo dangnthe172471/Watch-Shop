@@ -89,7 +89,7 @@ CREATE TABLE [dbo].[Order](
 	[id] [int]  IDENTITY(1,1),
 	[aid] [int],
 	[date] [date],
-	[dateShip] [date],
+	[dateShip] [nvarchar](max),
 	[timeShip] [nvarchar](max),
 	[totalMoney] [float],
 	[email] [nvarchar](max),

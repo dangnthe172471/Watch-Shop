@@ -79,6 +79,12 @@ public class CheckoutServlet extends HttpServlet {
             if (note == null) {
                 note = "";
             }
+            if (dateShip == null) {
+                dateShip = "";
+            }
+            if (timeShip == null) {
+                timeShip = "";
+            }
             session.setAttribute("name", name);
             session.setAttribute("phone", phone);
             session.setAttribute("email", email);
@@ -111,10 +117,15 @@ public class CheckoutServlet extends HttpServlet {
         String address = request.getParameter("address");
         String dateShip = request.getParameter("dateShip");
         String timeShip = request.getParameter("timeShip");
-
         String note = request.getParameter("note");
         if (note == null) {
             note = "";
+        }
+        if (dateShip == null) {
+            dateShip = "";
+        }
+        if (timeShip == null) {
+            timeShip = "";
         }
         LocalDateTime currentDateTime = LocalDateTime.now();
         // có rồi
@@ -139,7 +150,8 @@ public class CheckoutServlet extends HttpServlet {
                     request.getRequestDispatcher("Cart.jsp").forward(request, response);
                 }
             } else {
-                response.sendRedirect("login");
+                session.setAttribute("ttc", "ttc");
+                request.getRequestDispatcher("Login.jsp").forward(request, response);
             }
         }
     }

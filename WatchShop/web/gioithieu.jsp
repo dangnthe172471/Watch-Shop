@@ -34,7 +34,7 @@
             <img src="img/gt.png" style="width: 100%">
         </div>        
         <jsp:include page="nav2.jsp"/>
-        <!--<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>-->
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <df-messenger
         intent="WELCOME"
         chat-title="WatchShop"

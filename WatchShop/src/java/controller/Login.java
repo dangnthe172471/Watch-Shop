@@ -128,6 +128,14 @@ public class Login extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/listorder");
             }
 
+            String ttcart = (String) session.getAttribute("ttc");
+            if (ttcart == null) {
+                session.removeAttribute("ttc");
+            } else {
+                session.removeAttribute("ttc");
+                response.sendRedirect("Cart.jsp");
+            }
+
             //login User
             Cookie cu = new Cookie("cuser", username);
             Cookie cp = new Cookie("cpass", password);

@@ -315,7 +315,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    
         <!--ckeditor-->
         <script>CKEDITOR.replace('content');</script>
-        <!--<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>-->
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <df-messenger
         intent="WELCOME"
         chat-title="WatchShop"

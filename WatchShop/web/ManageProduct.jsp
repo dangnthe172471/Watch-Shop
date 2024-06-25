@@ -11,21 +11,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Watch Shop</title>
-        <!-- Boxicons -->
-        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-        <!-- My CSS -->
-        <link rel="stylesheet" href="css/manage.css">
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="css/home.css">        
+        <link rel="stylesheet" href="css/home.css">
         <link rel="stylesheet" href="css/nav.css">
         <script type="text/javascript" src="js/main.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
-        <script type="text/javascript" src="slick/slick.min.js"></script>  
+        <script type="text/javascript" src="slick/slick.min.js"></script>
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
     </head>
     <body>
         <jsp:include page="left.jsp" />
@@ -43,23 +39,29 @@
                     <div class="order">
                         <div class="head">
                             <h3>Quản Lý</h3>
-                            <form action="manageproduct" method="post">
-                                <c:forEach var="bidValue" items="${bid}">
-                                    <input type="hidden" value="${bidValue}" name="bid">
-                                </c:forEach>
-                                <c:forEach var="cidValue" items="${cid1}">
-                                    <input type="hidden" value="${cidValue}" name="cid1">
-                                </c:forEach>
-                                <c:forEach var="cidValue" items="${cid2}">
-                                    <input type="hidden" value="${cidValue}" name="cid2">
-                                </c:forEach>
-                                <c:forEach var="cidValue" items="${cid3}">
-                                    <input type="hidden" value="${cidValue}" name="cid3">
-                                </c:forEach>
-                                <input value="${sort}" name="sort" type="hidden">
-                                <input value="${key != null ? key : ''}" placeholder="Nhập tên, code sản phẩm"  name="key">
-                                <button type="submit" style="border: none;background-color: #F8F9FA"><i class='bx bx-search'></i></button> 
-                            </form>
+
+                            <div style="display:none" id="filter">
+                                <form action="manageproduct">
+                                    <c:forEach var="bidValue" items="${bid}">
+                                        <input type="hidden" value="${bidValue}" name="bid">
+                                    </c:forEach>
+                                    <c:forEach var="cidValue" items="${cid1}">
+                                        <input type="hidden" value="${cidValue}" name="cid1">
+                                    </c:forEach>
+                                    <c:forEach var="cidValue" items="${cid2}">
+                                        <input type="hidden" value="${cidValue}" name="cid2">
+                                    </c:forEach>
+                                    <c:forEach var="cidValue" items="${cid3}">
+                                        <input type="hidden" value="${cidValue}" name="cid3">
+                                    </c:forEach>  
+                                    <button style="border: none;background-color: #F8F9FA;" type="submit"><i class='bx bx-search'></i></button>
+                                    <input value="${sort}" name="sort" type="hidden">
+                                    <input type="text" name="key" value="${key != null ? key : ''}" placeholder="Nhập tên, mã sản phẩm">
+                                    <label>&nbsp;&nbsp;&nbsp;Từ: </label><input type="date" id="fromdate" onchange="this.form.submit()" name="fromdate" value="${fromdate != null ? fromdate : ''}">
+                                    <label>&nbsp;&nbsp;&nbsp;Đến: </label><input type="date" id="todate" onchange="this.form.submit()"  name="todate" value="${todate != null ? todate : ''}">
+                                </form>
+                            </div>
+                            &nbsp;&nbsp;&nbsp;<button style="border: none;background-color: #F8F9FA;" onclick="filter()"><i class='bx bx-filter' ></i></button>
                         </div>
                         <!--                        <div class="nav-bg">
                                                     <nav class="container" style="padding:0px ">
@@ -72,39 +74,46 @@
                         <c:if test="${empty listP}">
                             <p style="color: red">Không thấy sản phầm cần tìm</p>
                         </c:if>
+                        <form action="manageproduct" style="margin-top: -25px;">
+                            <c:forEach var="bidValue" items="${bid}">
+                                <input type="hidden" value="${bidValue}" name="bid">
+                            </c:forEach>
+                            <c:forEach var="cidValue" items="${cid1}">
+                                <input type="hidden" value="${cidValue}" name="cid1">
+                            </c:forEach>
+                            <c:forEach var="cidValue" items="${cid2}">
+                                <input type="hidden" value="${cidValue}" name="cid2">
+                            </c:forEach>
+                            <c:forEach var="cidValue" items="${cid3}">
+                                <input type="hidden" value="${cidValue}" name="cid3">
+                            </c:forEach>
+                            <input type="hidden" value="${key}" name="key">
+                            <input type="hidden" value="${fromdate}" name="todate">
+                            <input type="hidden" value="${todate}" name="todate">
+                            <select name="sort" onchange="this.form.submit()" style="margin-left: 1000px;margin-bottom: 20px">
+                                <option ${sort == 0 ? 'selected' : ''} value="0">-------None-------</option>
+                                <option ${sort == 1 ? 'selected' : ''} value="1">Code ↑</option>
+                                <option ${sort == 2 ? 'selected' : ''} value="2">Code ↓</option>
+                                <option ${sort == 3 ? 'selected' : ''} value="3">Tên ↑</option>
+                                <option ${sort == 4 ? 'selected' : ''} value="4">Tên ↓</option>
+                                <option ${sort == 5 ? 'selected' : ''} value="5">Giá ↑</option>    
+                                <option ${sort == 6 ? 'selected' : ''} value="6">Giá ↓</option>
+                                <option ${sort == 7 ? 'selected' : ''} value="7">Số lượng còn ↑</option>
+                                <option ${sort == 8 ? 'selected' : ''} value="8">Số lượng còn ↓</option>
+                                <option ${sort == 9 ? 'selected' : ''} value="9">Đã bán ↑</option>
+                                <option ${sort == 10 ? 'selected' : ''} value="10">Đã bán ↓</option>
+                                <option ${sort == 11 ? 'selected' : ''} value="11">Ngày sản xuất ↑</option>    
+                                <option ${sort == 12 ? 'selected' : ''} value="12">Ngày sản xuất ↓</option>
+                            </select>                                    
+                        </form>  
                         <table id="manageproduct">
                             <thead>
                                 <tr>
-                                    <th style="width: 30px; text-align: center;">
-                                        <form action="manageproduct" method="post">
-                                            <input value="${key}" name="key" type="hidden">
-                                            <c:forEach var="bidValue" items="${bid}">
-                                                <input type="hidden" value="${bidValue}" name="bid">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid1}">
-                                                <input type="hidden" value="${cidValue}" name="cid1">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid2}">
-                                                <input type="hidden" value="${cidValue}" name="cid2">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid3}">
-                                                <input type="hidden" value="${cidValue}" name="cid3">
-                                            </c:forEach>
-                                            Code <button type="submit" value="1" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-up" style="vertical-align: middle;"></i>
-                                            </button>
-                                            <button type="submit" value="2" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-down" style="vertical-align: middle;"></i>
-                                            </button>
-                                        </form>
-                                    </th>
+                                    <th style="width: 30px; text-align: center;">Code</th>
 
-                                    <th style="width: 160px;text-align: center">
-                                        <form action="manageproduct" method="post">
-                                            <input value="${key}" name="key" type="hidden">
-                                            <c:forEach var="bidValue" items="${bid}">
-                                                <input type="hidden" value="${bidValue}" name="bid">
-                                            </c:forEach>
+                                    <th style="width: 160px;text-align: center">Sản phẩm</th>
+                                    <th style="width: 130px;text-align: center">
+                                        <form action="manageproduct">                                              
                                             <c:forEach var="cidValue" items="${cid1}">
                                                 <input type="hidden" value="${cidValue}" name="cid1">
                                             </c:forEach>
@@ -114,16 +123,6 @@
                                             <c:forEach var="cidValue" items="${cid3}">
                                                 <input type="hidden" value="${cidValue}" name="cid3">
                                             </c:forEach>
-                                            Sản phẩm <button type="submit" value="3" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-up" style="vertical-align: middle;"></i>
-                                            </button>
-                                            <button type="submit" value="4" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-down" style="vertical-align: middle;"></i>
-                                            </button>
-                                        </form>                                        
-                                    </th>
-                                    <th style="width: 130px;text-align: center">
-                                        <form action="manageproduct" method="post">
                                             <input value="${key}" name="key" type="hidden">
                                             <input value="${sort}" name="sort" type="hidden">
                                             <ul class="main-menu" style="text-align: left"> 
@@ -138,7 +137,6 @@
                                                                     </c:if>
                                                                 </c:forEach>
                                                             </c:if>
-                                                            <input value="${sort}" name="sort" type="hidden"/>
                                                             <li><input ${isChecked ? 'checked' : ''} type="checkbox" value="${b.bid}" name="bid" onchange="this.form.submit()"/> ${b.bname}<br></li>
                                                             </c:forEach>
                                                     </ul>
@@ -147,7 +145,10 @@
                                         </form>
                                     </th>
                                     <th style="width: 150px;text-align: center">
-                                        <form action="manageproduct" method="post">
+                                        <form action="manageproduct">
+                                            <c:forEach var="bidValue" items="${bid}">
+                                                <input type="hidden" value="${bidValue}" name="bid">
+                                            </c:forEach>
                                             <input value="${key}" name="key" type="hidden">
                                             <input value="${sort}" name="sort" type="hidden">
                                             <ul class="main-menu" style="text-align: left;"> 
@@ -197,100 +198,14 @@
                                             </ul>
                                         </form>
                                     </th>
-                                    <th style="width: 125px;text-align: center">
-                                        <form action="manageproduct" method="post">
-                                            <input value="${key}" name="key" type="hidden">
-                                            <c:forEach var="bidValue" items="${bid}">
-                                                <input type="hidden" value="${bidValue}" name="bid">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid1}">
-                                                <input type="hidden" value="${cidValue}" name="cid1">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid2}">
-                                                <input type="hidden" value="${cidValue}" name="cid2">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid3}">
-                                                <input type="hidden" value="${cidValue}" name="cid3">
-                                            </c:forEach>
-                                            Giá <button type="submit" value="5" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-up" style="vertical-align: middle;"></i>
-                                            </button>
-                                            <button type="submit" value="6" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-down" style="vertical-align: middle;"></i>
-                                            </button>
-                                        </form>
-                                    <th style="width: 120px;text-align: center">
-                                        <form action="manageproduct" method="post">
-                                            <input value="${key}" name="key" type="hidden">
-                                            <c:forEach var="bidValue" items="${bid}">
-                                                <input type="hidden" value="${bidValue}" name="bid">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid1}">
-                                                <input type="hidden" value="${cidValue}" name="cid1">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid2}">
-                                                <input type="hidden" value="${cidValue}" name="cid2">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid3}">
-                                                <input type="hidden" value="${cidValue}" name="cid3">
-                                            </c:forEach>
-                                            Số lượng còn <button type="submit" value="7" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-up" style="vertical-align: middle;"></i>
-                                            </button>
-                                            <button type="submit" value="8" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-down" style="vertical-align: middle;"></i>
-                                            </button>
-                                        </form>
-                                    </th>
-                                    <th style="width: 80px;text-align: center">
-                                        <form action="manageproduct" method="post">
-                                            <input value="${key}" name="key" type="hidden">
-                                            <c:forEach var="bidValue" items="${bid}">
-                                                <input type="hidden" value="${bidValue}" name="bid">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid1}">
-                                                <input type="hidden" value="${cidValue}" name="cid1">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid2}">
-                                                <input type="hidden" value="${cidValue}" name="cid2">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid3}">
-                                                <input type="hidden" value="${cidValue}" name="cid3">
-                                            </c:forEach>
-                                            Đã bán <button type="submit" value="9" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-up" style="vertical-align: middle;"></i>
-                                            </button>
-                                            <button type="submit" value="10" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-down" style="vertical-align: middle;"></i>
-                                            </button>
-                                        </form>
-                                    <th style="width: 120px;text-align: center">
-                                        <form action="manageproduct" method="post">
-                                            <input value="${key}" name="key" type="hidden">
-                                            <c:forEach var="bidValue" items="${bid}">
-                                                <input type="hidden" value="${bidValue}" name="bid">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid1}">
-                                                <input type="hidden" value="${cidValue}" name="cid1">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid2}">
-                                                <input type="hidden" value="${cidValue}" name="cid2">
-                                            </c:forEach>
-                                            <c:forEach var="cidValue" items="${cid3}">
-                                                <input type="hidden" value="${cidValue}" name="cid3">
-                                            </c:forEach>
-                                            Ngày sản xuất <button type="submit" value="11" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-up" style="vertical-align: middle;"></i>
-                                            </button>
-                                            <button type="submit" value="12" name="sort" style="background-color: #F8F9FA; border: none;">
-                                                <i class="fa fa-long-arrow-down" style="vertical-align: middle;"></i>
-                                            </button>
-                                        </form>
-                                    <th style="width: 150px;text-align: center">Mô tả</th>
+                                    <th style="width: 125px;text-align: center">Giá</th>
+                                    <th style="width: 120px;text-align: center">Số lượng còn</th>
+                                    <th style="width: 80px;text-align: center">Đã bán</th>
+                                    <th style="width: 120px;text-align: center">Ngày sản xuất</th>
                                     <th style="width: 70px;text-align: center">Hành động</th>
                                 </tr>
                             </thead>
-                            <tbody style="height: 500px;">    
+                            <tbody style="height: 500px;">  
                                 <c:forEach var="o" items="${listP}">                                   
                                     <tr>
                                         <td style="text-align: left;display: table-cell;vertical-align: middle;">${o.code}</td>
@@ -324,20 +239,18 @@
                                         <td style="text-align: center">${o.quantity}</td>
                                         <td style="text-align: center">${o.sold} (${o.rate}⭐)</td>
                                         <td style="text-align: center"><fmt:formatDate value="${o.releaseDate}" pattern="dd-MM-yyyy"/></td>
-                                        <td><p style="display: -webkit-box;-webkit-line-clamp: 8;-webkit-box-orient: vertical;overflow: hidden;" title="${o.description}">${o.description}</p></td>
                                         <td style="text-align: center;font-size: 20px;"><a  class="editbtn"><i class="fa fa-edit" style="color: blue"></i></a>&nbsp;&nbsp;
-                                            <a href="#" onclick="doDelete('${c.cid}')"><i class="fa fa-trash" style="color: red"></i></a>
+                                            <a href="#" onclick="deleteProduct(event, '${o.id}')"><i class="fa fa-trash" style="color: red"></i></a>
                                         </td>
                                     </tr>
                                 </c:forEach>
-
                             </tbody>
                         </table>
                     </div>             
 
                 </div>
                 <c:if test="${countP >= 6}">                                                
-                    <form action="manageproduct" method="post">
+                    <form action="manageproduct">
                         <c:forEach var="bidValue" items="${bid}">
                             <input type="hidden" value="${bidValue}" name="bid">
                         </c:forEach>
@@ -374,7 +287,59 @@
                 </c:if>
             </main>
         </section>
+        <div id="deleteProduct" style="position: fixed;top: 80px;left: 600px;display: none">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: white">
+                        <h4 class="modal-title" style="color: black" >Xác nhận xóa</h4>
+                        <button style="color: black" type="button" class="close" onclick="deleteProduct(event, '${o.id}')" data-dismiss="modal">&times;</button>
+                    </div>
+                    <form action="manageproduct" method="post">
+                        <div class="modal-body">
+                            <h5 class="modal-title">Bạn có chắc muốn xóa sản phẩm này ?</h5>
+                            <input type="" name="pid" id="pid">                            
+                            <input type="" name="type" value="delete">                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="deleteProduct(event, '${o.id}')" data-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            const today = new Date();
+            const day = today.toISOString().split('T')[0];  // Format date to YYYY-MM-DD
+            document.getElementById('todate').setAttribute('max', day);
+            document.getElementById('fromdate').setAttribute('max', day);
+        </script>   
         <script src="js/script.js"></script>
-        <script src="js/mngproduct.js"></script>        
+        <script src="js/mngproduct.js"></script>                      
+        <!--..-->
+        <script>
+            function deleteProduct(event, id) {
+                event.preventDefault();
+                var x = document.getElementById('deleteProduct');
+                if (x.style.display === "") {
+                    x.style.display = "none";
+                } else {
+                    x.style.display = "";
+                    var pid = document.getElementById('pid');
+                    pid.value = id;
+                }
+            }
+        </script>
+        <script>
+            function filter()
+            {
+                var x = document.getElementById('filter');
+                if (x.style.display === "none") {
+                    x.style.display = "";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>        
     </body>
 </html>

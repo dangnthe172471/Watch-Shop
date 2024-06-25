@@ -130,7 +130,7 @@
                                     <div style="margin-left: 250px;color: red;font-size: 20px;font-weight: bold">${mess}</div>
                                 </div>
                                 <c:if test="${sessionScope.account==null}">
-                                    <a href="login"><button class="btn btn-lg btn-block btn-checkout text-uppercase text-white" id="btnCheckout"
+                                    <a href="checkout?pttt=ttweb"><button class="btn btn-lg btn-block btn-checkout text-uppercase text-white" id="btnCheckout"
                                                             style="background: #F5A623;width: 133%;margin-left: 5px;">Đặt mua</button></a> 
                                     </c:if>
                             </div>
@@ -162,21 +162,30 @@
                                                         <input type="text" id="fullname" class="form-control" value="${sessionScope.name!=null?sessionScope.name:sessionScope.account.user}"
                                                                placeholder="Nhập họ và tên" name="name" required autofocus oninput="validateFullName()">
                                                     </div>
+                                                               
                                                     <div class="form-label-group"><div id="phoneMessage" style="width: 200%"></div>
                                                         <input type="text" id="phoneNumber" class="form-control" value="${sessionScope.phone!=null?sessionScope.phone:sessionScope.account.phone}" 
                                                                placeholder="Nhập số điện thoại" name="phone" required oninput="validatePhoneNumber()">
-
                                                     </div>
+                                                               
                                                     <div class="form-label-group"><div id="emailMessage" style="width: 200%"></div>
                                                         <input type="email" id="email" class="form-control" value="${sessionScope.email!=null?sessionScope.email:sessionScope.account.email}" 
                                                                placeholder="Nhập địa chỉ email" name="email" required oninput="validateEmail()">
-
                                                     </div>
+                                                               
                                                     <div class="form-label-group"><div id="addressMessage" style="width: 200%"></div>
                                                         <input type="text" id="address" class="form-control" value="${sessionScope.address!=null?sessionScope.address:sessionScope.account.address}" 
                                                                placeholder="Nhập Địa chỉ giao hàng" name="address" required oninput="validateAddress()">
+                                                    </div>   
 
-                                                    </div>                                                  
+                                                    <div class="form-label-group"><label>Chọn ngày muốn nhận hàng</label>
+                                                        <input type="date" id="dateShip" id="address" class="form-control" value="${sessionScope.dateShip!=null?sessionScope.dateShip:''}" name="dateShip">
+                                                    </div>
+                                                    
+                                                    <div class="form-label-group"><label>Chọn khung giờ nhận hàng</label>
+                                                        <input type="time" class="form-control" value="${sessionScope.timeShip!=null?sessionScope.timeShip:''}" name="timeShip">
+                                                    </div>  
+                                                    
                                                     <div class="form-label-group">
                                                         <textarea type="text" id="inputNote" class="form-control"
                                                                   placeholder="Nhập ghi chú (Nếu có)" name="note">${sessionScope.note!=null?sessionScope.note:''}</textarea>
@@ -242,70 +251,13 @@
         <jsp:include page="nav2.jsp"/>
         <script src="js/cart.js"></script>
         <script>
-                                            function checkout() {
-                                                var x = document.getElementById("btnCheckout");
-                                                var y = document.getElementById("khoimua");
-                                                x.style.display = "none";
-                                                y.style.display = "";
-                                            }
-        </script>
-        <script>
-
-            function validateEmail() {
-                var email = document.getElementById("email").value;
-                var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
-                var emailMessageElement = document.getElementById("emailMessage");
-
-                if (emailRegex.test(email)) {
-                    emailMessageElement.innerHTML = "";
-                } else {
-                    emailMessageElement.innerHTML = "Email không đúng định dạng.";
-                    emailMessageElement.style.color = "red";
-                }
-            }
-
-            function validatePhoneNumber() {
-                var phoneNumber = document.getElementById("phoneNumber").value;
-                var phoneRegex = /^[0-9]{10,11}$/; // Giả sử số điện thoại Việt Nam có 10 hoặc 11 chữ số
-                var phoneMessageElement = document.getElementById("phoneMessage");
-
-                if (phoneRegex.test(phoneNumber) && phoneNumber.startsWith("0")) {
-                    phoneMessageElement.innerHTML = "";
-                } else {
-                    phoneMessageElement.innerHTML = "Số điện thoại không đúng định dạng.";
-                    phoneMessageElement.style.color = "red";
-                }
-            }
-
-            function validateAddress() {
-                var address = document.getElementById("address").value;
-                var addressMessageElement = document.getElementById("addressMessage");
-
-                if (address.startsWith(" ")) {
-                    addressMessageElement.innerHTML = "Địa chỉ sai định dạng.";
-                    addressMessageElement.style.color = "red";
-                } else if (address.trim() === "") {
-                    addressMessageElement.innerHTML = "Địa chỉ nhận hàng không được để trống.";
-                    addressMessageElement.style.color = "red";
-                } else {
-                    addressMessageElement.innerHTML = "";
-                }
-            }
-
-            function validateFullName() {
-                var username = document.getElementById("fullname").value;
-                var usernameMessageElement = document.getElementById("fullnameMessage");
-
-                if (username.startsWith(" ")) {
-                    usernameMessageElement.innerHTML = "Tên nhận hàng sai định dạng.";
-                    usernameMessageElement.style.color = "red";
-                } else　if (username.trim() === "") {
-                    usernameMessageElement.innerHTML = "Tên nhận hàng không được để trống.";
-                    usernameMessageElement.style.color = "red";
-                } else {
-                    usernameMessageElement.innerHTML = "";
-                }
+            function checkout() {
+                var x = document.getElementById("btnCheckout");
+                var y = document.getElementById("khoimua");
+                x.style.display = "none";
+                y.style.display = "";
             }
         </script>
+   
     </body>
 </html>

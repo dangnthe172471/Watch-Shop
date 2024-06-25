@@ -143,7 +143,7 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<Product> search(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, Double fromprice, Double toprice, Date fromdate, Date todate, int sort, int index) {
         List<Product> list = new ArrayList<>();
         String sql = """
@@ -263,7 +263,7 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    
+
     public int countSearchProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, Double fromprice, Double toprice, Date fromdate, Date todate) {
         String sql = """
                     SELECT COUNT(*) 
@@ -435,7 +435,7 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
-    public List<Product> getAllProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, int sort, int index) {
+    public List<Product> getAllProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, int sort, int index, Date fromdate, Date todate) {
         List<Product> list = new ArrayList<>();
         String sql = """
                         select *
@@ -444,7 +444,7 @@ public class ProductDAO extends DBContext {
                         inner join category c1 on (c1.cid=p.cateID1)
                         inner join category c2 on (c2.cid=p.cateID2)
                         inner join category c3 on (c3.cid=p.cateID3)
-                        where 1=1 
+                        where p.[status]=0
                      """;
         if (bid != null && bid[0] != 0) {
             sql += " and p.[brandID] in (";
@@ -488,6 +488,12 @@ public class ProductDAO extends DBContext {
         }
         if (key != null) {
             sql += " and ( p.[code] like N'%" + key + "%' or p.[name]  like N'%" + key + "%' )";
+        }
+        if (fromdate != null) {
+            sql += " and p.[releaseDate] >='" + fromdate + "'";
+        }
+        if (todate != null) {
+            sql += " and p.[releaseDate] <='" + todate + "'";
         }
         if (sort == 0) {
             sql += " \n order by p.[id]";
@@ -560,7 +566,7 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
-    public int countManageProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key) {
+    public int countManageProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, Date fromdate, Date todate) {
         String sql = """
                     SELECT COUNT(*) 
                     from product p inner join ImageProduct [pi] on(p.id=[pi].[pid])
@@ -568,8 +574,7 @@ public class ProductDAO extends DBContext {
                     inner join category c1 on (c1.cid=p.cateID1)
                     inner join category c2 on (c2.cid=p.cateID2)
                     inner join category c3 on (c3.cid=p.cateID3)
-                    where b.deleted=0 AND (c1.deleted = 0 AND c2.deleted = 0 AND c3.deleted = 0)
-                    and p.[status]=0""";
+                    where p.[status]=0""";
 
         if (bid != null && bid[0] != 0) {
             sql += " and p.[brandID] in (";
@@ -614,6 +619,12 @@ public class ProductDAO extends DBContext {
         if (key != null) {
             sql += " and ( p.[code] like N'%" + key + "%' or p.[name]  like N'%" + key + "%' )";
         }
+        if (fromdate != null) {
+            sql += " and p.[releaseDate] >='" + fromdate + "'";
+        }
+        if (todate != null) {
+            sql += " and p.[releaseDate] <='" + todate + "'";
+        }
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -623,5 +634,15 @@ public class ProductDAO extends DBContext {
         } catch (SQLException e) {
         }
         return 0;
+    }
+
+    public void deleteProduct(String pid) {
+        String sql = "UPDATE [dbo].[product] SET [status] = 1 WHERE [id] = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, pid);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
     }
 }
