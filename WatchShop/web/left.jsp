@@ -74,6 +74,12 @@
                             <span class="text">Sản phẩm</span>
                         </a>
                     </li>
+                    <li class="${tab==6?'active':''}">
+                        <a href="staff">
+                            <i class='bx bxs-group' ></i>
+                            <span class="text">Quản lý nhân viên</span>
+                        </a>
+                    </li>
                 </c:if>
                 <c:if test="${sessionScope.account.roleID==2}">
                     <li class="${tab==null?'active':''}">
