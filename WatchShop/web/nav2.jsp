@@ -88,8 +88,7 @@
                     <div class="col-md-12 col-xs-6">
                         <div class="lienket">
                             <h3 class="header text-uppercase font-weight-bold">Địa chỉ</h3>
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d3132.444306391705!2d105.53245210294008!3d20.98762361112083!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1718800407964!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.1181221446363!2d105.52534287749265!3d20.987901639314963!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345b99d2f5a6ad%3A0x6ff056ed4511a523!2sChung%20c%C6%B0%20Phenikaa!5e0!3m2!1svi!2s!4v1719293642824!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                        </div>
                     </div>
                 </div>
             </div>

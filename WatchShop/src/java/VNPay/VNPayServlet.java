@@ -6,6 +6,7 @@ package VNPay;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import dal.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -90,7 +91,8 @@ public class VNPayServlet extends HttpServlet {
         long amount = Integer.parseInt(request.getParameter("amount"));
         String bankCode = request.getParameter("bankCode");
 
-        String vnp_TxnRef = Config.getRandomNumber(8);
+        OrderDAO odao = new OrderDAO();
+        String vnp_TxnRef = "WSS_" + odao.getOid();
         String vnp_IpAddr = Config.getIpAddress(request);
 
         String vnp_TmnCode = Config.vnp_TmnCode;

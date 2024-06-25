@@ -132,7 +132,7 @@ public class EmailOrder {
                <body>
                  <div class="email-container">
                    <div class="header">
-                    <h1>Shoes Shop</h1>
+                    <h1>Watch Shop</h1>
                     <h4>Xác nhận đặt hàng thành công!</h4>
                     </div>
                    <div class="content">

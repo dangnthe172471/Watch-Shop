@@ -20,7 +20,21 @@ import model.Order;
  * @author admin
  */
 public class OrderDAO extends DBContext {
-
+    
+    public String getOid() {
+        String sql = " select top 1 id from [Order] order by id desc";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                int i = rs.getInt(1) + 1;
+                return Integer.toString(i);
+            }
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+    
     public void addOrder(Account u, Cart cart, String email, String phone, String address, String note, String dateShip, String timeShip) {
         LocalDate curDate = java.time.LocalDate.now();
         String date = curDate.toString();
@@ -52,7 +66,7 @@ public class OrderDAO extends DBContext {
                                   INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) Values (?,?,?,?)
                                   Update [dbo].[product] set [quantity]=?,[sold]=?
                                   where [id]=?""";
-
+                    
                     PreparedStatement st2 = connection.prepareStatement(sql2);
                     st2.setInt(1, oid);
                     st2.setInt(2, i.getProduct().getId());
@@ -67,7 +81,7 @@ public class OrderDAO extends DBContext {
         } catch (SQLException e) {
         }
     }
-
+    
     public void updateAmount(Account u, Cart cart) {
         for (Item i : cart.getItems()) {
             String sql = """
@@ -83,7 +97,7 @@ public class OrderDAO extends DBContext {
             }
         }
     }
-
+    
     public void CompletedOrderId(String oid) {
         String sql = "UPDATE [dbo].[Order] SET [sid] = 2 WHERE [id] = ?;";
         try {
@@ -93,7 +107,7 @@ public class OrderDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-
+    
     public void AcceptOrderId(String oid) {
         String sql = "UPDATE [dbo].[Order] SET [sid] = 3 WHERE [id] = ?;";
         try {
@@ -103,7 +117,7 @@ public class OrderDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-
+    
     public void CanceledOrderId(String oid) {
         String sql = "UPDATE [dbo].[Order] SET [sid] = 4 WHERE [id] = ?;";
         try {
@@ -113,7 +127,7 @@ public class OrderDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-
+    
     public List<Order> getOrderPending() {
         List<Order> list = new ArrayList<>();
         try {
@@ -140,10 +154,10 @@ public class OrderDAO extends DBContext {
         }
         return list;
     }
-
+    
     public List<Order> getOrderAccept() {
         List<Order> list = new ArrayList<>();
-
+        
         try {
             String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 3 order by date desc";
             PreparedStatement st = connection.prepareStatement(sql);
@@ -168,10 +182,10 @@ public class OrderDAO extends DBContext {
         }
         return list;
     }
-
+    
     public List<Order> getOrderCompleted() {
         List<Order> list = new ArrayList<>();
-
+        
         try {
             String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 2 order by date desc";
             PreparedStatement st = connection.prepareStatement(sql);
@@ -196,10 +210,10 @@ public class OrderDAO extends DBContext {
         }
         return list;
     }
-
+    
     public List<Order> getOrderCanceled() {
         List<Order> list = new ArrayList<>();
-
+        
         try {
             String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 4";
             PreparedStatement st = connection.prepareStatement(sql);

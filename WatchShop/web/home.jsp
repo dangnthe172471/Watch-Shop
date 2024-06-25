@@ -171,7 +171,7 @@
         <div class="container" style="margin-bottom: 20px;">
             <img src="img/footerhome.jpg" style="width: 100%"/>
         </div>
-        <!--<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>-->
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <df-messenger
         intent="WELCOME"
         chat-title="WatchShop"

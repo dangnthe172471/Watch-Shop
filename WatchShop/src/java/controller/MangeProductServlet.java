@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Date;
 import java.util.List;
 import model.Brand;
 import model.Category;
@@ -73,18 +74,21 @@ public class MangeProductServlet extends HttpServlet {
         String[] cid_raw3 = request.getParameterValues("cid3");
         String[] bid_raw = request.getParameterValues("bid");
         String key = request.getParameter("key");
+        String fromdate_raw = request.getParameter("fromdate");
+        String todate_raw = request.getParameter("todate");
         int[] cid1 = null;
         int[] cid2 = null;
         int[] cid3 = null;
         int[] bid = null;
-
+        Date fromdate, todate;
+        
         if (bid_raw != null) {
             bid = new int[bid_raw.length];
             for (int i = 0; i < bid.length; i++) {
                 bid[i] = Integer.parseInt(bid_raw[i]);
             }
         }
-
+        
         if (cid_raw1 != null) {
             cid1 = new int[cid_raw1.length];
             for (int i = 0; i < cid1.length; i++) {
@@ -103,7 +107,7 @@ public class MangeProductServlet extends HttpServlet {
                 cid3[i] = Integer.parseInt(cid_raw3[i]);
             }
         }
-
+        
         if (sort_raw == null) {
             sort_raw = "0";
         }
@@ -113,14 +117,19 @@ public class MangeProductServlet extends HttpServlet {
         if (indexpage == null) {
             indexpage = "1";
         }
-
+        
         index = Integer.parseInt(indexpage);
-        int countP = pdao.countManageProduct(bid, cid1, cid2, cid3, key);
+        fromdate = (fromdate_raw == null || fromdate_raw.equals(""))
+                ? null : Date.valueOf(fromdate_raw);
+        todate = (todate_raw == null || todate_raw.equals(""))
+                ? null : Date.valueOf(todate_raw);
+        int countP = pdao.countManageProduct(bid, cid1, cid2, cid3, key, fromdate, todate);
         int endpage = countP / 6;
         if (countP % 6 != 0) {
             endpage++;
         }
-        List<Product> listP = pdao.getAllProduct(bid, cid1, cid2, cid3, key, sort, index);
+        
+        List<Product> listP = pdao.getAllProduct(bid, cid1, cid2, cid3, key, sort, index, fromdate, todate);
         List<Brand> listB = bdao.getAllBrand();
         List<Category> listC = cadao.getAllCategory();
         request.setAttribute("listP", listP);
@@ -135,6 +144,8 @@ public class MangeProductServlet extends HttpServlet {
         request.setAttribute("sort", sort);
         request.setAttribute("endP", endpage);
         request.setAttribute("countP", countP);
+        request.setAttribute("fromdate", fromdate);
+        request.setAttribute("todate", todate);
         request.setAttribute("tab", "5");
         request.getRequestDispatcher("ManageProduct.jsp").forward(request, response);
     }
@@ -150,7 +161,16 @@ public class MangeProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        ProductDAO pdao = new ProductDAO();
+        String pid = request.getParameter("pid");
+        String type = request.getParameter("type");
+        if (type == null) {
+            type = "";
+        }
+        if (type.equals("delete")) {
+            pdao.deleteProduct(pid);
+            doGet(request, response);
+        }
     }
 
     /**
