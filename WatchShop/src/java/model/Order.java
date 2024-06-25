@@ -11,7 +11,7 @@ package model;
 public class Order {
 
     private int oid;
-    private String date, dateShip, timeShip;
+    private String date, dateShip, timeShip, receivedDate;
     private double totalMoney;
     private String email, phone, address;
     private String note;
@@ -21,11 +21,12 @@ public class Order {
     public Order() {
     }
 
-    public Order(int oid, String date, String dateShip, String timeShip, double totalMoney, String email, String phone, String address, String note, int sid, Account account) {
+    public Order(int oid, String date, String dateShip, String timeShip, String receivedDate, double totalMoney, String email, String phone, String address, String note, int sid, Account account) {
         this.oid = oid;
         this.date = date;
         this.dateShip = dateShip;
         this.timeShip = timeShip;
+        this.receivedDate = receivedDate;
         this.totalMoney = totalMoney;
         this.email = email;
         this.phone = phone;
@@ -65,6 +66,14 @@ public class Order {
 
     public void setTimeShip(String timeShip) {
         this.timeShip = timeShip;
+    }
+
+    public String getReceivedDate() {
+        return receivedDate;
+    }
+
+    public void setReceivedDate(String receivedDate) {
+        this.receivedDate = receivedDate;
     }
 
     public double getTotalMoney() {
