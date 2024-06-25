@@ -12,7 +12,7 @@ function validateEmail() {
     }
 }
 function validateEmails() {
-    var email = document.getElementById("newEmail").value; // Sửa đổi id thành "newEmail"
+    var email = document.getElementById("newEmail").value;
     var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
     var emailMessageElement = document.getElementById("emailMessage");
 
@@ -46,11 +46,13 @@ function validateUsername() {
     if (username.trim() === "") {
         usernameMessageElement.innerHTML = "Tên đăng nhập không được để trống.";
         usernameMessageElement.style.color = "red";
+    } else if (/\s/.test(username)) {
+        usernameMessageElement.innerHTML = "Tên đăng nhập không được chứa khoảng trắng.";
+        usernameMessageElement.style.color = "red";
     } else {
         usernameMessageElement.innerHTML = "";
     }
 }
-
 function validatePassword() {
     var password = document.getElementById("password").value;
     var passwordMessageElement = document.getElementById("passwordMessage");
@@ -95,6 +97,17 @@ function validateAddress() {
 
     if (address.trim() === "") {
         addressMessageElement.innerHTML = "địa chỉ nhận hàng có thể để trống.";
+        addressMessageElement.style.color = "red";
+    } else {
+        addressMessageElement.innerHTML = "";
+    }
+}
+function validateAddressStaff() {
+    var address = document.getElementById("newaddress").value;
+    var addressMessageElement = document.getElementById("naddressMessage");
+
+    if (address.trim() === "") {
+        addressMessageElement.innerHTML = "Phải nhập địa chỉ.";
         addressMessageElement.style.color = "red";
     } else {
         addressMessageElement.innerHTML = "";

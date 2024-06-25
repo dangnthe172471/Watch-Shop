@@ -7,6 +7,8 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Account;
 
 /**
@@ -91,6 +93,24 @@ public class AccountDAO extends DBContext {
             stm.executeUpdate();
         } catch (SQLException e) {
             System.out.print("AddAccount:" + e.getMessage());
+        }
+    }
+
+    public void AddStaff(Account newUser) {
+        String sql = "INSERT INTO Account ([user], [pass], [email], [phone], [Address], [avatar], [roleID], [status]) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, newUser.getUser());
+            st.setString(2, newUser.getPass());
+            st.setString(3, newUser.getEmail());
+            st.setString(4, newUser.getPhone());
+            st.setString(5, newUser.getAddress());
+            st.setString(6, newUser.getAvatar());
+            st.setInt(7, newUser.getRoleID());
+            st.setInt(8, newUser.getStatus());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("AddAccount: " + e.getMessage());
         }
     }
 
@@ -267,6 +287,147 @@ public class AccountDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("updateAccountAddress: " + e.getMessage());
             return false;
+        }
+    }
+
+    public List<Account> getStaff() {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Account WHERE roleID = 2 AND status = 0";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("avatar"),
+                        rs.getString("user"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getDouble("amount"),
+                        rs.getInt("bought"),
+                        rs.getString("Address"),
+                        rs.getInt("status"),
+                        rs.getInt("roleID"),
+                        rs.getString("token")
+                );
+                accounts.add(account);
+            }
+        } catch (SQLException e) {
+            System.out.println("getStaff: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    public void updateUserStatus(int id, int status) {
+        String sql = "UPDATE Account SET status = ? WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, status);
+            st.setInt(2, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("updateUserStatus: " + e.getMessage());
+        }
+    }
+
+    public List<Account> getBlockedStaff() {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Account WHERE roleID = 2 AND status = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("avatar"),
+                        rs.getString("user"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getDouble("amount"),
+                        rs.getInt("bought"),
+                        rs.getString("Address"),
+                        rs.getInt("status"),
+                        rs.getInt("roleID"),
+                        rs.getString("token")
+                );
+                accounts.add(account);
+            }
+        } catch (SQLException e) {
+            System.out.println("getBlockedStaff: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    public List<Account> searchStaffByName(String name) {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Account WHERE roleID = 2 AND status = 0 AND [user] LIKE ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + name + "%");
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("avatar"),
+                        rs.getString("user"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getDouble("amount"),
+                        rs.getInt("bought"),
+                        rs.getString("Address"),
+                        rs.getInt("status"),
+                        rs.getInt("roleID"),
+                        rs.getString("token")
+                );
+                accounts.add(account);
+            }
+        } catch (SQLException e) {
+            System.out.println("searchStaffByName: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    public List<Account> searchBlockedStaffByName(String name) {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Account WHERE roleID = 2 AND status = 1 AND [user] LIKE ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + name + "%");
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("avatar"),
+                        rs.getString("user"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getDouble("amount"),
+                        rs.getInt("bought"),
+                        rs.getString("Address"),
+                        rs.getInt("status"),
+                        rs.getInt("roleID"),
+                        rs.getString("token")
+                );
+                accounts.add(account);
+            }
+        } catch (SQLException e) {
+            System.out.println("searchBlockedStaffByName: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    public void deleteUserPermanently(int id) {
+        String sql = "DELETE FROM Account WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("deleteUserPermanently: " + e.getMessage());
         }
     }
 

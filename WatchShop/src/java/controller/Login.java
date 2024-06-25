@@ -118,25 +118,8 @@ public class Login extends HttpServlet {
             }
 
             session.setAttribute("account", account);
-            //login ADMIN
-            if (account.getRoleID() == 1 || account.getRoleID() == 2) {
-                request.getSession().setAttribute("account", account);
-                response.sendRedirect(request.getContextPath() + "/AdminManage.jsp");
-                return;
-            } else if (account.getRoleID() == 3) {
-                request.getSession().setAttribute("account", account);
-                response.sendRedirect(request.getContextPath() + "/listorder");
-            }
 
-            String ttcart = (String) session.getAttribute("ttc");
-            if (ttcart == null) {
-                session.removeAttribute("ttc");
-            } else {
-                session.removeAttribute("ttc");
-                response.sendRedirect("Cart.jsp");
-            }
-
-            //login User
+            // Tạo cookies
             Cookie cu = new Cookie("cuser", username);
             Cookie cp = new Cookie("cpass", password);
             Cookie cr = new Cookie("crem", rem);
@@ -152,8 +135,22 @@ public class Login extends HttpServlet {
             response.addCookie(cu);
             response.addCookie(cp);
             response.addCookie(cr);
+
+            //login ADMIN or MANAGER
+            if (account.getRoleID() == 1 || account.getRoleID() == 2) {
+                session.setAttribute("account", account);
+                response.sendRedirect(request.getContextPath() + "/AdminManage.jsp");
+                return;
+            } else if (account.getRoleID() == 3) {
+                session.setAttribute("account", account);
+                response.sendRedirect(request.getContextPath() + "/listorder");
+                return;
+            }
+
+            //login User
             response.sendRedirect(request.getContextPath() + "/home");
         }
+
     }
 
     private boolean isEmpty(String value) {
