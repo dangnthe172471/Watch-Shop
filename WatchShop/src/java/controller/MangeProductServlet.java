@@ -14,6 +14,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.List;
 import model.Brand;
@@ -81,14 +85,14 @@ public class MangeProductServlet extends HttpServlet {
         int[] cid3 = null;
         int[] bid = null;
         Date fromdate, todate;
-        
+
         if (bid_raw != null) {
             bid = new int[bid_raw.length];
             for (int i = 0; i < bid.length; i++) {
                 bid[i] = Integer.parseInt(bid_raw[i]);
             }
         }
-        
+
         if (cid_raw1 != null) {
             cid1 = new int[cid_raw1.length];
             for (int i = 0; i < cid1.length; i++) {
@@ -107,7 +111,7 @@ public class MangeProductServlet extends HttpServlet {
                 cid3[i] = Integer.parseInt(cid_raw3[i]);
             }
         }
-        
+
         if (sort_raw == null) {
             sort_raw = "0";
         }
@@ -117,7 +121,7 @@ public class MangeProductServlet extends HttpServlet {
         if (indexpage == null) {
             indexpage = "1";
         }
-        
+
         index = Integer.parseInt(indexpage);
         fromdate = (fromdate_raw == null || fromdate_raw.equals(""))
                 ? null : Date.valueOf(fromdate_raw);
@@ -128,8 +132,8 @@ public class MangeProductServlet extends HttpServlet {
         if (countP % 6 != 0) {
             endpage++;
         }
-        
-        List<Product> listP = pdao.getAllProduct(bid, cid1, cid2, cid3, key, sort, index, fromdate, todate);
+
+        List<Product> listP = pdao.manageProduct(bid, cid1, cid2, cid3, key, sort, index, fromdate, todate);
         List<Brand> listB = bdao.getAllBrand();
         List<Category> listC = cadao.getAllCategory();
         request.setAttribute("listP", listP);
@@ -163,12 +167,17 @@ public class MangeProductServlet extends HttpServlet {
             throws ServletException, IOException {
         ProductDAO pdao = new ProductDAO();
         String pid = request.getParameter("pid");
+        if (pid == null) {
+            pid = "0";
+        }
         String type = request.getParameter("type");
         if (type == null) {
             type = "";
         }
         if (type.equals("delete")) {
-            pdao.deleteProduct(pid);
+            pdao.deleteProduct(pid, "1");
+            doGet(request, response);
+        } else {
             doGet(request, response);
         }
     }

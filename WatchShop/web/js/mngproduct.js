@@ -20,3 +20,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+function checkNum(input) {
+    var maxValue = parseInt(input.getAttribute("max"));
+    if (input.value > maxValue) {
+        input.value = maxValue;
+    }
+}
