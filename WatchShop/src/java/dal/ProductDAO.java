@@ -19,6 +19,45 @@ import model.ImageProduct;
  */
 public class ProductDAO extends DBContext {
 
+    public List<Product> getAllProduct() {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+                        select *
+                        from product p inner join ImageProduct [pi] on(p.id=[pi].[pid])
+                        inner join brand b on (b.bid=p.brandID)
+                        inner join category c1 on (c1.cid=p.cateID1)
+                        inner join category c2 on (c2.cid=p.cateID2)
+                        inner join category c3 on (c3.cid=p.cateID3)""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getDate(7),
+                        rs.getString(8),
+                        rs.getDouble(9),
+                        rs.getInt(10),
+                        rs.getInt(11),
+                        rs.getInt(12),
+                        rs.getInt(13),
+                        rs.getInt(14),
+                        new ImageProduct(rs.getInt(15),
+                                rs.getInt(16),
+                                rs.getString(17),
+                                rs.getString(18),
+                                rs.getString(19),
+                                rs.getString(20))));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
     public List<Product> listProductLast() {
         List<Product> list = new ArrayList<>();
         String sql = """
@@ -29,6 +68,7 @@ public class ProductDAO extends DBContext {
                         inner join category c2 on (c2.cid=p.cateID2)
                         inner join category c3 on (c3.cid=p.cateID3)
                         where b.deleted=0 AND (c1.deleted = 0 AND c2.deleted = 0 AND c3.deleted = 0)
+                        and p.[status]=0
                         order by releaseDate desc""";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -397,7 +437,7 @@ public class ProductDAO extends DBContext {
                         Or cateID1 = (select (cateID1) from Product where id = ? )
                         Or cateID2 = (select (cateID2) from Product where id = ? )
                         Or cateID3 = (select (cateID3) from Product where id = ? ))
-                        AND p.[id] != ?
+                        and p.[status]=0 and p.[id] != ?                        
                         Order by sold desc
                      """;
         try {
@@ -435,7 +475,7 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
-    public List<Product> getAllProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, int sort, int index, Date fromdate, Date todate) {
+    public List<Product> manageProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, int sort, int index, Date fromdate, Date todate) {
         List<Product> list = new ArrayList<>();
         String sql = """
                         select *
@@ -636,12 +676,97 @@ public class ProductDAO extends DBContext {
         return 0;
     }
 
-    public void deleteProduct(String pid) {
-        String sql = "UPDATE [dbo].[product] SET [status] = 1 WHERE [id] = ?";
+    public void deleteProduct(String pid, String status) {
+        String sql = "UPDATE [dbo].[product] SET [status] = ? WHERE [id] = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, pid);
+            st.setString(1, status);
+            st.setString(2, pid);
             st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void editProduct(String id, String code, String name, String price, String quantity, String sold, String date, String description,
+            String rate, String cateID1, String cateID2, String cateID3, String brandID, String img1, String img2, String img3, String img4) {
+        String sql = """
+                    UPDATE [dbo].[product]
+                    SET [code] = ?
+                        ,[name] = ?
+                        ,[price] = ?
+                        ,[quantity] = ?
+                        ,[sold] = ?
+                        ,[releaseDate] = ?
+                        ,[description] = ?
+                        ,[rate] = ?
+                        ,[cateID1] = ?
+                        ,[cateID2] = ?
+                        ,[cateID3] = ?
+                        ,[brandID] = ?
+                        WHERE [id] = ? 
+                    UPDATE [dbo].[ImageProduct]
+                    SET [image1] = ?
+                        ,[image2] = ?
+                        ,[image3] = ?
+                        ,[image4] = ?
+                        WHERE [pid] = ?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, code);
+            st.setString(2, name);
+            st.setString(3, price);
+            st.setString(4, quantity);
+            st.setString(5, sold);
+            st.setString(6, date);
+            st.setString(7, description);
+            st.setString(8, rate);
+            st.setString(9, cateID1);
+            st.setString(10, cateID2);
+            st.setString(11, cateID3);
+            st.setString(12, brandID);
+            st.setString(13, id);
+            st.setString(14, img1);
+            st.setString(15, img2);
+            st.setString(16, img3);
+            st.setString(17, img4);
+            st.setString(18, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void addProduct(String code, String name, String price, String quantity, String sold, String date, String description,
+            String rate, String cateID1, String cateID2, String cateID3, String brandID, String img1, String img2, String img3, String img4) {
+        String sql = """
+                     INSERT INTO [dbo].[product]([code],[name],[price],[quantity],[sold],[releaseDate],[description],[rate],[cateID1],[cateID2],[cateID3],[brandID],[status])VALUES
+                     (?,?,?,?,?,?,?,?,?,?,?,?,'0') """;
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, code);
+            st.setString(2, name);
+            st.setString(3, price);
+            st.setString(4, quantity);
+            st.setString(5, sold);
+            st.setString(6, date);
+            st.setString(7, description);
+            st.setString(8, rate);
+            st.setString(9, cateID1);
+            st.setString(10, cateID2);
+            st.setString(11, cateID3);
+            st.setString(12, brandID);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+        String sql2 = """                    
+                     INSERT INTO [dbo].[ImageProduct]([pid],[image1],[image2],[image3],[image4])
+                     VALUES((select top 1 id from product order by id desc),?,?,?,?) """;
+        try {
+            PreparedStatement st2 = connection.prepareStatement(sql2);
+            st2.setString(1, img1);
+            st2.setString(2, img2);
+            st2.setString(3, img3);
+            st2.setString(4, img4);
+            st2.executeUpdate();
         } catch (Exception e) {
         }
     }

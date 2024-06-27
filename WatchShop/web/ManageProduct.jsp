@@ -22,6 +22,20 @@
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
         <script type="text/javascript" src="slick/slick.min.js"></script>
         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+        <style>
+            .desc:after {
+                content: ' ▼';
+            }
+
+            .asc:after {
+                content: ' ▲';
+            }
+            .inactive:after {
+                content: ' ▲';
+                color: gray;
+                opacity: 0.5;
+            }
+        </style>
     </head>
     <body>
         <jsp:include page="left.jsp" />
@@ -31,7 +45,7 @@
                     <div class="left">
                         <h1>Sản phẩm</h1>                      
                     </div>
-                    <a class="btn-download, btn btn-primary addbtn">
+                    <a class="btn-download, btn btn-primary addbtn" href="editproduct?type=add">
                         <span class="text">Thêm sản phẩm</span>
                     </a>
                 </div>
@@ -56,7 +70,7 @@
                                     </c:forEach>  
                                     <button style="border: none;background-color: #F8F9FA;" type="submit"><i class='bx bx-search'></i></button>
                                     <input value="${sort}" name="sort" type="hidden">
-                                    <input type="text" name="key" value="${key != null ? key : ''}" placeholder="Nhập tên, mã sản phẩm">
+                                    <input oninput="searchByName(this)" type="text" name="key" value="${key != null ? key : ''}" placeholder="Nhập tên, mã sản phẩm">
                                     <label>&nbsp;&nbsp;&nbsp;Từ: </label><input type="date" id="fromdate" onchange="this.form.submit()" name="fromdate" value="${fromdate != null ? fromdate : ''}">
                                     <label>&nbsp;&nbsp;&nbsp;Đến: </label><input type="date" id="todate" onchange="this.form.submit()"  name="todate" value="${todate != null ? todate : ''}">
                                 </form>
@@ -74,44 +88,16 @@
                         <c:if test="${empty listP}">
                             <p style="color: red">Không thấy sản phầm cần tìm</p>
                         </c:if>
-                        <form action="manageproduct" style="margin-top: -25px;">
-                            <c:forEach var="bidValue" items="${bid}">
-                                <input type="hidden" value="${bidValue}" name="bid">
-                            </c:forEach>
-                            <c:forEach var="cidValue" items="${cid1}">
-                                <input type="hidden" value="${cidValue}" name="cid1">
-                            </c:forEach>
-                            <c:forEach var="cidValue" items="${cid2}">
-                                <input type="hidden" value="${cidValue}" name="cid2">
-                            </c:forEach>
-                            <c:forEach var="cidValue" items="${cid3}">
-                                <input type="hidden" value="${cidValue}" name="cid3">
-                            </c:forEach>
-                            <input type="hidden" value="${key}" name="key">
-                            <input type="hidden" value="${fromdate}" name="todate">
-                            <input type="hidden" value="${todate}" name="todate">
-                            <select name="sort" onchange="this.form.submit()" style="margin-left: 1000px;margin-bottom: 20px">
-                                <option ${sort == 0 ? 'selected' : ''} value="0">-------None-------</option>
-                                <option ${sort == 1 ? 'selected' : ''} value="1">Code ↑</option>
-                                <option ${sort == 2 ? 'selected' : ''} value="2">Code ↓</option>
-                                <option ${sort == 3 ? 'selected' : ''} value="3">Tên ↑</option>
-                                <option ${sort == 4 ? 'selected' : ''} value="4">Tên ↓</option>
-                                <option ${sort == 5 ? 'selected' : ''} value="5">Giá ↑</option>    
-                                <option ${sort == 6 ? 'selected' : ''} value="6">Giá ↓</option>
-                                <option ${sort == 7 ? 'selected' : ''} value="7">Số lượng còn ↑</option>
-                                <option ${sort == 8 ? 'selected' : ''} value="8">Số lượng còn ↓</option>
-                                <option ${sort == 9 ? 'selected' : ''} value="9">Đã bán ↑</option>
-                                <option ${sort == 10 ? 'selected' : ''} value="10">Đã bán ↓</option>
-                                <option ${sort == 11 ? 'selected' : ''} value="11">Ngày sản xuất ↑</option>    
-                                <option ${sort == 12 ? 'selected' : ''} value="12">Ngày sản xuất ↓</option>
-                            </select>                                    
-                        </form>  
-                        <table id="manageproduct">
+                        <table>
                             <thead>
                                 <tr>
-                                    <th style="width: 30px; text-align: center;">Code</th>
+                                    <th style="width: 30px; text-align: center;" onclick="sortTable(1)">
+                                        Mã Sản phẩm&nbsp;<span id="arrow1" class="inactive"></span>
+                                    </th>
 
-                                    <th style="width: 160px;text-align: center">Sản phẩm</th>
+                                    <th style="width: 160px;text-align: center" onclick="sortTable(2)">
+                                        Sản phẩm<span id="arrow2" class="inactive"></span>
+                                    </th>
                                     <th style="width: 130px;text-align: center">
                                         <form action="manageproduct">                                              
                                             <c:forEach var="cidValue" items="${cid1}">
@@ -198,14 +184,22 @@
                                             </ul>
                                         </form>
                                     </th>
-                                    <th style="width: 125px;text-align: center">Giá</th>
-                                    <th style="width: 120px;text-align: center">Số lượng còn</th>
-                                    <th style="width: 80px;text-align: center">Đã bán</th>
-                                    <th style="width: 120px;text-align: center">Ngày sản xuất</th>
+                                    <th style="width: 125px;text-align: center" onclick="sortTable(3)">
+                                        Giá&nbsp;<span id="arrow3" class="inactive"></span>
+                                    </th>
+                                    <th style="width: 120px;text-align: center" onclick="sortTable(4)">
+                                        Số lượng còn&nbsp;<span id="arrow4" class="inactive"></span>
+                                    </th>
+                                    <th style="width: 80px;text-align: center" onclick="sortTable(5)">
+                                        Đã bán&nbsp;<span id="arrow5" class="inactive"></span>
+                                    </th>
+                                    <th style="width: 120px;text-align: center" onclick="sortTable(6)">
+                                        Ngày sản xuất&nbsp;<span id="arrow6" class="inactive"></span>
+                                    </th>
                                     <th style="width: 70px;text-align: center">Hành động</th>
                                 </tr>
                             </thead>
-                            <tbody style="height: 500px;">  
+                            <tbody style="height: 500px;" id="dataP">  
                                 <c:forEach var="o" items="${listP}">                                   
                                     <tr>
                                         <td style="text-align: left;display: table-cell;vertical-align: middle;">${o.code}</td>
@@ -239,7 +233,8 @@
                                         <td style="text-align: center">${o.quantity}</td>
                                         <td style="text-align: center">${o.sold} (${o.rate}⭐)</td>
                                         <td style="text-align: center"><fmt:formatDate value="${o.releaseDate}" pattern="dd-MM-yyyy"/></td>
-                                        <td style="text-align: center;font-size: 20px;"><a  class="editbtn"><i class="fa fa-edit" style="color: blue"></i></a>&nbsp;&nbsp;
+                                        <td style="text-align: center;font-size: 20px;">
+                                            <a  href="editproduct?type=edit&id=${o.id}"><i class="fa fa-edit" style="color: blue"></i></a>&nbsp;&nbsp;
                                             <a href="#" onclick="deleteProduct(event, '${o.id}')"><i class="fa fa-trash" style="color: red"></i></a>
                                         </td>
                                     </tr>
@@ -297,8 +292,8 @@
                     <form action="manageproduct" method="post">
                         <div class="modal-body">
                             <h5 class="modal-title">Bạn có chắc muốn xóa sản phẩm này ?</h5>
-                            <input type="" name="pid" id="pid">                            
-                            <input type="" name="type" value="delete">                            
+                            <input type="hidden" name="pid" id="pid">                            
+                            <input type="hidden" name="type" value="delete">                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" onclick="deleteProduct(event, '${o.id}')" data-dismiss="modal">Hủy</button>
@@ -310,13 +305,13 @@
         </div>
         <script>
             const today = new Date();
-            const day = today.toISOString().split('T')[0];  // Format date to YYYY-MM-DD
+            const day = today.toISOString().split('T')[0]; // Format date to YYYY-MM-DD
             document.getElementById('todate').setAttribute('max', day);
             document.getElementById('fromdate').setAttribute('max', day);
         </script>   
-        <script src="js/script.js"></script>
-        <script src="js/mngproduct.js"></script>                      
-        <!--..-->
+        <script src="js/mngproduct.js"></script>           
+        <script src="js/editproduct.js"></script>
+        <!--..-->      
         <script>
             function deleteProduct(event, id) {
                 event.preventDefault();
@@ -340,6 +335,66 @@
                     x.style.display = "none";
                 }
             }
-        </script>        
+        </script>   
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            function searchByName(param) {
+                var keySearch = param.value;
+                $.ajax({
+                    url: "/watchshop/ajaxproduct",
+                    type: "get", //send it through get method
+                    data: {
+                        key: keySearch
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("dataP");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+            }
+        </script>
+        <script>
+            let sort = '';
+            function sortTable(index) {
+                // TOGGLE BETWEEN ASCENDING AND DESCENDING ORDER
+                sort = (sort === 'asc') ? 'desc' : 'asc';
+
+                // UPDATE ARROW INDICATORS IN THE HEADER
+                for (let i = 1; i < 7; i++) {
+                    const arrow = document.getElementById('arrow' + i);
+                    arrow.className = (i === index) ? sort : 'inactive';
+                }
+                let sortT = index;
+                if (sort === 'asc') {
+                    sortIndex = index * 2 - 1;
+                } else {
+                    sortIndex = index * 2;
+                }
+
+                $.ajax({
+                    url: "/watchshop/ajaxproduct",
+                    type: "get", //send it through get method
+                    data: {
+                        sort: sortIndex
+                    },
+                    success: function (data) {
+                        var row = document.getElementById("dataP");
+                        row.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        //Do Something to handle error
+                    }
+                });
+            }
+        </script>
+
+        <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+        <!--<script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    
+        <!--ckeditor-->
+        <script>CKEDITOR.replace('description');</script>
     </body>
 </html>
