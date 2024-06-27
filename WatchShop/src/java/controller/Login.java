@@ -146,6 +146,13 @@ public class Login extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/listorder");
                 return;
             }
+            String ttcart = (String) session.getAttribute("ttc");
+            if (ttcart == null) {
+                session.removeAttribute("ttc");
+            } else {
+                session.removeAttribute("ttc");
+                response.sendRedirect("Cart.jsp");
+            }
 
             //login User
             response.sendRedirect(request.getContextPath() + "/home");
