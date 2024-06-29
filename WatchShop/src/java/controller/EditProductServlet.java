@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -90,6 +91,8 @@ public class EditProductServlet extends HttpServlet {
         }
     }
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -101,6 +104,7 @@ public class EditProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String id = request.getParameter("id");
         String code = request.getParameter("code");
         String name = request.getParameter("name");
@@ -184,6 +188,8 @@ public class EditProductServlet extends HttpServlet {
             img04 = "images/" + filename4;
         }
         if (type.equals("edit")) {
+            session.setMaxInactiveInterval(2);
+            session.setAttribute("edit", "edit");
             pdao.editProduct(id, code, name, price, quantity, sold, date, description, rate, cateID1, cateID2, cateID3, brandID, img01, img02, img03, img04);
         }
 
@@ -221,6 +227,8 @@ public class EditProductServlet extends HttpServlet {
                     return;
                 }
             }
+            session.setMaxInactiveInterval(2);
+            session.setAttribute("add", "add");
             pdao.addProduct(code, name, price, quantity, sold, date, description, rate, cateID1, cateID2, cateID3, brandID, img01, img02, img03, img04);
         }
         response.sendRedirect("manageproduct");

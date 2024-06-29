@@ -202,8 +202,9 @@ public class AjaxManageP extends HttpServlet {
                         + "                                        <td style=\"text-align: center\">" + o.getQuantity() + "</td>\n"
                         + "                                        <td style=\"text-align: center\">" + o.getSold() + " (" + o.getRate() + "⭐)</td>\n"
                         + "                                        <td style=\"text-align: center\">" + redate + "</td>\n"
-                        + "                                        <td style=\"text-align: center;font-size: 20px;\"><a  class=\"editbtn\"><i class=\"fa fa-edit\" style=\"color: blue\"></i></a>&nbsp;&nbsp;\n"
-                        + "                                            <a href=\"#\" onclick=\"deleteProduct(event, '${o.id}')\"><i class=\"fa fa-trash\" style=\"color: red\"></i></a>\n"
+                        + "          <td style=\"text-align: center;font-size: 20px;\">\n"
+                        + "                                            <a  href=\"editproduct?type=edit&id=" + o.getId() + "\"><i class=\"fa fa-edit\" style=\"color: blue\"></i></a>&nbsp;&nbsp;\n"
+                        + "                                            <a href=\"#\" onclick=\"deleteProduct(event, '" + o.getId() + "')\"><i class=\"fa fa-trash\" style=\"color: red\"></i></a>\n"
                         + "                                        </td>\n"
                         + "                                    </tr>");
             } catch (ParseException ex) {

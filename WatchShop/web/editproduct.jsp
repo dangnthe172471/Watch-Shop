@@ -26,7 +26,8 @@
         <script type="text/javascript" src="js/main.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
-        <script type="text/javascript" src="slick/slick.min.js"></script>        
+        <script type="text/javascript" src="slick/slick.min.js"></script>      
+        <script src="ckeditor/ckeditor.js"></script>
     </head> 
     <body style="font-family: Arial, sans-serif;">
         <jsp:include page="left.jsp" />
@@ -54,7 +55,7 @@
                                     <input type="text" id="name" style="width: 268px;" value="${p.name}" name="name" required oninput="validateName()"><br>
 
                                     <label for="date">Ngày sản xuất</label><br>
-                                    <input type="date" style="width: 268px;" value="${p.releaseDate}" name="date" required><br> 
+                                    <input type="date" style="width: 268px;" value="${p.releaseDate}" id="date" name="date" required><br> 
                                 </div>
 
                                 <div class="col-md-4">
@@ -159,13 +160,14 @@
                 }
             }
         </script>
+        <script>
+            const today = new Date();
+            const day = today.toISOString().split('T')[0]; // Format date to YYYY-MM-DD
+            document.getElementById('date').setAttribute('max', day);
+        </script> 
         <script src="js/script.js"></script>
         <script src="js/editproduct.js"></script>
 
-        <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
-        <!--<script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    
-        <!--ckeditor-->
         <script>CKEDITOR.replace('description');</script>
     </body>
 </html>

@@ -44,8 +44,8 @@
                 </div><br>
                 <hr>
                 <c:if test="${sessionScope.account.roleID==1}">
-                    <li class="${tab==null?'active':''}">
-                        <a href="AdminManage.jsp">
+                    <li class="${tab==1?'active':''}">
+                        <a href="statistical">
                             <i class='bx bxs-dashboard' ></i>
                             <span class="text">Thống kê</span>
                         </a>
@@ -109,7 +109,7 @@
             <nav class="navbar navbar-expand-md bg-white navbar-light">
                 <i class='bx bx-menu' ></i>  
                 <ul class="navbar-nav" style="margin-left: 850px;">
-                    <div class="dropdown row" style="margin-left: 10px">
+                    <div class="dropdown row" style="position: absolute; top: 10px;right: 50px;">
                         <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="AdminManage.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${sessionScope.account.user}</a></li> 
                         <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
                     </div>

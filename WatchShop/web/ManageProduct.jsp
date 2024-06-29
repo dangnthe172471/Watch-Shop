@@ -1,7 +1,7 @@
 <%-- 
-    Document   : ManageProduct
-    Created on : Jun 20, 2024, 1:31:30 PM
-    Author     : admin
+   Document   : ManageProduct
+   Created on : Jun 20, 2024, 1:31:30 PM
+   Author     : admin
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,6 +22,8 @@
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
         <script type="text/javascript" src="slick/slick.min.js"></script>
         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+        <script src="ckeditor/ckeditor.js"></script>
+
         <style>
             .desc:after {
                 content: ' ▼';
@@ -35,12 +37,80 @@
                 color: gray;
                 opacity: 0.5;
             }
+
+            @keyframes slide {
+                0% {
+                    right: -100%;
+                }
+                10% {
+                    right: 45px;
+                }
+                90% {
+                    right: 45px;
+                }
+                100% {
+                    right: -100%;
+                }
+            }
+
+            @keyframes slide-timeline {
+                0% {
+                    transform: translateX(100%);
+                }
+                100% {
+                    transform: translateX(-100%);
+                }
+            }
+
+            .notification {
+                display: none;
+                position: fixed;
+                font-size: 18px;
+                top: 60px;
+                right: 38px;
+                padding: 10px;
+                background: linear-gradient(90deg, #a8e063 60%, #28a745 100%);
+                color: white;
+                border-radius: 10px;
+                animation: slide 2s linear;
+            }
+
+            .timeline {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 5px;
+                overflow: hidden;
+            }
+
+            .timeline::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                background: linear-gradient(90deg, purple, violet);
+                animation: slide-timeline 4s linear infinite;
+            }
         </style>
     </head>
     <body>
         <jsp:include page="left.jsp" />
         <section id="content">
             <main>
+                <c:if test="${sessionScope.add!=null||sessionScope.edit!=null}">
+                    <div id="notification" class="notification">
+                        <c:if test="${sessionScope.add!=null}">
+                            Thêm sản phẩm thành công !
+                        </c:if>
+                        <c:if test="${sessionScope.edit!=null}">
+                            Chỉnh sửa sản phẩm thành công !
+                        </c:if>
+                        <div class="timeline" id="timeline"></div>
+                    </div>
+                </c:if>
                 <div class="head-title">
                     <div class="left">
                         <h1>Sản phẩm</h1>                      
@@ -91,7 +161,7 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th style="width: 30px; text-align: center;" onclick="sortTable(1)">
+                                    <th style="width: 110px; text-align: center;" onclick="sortTable(1)">
                                         Mã Sản phẩm&nbsp;<span id="arrow1" class="inactive"></span>
                                     </th>
 
@@ -311,6 +381,18 @@
         </script>   
         <script src="js/mngproduct.js"></script>           
         <script src="js/editproduct.js"></script>
+        <script src="js/script.js"></script>
+        <script>
+            window.onload = function () {
+                const notification = document.getElementById('notification');
+                notification.style.display = 'block';
+                notification.style.animation = 'slide 2.5s linear';
+
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 2000);
+            };
+        </script>
         <!--..-->      
         <script>
             function deleteProduct(event, id) {
@@ -391,10 +473,6 @@
             }
         </script>
 
-        <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
-        <!--<script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    
-        <!--ckeditor-->
         <script>CKEDITOR.replace('description');</script>
     </body>
 </html>
