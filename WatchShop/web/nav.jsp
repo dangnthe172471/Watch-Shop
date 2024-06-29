@@ -82,7 +82,7 @@
                 <ul class="main-menu">
                     <li><a href="home">Trang chủ</a></li>
                     <li style="margin-left: 30px;"><a href="search">Sản phẩm</a></li>                   
-                    <li style="margin-left: 30px;"><a href="search">Thương hiệu <i class="fa fa-caret-down fa-css"></i></a>
+                    <li style="margin-left: 30px;"><a style="color: white">Thương hiệu <i class="fa fa-caret-down fa-css"></i></a>
                         <ul class="sub-menu">
                             <c:forEach var="o" items="${listB}">                               
                                 <li><a href="search?bid=${o.bid}">${o.bname}</a></li>
