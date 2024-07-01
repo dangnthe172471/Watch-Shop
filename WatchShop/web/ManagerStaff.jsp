@@ -70,6 +70,7 @@
                 border-color: #dc3545;
             }
         </style>
+
     </head>
     <body>
         <jsp:include page="left.jsp" />
@@ -103,9 +104,19 @@
                             <table>
                                 <thead>
                                     <tr>
-
                                         <th>Avatar</th>
-                                        <th>Tên đăng nhập</th>
+                                        <th>
+                                            Tên đăng nhập
+                                            <form style="display:inline;" action="staff" method="get">
+                                                <button type="submit" name="sortField" value="user" class="sortable ${sortField == 'user' ? sortOrder : ''}" style="border: none; background: none;">
+                                                    <i class="fa fa-sort${sortField == 'user' ? (sortOrder == 'asc' ? '-asc' : '-desc') : ''}"></i>
+                                                    <input type="hidden" name="sortOrder" value="${sortField == 'user' && sortOrder == 'asc' ? 'desc' : 'asc'}">
+                                                    <input type="hidden" name="page" value="${currentPage}">
+                                                </button>
+                                            </form>
+                                        </th>
+
+
                                         <th>Email</th>
                                         <th>Số điện thoại</th>
                                         <th>Địa chỉ</th>
@@ -133,6 +144,33 @@
                         </form>
                     </div>                  
                 </div>
+                <c:if test="${totalPages > 1}">
+                    <form action="staff" method="get">
+                        <div class="clearfix row" style="margin: 10px -24px">
+                            <div class="hint-text" style="margin-left: 40px;">Hiển thị <b>${listacc.size()}</b> trong tổng  <b>${totalStaff}</b> thành viên</div>
+                            <ul class="pagination" style="margin-left: 200px;">
+                                <c:set var="prevPage" value="${currentPage - 1}" />
+                                <button name="page" value="${prevPage}" type="${currentPage > 1 ? 'submit' : 'button'}" style="width: 65px;height: 30px;border: 1px solid #007BFF;background-color: ${currentPage > 1 ? 'white' : '#9698ab'}">
+                                    Trước
+                                </button>
+                                <c:forEach begin="1" end="${totalPages}" var="i">
+                                    <li>
+                                        <button name="page" value="${i}" type="submit" style="width: 30px;height: 30px;margin: 0 2px;border: 1px solid #007BFF;background-color:${currentPage == i ? '#007BFF' : 'white'}">
+                                            ${i}
+                                        </button>
+                                    </li>
+                                </c:forEach>
+                                <c:set var="nextPage" value="${currentPage + 1}" />
+                                <button name="page" value="${nextPage}" type="${currentPage < totalPages ? 'submit' : 'button'}" style="width:65px;height: 30px;border: 1px solid #007BFF;background-color: ${currentPage < totalPages ? 'white' : '#9698ab'}">
+                                    Kế tiếp
+                                </button>
+                                <input type="hidden" name="sortField" value="${sortField}">
+                                <input type="hidden" name="sortOrder" value="${sortOrder}">
+                            </ul>
+                        </div>
+                    </form>
+                </c:if>
+
             </main>
             <!-- The Modal Add -->
             <form action="addstaff" method="post" id="addStaffForm">
@@ -143,12 +181,13 @@
                                 <h4 class="modal-title w-100">Thêm Nhân Viên</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
+                            <div id="errorBanner" class="alert alert-danger" style="display:none;"></div>
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="username">Tên đăng nhập:</label>
-                                     <div id="whitespaceMessage"></div>
+                                    <div id="whitespaceMessage"></div>
                                     <div id="usernameMessage" ></div>
-                                    <input type="text" class="form-control" name="user" id="username" required oninput="validateUsername()">
+                                    <input type="text" class="form-control" name="user" id="username" required  value="${param.user}" oninput="validateUsername()">
                                 </div>
                                 <div class="form-group">
                                     <label for="pass">Password:</label>
@@ -158,17 +197,17 @@
                                 <div class="form-group">
                                     <label for="email">Email:</label>
                                     <div id="emailMessage" ></div>
-                                    <input type="email" class="form-control" name="email" id="email" required oninput="validateEmail()">
+                                    <input type="email" class="form-control" name="email" id="email" required value="${param.email} oninput="validateEmail()">
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Phone:</label>
                                     <div id="phoneMessage" ></div>
-                                    <input type="text" class="form-control" name="phone" id="phoneNumber" required oninput="validatePhoneNumber()">
+                                    <input type="text" class="form-control" name="phone" id="phoneNumber" required value="${param.phone}" oninput="validatePhoneNumber()">
                                 </div>
                                 <div class="form-group">
                                     <label for="address">Address:</label>
                                     <div id="naddressMessage" "></div>
-                                    <input type="text" class="form-control" name="address" id="newaddress" required oninput="validateAddressStaff()">
+                                    <input type="text" class="form-control" name="address" id="newaddress" required value="${param.address}" oninput="validateAddressStaff()">
                                 </div>
                                 <div class="form-group" hidden>
                                     <label for="avatar">Avatar:</label>
@@ -186,7 +225,18 @@
         </section>
 
         <script type="text/javascript">
-            
+            $(document).ready(function () {
+                $('.addbtn').on('click', function () {
+                    $('#addmodal').modal('show');
+                });
+
+                // Tự động mở modal nếu có lỗi
+            <c:if test="${not empty errorMessage}">
+                $('#addmodal').modal('show');
+                $('#errorBanner').text('${errorMessage}').show();
+            </c:if>
+            });
+
             $(document).ready(function () {
                 $('.addbtn').on('click', function () {
                     $('#addmodal').modal('show');
@@ -216,3 +266,4 @@
         <script type="text/javascript" src="js/validation.js"></script>
         <script src="js/script.js"></script>
     </body>
+</html>

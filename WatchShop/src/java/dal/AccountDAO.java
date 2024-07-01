@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import model.Account;
 
@@ -76,6 +77,32 @@ public class AccountDAO extends DBContext {
             System.out.print("checkAccountExist:" + e.getMessage());
         }
         return null;
+    }
+    
+     public boolean checkAccountUser(String username) {
+        String sql = "SELECT [user] FROM Account WHERE [user] = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, username);
+            rs = st.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.print("checkAccountExist: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean checkEmailExist(String email) {
+        String sql = "SELECT [email] FROM Account WHERE [email] = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            rs = st.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.print("checkEmailExist: " + e.getMessage());
+        }
+        return false;
     }
 
     public void AddAccount(Account newUser) {
@@ -216,7 +243,7 @@ public class AccountDAO extends DBContext {
 
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, email);
-            ResultSet rs = st.executeQuery();
+             rs = st.executeQuery();
             if (rs.next()) {
                 System.out.println("Email found in database.");
                 return new Account(
@@ -247,7 +274,6 @@ public class AccountDAO extends DBContext {
         try {
             PreparedStatement st = connection.prepareStatement(sql);
 
-            // Thêm tiền tố "/img/" vào avatar nếu chưa có
             String avatarPath = account.getAvatar();
             if (!avatarPath.startsWith("img/")) {
                 avatarPath = "img/" + avatarPath;
@@ -431,4 +457,119 @@ public class AccountDAO extends DBContext {
         }
     }
 
+    public List<Account> getAllStaffSorted(String sortField, String sortOrder) {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Account WHERE roleID = 2 AND status = 0";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("avatar"),
+                        rs.getString("user"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getDouble("amount"),
+                        rs.getInt("bought"),
+                        rs.getString("Address"),
+                        rs.getInt("status"),
+                        rs.getInt("roleID"),
+                        rs.getString("token")
+                );
+                accounts.add(account);
+            }
+            if ("asc".equals(sortOrder)) {
+                accounts.sort(Comparator.comparing(a -> getFieldValue(a, sortField)));
+            } else {
+                accounts.sort(Comparator.comparing(a -> getFieldValue((Account) a, sortField)).reversed());
+            }
+        } catch (SQLException e) {
+            System.out.println("getAllStaffSorted: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    public List<Account> getAllBlockedStaffSorted(String sortField, String sortOrder) {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Account WHERE roleID = 2 AND status = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("avatar"),
+                        rs.getString("user"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getDouble("amount"),
+                        rs.getInt("bought"),
+                        rs.getString("Address"),
+                        rs.getInt("status"),
+                        rs.getInt("roleID"),
+                        rs.getString("token")
+                );
+                accounts.add(account);
+            }
+            if ("asc".equals(sortOrder)) {
+                accounts.sort(Comparator.comparing(a -> getFieldValue(a, sortField)));
+            } else {
+                accounts.sort(Comparator.comparing(a -> getFieldValue((Account) a, sortField)).reversed());
+            }
+        } catch (SQLException e) {
+            System.out.println("getAllBlockedStaffSorted: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    private Comparable getFieldValue(Account account, String fieldName) {
+        switch (fieldName) {
+            case "user":
+                return account.getUser();
+            // Thêm các trường khác nếu cần
+            default:
+                return account.getUser();
+        }
+    }
+
+    public List<Account> getStaffByPage(List<Account> sortedAccounts, int page, int pageSize) {
+        List<Account> pagedAccounts = new ArrayList<>();
+        int start = (page - 1) * pageSize;
+        int end = Math.min(start + pageSize, sortedAccounts.size());
+        for (int i = start; i < end; i++) {
+            pagedAccounts.add(sortedAccounts.get(i));
+        }
+        return pagedAccounts;
+    }
+
+    public int getTotalStaff() {
+        try {
+            String sql = "SELECT COUNT(*) FROM Account WHERE roleID = 2 AND status = 0";
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("getTotalStaff: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public int getTotalBlockedStaff() {
+        try {
+            String sql = "SELECT COUNT(*) FROM Account WHERE roleID = 2 AND status = 1";
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("getTotalBlockedStaff: " + e.getMessage());
+        }
+        return 0;
+    }
 }

@@ -61,12 +61,20 @@
                                 </ul>
                             </nav>
                         </div>
-                        <form action="staff">
+                        <form action="showstaffblock">
                             <table>
                                 <thead>
                                     <tr>
                                         <th>Avatar</th>
-                                        <th>Tên đăng nhập</th>
+                                        <th>
+                                            Tên đăng nhập
+                                            <button type="submit" name="sortField" value="user" class="sortable ${sortField == 'user' ? sortOrder : ''}" style="border: none; background: none;">
+                                                <i class="fa fa-sort${sortField == 'user' ? (sortOrder == 'asc' ? '-asc' : '-desc') : ''}"></i>
+                                                <input type="hidden" name="sortOrder" value="${sortField == 'user' && sortOrder == 'asc' ? 'desc' : 'asc'}">
+                                                <input type="hidden" name="page" value="${currentPage}">
+                                            </button>
+                                        </th>
+
                                         <th>Email</th>
                                         <th>Số điện thoại</th>
                                         <th>Địa chỉ</th>
@@ -92,6 +100,33 @@
                         </form>
                     </div>                  
                 </div>
+                <c:if test="${totalPages > 1}">
+                    <form action="showstaffblock" method="get">
+                        <div class="clearfix row" style="margin: 10px -24px">
+                            <div class="hint-text" style="margin-left: 40px;">Hiển thị <b>${blockedAccounts.size()}</b> trong tổng <b>${totalStaff}</b> thành viên</div>
+                            <ul class="pagination" style="margin-left: 200px;">
+                                <c:set var="prevPage" value="${currentPage - 1}" />
+                                <button name="page" value="${prevPage}" type="${currentPage > 1 ? 'submit' : 'button'}" style="width: 65px;height: 30px;border: 1px solid #007BFF;background-color: ${currentPage > 1 ? 'white' : '#9698ab'}">
+                                    Trước
+                                </button>
+                                <c:forEach begin="1" end="${totalPages}" var="i">
+                                    <li>
+                                        <button name="page" value="${i}" type="submit" style="width: 30px;height: 30px;margin: 0 2px;border: 1px solid #007BFF;background-color:${currentPage == i ? '#007BFF' : 'white'}">
+                                            ${i}
+                                        </button>
+                                    </li>
+                                </c:forEach>
+                                <c:set var="nextPage" value="${currentPage + 1}" />
+                                <button name="page" value="${nextPage}" type="${currentPage < totalPages ? 'submit' : 'button'}" style="width:65px;height: 30px;border: 1px solid #007BFF;background-color: ${currentPage < totalPages ? 'white' : '#9698ab'}">
+                                    Kế tiếp
+                                </button>
+                                <input type="hidden" name="sortField" value="${sortField}">
+                                <input type="hidden" name="sortOrder" value="${sortOrder}">
+                            </ul>
+                        </div>
+                    </form>
+                </c:if>
+
             </main>
         </section>
         <script type="text/javascript">
@@ -104,13 +139,13 @@
                 $.ajax({
                     url: 'searchblockedstaff',
                     type: 'GET',
-                    data: { searchText: searchText },
-                    success: function(data) {
+                    data: {searchText: searchText},
+                    success: function (data) {
                         $('#blocked-staff-table-body').html($(data).find('#blocked-staff-table-body').html());
                     }
                 });
             }
-             function restoreStaff(id) {
+            function restoreStaff(id) {
                 if (confirm('Bạn có muốn khôi phục nhân viên này?')) {
                     window.location = 'restorestaff?id=' + id;
                 }
