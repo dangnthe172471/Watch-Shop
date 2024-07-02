@@ -78,8 +78,8 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
-    
-     public boolean checkAccountUser(String username) {
+
+    public boolean checkAccountUser(String username) {
         String sql = "SELECT [user] FROM Account WHERE [user] = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -243,7 +243,7 @@ public class AccountDAO extends DBContext {
 
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, email);
-             rs = st.executeQuery();
+            rs = st.executeQuery();
             if (rs.next()) {
                 System.out.println("Email found in database.");
                 return new Account(
@@ -572,4 +572,101 @@ public class AccountDAO extends DBContext {
         }
         return 0;
     }
+
+    public List<Account> getAllShipperSorted(String sortField, String sortOrder) {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Account WHERE roleID = 3 AND status = 0";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("avatar"),
+                        rs.getString("user"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getDouble("amount"),
+                        rs.getInt("bought"),
+                        rs.getString("Address"),
+                        rs.getInt("status"),
+                        rs.getInt("roleID"),
+                        rs.getString("token")
+                );
+                accounts.add(account);
+            }
+            if ("asc".equals(sortOrder)) {
+                accounts.sort(Comparator.comparing(a -> getFieldValue(a, sortField)));
+            } else {
+                accounts.sort(Comparator.comparing(a -> getFieldValue((Account) a, sortField)).reversed());
+            }
+        } catch (SQLException e) {
+            System.out.println("getAllShipperSorted: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    public List<Account> getAllBlockedShipperSorted(String sortField, String sortOrder) {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Account WHERE roleID = 3 AND status = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("avatar"),
+                        rs.getString("user"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getDouble("amount"),
+                        rs.getInt("bought"),
+                        rs.getString("Address"),
+                        rs.getInt("status"),
+                        rs.getInt("roleID"),
+                        rs.getString("token")
+                );
+                accounts.add(account);
+            }
+            if ("asc".equals(sortOrder)) {
+                accounts.sort(Comparator.comparing(a -> getFieldValue(a, sortField)));
+            } else {
+                accounts.sort(Comparator.comparing(a -> getFieldValue((Account) a, sortField)).reversed());
+            }
+        } catch (SQLException e) {
+            System.out.println("getAllBlockedShipperSorted: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    public int getTotalShipper() {
+        try {
+            String sql = "SELECT COUNT(*) FROM Account WHERE roleID = 3 AND status = 0";
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("getTotalShipper: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public int getTotalBlockedShipper() {
+        try {
+            String sql = "SELECT COUNT(*) FROM Account WHERE roleID = 3 AND status = 1";
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("getTotalBlockedShipper: " + e.getMessage());
+        }
+        return 0;
+    }
+
 }

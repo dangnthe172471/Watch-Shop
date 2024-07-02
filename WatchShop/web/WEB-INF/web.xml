@@ -25,6 +25,25 @@
         <servlet-class>controller.BrandServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ShipperServlet</servlet-name>
+        <servlet-class>controller.ShipperServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowShipperDelete</servlet-name>
+        <servlet-class>controller.ShowShipperDelete</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddShipperServlet</servlet-name>
+        <servlet-class>controller.AddShipperServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RestoreShipperServlet</servlet-name>
+        <servlet-class>controller.RestoreShipperServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeletePermanentlyShipperServlet</servlet-name>
+        <servlet-class>controller.DeletePermanentlyShipperServlet</servlet-class>
+    <servlet>
         <servlet-name>AcceptServlet</servlet-name>
         <servlet-class>controller.AcceptServlet</servlet-class>
     </servlet>
@@ -241,6 +260,25 @@
         <url-pattern>/brand</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ShipperServlet</servlet-name>
+        <url-pattern>/shipper</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowShipperDelete</servlet-name>
+        <url-pattern>/showshipperblock</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddShipperServlet</servlet-name>
+        <url-pattern>/addshipper</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestoreShipperServlet</servlet-name>
+        <url-pattern>/restoreshipper</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletePermanentlyShipperServlet</servlet-name>
+        <url-pattern>/deletepermanentlyshipper</url-pattern>
+      <servlet-mapping>
         <servlet-name>AcceptServlet</servlet-name>
         <url-pattern>/accept</url-pattern>
     </servlet-mapping>
