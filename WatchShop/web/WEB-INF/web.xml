@@ -212,6 +212,10 @@
         <servlet-name>UpdateCategory</servlet-name>
         <servlet-class>controller.UpdateCategory</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckUserEmailServlet</servlet-name>
+        <servlet-class>controller.CheckUserEmailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -423,5 +427,9 @@
     <servlet-mapping>
         <servlet-name>UpdateCategory</servlet-name>
         <url-pattern>/updatecate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckUserEmailServlet</servlet-name>
+        <url-pattern>/checkUserEmail</url-pattern>
     </servlet-mapping>
 </web-app>
