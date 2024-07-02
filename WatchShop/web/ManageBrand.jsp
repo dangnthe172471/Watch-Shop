@@ -102,7 +102,7 @@
             </main>
 
             <!-- The Modal Add -->
-            <form action="addbrand" method="post" id="addBrandForm">
+            <form action="deletebrand" method="post" id="addBrandForm">
                 <div class="modal fade" id="addmodal">
                     <div class="modal-dialog">
                         <div class="modal-content">

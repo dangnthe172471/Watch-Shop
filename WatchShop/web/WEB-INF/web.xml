@@ -216,6 +216,10 @@
         <servlet-name>CheckUserEmailServlet</servlet-name>
         <servlet-class>controller.CheckUserEmailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Statistical3Servlet</servlet-name>
+        <servlet-class>controller.Statistical3Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -431,5 +435,9 @@
     <servlet-mapping>
         <servlet-name>CheckUserEmailServlet</servlet-name>
         <url-pattern>/checkUserEmail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Statistical3Servlet</servlet-name>
+        <url-pattern>/statistical3</url-pattern>
     </servlet-mapping>
 </web-app>

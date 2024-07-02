@@ -24,7 +24,7 @@ import model.OrderDetail;
  *
  * @author admin
  */
-public class Statistical2Servlet extends HttpServlet {
+public class Statistical3Servlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +43,10 @@ public class Statistical2Servlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Statistical2Servlet</title>");
+            out.println("<title>Servlet Statistical3Servlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Statistical2Servlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Statistical3Servlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,42 +66,31 @@ public class Statistical2Servlet extends HttpServlet {
             throws ServletException, IOException {
         StatisticalDAO sdao = new StatisticalDAO();
         BrandDAO bdao = new BrandDAO();
+        String year_raw = request.getParameter("year");
+        int y = Integer.parseInt(year_raw);
         int minYear = sdao.getMinYearOrder();
 
         LocalDate currentDate = LocalDate.now();
-
-        // Lấy năm hiện tại
         int maxYear = currentDate.getYear();
 
-        int[] year = new int[maxYear - minYear + 1];
+        int[] totalsByMonth = new int[12]; // Mảng chứa tổng số theo tháng, kích thước là 12 tháng
 
-        for (int i = minYear; i <= maxYear; i++) {
-            year[i - minYear] = sdao.getTotalByYear(i);
+        for (int i = 1; i <= 12; i++) {
+            totalsByMonth[i - 1] = sdao.getTotalByMonth(i, y);
         }
 
-        List<Account> listA = sdao.getTopTN();
-        List<Order> listO = sdao.getAllOrder();
-        List<OrderDetail> listOD = sdao.getAllOrderDetail();
+        List<OrderDetail> listOD = sdao.getOrderDetailByYear(y);
         List<Brand> listB = bdao.getAllBrand();
-        int[] data = new int[listB.size()];
-        for (int i = 0; i < listB.size(); i++) {
-            data[i] = sdao.getSumByBrandID(i+1);
-        }
 
-        request.setAttribute("listB", listB);
-
-        request.setAttribute("year", year);
+        request.setAttribute("totalsByMonth", totalsByMonth);
         request.setAttribute("minYear", minYear);
         request.setAttribute("maxYear", maxYear);
-        request.setAttribute("listA", listA);
-        request.setAttribute("listO", listO);
         request.setAttribute("listOD", listOD);
+        request.setAttribute("listB", listB);
+        request.setAttribute("year", y);
         request.setAttribute("tab", "1");
-        request.setAttribute("listBname", new Gson().toJson(listB));
-        request.setAttribute("data", new Gson().toJson(data));
-        request.setAttribute("years", new Gson().toJson(year));
-        request.getRequestDispatcher("statistical2.jsp").forward(request, response);
-
+        request.setAttribute("totalsByMonths", new Gson().toJson(totalsByMonth));
+        request.getRequestDispatcher("statistical3.jsp").forward(request, response);
     }
 
     /**
