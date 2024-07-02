@@ -80,6 +80,12 @@
                             <span class="text">Quản lý nhân viên</span>
                         </a>
                     </li>
+                    <li class="${tab==7?'active':''}">
+                        <a href="shipper">
+                            <i class='bx bxs-group' ></i>
+                            <span class="text">Quản lý nhân viên vận chuyển</span>
+                        </a>
+                    </li>
                 </c:if>
                 <c:if test="${sessionScope.account.roleID==2}">
                     <li class="${tab==null?'active':''}">
