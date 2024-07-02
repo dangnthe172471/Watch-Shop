@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,7 +19,6 @@ import jakarta.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.List;
 import model.Brand;
 import model.Category;
@@ -31,7 +29,6 @@ import model.Product;
  * @author admin
  */
 @MultipartConfig
-@WebServlet(name = "EditProductServlet", urlPatterns = {"/editproduct"})
 public class EditProductServlet extends HttpServlet {
 
     /**

@@ -10,7 +10,6 @@ import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,8 +18,6 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Brand;
 import model.Category;
 import model.Product;
@@ -29,7 +26,6 @@ import model.Product;
  *
  * @author admin
  */
-@WebServlet(name = "AjaxManageP", urlPatterns = {"/ajaxproduct"})
 public class AjaxManageP extends HttpServlet {
 
     /**

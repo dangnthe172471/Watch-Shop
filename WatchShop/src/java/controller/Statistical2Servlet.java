@@ -4,8 +4,8 @@
  */
 package controller;
 
+import com.google.gson.Gson;
 import dal.BrandDAO;
-import dal.CategoryDAO;
 import dal.StatisticalDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,16 +13,18 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.util.List;
+import model.Account;
 import model.Brand;
-import model.Category;
-import model.Product;
+import model.Order;
+import model.OrderDetail;
 
 /**
  *
  * @author admin
  */
-public class StatisticalServlet extends HttpServlet {
+public class Statistical2Servlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +43,10 @@ public class StatisticalServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet StatisticalServlet</title>");
+            out.println("<title>Servlet Statistical2Servlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet StatisticalServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Statistical2Servlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,23 +66,44 @@ public class StatisticalServlet extends HttpServlet {
             throws ServletException, IOException {
         StatisticalDAO sdao = new StatisticalDAO();
         BrandDAO bdao = new BrandDAO();
-        CategoryDAO cdao = new CategoryDAO();
-        int countAccount = sdao.countAccount();
-        int countOrder = sdao.countOrder();
-        int totalM = sdao.totalMoney();
-        Product p = sdao.getMax();
-        Product p1 = sdao.getMin();
+        int minYear = sdao.getMinYearOrder();
+        
+        LocalDate currentDate = LocalDate.now();
+        
+        // Lấy năm hiện tại
+        int maxYear = currentDate.getYear();
+        
+        int[] year = new int[maxYear - minYear + 1];
+
+        for (int i = minYear; i <= maxYear; i++) {
+            year[i - minYear] = sdao.getTotalByYear(i);
+        }
+        int ro = sdao.getSumByBrandID("1");
+        int ca = sdao.getSumByBrandID("2");
+        int au = sdao.getSumByBrandID("3");
+        int pa = sdao.getSumByBrandID("4");
+
+        
+        List<Account> listA = sdao.getTopTN();
+        List<Order> listO = sdao.getAllOrder();
+        List<OrderDetail> listOD = sdao.getAllOrderDetail();
         List<Brand> listB = bdao.getAllBrand();
-        List<Category> listC = cdao.getAllCategory();
-        request.setAttribute("p", p);
-        request.setAttribute("p1", p1);
+
+        request.setAttribute("year", year);
+        request.setAttribute("ro", ro);
+        request.setAttribute("ca", ca);
+        request.setAttribute("au", au);
+        request.setAttribute("pa", pa);
+        request.setAttribute("minYear", minYear);
+        request.setAttribute("maxYear", maxYear);
+        request.setAttribute("listA", listA);
+        request.setAttribute("listO", listO);
+        request.setAttribute("listOD", listOD);
         request.setAttribute("listB", listB);
-        request.setAttribute("listC", listC);
-        request.setAttribute("countAccount", countAccount);
-        request.setAttribute("countOrder", countOrder);
-        request.setAttribute("totalM", totalM);
         request.setAttribute("tab", "1");
-        request.getRequestDispatcher("AdminManage.jsp").forward(request, response);
+        request.setAttribute("years", new Gson().toJson(year));
+        request.getRequestDispatcher("statistical2.jsp").forward(request, response);
+
     }
 
     /**

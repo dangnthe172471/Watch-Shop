@@ -40,25 +40,31 @@
 
                 <ul class="box-info">
                     <li>
-                        <i class='bx bxs-calendar-check' ></i>
-                        <span class="text">
-                            <h3>${countOrder}</h3>
-                            <p>Tổng đặt hàng hoàn thành</p>
-                        </span>
+                        <a href="#" style="display: flex; text-align: left">
+                            <i class='bx bxs-calendar-check'></i>
+                            <span class="text" style="margin-left: 30px;">
+                                <h3>${countOrder}</h3>
+                                <p>Tổng đặt hàng hoàn thành</p>
+                            </span>
+                        </a>
                     </li>
                     <li>
-                        <i class='bx bxs-group' ></i>
-                        <span class="text">
-                            <h3>${countAccount}</h3>
-                            <p>Số khách hàng</p>
-                        </span>
+                        <a href="#" style="display: flex; text-align: left">
+                            <i class='bx bxs-group'></i>
+                            <span class="text" style="margin-left: 30px;">
+                                <h3>${countAccount}</h3>
+                                <p>Số khách hàng</p>
+                            </span>
+                        </a>
                     </li>
                     <li>
-                        <i class='bx bxs-dollar-circle' ></i>
-                        <span class="text">
-                            <h3><fmt:formatNumber value="${totalM}"/> vnđ</h3>
-                            <p>Tổng số tiền đã bán</p>
-                        </span>
+                        <a href="statistical2" style="display: flex; text-align: left">
+                            <i class='bx bxs-dollar-circle'></i>
+                            <span class="text" style="margin-left: 30px;">
+                                <h3><fmt:formatNumber value="${totalM}"/> vnđ</h3>
+                                <p>Tổng số tiền đã bán</p>
+                            </span> 
+                        </a>
                     </li>
                 </ul>
 

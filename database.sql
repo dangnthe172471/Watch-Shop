@@ -88,7 +88,7 @@ CREATE TABLE [dbo].[Status](
 CREATE TABLE [dbo].[Order](
 	[id] [int]  IDENTITY(1,1),
 	[aid] [int],
-	[date] [date],
+	[date] [nvarchar](max),
 	[dateShip] [nvarchar](max),
 	[timeShip] [nvarchar](max),
     [receivedDate] [nvarchar](max),
@@ -296,16 +296,16 @@ INSERT [dbo].[Status]([id], [status]) VALUES (5,N'Đã hủy')
 SET IDENTITY_INSERT [dbo].[Status] OFF
 
 INSERT [dbo].[Order] ([aid], [date], [dateShip],[timeShip], [receivedDate], [totalMoney], [email] , [phone], [address], [sid]) VALUES 
-(3, CAST(N'2020-06-12' AS Date), CAST(N'2020-06-14' AS Date), N'20:00', CAST(N'2020-06-14' AS Date), 64000000, N'user1@gmail.com', N'0123456789', N'Ha Noi', 4),
-(3, CAST(N'2021-05-05' AS Date), CAST(N'2021-05-07' AS Date), N'08:00', CAST(N'2020-06-14' AS Date), 90000000, N'user1@gmail.com', N'0123456789', N'Hai phong',4),
-(4, CAST(N'2021-10-12' AS Date), CAST(N'2021-10-15' AS Date), N'21:00', CAST(N'2020-06-14' AS Date), 32000000, N'user2@gmail.com', N'0123456789', N'Hue',4),
-(4, CAST(N'2021-12-12' AS Date), CAST(N'2020-06-14' AS Date), N'10:00', CAST(N'2021-12-12' AS Date), 90000000, N'user2@gmail.com', N'0123456789', N'Bac Giang',4),
-(3, CAST(N'2022-01-05' AS Date), CAST(N'2020-06-14' AS Date), N'12:00', CAST(N'2022-01-08' AS Date), 62000000, N'user1@gmail.com', N'0123456789', N'Hai Duong',4),
-(4, CAST(N'2022-03-12' AS Date), CAST(N'2020-06-14' AS Date), N'23:00', CAST(N'2022-03-12' AS Date), 64000000, N'user2@gmail.com', N'0123456789', N'Bac Ninh',4),
-(4, CAST(N'2022-08-05' AS Date), CAST(N'2020-06-14' AS Date), N'19:00', CAST(N'2022-08-08' AS Date), 60000000, N'user2@gmail.com', N'0123456789', N'Ninh Binh',3),
-(3, CAST(N'2022-12-12' AS Date), CAST(N'2020-06-14' AS Date), N'18:00', CAST(N'2022-12-14' AS Date), 32000000, N'user1@gmail.com', N'0123456789', N'Cao Bang',2),
-(3, CAST(N'2023-01-12' AS Date), CAST(N'2020-06-14' AS Date), N'15:00', CAST(N'2023-01-15' AS Date), 90000000, N'user1@gmail.com', N'0123456789', N'Ca Mau',1),
-(4, CAST(N'2023-02-05' AS Date), CAST(N'2020-06-14' AS Date), N'19:00', CAST(N'2023-02-07' AS Date), 124000000, N'user2@gmail.com', N'0123456789', N'Ha Long',1)
+(3, CAST(N'2020-06-12' AS Date), CAST(N'2020-06-16' AS Date), N'20:00', CAST(N'2020-06-16' AS Date), 64000000, N'user1@gmail.com', N'0123456789', N'Ha Noi', 4),
+(3, CAST(N'2020-10-01' AS Date), CAST(N'2020-10-08' AS Date), N'08:00', CAST(N'2020-10-08' AS Date), 90000000, N'user1@gmail.com', N'0123456789', N'Hai phong',4),
+(4, CAST(N'2021-10-12' AS Date), CAST(N'2021-10-16' AS Date), N'21:00', CAST(N'2021-10-16' AS Date), 32000000, N'user2@gmail.com', N'0123456789', N'Hue',4),
+(4, CAST(N'2021-12-12' AS Date), CAST(N'2021-12-18' AS Date), N'10:00', CAST(N'2021-12-18' AS Date), 90000000, N'user2@gmail.com', N'0123456789', N'Bac Giang',4),
+(3, CAST(N'2022-03-05' AS Date), CAST(N'2022-03-15' AS Date), N'12:00', CAST(N'2022-03-15' AS Date), 62000000, N'user1@gmail.com', N'0123456789', N'Hai Duong',4),
+(4, CAST(N'2023-03-12' AS Date), CAST(N'2023-03-15' AS Date), N'23:00', CAST(N'2023-03-15' AS Date), 64000000, N'user2@gmail.com', N'0123456789', N'Bac Ninh',4),
+(4, CAST(N'2023-08-05' AS Date), CAST(N'2023-08-10' AS Date), N'19:00', CAST(N'2023-08-10' AS Date), 60000000, N'user2@gmail.com', N'0123456789', N'Ninh Binh',3),
+(3, CAST(N'2024-01-01' AS Date), CAST(N'2024-01-06' AS Date), N'18:00', CAST(N'2024-01-06' AS Date), 32000000, N'user1@gmail.com', N'0123456789', N'Cao Bang',2),
+(3, CAST(N'2024-01-12' AS Date), CAST(N'2024-01-20' AS Date), N'15:00', CAST(N'2024-01-20' AS Date), 90000000, N'user1@gmail.com', N'0123456789', N'Ca Mau',1),
+(4, CAST(N'2024-02-05' AS Date), CAST(N'2024-02-10' AS Date), N'19:00', CAST(N'2024-02-10' AS Date), 124000000, N'user2@gmail.com', N'0123456789', N'Ha Long',1)
 
 INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (1,6,2,32000000)
 INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (2,10,3,30000000)

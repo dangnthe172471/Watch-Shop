@@ -8,18 +8,15 @@ import dal.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 import model.Category;
 
 /**
  *
  * @author quyld
  */
-@WebServlet(name = "AddCServlet", urlPatterns = {"/addcategory"})
 public class AddCServlet extends HttpServlet {
 
     /**

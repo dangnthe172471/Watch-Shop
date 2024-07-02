@@ -8,7 +8,6 @@ import dal.FeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +17,6 @@ import model.Feedback;
  *
  * @author admin
  */
-@WebServlet(name = "FeedbackServlet", urlPatterns = {"/feedback"})
 public class FeedbackServlet extends HttpServlet {
 
     /**
