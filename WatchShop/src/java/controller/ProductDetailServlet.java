@@ -11,7 +11,6 @@ import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +18,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Account;
 import model.Brand;
-import model.Cart;
 import model.Category;
 import model.Feedback;
 import model.Product;
@@ -28,7 +26,6 @@ import model.Product;
  *
  * @author admin
  */
-@WebServlet(name = "ProductDetailServlet", urlPatterns = {"/detail"})
 public class ProductDetailServlet extends HttpServlet {
 
     /**

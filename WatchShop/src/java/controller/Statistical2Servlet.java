@@ -4,24 +4,27 @@
  */
 package controller;
 
-import dal.AccountDAO;
+import com.google.gson.Gson;
+import dal.BrandDAO;
+import dal.StatisticalDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.util.List;
 import model.Account;
+import model.Brand;
+import model.Order;
+import model.OrderDetail;
 
 /**
  *
- * @author dung2
+ * @author admin
  */
-
-public class StaffServlet extends HttpServlet {
-
-    private static final int PAGE_SIZE = 10;
+public class Statistical2Servlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +43,10 @@ public class StaffServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet StaffServlet</title>");
+            out.println("<title>Servlet Statistical2Servlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet StaffServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Statistical2Servlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,33 +64,46 @@ public class StaffServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pageParam = request.getParameter("page");
-        int page = pageParam == null ? 1 : Integer.parseInt(pageParam);
+        StatisticalDAO sdao = new StatisticalDAO();
+        BrandDAO bdao = new BrandDAO();
+        int minYear = sdao.getMinYearOrder();
+        
+        LocalDate currentDate = LocalDate.now();
+        
+        // Lấy năm hiện tại
+        int maxYear = currentDate.getYear();
+        
+        int[] year = new int[maxYear - minYear + 1];
 
-        String sortField = request.getParameter("sortField");
-        String sortOrder = request.getParameter("sortOrder");
-
-        if (sortField == null || sortField.isEmpty()) {
-            sortField = "user"; 
+        for (int i = minYear; i <= maxYear; i++) {
+            year[i - minYear] = sdao.getTotalByYear(i);
         }
-        if (sortOrder == null || sortOrder.isEmpty()) {
-            sortOrder = "asc"; 
-        }
+        int ro = sdao.getSumByBrandID("1");
+        int ca = sdao.getSumByBrandID("2");
+        int au = sdao.getSumByBrandID("3");
+        int pa = sdao.getSumByBrandID("4");
 
-        AccountDAO dao = new AccountDAO();
-        List<Account> sortedAccounts = dao.getAllStaffSorted(sortField, sortOrder);
-        List<Account> pagedAccounts = dao.getStaffByPage(sortedAccounts, page, PAGE_SIZE);
-        int totalStaff = sortedAccounts.size();
-        int totalPages = (int) Math.ceil((double) totalStaff / PAGE_SIZE);
+        
+        List<Account> listA = sdao.getTopTN();
+        List<Order> listO = sdao.getAllOrder();
+        List<OrderDetail> listOD = sdao.getAllOrderDetail();
+        List<Brand> listB = bdao.getAllBrand();
 
-        request.setAttribute("listacc", pagedAccounts);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-        request.setAttribute("totalStaff", totalStaff);
-        request.setAttribute("sortField", sortField);
-        request.setAttribute("sortOrder", sortOrder);
-        request.setAttribute("tab", "6");
-        request.getRequestDispatcher("ManagerStaff.jsp").forward(request, response);
+        request.setAttribute("year", year);
+        request.setAttribute("ro", ro);
+        request.setAttribute("ca", ca);
+        request.setAttribute("au", au);
+        request.setAttribute("pa", pa);
+        request.setAttribute("minYear", minYear);
+        request.setAttribute("maxYear", maxYear);
+        request.setAttribute("listA", listA);
+        request.setAttribute("listO", listO);
+        request.setAttribute("listOD", listOD);
+        request.setAttribute("listB", listB);
+        request.setAttribute("tab", "1");
+        request.setAttribute("years", new Gson().toJson(year));
+        request.getRequestDispatcher("statistical2.jsp").forward(request, response);
+
     }
 
     /**

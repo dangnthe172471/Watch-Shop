@@ -7,7 +7,12 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import model.Account;
 import model.ImageProduct;
+import model.Order;
+import model.OrderDetail;
 import model.Product;
 
 /**
@@ -96,7 +101,7 @@ public class StatisticalDAO extends DBContext {
         }
         return null;
     }
-    
+
     public Product getMin() {
         String sql = """
                     select top 1 *
@@ -138,4 +143,178 @@ public class StatisticalDAO extends DBContext {
         }
         return null;
     }
+
+    public int getMinYearOrder() {
+        String sql = "SELECT YEAR(MIN(date)) FROM [Order] where sid = 4";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+
+    public int getTotalByYear(int year) {
+        String sql = "select sum (totalMoney) from [Order] where year(date) = ? and sid = 4";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, year);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+
+    public int getSumByBrandID(String bid) {
+        String sql = """
+                     select sum(sold) from product 
+                     where brandID=?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, bid);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+
+    public List<Account> getTopTN() {
+        List<Account> list = new ArrayList<>();
+        String sql = """
+                     SELECT TOP 3 *
+                     FROM [Account] 
+                     Where [roleID] =4
+                     order by bought desc""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new Account(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getDouble(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getInt(11),
+                        rs.getString(12)));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public List<Order> getAllOrder() {
+        List<Order> list = new ArrayList<>();
+        String sql = "Select * from [Order] o "
+                + "inner join Account a on (a.[id]=o.[aid])"
+                + "Where [sid] =4";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new Order(rs.getInt(1),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getDouble(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        new Account(rs.getInt(13),
+                                rs.getString(14),
+                                rs.getString(15),
+                                rs.getString(16),
+                                rs.getString(17),
+                                rs.getString(18),
+                                rs.getDouble(19),
+                                rs.getInt(20),
+                                rs.getString(21),
+                                rs.getInt(22),
+                                rs.getInt(23),
+                                rs.getString(24))));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public List<OrderDetail> getAllOrderDetail() {
+        List<OrderDetail> list = new ArrayList<>();
+        String sql = """
+                     select * FROM OrderDetail od
+                     INNER JOIN [Order] o ON o.id = od.oid
+                     INNER JOIN [Account] a ON a.id = o.aid
+                     INNER JOIN (Product p inner join ImageProduct [ip] on [ip].pid=p.id) ON p.id = od.pid""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new OrderDetail(
+                        rs.getInt(3),
+                        rs.getDouble(4),
+                        new Order(rs.getInt(5),
+                                rs.getString(7),
+                                rs.getString(8),
+                                rs.getString(9),
+                                rs.getString(10),
+                                rs.getDouble(11),
+                                rs.getString(12),
+                                rs.getString(13),
+                                rs.getString(14),
+                                rs.getString(15),
+                                rs.getInt(16),
+                                new Account(rs.getInt(17),
+                                        rs.getString(18),
+                                        rs.getString(19),
+                                        rs.getString(20),
+                                        rs.getString(21),
+                                        rs.getString(22),
+                                        rs.getDouble(23),
+                                        rs.getInt(24),
+                                        rs.getString(25),
+                                        rs.getInt(26),
+                                        rs.getInt(27),
+                                        rs.getString(28))),
+                        new Product(rs.getInt(29),
+                                rs.getString(30),
+                                rs.getString(31),
+                                rs.getDouble(32),
+                                rs.getInt(33),
+                                rs.getInt(34),
+                                rs.getDate(35),
+                                rs.getString(36),
+                                rs.getDouble(37),
+                                rs.getInt(38),
+                                rs.getInt(39),
+                                rs.getInt(40),
+                                rs.getInt(41),
+                                rs.getInt(42),
+                                new ImageProduct(rs.getInt(43),
+                                        rs.getInt(44),
+                                        rs.getString(45),
+                                        rs.getString(46),
+                                        rs.getString(47),
+                                        rs.getString(48)))));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
 }

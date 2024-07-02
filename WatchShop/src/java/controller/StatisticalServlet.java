@@ -10,7 +10,6 @@ import dal.StatisticalDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +22,6 @@ import model.Product;
  *
  * @author admin
  */
-@WebServlet(name = "StatisticalServlet", urlPatterns = {"/statistical"})
 public class StatisticalServlet extends HttpServlet {
 
     /**
