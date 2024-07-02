@@ -43,6 +43,7 @@
     <servlet>
         <servlet-name>DeletePermanentlyShipperServlet</servlet-name>
         <servlet-class>controller.DeletePermanentlyShipperServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>AcceptServlet</servlet-name>
         <servlet-class>controller.AcceptServlet</servlet-class>
@@ -278,7 +279,8 @@
     <servlet-mapping>
         <servlet-name>DeletePermanentlyShipperServlet</servlet-name>
         <url-pattern>/deletepermanentlyshipper</url-pattern>
-      <servlet-mapping>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AcceptServlet</servlet-name>
         <url-pattern>/accept</url-pattern>
     </servlet-mapping>
