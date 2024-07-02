@@ -8,20 +8,17 @@ import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.Account;
 
 /**
  *
  * @author dung2
  */
-
-public class StaffServlet extends HttpServlet {
-
-    private static final int PAGE_SIZE = 10;
+@WebServlet(name = "CheckUserEmailServlet", urlPatterns = {"/checkUserEmail"})
+public class CheckUserEmailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +37,10 @@ public class StaffServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet StaffServlet</title>");
+            out.println("<title>Servlet CheckUserEmailServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet StaffServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CheckUserEmailServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,35 +56,23 @@ public class StaffServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pageParam = request.getParameter("page");
-        int page = pageParam == null ? 1 : Integer.parseInt(pageParam);
-
-        String sortField = request.getParameter("sortField");
-        String sortOrder = request.getParameter("sortOrder");
-
-        if (sortField == null || sortField.isEmpty()) {
-            sortField = "user"; 
-        }
-        if (sortOrder == null || sortOrder.isEmpty()) {
-            sortOrder = "asc"; 
-        }
+        String type = request.getParameter("type");
+        String value = request.getParameter("value");
 
         AccountDAO dao = new AccountDAO();
-        List<Account> sortedAccounts = dao.getAllStaffSorted(sortField, sortOrder);
-        List<Account> pagedAccounts = dao.getStaffByPage(sortedAccounts, page, PAGE_SIZE);
-        int totalStaff = sortedAccounts.size();
-        int totalPages = (int) Math.ceil((double) totalStaff / PAGE_SIZE);
+        boolean exists = false;
 
-        request.setAttribute("listacc", pagedAccounts);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-        request.setAttribute("totalStaff", totalStaff);
-        request.setAttribute("sortField", sortField);
-        request.setAttribute("sortOrder", sortOrder);
-        request.setAttribute("tab", "6");
-        request.getRequestDispatcher("ManagerStaff.jsp").forward(request, response);
+        if ("user".equals(type)) {
+            exists = dao.checkAccountUser(value);
+        } else if ("email".equals(type)) {
+            exists = dao.checkEmailExist(value);
+        }
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"exists\": " + exists + "}");
     }
 
     /**

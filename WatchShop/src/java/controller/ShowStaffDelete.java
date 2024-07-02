@@ -20,6 +20,7 @@ import model.Account;
  * @author dung2
  */
 public class ShowStaffDelete extends HttpServlet {
+    private static final int PAGE_SIZE = 10; 
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -53,12 +54,33 @@ public class ShowStaffDelete extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       String pageParam = request.getParameter("page");
+        int page = pageParam == null ? 1 : Integer.parseInt(pageParam);
+
+        String sortField = request.getParameter("sortField");
+        String sortOrder = request.getParameter("sortOrder");
+
+        if (sortField == null || sortField.isEmpty()) {
+            sortField = "user"; 
+        }
+        if (sortOrder == null || sortOrder.isEmpty()) {
+            sortOrder = "asc"; 
+        }
+
         AccountDAO dao = new AccountDAO();
-        List<Account> blockedAccounts = dao.getBlockedStaff(); 
-        request.setAttribute("blockedAccounts", blockedAccounts);
+        List<Account> sortedAccounts = dao.getAllBlockedStaffSorted(sortField, sortOrder);
+        List<Account> pagedAccounts = dao.getStaffByPage(sortedAccounts, page, PAGE_SIZE);
+        int totalStaff = sortedAccounts.size();
+        int totalPages = (int) Math.ceil((double) totalStaff / PAGE_SIZE);
+
+        request.setAttribute("blockedAccounts", pagedAccounts);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("totalStaff", totalStaff);
+        request.setAttribute("sortField", sortField);
+        request.setAttribute("sortOrder", sortOrder);
         request.getRequestDispatcher("DeleteStaff.jsp").forward(request, response);
     }
 

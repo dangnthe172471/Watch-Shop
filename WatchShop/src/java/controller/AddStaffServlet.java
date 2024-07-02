@@ -74,6 +74,29 @@ public class AddStaffServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
         String avatar = request.getParameter("avatar");
+          AccountDAO dao = new AccountDAO();
+        String errorMessage = null;
+
+        // Kiểm tra user đã tồn tại chưa
+        if (dao.checkAccountUser(user)) {
+            errorMessage = "Tên đăng nhập đã tồn tại.";
+        }
+
+        // Kiểm tra email đã tồn tại chưa
+        if (dao.checkEmailExist(email)) {
+            errorMessage = "Email đã tồn tại.";
+        }
+
+        if (errorMessage != null) {
+            request.setAttribute("errorMessage", errorMessage);
+            request.setAttribute("user", user);
+            request.setAttribute("email", email);
+            request.setAttribute("phone", phone);
+            request.setAttribute("address", address);
+            request.setAttribute("avatar", avatar);
+            request.getRequestDispatcher("ManagerStaff.jsp").forward(request, response);
+            return;
+        }
 
         Account newStaff = new Account();
         newStaff.setUser(user);
@@ -84,8 +107,6 @@ public class AddStaffServlet extends HttpServlet {
         newStaff.setAvatar(avatar);
         newStaff.setRoleID(2); 
         newStaff.setStatus(0);
-
-        AccountDAO dao = new AccountDAO();
         dao.AddStaff(newStaff);
 
         response.sendRedirect("staff");
