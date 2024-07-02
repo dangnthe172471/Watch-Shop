@@ -12,7 +12,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +23,6 @@ import model.Account;
  *
  * @author dung2
  */
-@WebServlet(name = "UpdateAvatar", urlPatterns = {"/updateavatar"})
 @MultipartConfig
 public class UpdateAvatar extends HttpServlet {
 

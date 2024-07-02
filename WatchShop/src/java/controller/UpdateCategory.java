@@ -8,7 +8,6 @@ import dal.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +17,6 @@ import model.Category;
  *
  * @author quyld
  */
-@WebServlet(name = "UpdateCategory", urlPatterns = {"/updatecate"})
 public class UpdateCategory extends HttpServlet {
 
     /**

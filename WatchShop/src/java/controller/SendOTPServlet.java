@@ -4,7 +4,6 @@ import dal.AccountDAO;
 import java.io.IOException;
 import java.util.Random;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,7 +11,6 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import model.Email;
 
-@WebServlet(name = "SendOTPServlet", urlPatterns = {"/sendOTP"})
 public class SendOTPServlet extends HttpServlet {
 
     private final AccountDAO accountDAO = new AccountDAO();
