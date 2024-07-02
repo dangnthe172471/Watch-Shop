@@ -7,6 +7,7 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
@@ -171,13 +172,13 @@ public class StatisticalDAO extends DBContext {
         return 0;
     }
 
-    public int getSumByBrandID(String bid) {
+    public int getSumByBrandID(int bid) {
         String sql = """
                      select sum(sold) from product 
                      where brandID=?""";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, bid);
+            st.setInt(1, bid);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -317,4 +318,100 @@ public class StatisticalDAO extends DBContext {
         return list;
     }
 
+    public int getTotalByMonth(int month, int year) {
+        String sql = "select sum (totalMoney) from [Order] where MONTH(date)=? and year(date) = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, month);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+    
+    public List<OrderDetail> getOrderDetailByYear(int year) {
+        List<OrderDetail> list = new ArrayList<>();
+        String sql = """
+                     select * FROM OrderDetail od
+                     INNER JOIN [Order] o ON o.id = od.oid
+                     INNER JOIN [Account] a ON a.id = o.aid
+                     INNER JOIN (Product p inner join ImageProduct [ip] on [ip].pid=p.id) ON p.id = od.pid
+                     Where year(date) = ?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, year);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                list.add(new OrderDetail(
+                        rs.getInt(3),
+                        rs.getDouble(4),
+                        new Order(rs.getInt(5),
+                                rs.getString(7),
+                                rs.getString(8),
+                                rs.getString(9),
+                                rs.getString(10),
+                                rs.getDouble(11),
+                                rs.getString(12),
+                                rs.getString(13),
+                                rs.getString(14),
+                                rs.getString(15),
+                                rs.getInt(16),
+                                new Account(rs.getInt(17),
+                                        rs.getString(18),
+                                        rs.getString(19),
+                                        rs.getString(20),
+                                        rs.getString(21),
+                                        rs.getString(22),
+                                        rs.getDouble(23),
+                                        rs.getInt(24),
+                                        rs.getString(25),
+                                        rs.getInt(26),
+                                        rs.getInt(27),
+                                        rs.getString(28))),
+                        new Product(rs.getInt(29),
+                                rs.getString(30),
+                                rs.getString(31),
+                                rs.getDouble(32),
+                                rs.getInt(33),
+                                rs.getInt(34),
+                                rs.getDate(35),
+                                rs.getString(36),
+                                rs.getDouble(37),
+                                rs.getInt(38),
+                                rs.getInt(39),
+                                rs.getInt(40),
+                                rs.getInt(41),
+                                rs.getInt(42),
+                                new ImageProduct(rs.getInt(43),
+                                        rs.getInt(44),
+                                        rs.getString(45),
+                                        rs.getString(46),
+                                        rs.getString(47),
+                                        rs.getString(48)))));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public static void main(String[] args) {
+        StatisticalDAO sdao = new StatisticalDAO();
+        BrandDAO bdao = new BrandDAO();
+        int minYear = sdao.getMinYearOrder();
+
+        LocalDate currentDate = LocalDate.now();
+
+        // Lấy năm hiện tại
+        int maxYear = currentDate.getYear();
+
+        int[] year = new int[maxYear*12 - minYear*12 + 1];
+
+        for (int i = 1; i <= 12; i++) {
+            year[i - 1] = sdao.getTotalByMonth(i, 2021);
+        }
+    }
 }

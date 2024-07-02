@@ -48,12 +48,6 @@
                         </button>    
                     </div>
                 </div>
-                <select>
-                    <c:forEach begin="${minYear}" end="${maxYear}" var="i">
-                        <option>${i}</option>
-                        ${year[i - minYear]}
-                    </c:forEach>
-                </select>
                 <div class="row">
                     <div class="col-md-7">
                         <div
@@ -83,6 +77,7 @@
                     </div>
                 </div>
 
+                <a class="btn btn-primary" href="statistical3?year=${maxYear}" style="margin: 20px 320px;">Chi tiết</a>
             </main>
             <!-- MAIN -->
             <table id="tableExcel" style="display:none">
@@ -130,19 +125,25 @@
     </body>
     <script src="js/script.js"></script>
     <script src="js/table.js"></script>
-    <script src="js/sheet.js"></script>
+
     <script>
         google.charts.load('current', {'packages': ['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            const data = google.visualization.arrayToDataTable([
-                ['Đồng hồ', 'Mh1'],
-                ['Rolex', ${requestScope.ro}],
-                ['Cartier', ${requestScope.ca}],
-                ['Audemars Piguet', ${requestScope.au}],
-                ['Patek Philippe', ${requestScope.pa}]
-            ]);
+            const listB = ${listBname};
+            const datatable = ${data};
+            const charData = [['Watch', 'Mh1']];
+            for (let i = 0; i < listB.length; i++) {
+                const brand = listB[i];
+                const sum = datatable[i];
+                if (sum === 0) {
+                    charData.push([brand.bname, 1]);
+                } else {
+                    charData.push([brand.bname, sum]);
+                }
+            }
+            const data = google.visualization.arrayToDataTable(charData);
 
             const options = {
                 title: 'Tỷ lệ đồng hồ bán được',
@@ -160,6 +161,7 @@
 
         const labels = [];
         const data = [];
+
         for (let i = minYear; i <= maxYear; i++) {
             labels.push(i);
             data.push(yearData[i - minYear]);
@@ -176,10 +178,18 @@
                     }]
             },
             options: {
-                responsive: true
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                            ticks: {
+                                callback: function (value) {
+                                    return value.toLocaleString('vi-VN'); // Định dạng số trên trục y
+                                }
+                            }
+                        }]
+                }
             }
         });
-    </script>
 
-</script>
+    </script>
 </html>
