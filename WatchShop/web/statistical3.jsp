@@ -28,6 +28,7 @@
         <script type="text/javascript" src="slick/slick.min.js"></script>  
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
         <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     </head>
@@ -53,8 +54,9 @@
                         </c:forEach>
                     </select>
                 </form>
-                <div class="container">
-                    <canvas id="myChart"></canvas>
+                <div class="row">
+                    <canvas id="myChart" style="width:100%;max-width:610px;height: 500px;"></canvas>
+                    <div id="myChart1" style="width:100%;max-width:610px;height: 500px;"></div>
                 </div>
             </main>
             <!-- MAIN -->
@@ -97,7 +99,7 @@
     </body>
     <script>
         // Lấy dữ liệu JSON từ servlet và parse nó
-        var monthData = JSON.parse('${totalsByMonths}');
+        var monthData = ${totalsByMonths};
         var yValues = [];
 
         for (let i = 0; i < 12; i++) {
@@ -133,6 +135,34 @@
                 }
             }
         });
+    </script>
+    <script>
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+              const listB = ${listBname};
+              const datatable = ${data};
+            const charData = [['Watch', 'Mh1']];
+            for (let i = 0; i < listB.length; i++) {
+                const brand = listB[i];
+                const sum = datatable[i];
+                if (sum === 0) {
+                    charData.push([brand.bname, 0]);
+                } else {
+                    charData.push([brand.bname, sum]);
+                }
+            }
+            const data = google.visualization.arrayToDataTable(charData);
+
+            const options = {
+                title: 'Tỷ lệ đồng hồ bán được',
+                is3D: false
+            };
+
+            const chart = new google.visualization.PieChart(document.getElementById('myChart1'));
+            chart.draw(data, options);
+        }
     </script>
     <script src="js/script.js"></script>
     <script src="js/table.js"></script>

@@ -7,7 +7,6 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
@@ -36,7 +35,7 @@ public class StatisticalDAO extends DBContext {
     }
 
     public int countOrder() {
-        String sql = "SELECT COUNT(*) FROM [Order] where sid = 4";
+        String sql = "SELECT COUNT(*) FROM [Order]";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -49,7 +48,7 @@ public class StatisticalDAO extends DBContext {
     }
 
     public int totalMoney() {
-        String sql = "SELECT SUM(totalMoney) FROM [Order] where sid = 4";
+        String sql = "SELECT SUM(totalMoney) FROM [Order]";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -146,7 +145,7 @@ public class StatisticalDAO extends DBContext {
     }
 
     public int getMinYearOrder() {
-        String sql = "SELECT YEAR(MIN(date)) FROM [Order] where sid = 4";
+        String sql = "SELECT YEAR(MIN(date)) FROM [Order]";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -159,7 +158,7 @@ public class StatisticalDAO extends DBContext {
     }
 
     public int getTotalByYear(int year) {
-        String sql = "select sum (totalMoney) from [Order] where year(date) = ? and sid = 4";
+        String sql = "select sum (totalMoney) from [Order] where year(date) = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, year);
@@ -220,8 +219,7 @@ public class StatisticalDAO extends DBContext {
     public List<Order> getAllOrder() {
         List<Order> list = new ArrayList<>();
         String sql = "Select * from [Order] o "
-                + "inner join Account a on (a.[id]=o.[aid])"
-                + "Where [sid] =4";
+                + "inner join Account a on (a.[id]=o.[aid])";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -332,7 +330,25 @@ public class StatisticalDAO extends DBContext {
         }
         return 0;
     }
-    
+
+    public int getSumByBrandIDByYear(int bid, int year) {
+        String sql = """
+                     select sum(sold) from product p
+                     inner join ([Order] o inner join [OrderDetail] od on (o.id=od.oid)) on (od.pid= p.id)
+                     where p.brandID=? and year(o.date) =  ?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, bid);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+
     public List<OrderDetail> getOrderDetailByYear(int year) {
         List<OrderDetail> list = new ArrayList<>();
         String sql = """
@@ -398,20 +414,4 @@ public class StatisticalDAO extends DBContext {
         return list;
     }
 
-    public static void main(String[] args) {
-        StatisticalDAO sdao = new StatisticalDAO();
-        BrandDAO bdao = new BrandDAO();
-        int minYear = sdao.getMinYearOrder();
-
-        LocalDate currentDate = LocalDate.now();
-
-        // Lấy năm hiện tại
-        int maxYear = currentDate.getYear();
-
-        int[] year = new int[maxYear*12 - minYear*12 + 1];
-
-        for (int i = 1; i <= 12; i++) {
-            year[i - 1] = sdao.getTotalByMonth(i, 2021);
-        }
-    }
 }

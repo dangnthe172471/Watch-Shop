@@ -286,15 +286,39 @@
         <jsp:include page="nav2.jsp"/>
         <script src="js/detail.js"></script>
         <script>
-                                function checkNum(input) {
+                                function addCart(id) {
+                                    var input = document.getElementById("numInput");
                                     var maxValue = parseInt(input.getAttribute("max"));
-                                    var value = parseInt(input.value);
-                                    if (value > maxValue) {
-                                        input.value = maxValue;
-                                    } else if (value < 1) {
-                                        input.value = 1;
+                                    var error = document.getElementById("errCart");
+                                    if (maxValue <= 0 || parseInt(input.value) > maxValue) {
+                                        error.style.display = '';
+                                        return;
+                                    } else {
+                                        if (parseInt(input.value) > maxValue) {
+                                            input.value = maxValue;
+                                        }
+                                        // Tạo box thông báo
+                                        var notification = document.getElementById('notification');
+                                        notification.style.display = 'block';
+                                        notification.style.animation = 'slide 1.1s linear';
+
+                                        setTimeout(function () {
+                                            document.f.action = "buy?id=" + id;
+                                            document.f.submit();
+                                        }, 1000);
                                     }
                                 }
+        </script>
+        <script>
+            function checkNum(input) {
+                var maxValue = parseInt(input.getAttribute("max"));
+                var value = parseInt(input.value);
+                if (value > maxValue) {
+                    input.value = maxValue;
+                } else if (value < 1) {
+                    input.value = 1;
+                }
+            }
         </script>
         <script>
             function deleteFeedback(event, id, pid) {

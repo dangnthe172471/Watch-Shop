@@ -127,11 +127,13 @@
                                             </div>
                                         </div>
                                     </div> 
-                                    <div style="margin-left: 250px;color: red;font-size: 20px;font-weight: bold">${mess}</div>
+                                    <c:if test="${error!=null}">
+                                        <div style="margin-left: 250px;color: red;font-size: 20px;font-weight: bold">Tài khoản của bạn không đủ</div>
+                                    </c:if>
                                 </div>
                                 <c:if test="${sessionScope.account==null}">
                                     <a href="checkout?pttt=ttweb"><button class="btn btn-lg btn-block btn-checkout text-uppercase text-white" id="btnCheckout"
-                                                            style="background: #F5A623;width: 133%;margin-left: 5px;">Đặt mua</button></a> 
+                                                                          style="background: #F5A623;width: 133%;margin-left: 5px;">Đặt mua</button></a> 
                                     </c:if>
                             </div>
 
@@ -162,17 +164,17 @@
                                                         <input type="text" id="fullname" class="form-control" value="${sessionScope.name!=null?sessionScope.name:sessionScope.account.user}"
                                                                placeholder="Nhập họ và tên" name="name" required autofocus oninput="validateFullName()">
                                                     </div>
-                                                               
+
                                                     <div class="form-label-group"><div id="phoneMessage" style="width: 200%"></div>
                                                         <input type="text" id="phoneNumber" class="form-control" value="${sessionScope.phone!=null?sessionScope.phone:sessionScope.account.phone}" 
                                                                placeholder="Nhập số điện thoại" name="phone" required oninput="validatePhoneNumber()">
                                                     </div>
-                                                               
+
                                                     <div class="form-label-group"><div id="emailMessage" style="width: 200%"></div>
                                                         <input type="email" id="email" class="form-control" value="${sessionScope.email!=null?sessionScope.email:sessionScope.account.email}" 
                                                                placeholder="Nhập địa chỉ email" name="email" required oninput="validateEmail()">
                                                     </div>
-                                                               
+
                                                     <div class="form-label-group"><div id="addressMessage" style="width: 200%"></div>
                                                         <input type="text" id="address" class="form-control" value="${sessionScope.address!=null?sessionScope.address:sessionScope.account.address}" 
                                                                placeholder="Nhập Địa chỉ giao hàng" name="address" required oninput="validateAddress()">
@@ -181,11 +183,11 @@
                                                     <div class="form-label-group"><label>Chọn ngày muốn nhận hàng</label>
                                                         <input type="date" id="dateShip" id="address" class="form-control" value="${sessionScope.dateShip!=null?sessionScope.dateShip:''}" name="dateShip">
                                                     </div>
-                                                    
+
                                                     <div class="form-label-group"><label>Chọn khung giờ nhận hàng</label>
                                                         <input type="time" class="form-control" value="${sessionScope.timeShip!=null?sessionScope.timeShip:''}" name="timeShip">
                                                     </div>  
-                                                    
+
                                                     <div class="form-label-group">
                                                         <textarea type="text" id="inputNote" class="form-control"
                                                                   placeholder="Nhập ghi chú (Nếu có)" name="note">${sessionScope.note!=null?sessionScope.note:''}</textarea>
@@ -251,13 +253,20 @@
         <jsp:include page="nav2.jsp"/>
         <script src="js/cart.js"></script>
         <script>
-            function checkout() {
-                var x = document.getElementById("btnCheckout");
-                var y = document.getElementById("khoimua");
-                x.style.display = "none";
-                y.style.display = "";
-            }
+                                            function checkout() {
+                                                var x = document.getElementById("btnCheckout");
+                                                var y = document.getElementById("khoimua");
+                                                x.style.display = "none";
+                                                y.style.display = "";
+                                            }
         </script>
-   
+        <%
+            session.setAttribute("error", "error");
+        %>
+        <script type="text/javascript">
+            setTimeout(function () {
+            <% session.removeAttribute("error"); %>
+            }, 1000);
+        </script>
     </body>
 </html>

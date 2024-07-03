@@ -93,7 +93,6 @@ public class CheckoutServlet extends HttpServlet {
             request.getRequestDispatcher("vnpay_pay.jsp").forward(request, response);
         }
     }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -144,8 +143,8 @@ public class CheckoutServlet extends HttpServlet {
                     session.setAttribute("size", 0);
                     response.sendRedirect("thanks.jsp");
                 } else {
-                    request.setAttribute("mess", "Tài khoản của bạn không đủ");
-                    request.getRequestDispatcher("Cart.jsp").forward(request, response);
+                    session.setAttribute("error", "error");
+                    response.sendRedirect("Cart.jsp");
                 }
             } else {
                 session.setAttribute("ttc", "ttc");
