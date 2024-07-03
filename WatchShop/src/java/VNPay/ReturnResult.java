@@ -84,6 +84,16 @@ public class ReturnResult extends HttpServlet {
         if (note == null) {
             note = "";
         }
+
+        Object ad = session.getAttribute("add");
+        String add = "";
+        if (ad != null) {
+            add = (String) ad;
+            if (add.equals("add")) {
+                doPost(request, response);
+            }
+        }
+
         LocalDateTime currentDateTime = LocalDateTime.now();
         if (o != null) {
             cart = (Cart) o;
@@ -121,6 +131,7 @@ public class ReturnResult extends HttpServlet {
                     padao.addPayment(p);
                     if (vnp_TransactionStatus.equals("00")) {
                         odao.addOrder(acount, cart, email, phone, address, note, dateShip, timeShip);
+                        odao.updateBought(acount, cart);
                         EmailOrder handleEmail = new EmailOrder();
                         String sub = handleEmail.subjectOrder(name);
                         String msg = handleEmail.messageOrder(currentDateTime, formatNumber(cart.getTotalMoney()), phone, name, address, note, cart);
@@ -165,7 +176,58 @@ public class ReturnResult extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession(true);
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Account acount = null;
+        Object a = session.getAttribute("account");
+        if (a != null) {
+            acount = (Account) a;
+            String vnp_TxnRef = request.getParameter("vnp_TxnRef");
+            String vnp_Amount = request.getParameter("vnp_Amount");
+            vnp_Amount = vnp_Amount.substring(0, vnp_Amount.length() - 2);
+            String vnp_OrderInfo = request.getParameter("vnp_OrderInfo");
+            String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
+            String vnp_TransactionNo = request.getParameter("vnp_TransactionNo");
+            String vnp_BankCode = request.getParameter("vnp_BankCode");
+            String vnp_PayDate_raw = request.getParameter("vnp_PayDate");
+            String vnp_TransactionStatus = request.getParameter("vnp_TransactionStatus");
+
+            PaymentDAO padao = new PaymentDAO();
+            // Định dạng đầu vào tương ứng với chuỗi ngày tháng ban đầu
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+
+            // Định dạng đầu ra theo yêu cầu
+            SimpleDateFormat outputFormatDTB = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat outputFormatWeb = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            try {
+                // Chuyển chuỗi ngày tháng thành đối tượng Date
+                Date date = inputFormat.parse(vnp_PayDate_raw);
+
+                // Chuyển đối tượng Date thành chuỗi định dạng mong muốn
+                String vnp_PayDateWeb = outputFormatWeb.format(date);
+                String vnp_PayDateDTB = outputFormatDTB.format(date);
+                request.setAttribute("vnp_PayDate", vnp_PayDateWeb);
+
+                Payment p = new Payment("", vnp_TxnRef, vnp_Amount, vnp_OrderInfo, vnp_ResponseCode, vnp_TransactionNo, vnp_BankCode, vnp_PayDateDTB, vnp_TransactionStatus, acount.getId());
+                padao.addPayment(p);
+                if (vnp_TransactionStatus.equals("00")) {
+                    padao.updateAmount(acount, Double.parseDouble(vnp_Amount));
+                    session.removeAttribute("add");
+                }
+            } catch (ParseException e) {
+            }
+            request.setAttribute("addM", "addM");
+            request.setAttribute("vnp_TxnRef", vnp_TxnRef);
+            request.setAttribute("vnp_Amount", vnp_Amount);
+            request.setAttribute("vnp_OrderInfo", vnp_OrderInfo);
+            request.setAttribute("vnp_ResponseCode", vnp_ResponseCode);
+            request.setAttribute("vnp_TransactionNo", vnp_TransactionNo);
+            request.setAttribute("vnp_BankCode", vnp_BankCode);
+            request.setAttribute("vnp_TransactionStatus", vnp_TransactionStatus);
+            request.getRequestDispatcher("thanks.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("login");
+        }
     }
 
     /**

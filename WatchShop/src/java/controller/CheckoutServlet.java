@@ -91,8 +91,13 @@ public class CheckoutServlet extends HttpServlet {
             session.setAttribute("timeShip", timeShip);
             session.setAttribute("note", note);
             request.getRequestDispatcher("vnpay_pay.jsp").forward(request, response);
+        } else if (pttt.equals("add")) {
+            HttpSession session = request.getSession();
+            session.setAttribute("add", "add");
+            request.getRequestDispatcher("vnpay_add.jsp").forward(request, response);
         }
     }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
