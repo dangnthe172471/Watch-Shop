@@ -4,23 +4,25 @@
  */
 package controller;
 
-import dal.AccountDAO;
+import dal.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Account;
+import model.OrderDetailWithImage;
 
 /**
  *
  * @author dung2
  */
-public class ShipperServlet extends HttpServlet {
-
-    private static final int PAGE_SIZE = 10;
+@WebServlet(name = "OrderHistoryServlet", urlPatterns = {"/orderHistory"})
+public class OrderHistoryServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +41,10 @@ public class ShipperServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ShipperServlet</title>");
+            out.println("<title>Servlet OrderHistoryServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ShipperServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet OrderHistoryServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,33 +62,25 @@ public class ShipperServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pageParam = request.getParameter("page");
-        int page = pageParam == null ? 1 : Integer.parseInt(pageParam);
-
-        String sortField = request.getParameter("sortField");
-        String sortOrder = request.getParameter("sortOrder");
-
-        if (sortField == null || sortField.isEmpty()) {
-            sortField = "user";
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            response.sendRedirect("Login.jsp");
+            return;
         }
-        if (sortOrder == null || sortOrder.isEmpty()) {
-            sortOrder = "asc";
+        String username = account.getUser(); 
+        String statusFilter = request.getParameter("status"); 
+        OrderDAO orderDAO = new OrderDAO();
+        List<OrderDetailWithImage> orders;
+        if (statusFilter == null || statusFilter.isEmpty()) {
+            orders = orderDAO.getOrdersByUsername(username);
+        } else {
+            orders = orderDAO.getOrdersByUsernameAndStatus(username, statusFilter);
         }
-
-        AccountDAO dao = new AccountDAO();
-        List<Account> sortedAccounts = dao.getAllShipperSorted(sortField, sortOrder);
-        List<Account> pagedAccounts = dao.getStaffByPage(sortedAccounts, page, PAGE_SIZE);
-        int totalStaff = sortedAccounts.size();
-        int totalPages = (int) Math.ceil((double) totalStaff / PAGE_SIZE);
-
-        request.setAttribute("listShipper", pagedAccounts);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-        request.setAttribute("totalStaff", totalStaff);
-        request.setAttribute("sortField", sortField);
-        request.setAttribute("sortOrder", sortOrder);
-        request.setAttribute("tab", "7");
-        request.getRequestDispatcher("ManagerShipper.jsp").forward(request, response);
+        request.setAttribute("tab", "5");
+        request.setAttribute("orders", orders);
+        request.setAttribute("statusFilter", statusFilter); 
+        request.getRequestDispatcher("HistoryOrder.jsp").forward(request, response);
     }
 
     /**
