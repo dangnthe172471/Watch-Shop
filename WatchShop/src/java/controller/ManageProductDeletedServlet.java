@@ -13,10 +13,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.List;
 import model.Brand;
@@ -27,7 +23,7 @@ import model.Product;
  *
  * @author admin
  */
-public class MangeProductServlet extends HttpServlet {
+public class ManageProductDeletedServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +42,10 @@ public class MangeProductServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet MangeProductServlet</title>");
+            out.println("<title>Servlet ManageProductDeletedServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet MangeProductServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageProductDeletedServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -125,13 +121,13 @@ public class MangeProductServlet extends HttpServlet {
                 ? null : Date.valueOf(fromdate_raw);
         todate = (todate_raw == null || todate_raw.equals(""))
                 ? null : Date.valueOf(todate_raw);
-        int countP = pdao.countManageProduct(bid, cid1, cid2, cid3, key, fromdate, todate,"0");
+        int countP = pdao.countManageProduct(bid, cid1, cid2, cid3, key, fromdate, todate, "1");
         int endpage = countP / 6;
         if (countP % 6 != 0) {
             endpage++;
         }
 
-        List<Product> listP = pdao.manageProduct(bid, cid1, cid2, cid3, key, sort, index, fromdate, todate,"0");
+        List<Product> listP = pdao.manageProduct(bid, cid1, cid2, cid3, key, sort, index, fromdate, todate, "1");
         List<Brand> listB = bdao.getAllBrand();
         List<Category> listC = cadao.getAllCategory();
         request.setAttribute("listP", listP);
@@ -149,7 +145,7 @@ public class MangeProductServlet extends HttpServlet {
         request.setAttribute("fromdate", fromdate);
         request.setAttribute("todate", todate);
         request.setAttribute("tab", "5");
-        request.getRequestDispatcher("ManageProduct.jsp").forward(request, response);
+        request.getRequestDispatcher("ManageProductDeleted.jsp").forward(request, response);
     }
 
     /**
@@ -173,7 +169,7 @@ public class MangeProductServlet extends HttpServlet {
             type = "";
         }
         if (type.equals("delete")) {
-            pdao.deleteProduct(pid, "1");
+            pdao.deleteProduct(pid, "0");
             doGet(request, response);
         } else {
             doGet(request, response);
