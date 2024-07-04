@@ -302,10 +302,10 @@ INSERT [dbo].[Order] ([aid], [date], [dateShip],[timeShip], [receivedDate], [tot
 (4, CAST(N'2021-12-12' AS Date), CAST(N'2021-12-18' AS Date), N'10:00', CAST(N'2021-12-18' AS Date), 90000000, N'user2@gmail.com', N'0123456789', N'Bac Giang',4),
 (3, CAST(N'2022-03-05' AS Date), CAST(N'2022-03-15' AS Date), N'12:00', CAST(N'2022-03-15' AS Date), 62000000, N'user1@gmail.com', N'0123456789', N'Hai Duong',4),
 (4, CAST(N'2023-03-12' AS Date), CAST(N'2023-03-15' AS Date), N'23:00', CAST(N'2023-03-15' AS Date), 64000000, N'user2@gmail.com', N'0123456789', N'Bac Ninh',4),
-(4, CAST(N'2023-08-05' AS Date), CAST(N'2023-08-10' AS Date), N'19:00', CAST(N'2023-08-10' AS Date), 60000000, N'user2@gmail.com', N'0123456789', N'Ninh Binh',3),
-(3, CAST(N'2024-01-01' AS Date), CAST(N'2024-01-06' AS Date), N'18:00', CAST(N'2024-01-06' AS Date), 32000000, N'user1@gmail.com', N'0123456789', N'Cao Bang',2),
-(3, CAST(N'2024-01-12' AS Date), CAST(N'2024-01-20' AS Date), N'15:00', CAST(N'2024-01-20' AS Date), 90000000, N'user1@gmail.com', N'0123456789', N'Ca Mau',1),
-(4, CAST(N'2024-02-05' AS Date), CAST(N'2024-02-10' AS Date), N'19:00', CAST(N'2024-02-10' AS Date), 124000000, N'user2@gmail.com', N'0123456789', N'Ha Long',1)
+(4, CAST(N'2023-08-05' AS Date), CAST(N'2023-08-10' AS Date), N'19:00', N'', 60000000, N'user2@gmail.com', N'0123456789', N'Ninh Binh',3),
+(3, CAST(N'2024-01-01' AS Date), CAST(N'2024-01-06' AS Date), N'18:00', N'', 32000000, N'user1@gmail.com', N'0123456789', N'Cao Bang',2),
+(3, CAST(N'2024-01-12' AS Date), CAST(N'2024-01-20' AS Date), N'15:00', N'', 90000000, N'user1@gmail.com', N'0123456789', N'Ca Mau',1),
+(4, CAST(N'2024-02-05' AS Date), CAST(N'2024-02-10' AS Date), N'19:00', N'', 124000000, N'user2@gmail.com', N'0123456789', N'Ha Long',1)
 
 INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (1,6,2,32000000)
 INSERT [dbo].[OrderDetail]([oid],[pid],[quantity],[price]) VALUES (2,10,3,30000000)

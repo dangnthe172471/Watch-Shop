@@ -38,7 +38,7 @@
                 reader.readAsDataURL(event.target.files[0]);
             }
         </script>
-        
+
 
     </head>
     <body>
@@ -108,7 +108,11 @@
 
                             <div class="form-group">
                                 <div class="profile-label">Ví:</div>
-                                <div class="profile-value">${account.amount}</div>
+                                <div class="profile-value">${account.amount}</div> 
+                                <form action="checkout">
+                                    <input name="pttt" value="add" type="hidden"/>
+                                    <button type="submit" class="btn btn-primary" style="font-size: 10px;"><i class="fa fa-plus"></i></button>
+                                </form>
                             </div>
                         </div>
 

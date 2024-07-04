@@ -34,4 +34,19 @@ public class PaymentDAO extends DBContext {
         } catch (SQLException e) {
         }
     }
+
+    public void updateAmount(Account u, double amount) {
+
+        String sql = """
+                    Update [dbo].[Account] set [amount]=?
+                    where [id]=?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setDouble(1, u.getAmount() + amount);
+            st.setInt(2, u.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+        }
+
+    }
 }

@@ -62,7 +62,7 @@ public class ProcessServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(true);
         Cart cart = null;
         Object o = session.getAttribute("cart");
         ProductDAO dao = new ProductDAO();

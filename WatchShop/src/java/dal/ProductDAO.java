@@ -475,7 +475,7 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
-    public List<Product> manageProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, int sort, int index, Date fromdate, Date todate) {
+    public List<Product> manageProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, int sort, int index, Date fromdate, Date todate, String status) {
         List<Product> list = new ArrayList<>();
         String sql = """
                         select *
@@ -484,8 +484,7 @@ public class ProductDAO extends DBContext {
                         inner join category c1 on (c1.cid=p.cateID1)
                         inner join category c2 on (c2.cid=p.cateID2)
                         inner join category c3 on (c3.cid=p.cateID3)
-                        where p.[status]=0
-                     """;
+                        where p.[status]= ? """;
         if (bid != null && bid[0] != 0) {
             sql += " and p.[brandID] in (";
             for (int i = 0; i < bid.length; i++) {
@@ -577,7 +576,8 @@ public class ProductDAO extends DBContext {
         sql += "\nOFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, (index - 1) * 6);
+            st.setString(1, status);
+            st.setInt(2, (index - 1) * 6);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
@@ -606,7 +606,7 @@ public class ProductDAO extends DBContext {
         return list;
     }
 
-    public int countManageProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, Date fromdate, Date todate) {
+    public int countManageProduct(int[] bid, int[] cid1, int[] cid2, int[] cid3, String key, Date fromdate, Date todate, String status) {
         String sql = """
                     SELECT COUNT(*) 
                     from product p inner join ImageProduct [pi] on(p.id=[pi].[pid])
@@ -614,7 +614,7 @@ public class ProductDAO extends DBContext {
                     inner join category c1 on (c1.cid=p.cateID1)
                     inner join category c2 on (c2.cid=p.cateID2)
                     inner join category c3 on (c3.cid=p.cateID3)
-                    where p.[status]=0""";
+                    where p.[status]= ? """;
 
         if (bid != null && bid[0] != 0) {
             sql += " and p.[brandID] in (";
@@ -667,6 +667,7 @@ public class ProductDAO extends DBContext {
         }
         try {
             PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, status);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
