@@ -251,10 +251,26 @@
     <servlet>
         <servlet-name>DeleteOrderServlet</servlet-name>
         <servlet-class>controller.DeleteOrderServlet</servlet-class>
-      </servlet>
+    </servlet>
     <servlet>
         <servlet-name>ManageProductDeletedServlet</servlet-name>
         <servlet-class>controller.ManageProductDeletedServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageCustomerServlet</servlet-name>
+        <servlet-class>controller.ManageCustomerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageCustomerBlockServlet</servlet-name>
+        <servlet-class>controller.ManageCustomerBlockServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlockCustomerServlet</servlet-name>
+        <servlet-class>controller.BlockCustomerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RestoreCustomerServlet</servlet-name>
+        <servlet-class>controller.RestoreCustomerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -507,9 +523,25 @@
     <servlet-mapping>
         <servlet-name>DeleteOrderServlet</servlet-name>
         <url-pattern>/DeleteOrderServlet</url-pattern>
-          </servlet-mapping>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ManageProductDeletedServlet</servlet-name>
         <url-pattern>/productdeleted</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageCustomerServlet</servlet-name>
+        <url-pattern>/managercustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageCustomerBlockServlet</servlet-name>
+        <url-pattern>/customerblockk</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlockCustomerServlet</servlet-name>
+        <url-pattern>/blockcustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestoreCustomerServlet</servlet-name>
+        <url-pattern>/restorecustomer</url-pattern>
     </servlet-mapping>
 </web-app>

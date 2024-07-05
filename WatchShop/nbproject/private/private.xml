@@ -20,10 +20,12 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/A/Ky5/SE1804-SWP/Watch-Shop/WatchShop/web/thanks.jsp</file>
-            <file>file:/D:/A/Ky5/SE1804-SWP/Watch-Shop/WatchShop/web/ProfileUser.jsp</file>
-            <file>file:/D:/A/Ky5/SE1804-SWP/Watch-Shop/WatchShop/src/java/VNPay/ReturnResult.java</file>
-            <file>file:/D:/A/Ky5/SE1804-SWP/Watch-Shop/WatchShop/src/java/controller/CheckoutServlet.java</file>
+            <file>file:/D:/DuAn/Watch-Shop/WatchShop/src/java/controller/ManageCustomerBlockServlet.java</file>
+            <file>file:/D:/DuAn/Watch-Shop/WatchShop/web/left.jsp</file>
+            <file>file:/D:/DuAn/Watch-Shop/WatchShop/src/java/dal/AccountDAO.java</file>
+            <file>file:/D:/DuAn/Watch-Shop/WatchShop/src/java/controller/ManageCustomerServlet.java</file>
+            <file>file:/D:/DuAn/Watch-Shop/WatchShop/web/WEB-INF/web.xml</file>
+            <file>file:/D:/DuAn/Watch-Shop/WatchShop/src/java/controller/BlockCustomerServlet.java</file>
         </group>
     </open-files>
 </project-private>
