@@ -14,6 +14,9 @@ import model.Account;
 import model.Cart;
 import model.Item;
 import model.Order;
+import model.OrderDetail;
+import model.OrderDetailWithImage;
+import model.Product;
 
 /**
  *
@@ -252,5 +255,159 @@ public class OrderDAO extends DBContext {
         } catch (Exception e) {
         }
         return list;
+    }
+
+    public List<OrderDetailWithImage> getOrdersByUsername(String username) {
+        List<OrderDetailWithImage> list = new ArrayList<>();
+        try {
+            String sql = "SELECT o.id AS OrderID, o.date AS OrderDate, o.dateShip AS DateShip, o.timeShip AS TimeShip, "
+                    + "o.receivedDate AS ReceivedDate, o.totalMoney AS TotalMoney, o.email AS Email, o.phone AS Phone, "
+                    + "o.address AS Address, o.note AS Note, s.status AS OrderStatus, p.name AS ProductName, p.price AS ProductPrice, "
+                    + "od.quantity AS Quantity, (p.price * od.quantity) AS TotalPrice, ip.image1 AS ProductImage "
+                    + "FROM [Order] o "
+                    + "JOIN [OrderDetail] od ON o.id = od.oid "
+                    + "JOIN [product] p ON od.pid = p.id "
+                    + "JOIN [Account] a ON o.aid = a.id "
+                    + "JOIN [Status] s ON o.sid = s.id "
+                    + "JOIN [ImageProduct] ip ON p.id = ip.pid "
+                    + "WHERE a.[user] = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                OrderDetailWithImage orderDetail = new OrderDetailWithImage();
+                orderDetail.setOrderId(rs.getInt("OrderID"));
+                orderDetail.setOrderDate(rs.getString("OrderDate"));
+                orderDetail.setDateShip(rs.getString("DateShip"));
+                orderDetail.setTimeShip(rs.getString("TimeShip"));
+                orderDetail.setReceivedDate(rs.getString("ReceivedDate"));
+                orderDetail.setTotalMoney(rs.getFloat("TotalMoney"));
+                orderDetail.setEmail(rs.getString("Email"));
+                orderDetail.setPhone(rs.getString("Phone"));
+                orderDetail.setAddress(rs.getString("Address"));
+                orderDetail.setNote(rs.getString("Note"));
+                orderDetail.setOrderStatus(rs.getString("OrderStatus"));
+                orderDetail.setProductName(rs.getString("ProductName"));
+                orderDetail.setProductPrice(rs.getDouble("ProductPrice"));
+                orderDetail.setQuantity(rs.getInt("Quantity"));
+                orderDetail.setTotalPrice(rs.getDouble("TotalPrice"));
+                orderDetail.setProductImage(rs.getString("ProductImage"));
+                list.add(orderDetail);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<OrderDetailWithImage> getOrdersByUsernameAndStatus(String username, String status) {
+        List<OrderDetailWithImage> list = new ArrayList<>();
+        try {
+            String sql = "SELECT o.id AS OrderID, o.date AS OrderDate, o.dateShip AS DateShip, o.timeShip AS TimeShip, "
+                    + "o.receivedDate AS ReceivedDate, o.totalMoney AS TotalMoney, o.email AS Email, o.phone AS Phone, "
+                    + "o.address AS Address, o.note AS Note, s.status AS OrderStatus, p.name AS ProductName, p.price AS ProductPrice, "
+                    + "od.quantity AS Quantity, (p.price * od.quantity) AS TotalPrice, ip.image1 AS ProductImage "
+                    + "FROM [Order] o "
+                    + "JOIN [OrderDetail] od ON o.id = od.oid "
+                    + "JOIN [product] p ON od.pid = p.id "
+                    + "JOIN [Account] a ON o.aid = a.id "
+                    + "JOIN [Status] s ON o.sid = s.id "
+                    + "JOIN [ImageProduct] ip ON p.id = ip.pid "
+                    + "WHERE a.[user] = ? AND s.status = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, username);
+            st.setString(2, status);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                OrderDetailWithImage orderDetail = new OrderDetailWithImage();
+                orderDetail.setOrderId(rs.getInt("OrderID"));
+                orderDetail.setOrderDate(rs.getString("OrderDate"));
+                orderDetail.setDateShip(rs.getString("DateShip"));
+                orderDetail.setTimeShip(rs.getString("TimeShip"));
+                orderDetail.setReceivedDate(rs.getString("ReceivedDate"));
+                orderDetail.setTotalMoney(rs.getFloat("TotalMoney"));
+                orderDetail.setEmail(rs.getString("Email"));
+                orderDetail.setPhone(rs.getString("Phone"));
+                orderDetail.setAddress(rs.getString("Address"));
+                orderDetail.setNote(rs.getString("Note"));
+                orderDetail.setOrderStatus(rs.getString("OrderStatus"));
+                orderDetail.setProductName(rs.getString("ProductName"));
+                orderDetail.setProductPrice(rs.getDouble("ProductPrice"));
+                orderDetail.setQuantity(rs.getInt("Quantity"));
+                orderDetail.setTotalPrice(rs.getDouble("TotalPrice"));
+                orderDetail.setProductImage(rs.getString("ProductImage"));
+                list.add(orderDetail);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+   public OrderDetailWithImage getOrderDetailById(String orderId) {
+    OrderDetailWithImage orderDetail = new OrderDetailWithImage();
+    try {
+        String sql = "SELECT o.id AS OrderID, o.date AS OrderDate, o.dateShip AS DateShip, o.timeShip AS TimeShip, "
+                + "o.receivedDate AS ReceivedDate, o.totalMoney AS TotalMoney, o.email AS Email, o.phone AS Phone, "
+                + "o.address AS Address, o.note AS Note, s.status AS OrderStatus, p.name AS ProductName, p.price AS ProductPrice, "
+                + "od.quantity AS Quantity, (p.price * od.quantity) AS TotalPrice, ip.image1 AS ProductImage "
+                + "FROM [Order] o "
+                + "JOIN [OrderDetail] od ON o.id = od.oid "
+                + "JOIN [product] p ON od.pid = p.id "
+                + "JOIN [Status] s ON o.sid = s.id "
+                + "JOIN [ImageProduct] ip ON p.id = ip.pid "
+                + "WHERE o.id = ?";
+
+        PreparedStatement st = connection.prepareStatement(sql);
+        st.setString(1, orderId);
+        ResultSet rs = st.executeQuery();
+
+        if (rs.next()) {
+            orderDetail.setOrderId(rs.getInt("OrderID"));
+            orderDetail.setOrderDate(rs.getString("OrderDate"));
+            orderDetail.setDateShip(rs.getString("DateShip"));
+            orderDetail.setTimeShip(rs.getString("TimeShip"));
+            orderDetail.setReceivedDate(rs.getString("ReceivedDate"));
+             orderDetail.setTotalMoney(rs.getFloat("TotalMoney"));
+            orderDetail.setEmail(rs.getString("Email"));
+            orderDetail.setPhone(rs.getString("Phone"));
+            orderDetail.setAddress(rs.getString("Address"));
+            orderDetail.setNote(rs.getString("Note"));
+            orderDetail.setOrderStatus(rs.getString("OrderStatus"));
+            orderDetail.setProductName(rs.getString("ProductName"));
+            orderDetail.setProductPrice(rs.getDouble("ProductPrice"));
+            orderDetail.setQuantity(rs.getInt("Quantity"));
+            orderDetail.setTotalPrice(rs.getDouble("TotalPrice"));
+            orderDetail.setProductImage(rs.getString("ProductImage"));
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return orderDetail;
+}
+
+    public boolean cancelOrder(String orderId) {
+        String sql = "UPDATE [Order] SET [sid] = 5 WHERE [id] = ? AND [sid] = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, orderId);
+            int rowsUpdated = st.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteOrder(String orderId) {
+        String sql = "DELETE FROM [Order] WHERE [id] = ? AND [sid] = 5"; // 5 là trạng thái "Đã hủy"
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, orderId);
+            int rowsDeleted = st.executeUpdate();
+            return rowsDeleted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

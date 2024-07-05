@@ -76,7 +76,7 @@
                     </a>
                 </li>
                 <li class="${tab==5?'active':''}">
-                    <a href="HistoryOder.jsp">
+                    <a href="orderHistory">
                         <i class="bx bx-cart"></i>
                         <span class="text">Sản phẩm đã mua</span>
                     </a>
