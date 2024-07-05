@@ -7,6 +7,8 @@ package dal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Account;
 
 /**
@@ -267,6 +269,79 @@ public class AccountDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("updateAccountAddress: " + e.getMessage());
             return false;
+        }
+    }
+    public List<Account> getAllCustomer() {
+        List<Account> list = new ArrayList<>();
+        try {
+            String sql = "select * from Account where roleID = 4 and status = 0";
+            stm = connection.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Account a = new Account(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getDouble(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getInt(11),
+                        rs.getString(12));
+                list.add(a);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<Account> getAllCustomerBlock() {
+        List<Account> list = new ArrayList<>();
+        try {
+            String sql = "select * from Account where roleID = 4 and status = 1";
+            stm = connection.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Account a = new Account(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getDouble(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getInt(11),
+                        rs.getString(12));
+                list.add(a);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public void blockCustomerById(String bid) {
+        String sql = "UPDATE [dbo].[Account] SET [status] = 1 WHERE [id] = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, bid);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void restoreCustomerById(String bid) {
+        String sql = "UPDATE [dbo].[Account] SET [status] = 0 WHERE [id] = ?;";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, bid);
+            st.executeUpdate();
+        } catch (Exception e) {
         }
     }
 
