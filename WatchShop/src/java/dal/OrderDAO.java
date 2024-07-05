@@ -24,20 +24,6 @@ import model.Product;
  */
 public class OrderDAO extends DBContext {
 
-    public String getOid() {
-        String sql = " select top 1 id from [Order] order by id desc";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                int i = rs.getInt(1) + 1;
-                return Integer.toString(i);
-            }
-        } catch (SQLException e) {
-        }
-        return null;
-    }
-
     public void addOrder(Account u, Cart cart, String email, String phone, String address, String note, String dateShip, String timeShip) {
         LocalDate curDate = java.time.LocalDate.now();
         String date = curDate.toString();
@@ -86,18 +72,43 @@ public class OrderDAO extends DBContext {
     }
 
     public void updateAmount(Account u, Cart cart) {
+        int totalQuantity = 0;
+        // Tính tổng số lượng các items
         for (Item i : cart.getItems()) {
-            String sql = """
-                    Update [dbo].[Account] set [amount]=?,[bought]=?
-                    where [id]=?""";
-            try {
-                PreparedStatement st = connection.prepareStatement(sql);
-                st.setDouble(1, u.getAmount() - cart.getTotalMoney());
-                st.setInt(2, u.getBought() + i.getQuantity());
-                st.setInt(3, u.getId());
-                st.executeUpdate();
-            } catch (SQLException e) {
-            }
+            totalQuantity += i.getQuantity();
+        }
+
+        String sql = """
+                        Update [dbo].[Account] set [amount]=?,[bought]=?
+                        where [id]=?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setDouble(1, u.getAmount() - cart.getTotalMoney());
+            st.setInt(2, u.getBought() + totalQuantity);
+            st.setInt(3, u.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            // Handle exception here
+        }
+    }
+
+    public void updateBought(Account u, Cart cart) {
+        int totalQuantity = 0;
+        // Tính tổng số lượng các items
+        for (Item i : cart.getItems()) {
+            totalQuantity += i.getQuantity();
+        }
+
+        String sql = """
+                        Update [dbo].[Account] set [bought]=?
+                        where [id]=?""";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, u.getBought() + totalQuantity);
+            st.setInt(2, u.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            // Handle exception here
         }
     }
 

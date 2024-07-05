@@ -81,6 +81,10 @@ public class Statistical3Servlet extends HttpServlet {
 
         List<OrderDetail> listOD = sdao.getOrderDetailByYear(y);
         List<Brand> listB = bdao.getAllBrand();
+        int[] data = new int[listB.size()];
+        for (int i = 0; i < listB.size(); i++) {
+            data[i] = sdao.getSumByBrandIDByYear(i + 1, y);
+        }
 
         request.setAttribute("totalsByMonth", totalsByMonth);
         request.setAttribute("minYear", minYear);
@@ -89,6 +93,8 @@ public class Statistical3Servlet extends HttpServlet {
         request.setAttribute("listB", listB);
         request.setAttribute("year", y);
         request.setAttribute("tab", "1");
+        request.setAttribute("listBname", new Gson().toJson(listB));
+        request.setAttribute("data", new Gson().toJson(data));
         request.setAttribute("totalsByMonths", new Gson().toJson(totalsByMonth));
         request.getRequestDispatcher("statistical3.jsp").forward(request, response);
     }

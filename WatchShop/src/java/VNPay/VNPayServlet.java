@@ -91,8 +91,7 @@ public class VNPayServlet extends HttpServlet {
         long amount = Integer.parseInt(request.getParameter("amount"));
         String bankCode = request.getParameter("bankCode");
 
-        OrderDAO odao = new OrderDAO();
-        String vnp_TxnRef = "WSS_" + odao.getOid();
+        String vnp_TxnRef = Config.getRandomNumber(8);
         String vnp_IpAddr = Config.getIpAddress(request);
 
         String vnp_TmnCode = Config.vnp_TmnCode;
@@ -108,7 +107,7 @@ public class VNPayServlet extends HttpServlet {
             vnp_Params.put("vnp_BankCode", bankCode);
         }
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-        vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
+        vnp_Params.put("vnp_OrderInfo", "Thanh toan giao dich:" + vnp_TxnRef);
         vnp_Params.put("vnp_OrderType", orderType);
 
         String locate = request.getParameter("language");

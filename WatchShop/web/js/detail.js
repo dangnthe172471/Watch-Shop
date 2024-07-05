@@ -42,7 +42,7 @@ function addCart(id) {
         }
         // Tạo box thông báo
         var notification = document.getElementById('notification');
-        notification.style.display = '';
+        notification.style.display = 'block';
         notification.style.animation = 'slide 1.1s linear';
 
         setTimeout(function () {

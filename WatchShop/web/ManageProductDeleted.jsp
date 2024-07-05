@@ -1,8 +1,9 @@
 <%-- 
-   Document   : ManageProduct
-   Created on : Jun 20, 2024, 1:31:30 PM
-   Author     : admin
+    Document   : ManageProductDeleted
+    Created on : Jul 4, 2024, 1:28:02 PM
+    Author     : admin
 --%>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -114,10 +115,7 @@
                 <div class="head-title">
                     <div class="left">
                         <h1>Sản phẩm</h1>                      
-                    </div>
-                    <a class="btn-download, btn btn-primary addbtn" href="editproduct?type=add">
-                        <span class="text">Thêm sản phẩm</span>
-                    </a>
+                    </div>                   
                 </div>
                 <div class="table-data">
                     <div class="order">
@@ -125,7 +123,7 @@
                             <h3>Quản Lý</h3>
 
                             <div style="display:none" id="filter">
-                                <form action="manageproduct">
+                                <form action="productdeleted">
                                     <c:forEach var="bidValue" items="${bid}">
                                         <input type="hidden" value="${bidValue}" name="bid">
                                     </c:forEach>
@@ -149,8 +147,8 @@
                         </div>
                         <div>
                             <ul class="main-menu">
-                                <li><a href="manageproduct" style="color: black;font-weight: bold;">Danh sách</a></li>
-                                <li style="margin-left: 30px"><a href="productdeleted" style="color: gray;">Danh sách sản phẩm đã xóa</a></li>               
+                                <li><a style="color: gray" href="manageproduct">Danh sách</a></li>
+                                <li style="margin-left: 30px"><a href="productdeleted" style="font-weight: bold;color: black">Danh sách sản phẩm đã xóa</a></li>               
                             </ul>
                         </div>
                         <c:if test="${empty listP}">
@@ -167,7 +165,7 @@
                                         Sản phẩm<span id="arrow2" class="inactive"></span>
                                     </th>
                                     <th style="width: 130px;text-align: center">
-                                        <form action="manageproduct">                                              
+                                        <form action="productdeleted">                                              
                                             <c:forEach var="cidValue" items="${cid1}">
                                                 <input type="hidden" value="${cidValue}" name="cid1">
                                             </c:forEach>
@@ -199,7 +197,7 @@
                                         </form>
                                     </th>
                                     <th style="width: 150px;text-align: center">
-                                        <form action="manageproduct">
+                                        <form action="productdeleted">
                                             <c:forEach var="bidValue" items="${bid}">
                                                 <input type="hidden" value="${bidValue}" name="bid">
                                             </c:forEach>
@@ -302,8 +300,7 @@
                                         <td style="text-align: center">${o.sold} (${o.rate}⭐)</td>
                                         <td style="text-align: center"><fmt:formatDate value="${o.releaseDate}" pattern="dd-MM-yyyy"/></td>
                                         <td style="text-align: center;font-size: 20px;">
-                                            <a  href="editproduct?type=edit&id=${o.id}"><i class="fa fa-edit" style="color: blue"></i></a>&nbsp;&nbsp;
-                                            <a href="#" onclick="deleteProduct(event, '${o.id}')"><i class="fa fa-trash" style="color: red"></i></a>
+                                            <a href="#" onclick="deleteProduct(event, '${o.id}')"><i class="fa fa-history"></i></i></a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -313,7 +310,7 @@
 
                 </div>
                 <c:if test="${countP >= 6}">                                                
-                    <form action="manageproduct">
+                    <form action="productdeleted">
                         <c:forEach var="bidValue" items="${bid}">
                             <input type="hidden" value="${bidValue}" name="bid">
                         </c:forEach>
@@ -354,18 +351,18 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: white">
-                        <h4 class="modal-title" style="color: black" >Xác nhận xóa</h4>
+                        <h4 class="modal-title" style="color: black" >Hoàn tác sản phẩm</h4>
                         <button style="color: black" type="button" class="close" onclick="deleteProduct(event, '${o.id}')" data-dismiss="modal">&times;</button>
                     </div>
-                    <form action="manageproduct" method="post">
+                    <form action="productdeleted" method="post">
                         <div class="modal-body">
-                            <h5 class="modal-title">Bạn có chắc muốn xóa sản phẩm này ?</h5>
+                            <h5 class="modal-title">Bạn có chắc khôi phục sản phẩm này ?</h5>
                             <input type="hidden" name="pid" id="pid">                            
                             <input type="hidden" name="type" value="delete">                            
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" onclick="deleteProduct(event, '${o.id}')" data-dismiss="modal">Hủy</button>
-                            <button type="submit" class="btn btn-danger">Xóa</button>
+                            <button type="button" class="btn btn-success" onclick="deleteProduct(event, '${o.id}')" data-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-primary">Xác nhận</button>
                         </div>
                     </form>
                 </div>
@@ -422,7 +419,7 @@
                 var keySearch = param.value;
                 $.ajax({
                     url: "/watchshop/ajaxproduct",
-                    type: "get", //send it through get method
+                    type: "post", //send it through get method
                     data: {
                         key: keySearch
                     },
@@ -456,7 +453,7 @@
 
                 $.ajax({
                     url: "/watchshop/ajaxproduct",
-                    type: "get", //send it through get method
+                    type: "post", //send it through get method
                     data: {
                         sort: sortIndex
                     },

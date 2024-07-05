@@ -251,6 +251,10 @@
     <servlet>
         <servlet-name>DeleteOrderServlet</servlet-name>
         <servlet-class>controller.DeleteOrderServlet</servlet-class>
+      </servlet>
+    <servlet>
+        <servlet-name>ManageProductDeletedServlet</servlet-name>
+        <servlet-class>controller.ManageProductDeletedServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -503,5 +507,9 @@
     <servlet-mapping>
         <servlet-name>DeleteOrderServlet</servlet-name>
         <url-pattern>/DeleteOrderServlet</url-pattern>
+          </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageProductDeletedServlet</servlet-name>
+        <url-pattern>/productdeleted</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -24,51 +24,45 @@ public class EmailOrder {
     private final String eFrom = "watchshop1804@gmail.com";
     private final String ePass = "krhq vohz saxg chlc";
 
-    public void sendEmail(String subject, String messgage, String to) {
-        try {
-
-        } catch (Exception e) {
-        }
+    
+    public void sendEmail(String subject, String message, String to) {
         // Properties
         Properties props = new Properties();
 
-        //Su dung server nao de gui mail- smtp host
+        // SMTP server settings
         props.put("mail.smtp.host", "smtp.gmail.com");
-
-        // TLS 587 SSL 465
-        props.put("mail.smtp.port", "smtp.gmail.com");
-
-        // dang nhap
+        props.put("mail.smtp.port", "587"); // TLS port
         props.put("mail.smtp.auth", "true");
-
         props.put("mail.smtp.starttls.enable", "true");
 
-        //dang nhap tai khoan
+        // Authenticator
         Authenticator au = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(eFrom, ePass);
             }
-
         };
-        // phien lam viec
+
+        // Session
         Session session = Session.getInstance(props, au);
 
         try {
+            // Create a MimeMessage
             MimeMessage msg = new MimeMessage(session);
-            msg.addHeader("Content-type", "text/HTML, charset=UTF-8");
+            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
             msg.setFrom(new InternetAddress(eFrom));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
-            // tieu de
             msg.setSubject(subject, "UTF-8");
-            // Noi dung
-            msg.setContent(messgage, "text/html; charset=UTF-8");
-            // Gui email
+            msg.setContent(message, "text/html; charset=UTF-8");
+
+            // Send email
             Transport.send(msg);
+            System.out.println("Send email success!");
         } catch (MessagingException e) {
+            e.printStackTrace();
             System.out.println("Send email failed");
         }
-    }
+    }        
 
     // Tiêu đề
     public String subjectOrder(String fullName) {
@@ -157,5 +151,14 @@ public class EmailOrder {
                 + "</body>\n"
                 + "</html>";
         return content;
+    }
+    
+       public static void main(String[] args) {
+        // Test sending email
+        EmailOrder handleEmail = new EmailOrder();
+        String sub = handleEmail.subjectOrder("123");
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        String msg = handleEmail.messageOrder(currentDateTime, "123123", "0123321", "123", "vn", "", new Cart());
+        handleEmail.sendEmail(sub, msg, "bapthom3@gmail.com");
     }
 }

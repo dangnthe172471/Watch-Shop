@@ -46,7 +46,7 @@
                 <c:if test="${sessionScope.account.roleID==1}">
                     <li class="${tab==1?'active':''}">
                         <a href="statistical">
-                            <i class='bx bxs-dashboard' ></i>
+                            <i class='bx bxs-dollar-circle' ></i>
                             <span class="text">Thống kê</span>
                         </a>
                     </li>
@@ -70,7 +70,7 @@
                     </li>
                     <li class="${tab==5?'active':''}">
                         <a href="manageproduct">
-                            <i class='bx bxs-group' ></i>
+                            <i class='bx bxs-dashboard'></i>
                             <span class="text">Sản phẩm</span>
                         </a>
                     </li>
