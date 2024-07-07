@@ -1,8 +1,19 @@
-﻿USE [master]
+﻿USE master; 
 GO
-Create database [Projectswp]
+IF EXISTS(SELECT name FROM sys.databases
+     WHERE name = 'Projectswp')
+     DROP DATABASE Projectswp 
+
+GO  
+CREATE DATABASE [Projectswp];
+GO  
+USE [Projectswp];
 GO
-USE [Projectswp]
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
 GO
 
 CREATE TABLE [dbo].[Role](
