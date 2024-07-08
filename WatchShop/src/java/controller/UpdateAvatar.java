@@ -120,7 +120,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             String filePath = uploadFilePath + File.separator + fileName;
             filePart.write(filePath);
 
-            String avatarPath = UPLOAD_DIR + "/" + "avatar_" + fileName;
+            String avatarPath = UPLOAD_DIR + "/"+ fileName;
             BufferedImage originalImage = ImageIO.read(new File(filePath));
             int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
             BufferedImage resizedImage = new BufferedImage(AVATAR_WIDTH, AVATAR_HEIGHT, type);

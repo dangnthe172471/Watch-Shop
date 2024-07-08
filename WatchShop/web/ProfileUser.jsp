@@ -5,6 +5,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -105,14 +106,19 @@
                                 </form>
 
                             </div>
-
+                            <div class="form-group">
+                                <div class="profile-label">Số hàng đã mua:</div>
+                                <div class="profile-value">${account.bought} sản phẩm</div> 
+                            </div>
                             <div class="form-group">
                                 <div class="profile-label">Ví:</div>
-                                <div class="profile-value">${account.amount}</div> 
-                                <form action="checkout">
-                                    <input name="pttt" value="add" type="hidden"/>
-                                    <button type="submit" class="btn btn-primary" style="font-size: 10px;"><i class="fa fa-plus"></i></button>
-                                </form>
+                                <div class="profile-value row ml-0"><fmt:formatNumber value="${account.amount}"/> vnđ
+                                    <form action="checkout" class="ml-3">
+                                        <input name="pttt" value="add" type="hidden"/>
+                                        <button type="submit" class="btn btn-primary" style="font-size: 10px;"><i class="fa fa-plus"></i></button>
+                                    </form>
+                                </div> 
+
                             </div>
                         </div>
 
