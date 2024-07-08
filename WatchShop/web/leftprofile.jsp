@@ -45,7 +45,7 @@
             </a>
             <ul class="side-menu top">
                 <div class="user-info" >
-                    <img src="${account.avatar}" alt="Avatar" id="avatarImg" style="max-width: 60px; max-height: 60px; border-radius: 50%; border: 2px solid #ccc;" data-toggle="modal" data-target="#avatarModal">
+                    <img src="${account.avatar}" alt="Avatar" id="avatarImg" style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ccc;" data-toggle="modal" data-target="#avatarModal">
                     <p>${account.user}</p>
                 </div><br>
                 <hr>
