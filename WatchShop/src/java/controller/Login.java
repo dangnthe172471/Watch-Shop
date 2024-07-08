@@ -143,7 +143,7 @@ public class Login extends HttpServlet {
                 return;
             } else if (account.getRoleID() == 3) {
                 session.setAttribute("account", account);
-                response.sendRedirect(request.getContextPath() + "/listorder");
+                response.sendRedirect(request.getContextPath() + "/listorderaccept");
                 return;
             }
             String ttcart = (String) session.getAttribute("ttc");

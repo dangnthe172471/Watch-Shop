@@ -174,7 +174,7 @@ public class OrderDAO extends DBContext {
         List<Order> list = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 3 order by date desc";
+            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 2 order by date desc";
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -203,7 +203,35 @@ public class OrderDAO extends DBContext {
         List<Order> list = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 2 order by date desc";
+            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 4 order by date desc";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Order o = new Order();
+                Account a = new Account(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getDouble(19), rs.getInt(20), rs.getString(21), rs.getInt(22), rs.getInt(23), rs.getString(24));
+                o.setOid(rs.getInt(1));
+                o.setAccount(a);
+                o.setDate(rs.getString(3));
+                o.setDateShip(rs.getString(4));
+                o.setTimeShip(rs.getString(5));
+                o.setReceivedDate(rs.getString(6));
+                o.setTotalMoney(rs.getDouble(7));
+                o.setEmail(rs.getString(8));
+                o.setPhone(rs.getString(9));
+                o.setAddress(rs.getString(10));
+                o.setNote(rs.getString(11));
+                o.setSid(rs.getInt(12));
+                list.add(o);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    public List<Order> getOrderDelivering() {
+        List<Order> list = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 3 order by date desc";
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -232,7 +260,7 @@ public class OrderDAO extends DBContext {
         List<Order> list = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 4";
+            String sql = "SELECT * FROM [Order] o inner join [Account] a on (a.id=o.aid) where sid = 5";
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {

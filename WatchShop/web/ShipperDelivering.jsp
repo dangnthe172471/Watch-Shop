@@ -1,6 +1,6 @@
 <%-- 
-    Document   : ShipperAccept
-    Created on : Jun 19, 2024, 7:59:11 PM
+    Document   : ShipperDelivering
+    Created on : Jul 6, 2024, 8:43:11 PM
     Author     : quyld
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -35,8 +35,6 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-        
     </head>
     <body>
         <jsp:include page="left.jsp" />
@@ -44,7 +42,7 @@
             <main>
                 <div class="head-title">
                     <div class="left">
-                        <h1>Danh sách đơn</h1>                      
+                        <h1>Đơn Đang Vận Chuyển</h1>                      
                     </div>
                 </div>
 
@@ -53,16 +51,9 @@
                         <div class="nav-bgg">
                             <nav class="containerr" style="padding-left: 0px" >
                                 <ul class="main-menuu">
-                                    <c:if test="${sessionScope.account.roleID==2}">
-                                        <li><a style="padding-right: 0px" href="listorder">Danh sách đơn</a></li>
-                                        <li style="margin-left: 30px;"><a href="listorderaccept">Đơn đã xác nhận</a></li> 
-                                        </c:if>
-                                        <c:if test="${sessionScope.account.roleID==3}">
-                                        <li><a style="padding-right: 0px" href="listorderaccept">Danh sách đơn</a></li>
-                                        <li style="margin-left: 30px;"><a href="listorderdelivering">Đơn Đang giao</a></li>               
-                                        <li style="margin-left: 30px;"><a href="listordercompleted">Đơn Hoàn Thành</a></li>
-                                        </c:if>
-
+                                    <li><a style="padding-right: 0px" href="listorderaccept">Danh sách đơn</a></li>
+                                    <li style="margin-left: 30px;"><a href="listorderdelivering">Đơn Đang giao</a></li>               
+                                    <li style="margin-left: 30px;"><a href="listordercompleted">Đơn Hoàn Thành</a></li>              
                                 </ul>
                             </nav>
                         </div>
@@ -77,10 +68,11 @@
                                 <input type="text" id="search-address" placeholder="Tìm kiếm theo địa chỉ">
                             </form>
                         </div>
-                        <form action="listorderaccept">
+                        <form action="listorderdelivering">
                             <table id="orderTable">
                                 <thead>
                                     <tr>
+                                      
                                         <th style="width: 110px">Khách hàng<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(0, 'str')">⇅</span></th>
                                         <th style="width: 110px">Số điện thoại<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(1, 'str')">⇅</span></th>
                                         <th style="width: 155px; padding-left:50px">Email<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(2, 'str')">⇅</span></th>
@@ -94,40 +86,22 @@
                                     </tr>                                   
                                 </thead>
                                 <tbody>
-                                    <c:if test="${sessionScope.account.roleID==2}">
-                                        <c:forEach items="${order}" var="o">
-                                            <tr>
-                                                <td>${o.account.user}</td> 
-                                                <td>${o.phone}</td>
-                                                <td>${o.email}</td>
-                                                <td>${o.address}</td>
-                                                <td><fmt:formatNumber value="${o.totalMoney}"/></td>
-                                                <td>${o.date}</td>
-                                                <td>${o.dateShip}</td>
-                                                <td>${o.timeShip}</td>
-                                                <td></td>
-                                            </tr> 
-                                        </c:forEach>
-                                    </c:if>
-                                    <c:if test="${sessionScope.account.roleID==3}">
-                                        <c:forEach items="${order}" var="o">
-                                            <tr>
-                                                <td>${o.account.user}</td> 
-                                                <td>${o.phone}</td>
-                                                <td>${o.email}</td>
-                                                <td>${o.address}</td>
-                                                <td><fmt:formatNumber value="${o.totalMoney}"/></td>
-                                                <td>${o.date}</td>
-                                                <td>${o.dateShip}</td>
-                                                <td>${o.timeShip}</td>
-                                                <td></td> 
-                                                <td>
-                                                    <a href="#" onclick="doOrder('${o.oid}')"><i class="fa fa-shopping-bag"></i></a>
-                                                </td>
-                                            </tr> 
-                                        </c:forEach>
-                                    </c:if>
-
+                                    <c:forEach items="${order}" var="o">
+                                        <tr>
+                                            <td>${o.account.user}</td> 
+                                            <td>${o.phone}</td>
+                                            <td>${o.email}</td>
+                                            <td>${o.address}</td>
+                                            <td><fmt:formatNumber value="${o.totalMoney}"/></td>
+                                            <td>${o.date}</td>
+                                            <td>${o.dateShip}</td>
+                                            <td>${o.timeShip}</td>
+                                            <td></td> 
+                                            <td>
+                                                <a href="#" onclick="doOrder('${o.oid}')"><i class="fa fa-shopping-bag"></i></a>
+                                            </td>
+                                        </tr> 
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </form>

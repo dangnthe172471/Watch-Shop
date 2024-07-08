@@ -101,6 +101,12 @@
                             <span class="text">Thống kê</span>
                         </a>
                     </li>
+                    <li class="${tab==3?'active':''}">
+                        <a href="listorder">
+                            <i class='bx bxs-message-dots' ></i>
+                            <span class="text">Đơn Hàng</span>
+                        </a>
+                    </li>
                     <li class="${tab==4?'active':''}">
                         <a href="manageblog">
                             <i class='bx bxs-message-dots' ></i>
@@ -110,7 +116,7 @@
                 </c:if>
                 <c:if test="${sessionScope.account.roleID==3}">
                     <li class="${tab==null?'active':''}">
-                        <a href="listorder">
+                        <a href="listorderaccept">
                             <i class='bx bxs-message-dots' ></i>
                             <span class="text">Danh sách đơn</span>
                         </a>

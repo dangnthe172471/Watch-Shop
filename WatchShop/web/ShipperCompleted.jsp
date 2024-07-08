@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="css/search-ship.css">
         <link rel="stylesheet" href="css/update-brand.css">
         <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/sort-order.js"></script>
         <script type="text/javascript" src="js/search-ship.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
@@ -42,7 +43,7 @@
             <main>
                 <div class="head-title">
                     <div class="left">
-                        <h1>Đơn nhận</h1>                      
+                        <h1>Đơn Hoàn Thành</h1>                      
                     </div>
                 </div>
 
@@ -51,9 +52,9 @@
                         <div class="nav-bgg">
                             <nav class="containerr" style="padding-left: 0px" >
                                 <ul class="main-menuu">
-                                    <li><a style="padding-right: 0px" href="listorder">Danh sách đơn</a></li>
-                                    <li style="margin-left: 30px;"><a href="listordercompleted">Đơn nhận</a></li>               
-                                    <li style="margin-left: 30px;"><a href="listorderaccept">Đơn Hoàn Thành</a></li>         
+                                    <li><a style="padding-right: 0px" href="listorderaccept">Danh sách đơn</a></li>
+                                    <li style="margin-left: 30px;"><a href="listorderdelivering">Đơn Đang giao</a></li>               
+                                    <li style="margin-left: 30px;"><a href="listordercompleted">Đơn Hoàn Thành</a></li>         
                                 </ul>
                             </nav>
                         </div>
@@ -69,35 +70,33 @@
                             </form>
                         </div>
                         <form action="listordercompleted">
-                            <table>
+                            <table id="orderTable">
                                 <thead>
                                     <tr>
-                                        <th style="width: 7px"></th>
-                                        <th>Khách hàng</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Email</th>
-                                        <th style="width: 100px">Địa chỉ</th>
-                                        <th style="width: 180px">Tổng tiền</th>
-                                        <th style="width: 180px">Ngày đặt</th>
-                                        <th style="width: 200px">Ghi chú</th>
-                                        <th style="width: 60px;"></th>
-                                    </tr>
+                                      
+                                        <th style="width: 110px">Khách hàng<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(0, 'str')">⇅</span></th>
+                                        <th style="width: 110px">Số điện thoại<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(1, 'str')">⇅</span></th>
+                                        <th style="width: 155px; padding-left:50px">Email<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(2, 'str')">⇅</span></th>
+                                        <th style="width: 120px">Địa chỉ<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(3, 'str')">⇅</span></th>
+                                        <th style="width: 150px">Tổng tiền<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(4, 'num')">⇅</span></th>
+                                        <th style="width: 150px">Ngày đặt<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(5, 'str')">⇅</span></th>
+                                        <th style="width: 150px">Ngày muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(6, 'str')">⇅</span></th>
+                                        <th style="width: 100px">Thời gian muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
+                                        <th style="width: 180px; padding-left:40px">Ghi chú</th>
+                                    </tr>                                   
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${order}" var="o">
                                         <tr>
-                                            <td><p style="display: none ">${o.oid}</p></td>
-                                            <td>${o.user}</td> 
+                                            <td>${o.account.user}</td> 
                                             <td>${o.phone}</td>
                                             <td>${o.email}</td>
                                             <td>${o.address}</td>
                                             <td><fmt:formatNumber value="${o.totalMoney}"/></td>
                                             <td>${o.date}</td>
-                                            <td></td> 
-                                            <td>
-                                                <a href="#" onclick="doCAccept('${o.oid}')"><i class="fa fa-check-square"></i></a>&nbsp;&nbsp;
-                                                <a href="#" onclick="doCanceled('${o.oid}')"><i class="fa fa-trash"></i></a>
-                                            </td>
+                                            <td>${o.dateShip}</td>
+                                            <td>${o.timeShip}</td>
+                                            <td></td>
                                         </tr> 
                                     </c:forEach>
                                 </tbody>
