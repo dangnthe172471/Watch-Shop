@@ -272,6 +272,10 @@
         <servlet-name>RestoreCustomerServlet</servlet-name>
         <servlet-class>controller.RestoreCustomerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListOrderDeliveringServlet</servlet-name>
+        <servlet-class>controller.ListOrderDeliveringServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -543,5 +547,9 @@
     <servlet-mapping>
         <servlet-name>RestoreCustomerServlet</servlet-name>
         <url-pattern>/restorecustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListOrderDeliveringServlet</servlet-name>
+        <url-pattern>/listorderdelivering</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -19,7 +19,7 @@ import model.Order;
  *
  * @author quyld
  */
-public class ListOrderAcceptServlet extends HttpServlet {
+public class ListOrderDeliveringServlet extends HttpServlet {
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -29,10 +29,10 @@ public class ListOrderAcceptServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListOrderAcceptServlet</title>");  
+            out.println("<title>Servlet ListOrderDeliveringServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ListOrderAcceptServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ListOrderDeliveringServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -42,10 +42,9 @@ public class ListOrderAcceptServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         OrderDAO o = new OrderDAO();
-        List <Order> listorder = o.getOrderAccept();
+        List <Order> listorder = o.getOrderDelivering();
         request.setAttribute("order", listorder);
         request.setAttribute("tab", "3");
-        request.getRequestDispatcher("ShipperAccept.jsp").forward(request, response);
+        request.getRequestDispatcher("ShipperDelivering.jsp").forward(request, response);
     } 
-
 }

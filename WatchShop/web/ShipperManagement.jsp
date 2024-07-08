@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="css/search-ship.css">
         <link rel="stylesheet" href="css/update-brand.css">
         <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/sort-order.js"></script>
         <script type="text/javascript" src="js/search-ship.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
@@ -53,8 +54,7 @@
                             <nav class="containerr" style="padding-left: 0px" >
                                 <ul class="main-menuu">
                                     <li><a style="padding-right: 0px" href="listorder">Danh sách đơn</a></li>
-                                    <li style="margin-left: 30px;"><a href="listordercompleted">Đơn nhận</a></li>               
-                                    <li style="margin-left: 30px;"><a href="listorderaccept">Đơn Hoàn Thành</a></li>         
+                                    <li style="margin-left: 30px;"><a href="listorderaccept">Đơn đã xác nhận</a></li>        
                                 </ul>
                             </nav>
                         </div>
@@ -72,19 +72,19 @@
 
 
                         <form action="listorder">
-                            <table>
+                            <table id="orderTable">
                                 <thead>
                                     <tr>
                                       
-                                        <th style="width: 100px">Khách hàng</th>
-                                        <th style="width: 100px">Số điện thoại</th>
-                                        <th style="width: 120px">Email</th>
-                                        <th style="width: 100px">Địa chỉ</th>
-                                        <th style="width: 150px">Tổng tiền</th>
-                                        <th style="width: 180px">Ngày đặt</th>
-                                        <th style="width: 180px">Ngày muốn giao</th>
-                                        <th style="width: 180px">Thời gian muốn giao</th>
-                                        <th style="width: 180px">Ghi chú</th>
+                                        <th style="width: 110px">Khách hàng<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(0, 'str')">⇅</span></th>
+                                        <th style="width: 110px">Số điện thoại<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(1, 'str')">⇅</span></th>
+                                        <th style="width: 155px; padding-left:50px">Email<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(2, 'str')">⇅</span></th>
+                                        <th style="width: 120px">Địa chỉ<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(3, 'str')">⇅</span></th>
+                                        <th style="width: 150px">Tổng tiền<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(4, 'num')">⇅</span></th>
+                                        <th style="width: 150px">Ngày đặt<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(5, 'str')">⇅</span></th>
+                                        <th style="width: 150px">Ngày muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(6, 'str')">⇅</span></th>
+                                        <th style="width: 100px">Thời gian muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
+                                        <th style="width: 180px; padding-left:40px">Ghi chú</th>
                                         <th style="width: 60px;"></th>
                                     </tr>                                   
                                 </thead>
@@ -115,7 +115,7 @@
 
             <script type="text/javascript">
                 function doOrder(oid) {
-                    if (confirm('Xác nhận đơn hàng')) {
+                    if (confirm('Xác nhận đơn và chuyển giao cho người vận chuyển')) {
                         window.location = 'completed?oid=' + oid;
                     }
                 }
