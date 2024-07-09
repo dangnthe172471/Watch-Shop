@@ -197,7 +197,7 @@
                                 <div class="form-group">
                                     <label for="email">Email:</label>
                                     <div id="emailMessage" ></div>
-                                    <input type="email" class="form-control" name="email" id="email" required value="${param.email} oninput="validateEmail()">
+                                    <input type="email" class="form-control" name="email" id="email" required value="${param.email}" oninput="validateEmail()">
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Phone:</label>

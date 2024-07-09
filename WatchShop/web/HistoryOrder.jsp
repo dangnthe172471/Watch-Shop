@@ -35,8 +35,16 @@
             body {
                 background: #eee;
             }
+            .panel-order {
+                min-width: 600px; /* Đặt chiều rộng tối thiểu */
+                min-height: 400px; /* Đặt chiều cao tối thiểu */
+                max-width: 100%; /* Cho phép dãn ra nhưng không vượt quá chiều rộng của cửa sổ */
+                margin: 0 auto; /* Căn giữa form */
+                font-size: 16px; /* Giảm kích thước font chữ */
+            }
             .panel-order .row {
                 border-bottom: 1px solid #ccc;
+                padding: 10px 0; /* Tăng padding để tạo khoảng cách giữa các hàng */
             }
             .panel-order .row:last-child {
                 border: 0px;
@@ -54,28 +62,38 @@
             }
             .panel-order .row .col-md-11 {
                 border-left: 1px solid #ccc;
+                padding-left: 15px; /* Thêm padding để tạo khoảng cách giữa cột và đường viền */
             }
             .panel-order .row .row .col-md-12 {
-                padding-top: 7px;
-                padding-bottom: 7px;
+                padding-top: 10px;
+                padding-bottom: 10px;
             }
             .panel-order .row .row .col-md-12:last-child {
-                font-size: 11px;
+                font-size: 14px; /* Giảm kích thước font chữ cho phần cuối */
                 color: #555;
                 background: #efefef;
+                padding: 10px; /* Thêm padding để tạo khoảng cách */
             }
             .panel-order .btn-group {
                 margin: 0px;
                 padding: 0px;
             }
             .panel-order .panel-body {
-                padding-top: 0px;
-                padding-bottom: 0px;
+                padding-top: 10px; /* Thêm padding trên cùng */
+                padding-bottom: 10px; /* Thêm padding dưới cùng */
             }
-            .panel-order .panel-deading {
+            .panel-order .panel-heading {
                 margin-bottom: 0;
+                font-size: 18px; /* Giảm kích thước font chữ cho phần tiêu đề */
+                padding: 10px; /* Thêm padding cho phần tiêu đề */
+            }
+            .btn-xs {
+                font-size: 14px; /* Giảm kích thước font chữ cho các nút nhỏ */
+                padding: 5px 10px; /* Thêm padding cho các nút nhỏ */
             }
         </style>
+
+
     </head>
     <body>
         <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
@@ -108,8 +126,9 @@
                                         <span><strong>${order.productName}</strong></span><br/>
                                         Số lượng: ${order.quantity}, Giá tiền:  ${order.formattedTotalPrice} <br/>
                                         <a data-toggle="modal" data-target="#orderModal" data-orderid="${order.orderId}" class="btn btn-success btn-xs" href="#" title="View"><i class="fa fa-eye"></i></a>
-                                        <a data-orderid="${order.orderId}" data-orderstatus="${order.orderStatus}" class="btn btn-danger btn-xs glyphicon glyphicon-trash delete-order" href="#" title="Delete"></a>
-                                    </div>
+                                            <c:if test="${order.orderStatus == 'Chờ giao hàng'}">
+                                            <a data-orderid="${order.orderId}" data-orderstatus="${order.orderStatus}" class="btn btn-danger btn-xs glyphicon glyphicon-trash delete-order" href="#" title="Delete"></a>
+                                        </c:if>                                    </div>
                                     <div class="col-md-12">Đơn hàng được thực hiện vào: ${order.orderDate}</div>
                                 </div>
                             </div>

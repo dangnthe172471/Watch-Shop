@@ -44,8 +44,8 @@
                 <span class="text">Watch Shop</span>
             </a>
             <ul class="side-menu top">
-                <div class="user-info" >
-                    <img src="${account.avatar}" alt="Avatar" id="avatarImg" style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ccc;" data-toggle="modal" data-target="#avatarModal">
+                <div class="user-info" style="margin-left: 10px;" >
+                    <img src="${account.avatar}" alt="Avatar" id="avatarImg" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ccc;" data-toggle="modal" data-target="#avatarModal">
                     <p>${account.user}</p>
                 </div><br>
                 <hr>
@@ -86,44 +86,16 @@
 
             </ul>
         </section>
-        <section id="content">
+         <section id="content">
             <nav class="navbar navbar-expand-md bg-white navbar-light">
                 <i class='bx bx-menu' ></i>  
-                <ul class="navbar-nav" style="margin-left: 600px;">
-                    <div class="dropdown row" style="margin-left: 10px">
-                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="ProfileUser.jsp" style="display:inline-block">  <img src="${account.avatar}" alt="Avatar" id="avatarImg" style="max-width: 25px; max-height: 25px; border-radius: 50%; border: 1px solid #ccc;" > ${sessionScope.account.user}</a></li> 
+                <ul class="navbar-nav" style="margin-left: 850px;">
+                    <div class="dropdown row" style="position: absolute; top: 10px;right: 50px;">
+                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="profile" style="display:inline-block"> <img src="${account.avatar}" alt="Avatar" id="avatarImg" style="max-width: 25px; max-height: 25px; border-radius: 50%; border: 1px solid #ccc;" > ${sessionScope.account.user}</a></li> 
                         <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
-                    </div>
-                    <c:set var="size" value="${sessionScope.size}"/>
-                    <div style="margin-left: 10px">
-                        <li class="nav-item giohang">
-                            <a href="Cart.jsp" class="btn btn-secondary rounded-circle">
-                                <i class="fa fa-shopping-cart"></i>
-                                <c:if test="${size>0}">
-                                    <div class="cart-amount">${size}</div>
-                                </c:if>
-                            </a>
-                            <a href="Cart.jsp" class="nav-link text-dark text-uppercase" style="display:inline-block">Giỏ hàng</a>
-                        </li>
                     </div>
                 </ul>
             </nav>
         </section>
-
-        <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="avatarModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-blue">
-                        <h5 class="modal-title" id="avatarModalLabel">Avatar</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img src="${account.avatar}" alt="Avatar" class="img-fluid">
-                    </div>
-                </div>
-            </div>
-        </div>
     </body>
 </html>

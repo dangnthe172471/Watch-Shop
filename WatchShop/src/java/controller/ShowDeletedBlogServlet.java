@@ -5,23 +5,24 @@
 
 package controller;
 
-import dal.OrderDAO;
+import dal.BlogDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Account;
-import model.OrderDetailWithImage;
+import model.Blog;
 
 /**
  *
  * @author dung2
  */
-public class OrderTrackingServlet extends HttpServlet {
+@WebServlet(name="ShowDeletedBlogServlet", urlPatterns={"/showdeletedblog"})
+public class ShowDeletedBlogServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +39,10 @@ public class OrderTrackingServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OrderTrackingServlet</title>");  
+            out.println("<title>Servlet ShowDeletedBlogServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet OrderTrackingServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ShowDeletedBlogServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,36 +56,32 @@ public class OrderTrackingServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("account");
-
-        if (account == null) {
-            response.sendRedirect("Login.jsp");
-            return;
-        }
-
-        String orderId = request.getParameter("orderId");
-        OrderDAO orderDAO = new OrderDAO();
-        List<OrderDetailWithImage> orderDetails = orderDAO.getOrderDetailsByOrderId(orderId);
-
-        request.setAttribute("orderDetails", orderDetails);
-        request.getRequestDispatcher("OrderTracking.jsp").forward(request, response);
+        BlogDAO blogDAO = new BlogDAO();
+        List<Blog> listDeletedBlogs = blogDAO.getAllDeletedBlogs();
+        List<Account> listA = blogDAO.getAllAccount();
+        request.setAttribute("listDeletedBlogs", listDeletedBlogs);
+        request.setAttribute("listA", listA);
+        request.setAttribute("tab", "4");
+        request.getRequestDispatcher("DeletedBlogs.jsp").forward(request, response);
     }
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+        int id = Integer.parseInt(request.getParameter("id"));
+        BlogDAO blogDAO = new BlogDAO();
+        
+        if ("restore".equals(action)) {
+            blogDAO.restoreBlog(id);
+        } else if ("delete".equals(action)) {
+            blogDAO.permanentlyDeleteBlog(id);
+        }
+        
+        response.sendRedirect("showdeletedblog");
     }
 
     /** 
