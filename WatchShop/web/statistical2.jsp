@@ -80,7 +80,7 @@
                 <a class="btn btn-primary" href="statistical3?year=${maxYear}" style="margin: 20px 320px;">Chi tiết</a>
             </main>
             <!-- MAIN -->
-            <table id="tableExcel" style="display:none">
+            <table id="tableExcel" style="display: none">
                 <thead>
                     <tr>
                         <th>Mã đơn hàng</th>
@@ -94,29 +94,27 @@
                 </thead>
                 <tbody>
                     <c:forEach items="${listO}" var="o">
-                        <tr>
-                            <td>${o.oid}</td>
-                            <td>                        
-                                <c:forEach items="${listOD}" var="od">
-                                    ${o.oid==od.order.oid?od.product.name:''}   
-                                </c:forEach>
-                            </td>
-                            <td>
-                                <c:forEach items="${listOD}" var="od">
-                                    <c:forEach items="${listB}" var="b">
-                                        ${o.oid==od.order.oid?(od.product.brandID==b.bid?b.bname:''):''}   
-                                    </c:forEach>
-                                </c:forEach>
-                            </td>
-                            <td>
-                                <c:forEach items="${listOD}" var="od">
-                                    ${o.oid==od.order.oid?od.quantity:''}
-                                </c:forEach>
-                            </td>
-                            <td>${o.account.user}</td>
-                            <td>${o.date}</td>
-                            <td><fmt:formatNumber value="${o.totalMoney}"/></td>
-                        </tr>
+                        <c:forEach items="${listOD}" var="od">
+                            <c:if test="${o.oid == od.order.oid && od.product.name != ''}">
+                                <tr>
+                                    <td>${o.oid}</td>
+                                    <td>                        
+                                        ${o.oid==od.order.oid?od.product.name:''}   
+                                    </td>
+                                    <td>
+                                        <c:forEach items="${listB}" var="b">
+                                            ${o.oid==od.order.oid?(od.product.brandID==b.bid?b.bname:''):''}   
+                                        </c:forEach>
+                                    </td>
+                                    <td>
+                                        ${o.oid==od.order.oid?od.quantity:''}
+                                    </td>
+                                    <td>${o.account.user}</td>
+                                    <td>${o.date}</td>
+                                    <td><fmt:formatNumber value="${o.totalMoney}"/></td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
                     </c:forEach>
                 </tbody>
             </table>
