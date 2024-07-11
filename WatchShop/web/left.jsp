@@ -93,6 +93,13 @@
                         </a>
 
                     </li>
+                    <li class="${tab==9?'active':''}">
+                        <a href="manageAccounts">
+                            <i class='bx bxs-group' ></i>
+                            <span class="text">Quản lý hoạt động </span>
+                        </a>
+
+                    </li>
                 </c:if>
                 <c:if test="${sessionScope.account.roleID==2}">
                     <li class="${tab==null?'active':''}">

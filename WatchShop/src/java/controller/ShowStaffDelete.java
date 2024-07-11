@@ -81,6 +81,7 @@ public class ShowStaffDelete extends HttpServlet {
         request.setAttribute("totalStaff", totalStaff);
         request.setAttribute("sortField", sortField);
         request.setAttribute("sortOrder", sortOrder);
+        request.setAttribute("tab", "6");
         request.getRequestDispatcher("DeleteStaff.jsp").forward(request, response);
     }
 
