@@ -276,6 +276,14 @@
         <servlet-name>ListOrderDeliveringServlet</servlet-name>
         <servlet-class>controller.ListOrderDeliveringServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccountManagementServlet</servlet-name>
+        <servlet-class>controller.AccountManagementServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountBlock</servlet-name>
+        <servlet-class>controller.AccountBlock</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -551,5 +559,13 @@
     <servlet-mapping>
         <servlet-name>ListOrderDeliveringServlet</servlet-name>
         <url-pattern>/listorderdelivering</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManagementServlet</servlet-name>
+        <url-pattern>/manageAccounts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountBlock</servlet-name>
+        <url-pattern>/showAccountblock</url-pattern>
     </servlet-mapping>
 </web-app>

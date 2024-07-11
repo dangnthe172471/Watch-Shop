@@ -18,9 +18,7 @@ import model.Account;
  *
  * @author dung2
  */
-public class ShowShipperDelete extends HttpServlet {
-
-    private static final int PAGE_SIZE = 10;
+public class AccountBlock extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +37,10 @@ public class ShowShipperDelete extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ShowShipperDelete</title>");
+            out.println("<title>Servlet AccountBlock</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ShowShipperDelete at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AccountBlock at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,33 +58,36 @@ public class ShowShipperDelete extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pageParam = request.getParameter("page");
-        int page = pageParam == null ? 1 : Integer.parseInt(pageParam);
-
         String sortField = request.getParameter("sortField");
         String sortOrder = request.getParameter("sortOrder");
-
-        if (sortField == null || sortField.isEmpty()) {
+        if (sortField == null) {
             sortField = "user";
         }
-        if (sortOrder == null || sortOrder.isEmpty()) {
+        if (sortOrder == null) {
             sortOrder = "asc";
         }
 
-        AccountDAO dao = new AccountDAO();
-        List<Account> sortedAccounts = dao.getAllBlockedShipperSorted(sortField, sortOrder);
-        List<Account> pagedAccounts = dao.getStaffByPage(sortedAccounts, page, PAGE_SIZE);
-        int totalStaff = sortedAccounts.size();
-        int totalPages = (int) Math.ceil((double) totalStaff / PAGE_SIZE);
+        int page = 1;
+        int pageSize = 10;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
 
-        request.setAttribute("blockedShippers", pagedAccounts);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-        request.setAttribute("totalStaff", totalStaff);
+        AccountDAO dao = new AccountDAO();
+        List<Account> accounts = dao.getAllAccountsBlockSorted(sortField, sortOrder);
+        int totalAccounts = accounts.size();
+        int totalPages = (int) Math.ceil((double) totalAccounts / pageSize);
+
+        List<Account> pagedAccounts = dao.getStaffByPage(accounts, page, pageSize);
+
+        request.setAttribute("accounts", pagedAccounts);
         request.setAttribute("sortField", sortField);
         request.setAttribute("sortOrder", sortOrder);
-        request.setAttribute("tab", "7");
-        request.getRequestDispatcher("DeleteShipper.jsp").forward(request, response);
+        request.setAttribute("totalAccounts", totalAccounts);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("tab", "9");
+        request.getRequestDispatcher("ManageAccountBlock.jsp").forward(request, response);
     }
 
     /**
