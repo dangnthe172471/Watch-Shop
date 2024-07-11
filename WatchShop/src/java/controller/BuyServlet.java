@@ -94,9 +94,9 @@ public class BuyServlet extends HttpServlet {
         Item t = new Item(p, num, price);
         cart.addItem(t);
         List<Item> list = cart.getItems();
+        
         double totalMoney = 0;
         int size= 0;
-
         for (Item item : list) {
             totalMoney += item.getPrice() * item.getQuantity();
             size+=item.getQuantity();

@@ -112,13 +112,16 @@ public class ProcessServlet extends HttpServlet {
             }
         }
         List<Item> list = cart.getItems();
+        
         double totalMoney = 0;
+        int size=0;
         for (Item item : list) {
             totalMoney += item.getPrice() * item.getQuantity();
+            size+=item.getQuantity();
         }
         session.setAttribute("totalMoney", totalMoney);
         session.setAttribute("cart", cart);
-        session.setAttribute("size", list.size());
+        session.setAttribute("size", size);
         response.sendRedirect(request.getHeader("referer"));
     }
 
