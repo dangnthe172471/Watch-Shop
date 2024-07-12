@@ -21,6 +21,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/A/Ky5/SE1804-SWP/Watch-Shop/WatchShop/src/java/controller/HomeServlet.java</file>
+            <file>file:/D:/A/Ky5/SE1804-SWP/Watch-Shop/WatchShop/web/Cart.jsp</file>
+            <file>file:/D:/A/Ky5/SE1804-SWP/Watch-Shop/WatchShop/src/java/model/Cart.java</file>
+            <file>file:/D:/A/Ky5/SE1804-SWP/Watch-Shop/WatchShop/web/nav.jsp</file>
+            <file>file:/D:/A/Ky5/SE1804-SWP/Watch-Shop/WatchShop/src/java/controller/CheckoutServlet.java</file>
+            <file>file:/D:/A/Ky5/SE1804-SWP/Watch-Shop/WatchShop/src/java/model/EmailOrder.java</file>
         </group>
     </open-files>
 </project-private>
