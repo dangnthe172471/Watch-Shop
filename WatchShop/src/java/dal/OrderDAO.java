@@ -444,4 +444,23 @@ public List<OrderDetailWithImage> getOrdersByUsernameAndStatus(String username, 
             return false;
         }
     }
+    
+    public boolean isProductAvailable(int pid, int requiredQuantity) {
+        String sql = "SELECT quantity FROM [product] WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, pid);
+            ResultSet rs = st.executeQuery();
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                int currentQuantity = rs.getInt(1);
+                if (currentQuantity >= requiredQuantity) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
 }

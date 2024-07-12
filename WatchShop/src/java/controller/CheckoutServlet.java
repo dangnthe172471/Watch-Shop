@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import model.Account;
 import model.Cart;
 import model.EmailOrder;
+import model.Item;
 
 /**
  *
@@ -137,6 +138,13 @@ public class CheckoutServlet extends HttpServlet {
             Object a = session.getAttribute("account");
             if (a != null) {
                 acount = (Account) a;
+                for (Item item : cart.getItems()) {
+                    if (!odao.isProductAvailable(item.getProduct().getId(), item.getQuantity())) {
+                        session.setAttribute("error", "2");
+                        response.sendRedirect("Cart.jsp");
+                        return;
+                    }
+                }
                 if (acount.getAmount() >= cart.getTotalMoney()) {
                     odao.addOrder(acount, cart, email, phone, address, note, dateShip, timeShip);
                     odao.updateAmount(acount, cart);
