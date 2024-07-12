@@ -127,8 +127,11 @@
                                             </div>
                                         </div>
                                     </div> 
-                                    <c:if test="${error!=null}">
+                                    <c:if test="${error==1}">
                                         <div style="margin-left: 250px;color: red;font-size: 20px;font-weight: bold">Tài khoản của bạn không đủ</div>
+                                    </c:if>
+                                    <c:if test="${error==2}">
+                                        <div style="margin-left: 250px;color: red;font-size: 20px;font-weight: bold">Sản của bạn muốn mua đã hết</div>
                                     </c:if>
                                 </div>
                                 <c:if test="${sessionScope.account==null}">

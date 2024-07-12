@@ -50,7 +50,7 @@
                 <div class="message">
                     Chúc mừng bạn đã hoàn tất đơn hàng.<br>
                     Chúng tôi sẽ kiểm tra và liên hệ giao hàng đến bạn trong thời gian sớm nhất!<br>
-                    Để xem lại đơn hàng, vui lòng <a href="#" class="link">nhấn vào đây</a>.
+                    Để xem lại đơn hàng, vui lòng <a data-toggle="modal" data-target="#orderModal" data-orderid="${order.orderId}" href="#" title="View">nhấn vào đây</a>.
                 </div>
                 <a href="home" class="button">QUAY LẠI TRANG CHỦ</a>
             </div>        
