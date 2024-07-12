@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import model.Account;
 import model.Cart;
 import model.EmailOrder;
+import model.Item;
 
 /**
  *
@@ -130,16 +131,43 @@ public class CheckoutServlet extends HttpServlet {
             timeShip = "";
         }
         LocalDateTime currentDateTime = LocalDateTime.now();
-        // có rồi
+
         if (o != null) {
             cart = (Cart) o;
             Account acount = null;
             Object a = session.getAttribute("account");
             if (a != null) {
                 acount = (Account) a;
+                boolean isAvailable = true;
+
+                // Kiểm tra số lượng sản phẩm trong giỏ hàng
+                for (Item item : cart.getItems()) {
+                    if (item.getQuantity() < 1) {
+                        session.setAttribute("error", "2");
+                        response.sendRedirect("Cart.jsp");
+                        return;
+                    }
+
+                    // Kiểm tra số lượng sản phẩm trong kho
+                    if (!odao.isProductAvailable(item.getProduct().getId(), item.getQuantity())) {
+                        isAvailable = false;
+                        break;
+                    }
+                }
+
+                if (!isAvailable) {
+                    session.setAttribute("error", "2");
+                    response.sendRedirect("Cart.jsp");
+                    return;
+                }
+
                 if (acount.getAmount() >= cart.getTotalMoney()) {
-                    odao.addOrder(acount, cart, email, phone, address, note, dateShip, timeShip);
-                    odao.updateAmount(acount, cart);
+                    // Tạo giao dịch để kiểm tra và cập nhật số lượng sản phẩm
+                    synchronized (this) {
+                        odao.addOrder(acount, cart, email, phone, address, note, dateShip, timeShip);
+                        odao.updateAmount(acount, cart);
+                    }
+
                     EmailOrder handleEmail = new EmailOrder();
                     String sub = handleEmail.subjectOrder(name);
                     String msg = handleEmail.messageOrder(currentDateTime, formatNumber(cart.getTotalMoney()), phone, name, address, note, cart);
@@ -148,7 +176,7 @@ public class CheckoutServlet extends HttpServlet {
                     session.setAttribute("size", 0);
                     response.sendRedirect("thanks.jsp");
                 } else {
-                    session.setAttribute("error", "error");
+                    session.setAttribute("error", "1");
                     response.sendRedirect("Cart.jsp");
                 }
             } else {
