@@ -525,8 +525,6 @@ public class AccountDAO extends DBContext {
         return accounts;
     }
 
-   
-
     public List<Account> getStaffByPage(List<Account> sortedAccounts, int page, int pageSize) {
         List<Account> pagedAccounts = new ArrayList<>();
         int start = (page - 1) * pageSize;
@@ -736,7 +734,6 @@ public class AccountDAO extends DBContext {
         }
     }
 
-
     public List<Account> getAllShippers() {
         List<Account> shippers = new ArrayList<>();
         String sql = "SELECT id, [user] FROM Account WHERE roleID = 3";
@@ -753,6 +750,7 @@ public class AccountDAO extends DBContext {
             System.out.println("getAllShippers: " + e.getMessage());
         }
         return shippers;
+    }
 
     public List<Account> getAllAccounts() {
         List<Account> accounts = new ArrayList<>();
@@ -816,8 +814,6 @@ public class AccountDAO extends DBContext {
         }
         return accounts;
     }
-    
-    
 
     public List<Account> getAllAccountsBlockSorted(String sortField, String sortOrder) {
         List<Account> accounts = new ArrayList<>();
