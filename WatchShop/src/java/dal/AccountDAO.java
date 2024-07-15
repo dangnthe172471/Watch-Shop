@@ -525,15 +525,7 @@ public class AccountDAO extends DBContext {
         return accounts;
     }
 
-    private Comparable getFieldValue(Account account, String fieldName) {
-        switch (fieldName) {
-            case "user":
-                return account.getUser();
-            // Thêm các trường khác nếu cần
-            default:
-                return account.getUser();
-        }
-    }
+   
 
     public List<Account> getStaffByPage(List<Account> sortedAccounts, int page, int pageSize) {
         List<Account> pagedAccounts = new ArrayList<>();
@@ -744,6 +736,7 @@ public class AccountDAO extends DBContext {
         }
     }
 
+
     public List<Account> getAllShippers() {
         List<Account> shippers = new ArrayList<>();
         String sql = "SELECT id, [user] FROM Account WHERE roleID = 3";
@@ -760,6 +753,119 @@ public class AccountDAO extends DBContext {
             System.out.println("getAllShippers: " + e.getMessage());
         }
         return shippers;
+
+    public List<Account> getAllAccounts() {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Account where roleID = 4 and status = 0";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("avatar"),
+                        rs.getString("user"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getDouble("amount"),
+                        rs.getInt("bought"),
+                        rs.getString("Address"),
+                        rs.getInt("status"),
+                        rs.getInt("roleID"),
+                        rs.getString("token")
+                );
+                accounts.add(account);
+            }
+        } catch (SQLException e) {
+            System.out.println("getAllAccounts: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    public List<Account> getAllAccountsSorted(String sortField, String sortOrder) {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Account where roleID = 4 and status = 0";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("avatar"),
+                        rs.getString("user"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getDouble("amount"),
+                        rs.getInt("bought"),
+                        rs.getString("Address"),
+                        rs.getInt("status"),
+                        rs.getInt("roleID"),
+                        rs.getString("token")
+                );
+                accounts.add(account);
+            }
+            if ("asc".equals(sortOrder)) {
+                accounts.sort(Comparator.comparing(a -> getFieldValue(a, sortField)));
+            } else {
+                accounts.sort(Comparator.comparing(a -> getFieldValue((Account) a, sortField)).reversed());
+            }
+        } catch (SQLException e) {
+            System.out.println("getAllAccountsSorted: " + e.getMessage());
+        }
+        return accounts;
+    }
+    
+    
+
+    public List<Account> getAllAccountsBlockSorted(String sortField, String sortOrder) {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM Account where roleID = 4 and status = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("id"),
+                        rs.getString("avatar"),
+                        rs.getString("user"),
+                        rs.getString("pass"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getDouble("amount"),
+                        rs.getInt("bought"),
+                        rs.getString("Address"),
+                        rs.getInt("status"),
+                        rs.getInt("roleID"),
+                        rs.getString("token")
+                );
+                accounts.add(account);
+            }
+            if ("asc".equals(sortOrder)) {
+                accounts.sort(Comparator.comparing(a -> getFieldValue(a, sortField)));
+            } else {
+                accounts.sort(Comparator.comparing(a -> getFieldValue((Account) a, sortField)).reversed());
+            }
+        } catch (SQLException e) {
+            System.out.println("getAllAccountsSorted: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    private Comparable getFieldValue(Account account, String fieldName) {
+        switch (fieldName) {
+            case "user":
+                return account.getUser();
+            case "email":
+                return account.getEmail();
+            case "phone":
+                return account.getPhone();
+            case "address":
+                return account.getAddress();
+            default:
+                return account.getUser();
+        }
     }
 
 }

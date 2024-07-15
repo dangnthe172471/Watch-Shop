@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import model.Account;
 import model.OrderDetailWithImage;
 
@@ -55,7 +56,7 @@ public class OrderTrackingServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
@@ -67,9 +68,9 @@ public class OrderTrackingServlet extends HttpServlet {
 
         String orderId = request.getParameter("orderId");
         OrderDAO orderDAO = new OrderDAO();
-        OrderDetailWithImage orderDetail = orderDAO.getOrderDetailById(orderId);
+        List<OrderDetailWithImage> orderDetails = orderDAO.getOrderDetailsByOrderId(orderId);
 
-        request.setAttribute("orderDetail", orderDetail);
+        request.setAttribute("orderDetails", orderDetails);
         request.getRequestDispatcher("OrderTracking.jsp").forward(request, response);
     }
 

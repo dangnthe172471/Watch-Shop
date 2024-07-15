@@ -4,24 +4,21 @@
  */
 package controller;
 
-import dal.ProductDAO;
+import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Cart;
-import model.Item;
-import model.Product;
+import model.Account;
 
 /**
  *
- * @author admin
+ * @author dung2
  */
-public class BuyServlet extends HttpServlet {
+public class AccountBlock extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +37,10 @@ public class BuyServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BuyServlet</title>");
+            out.println("<title>Servlet AccountBlock</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BuyServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AccountBlock at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +58,36 @@ public class BuyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+        String sortField = request.getParameter("sortField");
+        String sortOrder = request.getParameter("sortOrder");
+        if (sortField == null) {
+            sortField = "user";
+        }
+        if (sortOrder == null) {
+            sortOrder = "asc";
+        }
+
+        int page = 1;
+        int pageSize = 10;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
+        AccountDAO dao = new AccountDAO();
+        List<Account> accounts = dao.getAllAccountsBlockSorted(sortField, sortOrder);
+        int totalAccounts = accounts.size();
+        int totalPages = (int) Math.ceil((double) totalAccounts / pageSize);
+
+        List<Account> pagedAccounts = dao.getStaffByPage(accounts, page, pageSize);
+
+        request.setAttribute("accounts", pagedAccounts);
+        request.setAttribute("sortField", sortField);
+        request.setAttribute("sortOrder", sortOrder);
+        request.setAttribute("totalAccounts", totalAccounts);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("tab", "9");
+        request.getRequestDispatcher("ManageAccountBlock.jsp").forward(request, response);
     }
 
     /**
@@ -75,36 +101,7 @@ public class BuyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(true);
-        Cart cart = null;
-        Object o = session.getAttribute("cart");
-        ProductDAO dao = new ProductDAO();
-        // có rồi
-        if (o != null) {
-            cart = (Cart) o;
-        } else {
-            cart = new Cart();
-        }
-        String tnmum = request.getParameter("num");
-        String id = request.getParameter("id");
-        int num;
-        num = Integer.parseInt(tnmum);
-        Product p = dao.getProductByID(id);
-        double price = p.getPrice();
-        Item t = new Item(p, num, price);
-        cart.addItem(t);
-        List<Item> list = cart.getItems();
-        
-        double totalMoney = 0;
-        int size= 0;
-        for (Item item : list) {
-            totalMoney += item.getPrice() * item.getQuantity();
-            size+=item.getQuantity();
-        }
-        session.setAttribute("totalMoney", totalMoney);
-        session.setAttribute("cart", cart);
-        session.setAttribute("size", size);
-        response.sendRedirect("detail?pid=" + id);
+        processRequest(request, response);
     }
 
     /**

@@ -287,6 +287,14 @@
     <servlet>
         <servlet-name>AssignShipperServlet</servlet-name>
         <servlet-class>controller.AssignShipperServlet</servlet-class>
+       </servlet>
+    <servlet>
+        <servlet-name>AccountManagementServlet</servlet-name>
+        <servlet-class>controller.AccountManagementServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountBlock</servlet-name>
+        <servlet-class>controller.AccountBlock</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -575,5 +583,13 @@
     <servlet-mapping>
         <servlet-name>AssignShipperServlet</servlet-name>
         <url-pattern>/assignShipper</url-pattern>
+       </servlet-mapping>
+   <servlet-mapping>
+        <servlet-name>AccountManagementServlet</servlet-name>
+        <url-pattern>/manageAccounts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountBlock</servlet-name>
+        <url-pattern>/showAccountblock</url-pattern>
     </servlet-mapping>
 </web-app>

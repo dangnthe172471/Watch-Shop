@@ -13,7 +13,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/home.css">        
         <link rel="stylesheet" href="css/nav.css">
-        <link rel="stylesheet" href="css/manage-blog.css">        
+        <link rel="stylesheet" href="css/manage-blog.css">     
+        <link rel="stylesheet" href="css/shipper.css">
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -44,6 +45,14 @@
                                     <a class="dropdown-item" href="#" onclick="filterBlogs(2)">Đã xóa</a>
                                 </div>
                             </div>                
+                        </div>
+                        <div class="nav-bgg">
+                            <nav class="containerr" style="padding:0px; width: 30%">
+                                <ul class="main-menuu">
+                                    <li><a style="padding-left: 7px" href="manageblog">Danh sách</a></li>
+                                    <li style="margin-left: 30px;"><a href="showdeletedblog">Danh sách Xóa</a></li>
+                                </ul>
+                            </nav>
                         </div>
                         <table class="table table-striped">
                             <thead>

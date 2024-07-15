@@ -150,4 +150,49 @@ public class BlogDAO extends DBContext {
         }
         return list;
     }
+    
+    public List<Blog> getAllDeletedBlogs() {
+    List<Blog> list = new ArrayList<>();
+    String sql = "SELECT * FROM Blog WHERE status = 2 ORDER BY id desc";
+    try {
+        PreparedStatement st = connection.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            list.add(new Blog(rs.getInt("id"),
+                    rs.getString("title"),
+                    rs.getString("image"),
+                    rs.getString("image2"),
+                    rs.getString("date"),
+                    rs.getString("description"),
+                    rs.getInt("status"),
+                    rs.getInt("created_by")));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+
+public void restoreBlog(int id) {
+    String sql = "UPDATE Blog SET status = 0 WHERE id = ?";
+    try {
+        PreparedStatement st = connection.prepareStatement(sql);
+        st.setInt(1, id);
+        st.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+public void permanentlyDeleteBlog(int id) {
+    String sql = "DELETE FROM Blog WHERE id = ?";
+    try {
+        PreparedStatement st = connection.prepareStatement(sql);
+        st.setInt(1, id);
+        st.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
 }

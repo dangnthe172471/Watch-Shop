@@ -38,8 +38,8 @@
                 <span class="text">Watch Shop</span>
             </a>
             <ul class="side-menu top">
-                <div class="user-info" >
-                    <img src="${account.avatar}" alt="Avatar" style="max-width: 60px; max-height: 60px; border-radius: 50%; border: 2px solid #ccc;">
+                <div class="user-info" style="margin-left: 10px;" >
+                    <img src="${account.avatar}" alt="Avatar" id="avatarImg" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ccc;" data-toggle="modal" data-target="#avatarModal">
                     <p>${account.user}</p>
                 </div><br>
                 <hr>
@@ -91,7 +91,14 @@
                             <i class='bx bxs-group' ></i>
                             <span class="text">Khách hàng</span>
                         </a>
-                        
+
+                    </li>
+                    <li class="${tab==9?'active':''}">
+                        <a href="manageAccounts">
+                            <i class='bx bxs-group' ></i>
+                            <span class="text">Quản lý hoạt động </span>
+                        </a>
+
                     </li>
                 </c:if>
                 <c:if test="${sessionScope.account.roleID==2}">
@@ -121,6 +128,39 @@
                             <span class="text">Danh sách đơn</span>
                         </a>
                     </li>
+                </c:if>
+                <c:if test="${sessionScope.account.roleID==4}">
+                    <li class="${tab==null?'active':''}">
+                        <a href="ProfileUser.jsp">
+                            <i class='bx bx-user'></i>
+                            <span class="text">Hồ sơ</span>
+                        </a>
+                    </li>
+                    <li class="${tab==2?'active':''}">
+                        <a href="changepass">
+                            <i class="bx bx-lock"></i>
+                            <span class="text">Thay đổi mật khẩu</span>
+                        </a>
+                    </li>
+                    <li class="${tab==3?'active':''}">
+                        <a href="confirm.jsp">
+                            <i class='bx bxs-doughnut-chart' ></i>
+                            <span class="text">Thay đổi thông tin</span>
+                        </a>
+                    </li>
+                    <li class="${tab==4?'active':''}">
+                        <a href="blog">
+                            <i class='bx bxs-message-dots' ></i>
+                            <span class="text">Tin tức</span>
+                        </a>
+                    </li>
+                    <li class="${tab==5?'active':''}">
+                        <a href="orderHistory">
+                            <i class="bx bx-cart"></i>
+                            <span class="text">Sản phẩm đã mua</span>
+                        </a>
+                    </li>
+
                 </c:if>
             </ul>
         </section>

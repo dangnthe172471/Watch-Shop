@@ -70,7 +70,7 @@
                 overflow: hidden;
                 color: lightskyblue;
                 padding-left: 0px;
-                margin-top: 3vh
+                margin-top: 3vh;
             }
 
             #progressbar li {
@@ -117,6 +117,79 @@
             #progressbar li.active:after {
                 background: lightskyblue;
             }
+
+
+
+            #progressbar {
+                margin-bottom: 3vh;
+                overflow: hidden;
+                color: lightskyblue;
+                padding-left: 0px;
+                margin-top: 3vh;
+            }
+
+            #progressbar li {
+                list-style-type: none;
+                font-size: x-small;
+                width: 25%;
+                float: left;
+                position: relative;
+                font-weight: 400;
+                color: rgb(160, 159, 159);
+                text-align: center;
+            }
+
+            #progressbar li:before {
+                line-height: 20px; 
+                display: block;
+                font-size: 12px;
+                background: #ddd;
+                border-radius: 50%;
+                margin: auto;
+                z-index: -1;
+                margin-bottom: 1vh;
+                width: 20px; 
+                height: 20px; 
+                border: 2px solid lightskyblue; 
+                content: ''; 
+            }
+
+            #progressbar li:after {
+                content: '';
+                height: 2px;
+                background: #ddd;
+                position: absolute;
+                left: 0%;
+                right: 0%;
+                margin-bottom: 2vh;
+                top: 9px; 
+                z-index: 1;
+            }
+
+            .progress-track {
+                padding: 0 8%;
+            }
+
+            #progressbar li.active {
+                color: black;
+            }
+
+            #progressbar li.active:before,
+            #progressbar li.active:after {
+                background: lightskyblue;
+                border-color: lightskyblue; 
+            }
+
+            .step-icon {
+                display: block;
+                width: 20px; 
+                height: 20px; 
+                border-radius: 50%;
+                margin: 0 auto 10px;
+                background: white;
+                border: 2px solid lightskyblue;
+            }
+
         </style>
     </head>
     <body>
@@ -126,38 +199,34 @@
                 <div class="row">
                     <div class="col-7">
                         <span id="heading">Đơn hàng được đặt ngày:</span><br>
-                        <span id="details">${orderDetail.orderDate}</span>
+                        <span id="details">${orderDetails[0].orderDate}</span>
                     </div>
                     <div class="col-5 pull-right">
-
-                        <span id="heading">Dự kiến giao:${orderDetail.dateShip}</span><br>
-                        <span id="details">Thời gian:${orderDetail.timeShip}</span>
+                        <span id="heading">Dự kiến giao: ${orderDetails[0].dateShip}</span><br>
+                        <span id="details">Thời gian: ${orderDetails[0].timeShip}</span>
                     </div>
                 </div>      
             </div>      
             <div class="pricing">
-                <div class="row">
-                    <div class="col-9">
-                        <span id="name">Tên sản phẩm: ${orderDetail.productName}</span>  
+                <c:forEach var="orderDetail" items="${orderDetails}">
+                    <div class="row">
+                        <div class="col-7">
+                            <span id="name"> ${orderDetail.productName}</span>  
+                        </div>
+                        <div class="col-5">
+                            <span id="price">Giá tiền: ${orderDetail.formattedTotalPrice}</span>
+                        </div>
                     </div>
-                    <div class="col-3">
-                        <span id="price">Giá tiền: ${orderDetail.formattedTotalPrice}</span>
+                    <div class="row">
+                        <div class="col-4"><img src="${orderDetail.productImage}" class="media-object img-thumbnail" /></div>
+
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-9">
-                        <div class="col-5"><img src="${orderDetail.productImage}" class="media-object img-thumbnail" /></div>
-                    </div>
-                    <div class="col-3">
-                        <span id="heading">Đơn hàng số:</span><br>
-                        <span id="details">${orderDetail.orderId}</span>
-                    </div>
-                </div>
+                </c:forEach>
             </div>
             <div class="total">
                 <div class="row">
-                    <div class="col-9">Tổng số tiền phải thanh Toán:</div>
-                    <div class="col-3"><big>${orderDetail.getFormattedTotalMoney()}</big></div>
+                    <div class="col-9">Tổng số tiền phải thanh toán:</div>
+                    <div class="col-3"><big>${orderDetails[0].formattedTotalPrice}</big></div>
                 </div>
             </div>
             <div class="tracking">
@@ -165,12 +234,21 @@
             </div>
             <div class="progress-track">
                 <ul id="progressbar">
-                    <li class="step0 ${orderDetail.orderStatus == 'Chờ giao hàng' || orderDetail.orderStatus == 'Đã nhận đơn' || orderDetail.orderStatus == 'Đang giao hàng' || orderDetail.orderStatus == 'Hoàn thành' ? 'active' : ''}" id="step1">Đã đặt hàng</li>
-                    <li class="step0 ${orderDetail.orderStatus == 'Đã nhận đơn' || orderDetail.orderStatus == 'Đang giao hàng' || orderDetail.orderStatus == 'Hoàn thành' ? 'active' : ''}" id="step2">Đã vận chuyển</li>
-                    <li class="step0 ${orderDetail.orderStatus == 'Đang giao hàng' || orderDetail.orderStatus == 'Hoàn thành' ? 'active' : ''}" id="step3">Trên đường</li>
-                    <li class="step0 ${orderDetail.orderStatus == 'Hoàn thành' ? 'active' : ''}" id="step4">Giao hàng thành công</li>
+                    <li class="step0 ${orderDetails[0].orderStatus == 'Chờ giao hàng' || orderDetails[0].orderStatus == 'Đã nhận đơn' || orderDetails[0].orderStatus == 'Đang giao hàng' || orderDetails[0].orderStatus == 'Hoàn thành' ? 'active' : ''}" id="step1">
+                        Đã đặt hàng
+                    </li>
+                    <li class="step0 ${orderDetails[0].orderStatus == 'Đã nhận đơn' || orderDetails[0].orderStatus == 'Đang giao hàng' || orderDetails[0].orderStatus == 'Hoàn thành' ? 'active' : ''}" id="step2">
+                        Đã nhận đơn
+                    </li>
+                    <li class="step0 ${orderDetails[0].orderStatus == 'Đang giao hàng' || orderDetails[0].orderStatus == 'Hoàn thành' ? 'active' : ''}" id="step3">
+                        Trên đường
+                    </li>
+                    <li class="step0 ${orderDetails[0].orderStatus == 'Hoàn thành' ? 'active' : ''}" id="step4">
+                        Giao hàng thành công
+                    </li>
                 </ul>
             </div>
+
             <hr>
             <div class="footer">
                 <p>Cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của Watch Shop!</p>
