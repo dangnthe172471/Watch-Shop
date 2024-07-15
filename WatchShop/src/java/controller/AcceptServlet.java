@@ -42,8 +42,8 @@ public class AcceptServlet extends HttpServlet {
     throws ServletException, IOException {
         String id = request.getParameter("oid");
         OrderDAO o = new OrderDAO();
-        o.AcceptOrderId(id);
-        response.sendRedirect("listordercompleted");
+        o.CanceledOrderId(id);
+        request.getRequestDispatcher("listordercompleted");
     } 
 
 }

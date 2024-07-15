@@ -34,8 +34,8 @@
                         <div class="head">
                             <h3>Danh sách</h3>
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-eutton" id="filterDropdown" data-toggle="dropdown" aria-haspopup="txpanded="false">
-                                    <i class='bx bx-filter' ></i> Trạng thái
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class='bx bx-filter'></i> Trạng thái
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="filterDropdown">
                                     <a class="dropdown-item" href="#" onclick="filterBlogs()">Tất cả</a> 
@@ -58,7 +58,7 @@
                                 </tr>
                             </thead>
                             <tbody id="blogList">
-                                <c:forEach items="${requestScope.listBl}" var="c">
+                                <c:forEach items="${listBl}" var="c">
                                     <tr data-status="${c.status}">
                                         <td>${c.id}</td>
                                         <td>
@@ -84,7 +84,7 @@
                                             </span>
                                         </td>
                                         <c:forEach var="a" items="${listA}">
-                                            <td  style="display:${c.created_by==a.id?'':'none'}  ;text-align: center; padding-right: 70px;">${a.user}</td>
+                                            <td style="display:${c.created_by==a.id?'':'none'}; text-align: center; padding-right: 70px;">${a.user}</td>
                                         </c:forEach>
                                         <td>
                                             <c:choose>

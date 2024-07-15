@@ -668,6 +668,7 @@ public class AccountDAO extends DBContext {
         }
         return 0;
     }
+
     public List<Account> getAllCustomer() {
         List<Account> list = new ArrayList<>();
         try {
@@ -675,7 +676,7 @@ public class AccountDAO extends DBContext {
             stm = connection.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {
-                
+
                 Account a = new Account(
                         rs.getInt(1),
                         rs.getString(2),
@@ -741,6 +742,24 @@ public class AccountDAO extends DBContext {
             st.executeUpdate();
         } catch (Exception e) {
         }
+    }
+
+    public List<Account> getAllShippers() {
+        List<Account> shippers = new ArrayList<>();
+        String sql = "SELECT id, [user] FROM Account WHERE roleID = 3";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account shipper = new Account();
+                shipper.setId(rs.getInt("id"));
+                shipper.setUser(rs.getString("user"));
+                shippers.add(shipper);
+            }
+        } catch (SQLException e) {
+            System.out.println("getAllShippers: " + e.getMessage());
+        }
+        return shippers;
     }
 
 }
