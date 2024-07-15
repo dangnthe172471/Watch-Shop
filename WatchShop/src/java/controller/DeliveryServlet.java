@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import dal.OrderDAO;
@@ -17,30 +16,32 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author quyld
  */
-public class CompletedServlet extends HttpServlet {
-  
+public class DeliveryServlet extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CompletedServlet</title>");  
+            out.println("<title>Servlet DeliveryServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CompletedServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet DeliveryServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String id = request.getParameter("oid");
         OrderDAO o = new OrderDAO();
-        o.CompletedOrderId(id);
-        response.sendRedirect("listorderaccept");
+        o.AcceptOrderId(id);
+        request.getRequestDispatcher("listorderdelivering");
     } 
+
 }

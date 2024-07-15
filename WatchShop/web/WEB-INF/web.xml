@@ -277,6 +277,18 @@
         <servlet-class>controller.ListOrderDeliveringServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DeliveryServlet</servlet-name>
+        <servlet-class>controller.DeliveryServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetShippersServlet</servlet-name>
+        <servlet-class>controller.GetShippersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AssignShipperServlet</servlet-name>
+        <servlet-class>controller.AssignShipperServlet</servlet-class>
+       </servlet>
+    <servlet>
         <servlet-name>AccountManagementServlet</servlet-name>
         <servlet-class>controller.AccountManagementServlet</servlet-class>
     </servlet>
@@ -561,6 +573,18 @@
         <url-pattern>/listorderdelivering</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>DeliveryServlet</servlet-name>
+        <url-pattern>/delivery</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetShippersServlet</servlet-name>
+        <url-pattern>/getShippers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AssignShipperServlet</servlet-name>
+        <url-pattern>/assignShipper</url-pattern>
+       </servlet-mapping>
+   <servlet-mapping>
         <servlet-name>AccountManagementServlet</servlet-name>
         <url-pattern>/manageAccounts</url-pattern>
     </servlet-mapping>

@@ -16,7 +16,7 @@ public class BlogDAO extends DBContext {
 
     public List<Blog> getAllBlog() {
         List<Blog> list = new ArrayList<>();
-        String sql = "SELECT * FROM Blog where status <> 2 ORDER BY status ASC, id desc";
+        String sql = "SELECT * FROM Blog where status <> 3 ORDER BY status ASC, id desc";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -105,7 +105,7 @@ public class BlogDAO extends DBContext {
 
     public List<Blog> getAllPublishedBlogs() {
         List<Blog> list = new ArrayList<>();
-        String sql = "SELECT * FROM Blog WHERE status = 1 ORDER BY id DESC";
+        String sql = "SELECT * FROM Blog ORDER BY id DESC";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();

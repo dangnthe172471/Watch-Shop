@@ -12,7 +12,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Account;
 import model.Order;
 
 /**
@@ -41,10 +43,18 @@ public class ListOrderCompletedServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            response.sendRedirect("Login.jsp");
+            return;
+        }
+        int id = account.getId(); 
+        String statusFilter = request.getParameter("status");
         OrderDAO o = new OrderDAO();
-        List <Order> listorder = o.getOrderCompleted();
+        List <Order> listorder = o.getOrderOfShiperCom(id);
         request.setAttribute("order", listorder);
-        request.setAttribute("tab", "3");
+        request.setAttribute("statusFilter", statusFilter); 
         request.getRequestDispatcher("ShipperCompleted.jsp").forward(request, response);
     } 
 

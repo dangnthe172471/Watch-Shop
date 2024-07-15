@@ -35,6 +35,39 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <style>
+        .custom-button {
+            background-color: #2196F3;
+            height: 35px; /* Tăng chiều cao để chữ rõ hơn */
+            width: 100px; /* Điều chỉnh lại width cho phù hợp */
+            border: none;
+            border-radius: 10px; /* Bo tròn góc */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            overflow: hidden; /* Ẩn phần chữ vượt quá */
+            white-space: nowrap; /* Không ngắt dòng */
+        }
+
+        .custom-button a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px; /* Tăng kích thước chữ */
+            font-weight: bold;
+            display: block;
+            width: 100%;
+            text-align: center;
+            line-height: 35px; /* Căn giữa theo chiều dọc */
+            overflow: hidden; /* Ẩn phần chữ vượt quá */
+            white-space: nowrap; /* Không ngắt dòng */
+        }
+
+        .custom-button:hover {
+            background-color: lightgreen; /* Thêm hiệu ứng khi rê chuột */
+        }
+    </style>
 
         
     </head>
@@ -94,7 +127,7 @@
                                     </tr>                                   
                                 </thead>
                                 <tbody>
-                                    <c:if test="${sessionScope.account.roleID==2}">
+                                    
                                         <c:forEach items="${order}" var="o">
                                             <tr>
                                                 <td>${o.account.user}</td> 
@@ -105,28 +138,14 @@
                                                 <td>${o.date}</td>
                                                 <td>${o.dateShip}</td>
                                                 <td>${o.timeShip}</td>
-                                                <td></td>
-                                            </tr> 
-                                        </c:forEach>
-                                    </c:if>
-                                    <c:if test="${sessionScope.account.roleID==3}">
-                                        <c:forEach items="${order}" var="o">
-                                            <tr>
-                                                <td>${o.account.user}</td> 
-                                                <td>${o.phone}</td>
-                                                <td>${o.email}</td>
-                                                <td>${o.address}</td>
-                                                <td><fmt:formatNumber value="${o.totalMoney}"/></td>
-                                                <td>${o.date}</td>
-                                                <td>${o.dateShip}</td>
-                                                <td>${o.timeShip}</td>
-                                                <td></td> 
+                                                <td>${o.note}</td>  
                                                 <td>
-                                                    <a href="#" onclick="doOrder('${o.oid}')"><i class="fa fa-shopping-bag"></i></a>
+                                                    <button class="custom-button" onclick="doOrder('${o.oid}')">
+                                                    <a>Nhận Đơn</a>
+                                                </button>
                                                 </td>
                                             </tr> 
                                         </c:forEach>
-                                    </c:if>
 
                                 </tbody>
                             </table>
@@ -135,5 +154,14 @@
                     </div>                  
                 </div>
             </main>
+            <script type="text/javascript">
+                function doOrder(oid) {
+                    if (confirm('Xác nhận lấy đơn hàng vận chuyển')) {
+                        window.location = 'completed?oid=' + oid;
+                    }
+                }
+            </script>
+            <script src="js/script.js"></script>
+            
     </body>
 </html>

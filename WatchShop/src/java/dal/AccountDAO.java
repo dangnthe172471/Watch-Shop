@@ -736,6 +736,24 @@ public class AccountDAO extends DBContext {
         }
     }
 
+
+    public List<Account> getAllShippers() {
+        List<Account> shippers = new ArrayList<>();
+        String sql = "SELECT id, [user] FROM Account WHERE roleID = 3";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account shipper = new Account();
+                shipper.setId(rs.getInt("id"));
+                shipper.setUser(rs.getString("user"));
+                shippers.add(shipper);
+            }
+        } catch (SQLException e) {
+            System.out.println("getAllShippers: " + e.getMessage());
+        }
+        return shippers;
+
     public List<Account> getAllAccounts() {
         List<Account> accounts = new ArrayList<>();
         String sql = "SELECT * FROM Account where roleID = 4 and status = 0";

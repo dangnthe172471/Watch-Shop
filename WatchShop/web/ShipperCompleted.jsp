@@ -82,6 +82,7 @@
                                         <th style="width: 150px">Ngày đặt<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(5, 'str')">⇅</span></th>
                                         <th style="width: 150px">Ngày muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(6, 'str')">⇅</span></th>
                                         <th style="width: 100px">Thời gian muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
+                                        <th style="width: 100px">Ngày nhận<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
                                         <th style="width: 180px; padding-left:40px">Ghi chú</th>
                                     </tr>                                   
                                 </thead>
@@ -96,7 +97,8 @@
                                             <td>${o.date}</td>
                                             <td>${o.dateShip}</td>
                                             <td>${o.timeShip}</td>
-                                            <td></td>
+                                            <td>${o.receivedDate}</td>
+                                            <td>${o.note}</td> 
                                         </tr> 
                                     </c:forEach>
                                 </tbody>
