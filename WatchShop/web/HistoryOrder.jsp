@@ -96,7 +96,6 @@
 
     </head>
     <body>
-        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
         <jsp:include page="leftprofile.jsp" />
         <section id="content">  
             <div class="panel panel-default panel-order">
@@ -125,7 +124,7 @@
                                         <div class="pull-right"><label class="label label-danger">${order.orderStatus}</label></div>
                                         <span><strong>${order.productName}</strong></span><br/>
                                         Số lượng: ${order.quantity}, Giá tiền:  ${order.formattedTotalPrice} <br/>
-                                        <a data-toggle="modal" data-target="#orderModal" data-orderid="${order.orderId}" class="btn btn-success btn-xs" href="#" title="View"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-success btn-xs" href="ordertracking?orderId=${order.orderId}" ><i class="fa fa-eye"></i></a>
                                             <c:if test="${order.orderStatus == 'Chờ giao hàng'}">
                                             <a data-orderid="${order.orderId}" data-orderstatus="${order.orderStatus}" class="btn btn-danger btn-xs glyphicon glyphicon-trash delete-order" href="#" title="Delete"></a>
                                         </c:if>                                    </div>

@@ -51,7 +51,7 @@
                 <hr>
 
 
-                <li class="${tab==null?'active':''}">
+                <li class="${tab==1?'active':''}">
                     <a href="profile">
                         <i class='bx bx-user'></i>
                         <span class="text">Hồ sơ</span>
@@ -75,7 +75,7 @@
                         <span class="text">Tin tức</span>
                     </a>
                 </li>
-                <li class="${tab==5?'active':''}">
+                <li class="${(tab==5||tab==null)?'active':''}">
                     <a href="orderHistory">
                         <i class="bx bx-cart"></i>
                         <span class="text">Sản phẩm đã mua</span>
@@ -86,7 +86,7 @@
 
             </ul>
         </section>
-         <section id="content">
+        <section id="content">
             <nav class="navbar navbar-expand-md bg-white navbar-light">
                 <i class='bx bx-menu' ></i>  
                 <ul class="navbar-nav" style="margin-left: 850px;">
