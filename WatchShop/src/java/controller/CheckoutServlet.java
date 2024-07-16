@@ -81,7 +81,6 @@ public class CheckoutServlet extends HttpServlet {
         }
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -130,8 +129,7 @@ public class CheckoutServlet extends HttpServlet {
                     session.removeAttribute("cart");
                     session.setAttribute("size", 0);
                     int orderID = odao.getOrderID(acount.getId());
-                    request.setAttribute("orderID", orderID);
-                    response.sendRedirect("thanks.jsp");
+                    response.sendRedirect("thanks.jsp?orderID=" + orderID);
                 } else {
                     session.setAttribute("error", "1");
                     response.sendRedirect("Cart.jsp");
