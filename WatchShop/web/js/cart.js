@@ -82,7 +82,7 @@ function validateFullName() {
     if (username.startsWith(" ")) {
         usernameMessageElement.innerHTML = "Tên nhận hàng sai định dạng.";
         usernameMessageElement.style.color = "red";
-    } else　if (username.trim() === "") {
+    } else if (username.trim() === "") {
         usernameMessageElement.innerHTML = "Tên nhận hàng không được để trống.";
         usernameMessageElement.style.color = "red";
     } else {

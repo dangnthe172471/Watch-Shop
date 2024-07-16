@@ -287,7 +287,7 @@
     <servlet>
         <servlet-name>AssignShipperServlet</servlet-name>
         <servlet-class>controller.AssignShipperServlet</servlet-class>
-       </servlet>
+    </servlet>
     <servlet>
         <servlet-name>AccountManagementServlet</servlet-name>
         <servlet-class>controller.AccountManagementServlet</servlet-class>
@@ -583,8 +583,8 @@
     <servlet-mapping>
         <servlet-name>AssignShipperServlet</servlet-name>
         <url-pattern>/assignShipper</url-pattern>
-       </servlet-mapping>
-   <servlet-mapping>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AccountManagementServlet</servlet-name>
         <url-pattern>/manageAccounts</url-pattern>
     </servlet-mapping>

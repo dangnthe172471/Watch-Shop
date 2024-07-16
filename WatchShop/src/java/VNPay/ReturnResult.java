@@ -153,6 +153,8 @@ public class ReturnResult extends HttpServlet {
                 request.setAttribute("vnp_TransactionNo", vnp_TransactionNo);
                 request.setAttribute("vnp_BankCode", vnp_BankCode);
                 request.setAttribute("vnp_TransactionStatus", vnp_TransactionStatus);
+                int orderID = odao.getOrderID(acount.getId());
+                request.setAttribute("orderID", orderID);
                 request.getRequestDispatcher("thanks.jsp").forward(request, response);
             } else {
                 response.sendRedirect("login");

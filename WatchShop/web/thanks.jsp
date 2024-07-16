@@ -50,7 +50,7 @@
                 <div class="message">
                     Chúc mừng bạn đã hoàn tất đơn hàng.<br>
                     Chúng tôi sẽ kiểm tra và liên hệ giao hàng đến bạn trong thời gian sớm nhất!<br>
-                    Để xem lại đơn hàng, vui lòng <a data-toggle="modal" data-target="#orderModal" data-orderid="${order.orderId}" href="#" title="View">nhấn vào đây</a>.
+                    Để xem lại đơn hàng, vui lòng <a href="ordertracking?orderId=${orderID}">nhấn vào đây</a>.
                 </div>
                 <a href="home" class="button">QUAY LẠI TRANG CHỦ</a>
             </div>        
@@ -62,7 +62,7 @@
                     <div class="message" style="text-align: left">
                         Chúc mừng bạn đã hoàn tất đơn hàng.<br>
                         Chúng tôi sẽ kiểm tra và liên hệ giao hàng đến bạn trong thời gian sớm nhất!<br>
-                        Để xem lại đơn hàng, vui lòng <a data-toggle="modal" data-target="#orderModal" data-orderid="${order.orderId}" href="#" title="View">nhấn vào đây</a>.
+                        Để xem lại đơn hàng, vui lòng <a href="ordertracking?orderId=${orderID}">nhấn vào đây</a>.
                     </div><br><hr>
                 </c:if>
                 <c:if test="${addM!=null}">

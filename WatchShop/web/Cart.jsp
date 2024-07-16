@@ -135,13 +135,13 @@
                                     </c:if>
                                 </div>
                                 <c:if test="${sessionScope.account==null}">
-                                    <a href="checkout?pttt=ttweb"><button class="btn btn-lg btn-block btn-checkout text-uppercase text-white" id="btnCheckout"
+                                    <a href="checkout?pttt=ttweb"><button class="btn btn-lg btn-block btn-checkout text-uppercase text-white" id="btnCheckout1"
                                                                           style="background: #F5A623;width: 133%;margin-left: 5px;">Đặt mua</button></a> 
                                     </c:if>
                             </div>
 
                             <c:if test="${sessionScope.account!=null}">
-                                <button class="btn btn-lg btn-block btn-checkout text-uppercase text-white" id="btnCheckout"
+                                <button class="btn btn-lg btn-block btn-checkout text-uppercase text-white" id="btnCheckout2"
                                         style="background: #F5A623; width: 96%;margin-left: 20px;" onclick="checkout()" >Đặt mua</button>
                             </c:if>
 
@@ -216,9 +216,9 @@
                                                     <div class="card-body" style="padding: 15px;">                                                 
                                                         <div class="pttt">
                                                             <h6 class="header text-uppercase">Chọn phương thức thanh toán</h6>
-                                                            <div class="option mb-2">
-                                                                <input type="radio" name="pttt" value="ttweb" id="cod" checked>
-                                                                <label for="cod">Thanh toán bằng tiền tài khoản shop</label>
+                                                            <div class="option option1">
+                                                                <input type="radio" name="pttt" value="ttweb" checked>
+                                                                <label>Thanh toán bằng tiền tài khoản shop</label>
                                                             </div>
                                                             <div class="option option2">
                                                                 <input type="radio" name="pttt" value="ttpay" id="atm">
@@ -257,7 +257,7 @@
         <script src="js/cart.js"></script>
         <script>
                                             function checkout() {
-                                                var x = document.getElementById("btnCheckout");
+                                                var x = document.getElementById("btnCheckout2");
                                                 var y = document.getElementById("khoimua");
                                                 x.style.display = "none";
                                                 y.style.display = "";

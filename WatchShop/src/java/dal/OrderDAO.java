@@ -664,4 +664,20 @@ public class OrderDAO extends DBContext {
         }
         return false;
     }
+
+    public int getOrderID(int aid) {
+        String sql = "select top 1 * from [Order]\n"
+                + "where aid = ? order by [id] desc";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, aid);
+            ResultSet rs = st.executeQuery();
+            rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
 }
