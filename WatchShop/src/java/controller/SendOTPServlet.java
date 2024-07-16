@@ -17,6 +17,14 @@ public class SendOTPServlet extends HttpServlet {
     private final Email emailSender = new Email();
 
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setAttribute("tab", "3");
+        request.getRequestDispatcher("confirm.jsp").forward(request, response);
+
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
