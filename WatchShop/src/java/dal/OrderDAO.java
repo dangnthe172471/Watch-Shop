@@ -456,7 +456,8 @@ public class OrderDAO extends DBContext {
                     + "JOIN [Account] a ON o.aid = a.id "
                     + "JOIN [Status] s ON o.sid = s.id "
                     + "JOIN [ImageProduct] ip ON p.id = ip.pid "
-                    + "WHERE a.[user] = ?";
+                    + "WHERE a.[user] = ? "
+                    + "ORDER BY o.date DESC"; // Thêm phần ORDER BY để sắp xếp theo ngày đặt hàng
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             ResultSet rs = st.executeQuery();
