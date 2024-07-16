@@ -39,6 +39,19 @@
                 reader.readAsDataURL(event.target.files[0]);
             }
         </script>
+        <script>
+            $(document).ready(function () {
+                $("#changeAddressButton").on("click", function () {
+                    $("#addressInputContainer").toggle();
+                    if ($("#addressInputContainer").is(":visible")) {
+                        $(this).text("Lưu thay đổi");
+                    } else {
+                        $(this).text("Thay đổi");
+                    }
+                });
+            });
+        </script>
+
 
 
     </head>
@@ -76,7 +89,7 @@
                             <div class="form-group">
                                 <label class="profile-label">Email:</label>
                                 <div class="profile-value">${account.email}
-                                    <a href="confirm.jsp" class="btn btn-info">Thay đổi</a>
+                                    <a href="sendOTP" class="btn btn-info">Thay đổi</a>
                                 </div> 
 
                             </div>
@@ -91,21 +104,22 @@
                                 <form action="updateaddress" method="post">
                                     <c:choose>
                                         <c:when test="${empty account.address}">
-                                            <div class="form-group">
+                                            <div class="form-group" id="addressInputContainer">
                                                 <input type="text" class="form-control w-50" name="newAddress" placeholder="Nhập địa chỉ mới" required>
                                                 <button type="submit" class="btn btn-info mt-2">Thêm</button>
                                             </div>
                                         </c:when>
                                         <c:otherwise>
-                                            <div class="form-group">
+                                            <div class="form-group" id="addressInputContainer" style="display:none;">
                                                 <input type="text" class="form-control w-50" name="newAddress" placeholder="Nhập địa chỉ mới" required>
-                                                <button type="submit" class="btn btn-info mt-2">Thay đổi</button>
+                                                <button type="submit" class="btn btn-info mt-2">Lưu</button>
                                             </div>
+                                            <button type="button" class="btn btn-info mt-2" id="changeAddressButton">Thay đổi</button>
                                         </c:otherwise>
                                     </c:choose>
                                 </form>
-
                             </div>
+
                             <div class="form-group">
                                 <div class="profile-label">Số hàng đã mua:</div>
                                 <div class="profile-value">${account.bought} sản phẩm</div> 

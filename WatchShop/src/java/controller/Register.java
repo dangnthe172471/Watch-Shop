@@ -4,7 +4,6 @@
  */
 package controller;
 
-
 import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,7 +74,7 @@ public class Register extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("username");
@@ -86,12 +85,12 @@ public class Register extends HttpServlet {
         String address = request.getParameter("address");
 
         // Server-side validation for empty fields
-        if (isEmpty(username) || isEmpty(password) || isEmpty(repassword) || isEmpty(email) || isEmpty(phone) ) {
+        if (isEmpty(username) || isEmpty(password) || isEmpty(repassword) || isEmpty(email) || isEmpty(phone)) {
             request.setAttribute("error", "Không được để trống.");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
             return;
         }
-         if (containsWhitespace(username) || containsWhitespace(password) || containsWhitespace(repassword) || containsWhitespace(email) || containsWhitespace(phone)) {
+        if (containsWhitespace(username) || containsWhitespace(password) || containsWhitespace(repassword) || containsWhitespace(email) || containsWhitespace(phone)) {
             request.setAttribute("error", "Lỗi dấu cách.");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
             return;
@@ -123,9 +122,12 @@ public class Register extends HttpServlet {
             request.getRequestDispatcher("Register.jsp").forward(request, response);
         } else {
             AccountDAO da = new AccountDAO();
-            Account account = da.checkAccountExist(username);
 
-            if (account == null) {
+            // Check if username already exists
+            if (da.checkAccountUser(username)) {
+                request.setAttribute("error", "Tài khoản đã tồn tại, vui lòng đăng nhập!");
+                request.getRequestDispatcher("Register.jsp").forward(request, response);
+            } else {
                 Account newUser = new Account();
                 newUser.setUser(username);
                 newUser.setPass(Mahoa.toSHA1(password));
@@ -133,14 +135,10 @@ public class Register extends HttpServlet {
                 newUser.setPhone(phone);
                 newUser.setAddress(address);
 
-                AccountDAO dao = new AccountDAO();
                 da.AddAccount(newUser);
                 HttpSession session = request.getSession();
                 session.setAttribute("account", newUser);
                 response.sendRedirect(request.getContextPath() + "/home");
-            } else {
-                request.setAttribute("error", "Tài khoản đã tồn tại, vui lòng đăng nhập!");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
             }
         }
     }

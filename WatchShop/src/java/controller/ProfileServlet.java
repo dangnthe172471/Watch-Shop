@@ -47,7 +47,7 @@ public class ProfileServlet extends HttpServlet {
             AccountDAO accountDAO = new AccountDAO();
             Account fullAccount = accountDAO.checkAccountExist(account.getUser());
                 request.setAttribute("account", fullAccount);
-                response.sendRedirect("ProfileUser.jsp");
+                request.getRequestDispatcher("ProfileUser.jsp").forward(request, response);
             } else {
             response.sendRedirect("Login.jsp");
         }

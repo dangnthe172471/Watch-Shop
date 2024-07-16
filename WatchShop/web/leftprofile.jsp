@@ -52,7 +52,7 @@
 
 
                 <li class="${tab==null?'active':''}">
-                    <a href="ProfileUser.jsp">
+                    <a href="profile">
                         <i class='bx bx-user'></i>
                         <span class="text">Hồ sơ</span>
                     </a>
@@ -64,7 +64,7 @@
                     </a>
                 </li>
                 <li class="${tab==3?'active':''}">
-                    <a href="confirm.jsp">
+                    <a href="sendOTP">
                         <i class='bx bxs-doughnut-chart' ></i>
                         <span class="text">Thay đổi thông tin</span>
                     </a>
