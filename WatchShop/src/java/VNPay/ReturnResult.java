@@ -19,6 +19,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import model.Account;
 import model.Cart;
 import model.EmailOrder;
@@ -135,7 +137,6 @@ public class ReturnResult extends HttpServlet {
                         EmailOrder handleEmail = new EmailOrder();
                         String sub = handleEmail.subjectOrder(name);
                         String msg = handleEmail.messageOrder(currentDateTime, formatNumber(cart.getTotalMoney()), phone, name, address, note, cart);
-                        handleEmail.sendEmail(sub, msg, email);
                         session.removeAttribute("cart");
                         session.removeAttribute("name");
                         session.removeAttribute("phone");
@@ -143,24 +144,43 @@ public class ReturnResult extends HttpServlet {
                         session.removeAttribute("address");
                         session.removeAttribute("note");
                         session.setAttribute("size", 0);
+                        request.setAttribute("vnp_TxnRef", vnp_TxnRef);
+                        request.setAttribute("vnp_Amount", vnp_Amount);
+                        request.setAttribute("vnp_OrderInfo", vnp_OrderInfo);
+                        request.setAttribute("vnp_ResponseCode", vnp_ResponseCode);
+                        request.setAttribute("vnp_TransactionNo", vnp_TransactionNo);
+                        request.setAttribute("vnp_BankCode", vnp_BankCode);
+                        request.setAttribute("vnp_TransactionStatus", vnp_TransactionStatus);
+                        int orderID = odao.getOrderID(acount.getId());
+                        request.setAttribute("orderID", orderID);
+                        request.getRequestDispatcher("thanks.jsp").forward(request, response);
+
+                        executorService.submit(() -> {
+                            handleEmail.sendEmail(sub, msg, email);
+                        });
+                    } else {
+                        request.setAttribute("vnp_TxnRef", vnp_TxnRef);
+                        request.setAttribute("vnp_Amount", vnp_Amount);
+                        request.setAttribute("vnp_OrderInfo", vnp_OrderInfo);
+                        request.setAttribute("vnp_ResponseCode", vnp_ResponseCode);
+                        request.setAttribute("vnp_TransactionNo", vnp_TransactionNo);
+                        request.setAttribute("vnp_BankCode", vnp_BankCode);
+                        request.setAttribute("vnp_TransactionStatus", vnp_TransactionStatus);
+                        int orderID = odao.getOrderID(acount.getId());
+                        request.setAttribute("orderID", orderID);
+                        request.getRequestDispatcher("thanks.jsp").forward(request, response);
                     }
+
                 } catch (ParseException e) {
                 }
-                request.setAttribute("vnp_TxnRef", vnp_TxnRef);
-                request.setAttribute("vnp_Amount", vnp_Amount);
-                request.setAttribute("vnp_OrderInfo", vnp_OrderInfo);
-                request.setAttribute("vnp_ResponseCode", vnp_ResponseCode);
-                request.setAttribute("vnp_TransactionNo", vnp_TransactionNo);
-                request.setAttribute("vnp_BankCode", vnp_BankCode);
-                request.setAttribute("vnp_TransactionStatus", vnp_TransactionStatus);
-                int orderID = odao.getOrderID(acount.getId());
-                request.setAttribute("orderID", orderID);
-                request.getRequestDispatcher("thanks.jsp").forward(request, response);
+
             } else {
                 response.sendRedirect("login");
             }
         }
     }
+
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private static String formatNumber(double number) {
         DecimalFormat formatter = new DecimalFormat("#,###,###.###");
