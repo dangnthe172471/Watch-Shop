@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import model.Account;
 import model.Cart;
 import model.EmailOrder;
@@ -122,14 +124,19 @@ public class CheckoutServlet extends HttpServlet {
                 if (acount.getAmount() >= cart.getTotalMoney()) {
                     odao.addOrder(acount, cart, email, phone, address, note, dateShip, timeShip);
                     odao.updateAmount(acount, cart);
-                    EmailOrder handleEmail = new EmailOrder();
-                    String sub = handleEmail.subjectOrder(name);
-                    String msg = handleEmail.messageOrder(currentDateTime, formatNumber(cart.getTotalMoney()), phone, name, address, note, cart);
-                    handleEmail.sendEmail(sub, msg, email);
+
                     session.removeAttribute("cart");
                     session.setAttribute("size", 0);
                     int orderID = odao.getOrderID(acount.getId());
+                    EmailOrder handleEmail = new EmailOrder();
+                    String sub = handleEmail.subjectOrder(name);
+                    String msg = handleEmail.messageOrder(currentDateTime, formatNumber(cart.getTotalMoney()), phone, name, address, note, cart);
                     response.sendRedirect("thanks.jsp?orderID=" + orderID);
+
+                    executorService.submit(() -> {
+                        handleEmail.sendEmail(sub, msg, email);
+                    });
+
                 } else {
                     session.setAttribute("error", "1");
                     response.sendRedirect("Cart.jsp");
@@ -140,6 +147,7 @@ public class CheckoutServlet extends HttpServlet {
             }
         }
     }
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private static String formatNumber(double number) {
         DecimalFormat formatter = new DecimalFormat("#,###,###.###");
