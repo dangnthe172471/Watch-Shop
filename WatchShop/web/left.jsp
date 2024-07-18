@@ -86,17 +86,17 @@
                             <span class="text">Quản lý nhân viên vận chuyển</span>
                         </a>
                     </li>
-                    <li class="${tab==8?'active':''}">
+<!--                    <li class="${tab==8?'active':''}">
                         <a href="managercustomer">
                             <i class='bx bxs-group' ></i>
                             <span class="text">Khách hàng</span>
                         </a>
 
-                    </li>
+                    </li>-->
                     <li class="${tab==9?'active':''}">
                         <a href="manageAccounts">
                             <i class='bx bxs-group' ></i>
-                            <span class="text">Quản lý hoạt động </span>
+                            <span class="text">Khách Hàng </span>
                         </a>
 
                     </li>

@@ -18,7 +18,9 @@ import model.Item;
 import model.Order;
 import model.OrderDetail;
 import model.OrderDetailWithImage;
+import model.OrderList;
 import model.Product;
+import model.ShippingHistory;
 
 /**
  *
@@ -146,13 +148,13 @@ public class OrderDAO extends DBContext {
         }
     }
 
-    public void AssignOrderToShipper(String username, String oid) {
-        String sql = "INSERT INTO [Projectswp].[dbo].[ShippingHistory] ([aid], [oid])\n"
+    public void AssignOrderToShipper(String aid, String oid) {
+        String sql = "INSERT INTO [dbo].[ShippingHistory] ([aid], [oid])\n"
                 + "VALUES \n"
                 + "(?, ?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, username);
+            st.setString(1, aid);
             st.setString(2, oid);
             st.executeUpdate();
         } catch (Exception e) {
@@ -681,4 +683,58 @@ public class OrderDAO extends DBContext {
         }
         return 0;
     }
+        public List<OrderList> getOrderForStaff() {
+        List<OrderList> list = new ArrayList<>();
+        try {
+            String sql = "SELECT o.id AS OrderID, \n"
+                    + "       a.[user] AS [User], \n"
+                    + "       o.date AS OrderDate, \n"
+                    + "       o.dateShip AS DateShip, \n"
+                    + "       o.timeShip AS TimeShip, \n"
+                    + "       o.totalMoney AS TotalMoney, \n"
+                    + "       o.email AS Email, \n"
+                    + "       o.phone AS Phone, \n"
+                    + "       o.address AS Address, \n"
+                    + "       o.note AS Note,\n"
+                    + "       a2.[user] AS ShippingAidUser\n"
+                    + "FROM [Order] o \n"
+                    + "JOIN [Account] a ON o.aid = a.id \n"
+                    + "LEFT JOIN [ShippingHistory] sh ON sh.oid = o.id \n"
+                    + "LEFT JOIN [Account] a2 ON sh.aid = a2.id\n"
+                    + "WHERE o.sid = 1";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                OrderList o = new OrderList();
+                o.setOrderId(rs.getInt(1));
+                o.setCustomer(rs.getString(2));
+                o.setOrderDate(rs.getString(3));
+                o.setDateShip(rs.getString(4));
+                o.setTimeShip(rs.getString(5));
+                o.setTotalMoney(rs.getFloat(6));
+                o.setEmail(rs.getString(7));
+                o.setPhone(rs.getString(8));
+                o.setAddress(rs.getString(9));
+                o.setNote(rs.getString(10));
+                o.setShipper(rs.getString(11));
+                list.add(o);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    public void updateShipper(int orderId, int shipperId) {
+    String sql = "UPDATE [ShippingHistory] SET aid = ? WHERE oid = ?";
+    try {
+        PreparedStatement st = connection.prepareStatement(sql);
+        st.setInt(1, shipperId);
+        st.setInt(2, orderId);
+        st.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
 }

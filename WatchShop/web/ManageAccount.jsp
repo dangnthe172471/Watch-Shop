@@ -74,26 +74,26 @@
             <main>
                 <div class="head-title">
                     <div class="left">
-                        <h1>Quản Lý Nhân Viên</h1>
+                        <h1>Quản Lý Khách Hàng</h1>
                     </div>
                 </div>
                 <div class="table-data">
                     <div class="order">
                         <div class="head">
-                            <h3>Nhân Viên</h3>
+                            <h3>Khách Hàng</h3>
                             <form action="searchstaff" id="search-box">
-                                <input type="text" id="search-text" placeholder="Tìm kiếm nhân viên" onkeyup="searchStaff()">
+                                <input type="text" id="search-text" placeholder="Tìm kiếm khách hàng" onkeyup="searchStaff()">
                                 <button id="search-btn"><i class='bx bx-search'></i></button>
                             </form>
                         </div>
-                        <div class="nav-bgg">
+<!--                        <div class="nav-bgg">
                             <nav class="containerr" style="padding:0px ; width: 30%">
                                 <ul class="main-menuu">
                                     <li><a style="padding-left: 7px" href="manageAccounts">Danh sách</a></li>
                                     <li style="margin-left: 30px;"><a href="showAccountblock">Danh sách Xóa</a></li>                  
                                 </ul>
                             </nav>
-                        </div>
+                        </div>-->
                         <form action="manageAccounts" method="get">
                             <table>
                                 <thead>
@@ -112,7 +112,7 @@
                                         <th>Email</th>
                                         <th>Số điện thoại</th>
                                         <th>Địa chỉ</th>
-                                        <th>Hành động</th>
+                                        <th style="width: 100px">Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody id="staff-table-body">
@@ -129,14 +129,14 @@
                                                         <form action="manageAccounts" method="post" style="display:inline;">
                                                             <input type="hidden" name="action" value="block">
                                                             <input type="hidden" name="accountId" value="${account.id}">
-                                                            <button type="submit" class="btn btn-danger">Chặn</button>
+                                                            <button style="width: 100px" type="submit" class="btn btn-danger"  onclick="showConfirmModal(this, 'block', '${account.id}')">Chặn</button>
                                                         </form>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <form action="manageAccounts" method="post" style="display:inline;">
                                                             <input type="hidden" name="action" value="restore">
                                                             <input type="hidden" name="accountId" value="${account.id}">
-                                                            <button type="submit" class="btn btn-primary">Khôi phục</button>
+                                                            <button style="width: 100px" type="submit" class="btn btn-primary"  onclick="showConfirmModal(this, 'restore', '${account.id}')">Khôi phục</button>
                                                         </form>
                                                     </c:otherwise>
                                                 </c:choose>

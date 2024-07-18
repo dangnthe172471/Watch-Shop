@@ -5,22 +5,20 @@
 
 package controller;
 
-import com.google.gson.Gson;
-import dal.AccountDAO;
+import dal.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.Account;
+import model.ShippingHistory;
 
 /**
  *
  * @author quyld
  */
-public class GetShippersServlet extends HttpServlet {
+public class UpdatrShipper extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +35,10 @@ public class GetShippersServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GetShippersServlet</title>");  
+            out.println("<title>Servlet UpdatrShipper</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet GetShippersServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpdatrShipper at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,19 +53,10 @@ public class GetShippersServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    AccountDAO accountDAO = new AccountDAO();
-        List<Account> shippers = accountDAO.getAllShippers();
-        Gson gson = new Gson();
-        String jsonShippers = gson.toJson(shippers);
-        
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.print(jsonShippers);
-            out.flush();
-        }
-}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -79,7 +68,15 @@ public class GetShippersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+
+        int orderId = Integer.parseInt(request.getParameter("oid"));
+        int shipperId = Integer.parseInt(request.getParameter("aid"));
+
+        OrderDAO orderDAO = new OrderDAO();
+        orderDAO.updateShipper(orderId, shipperId);
+
+        response.sendRedirect("listorder"); // Redirect to order list page after update
     }
 
     /** 

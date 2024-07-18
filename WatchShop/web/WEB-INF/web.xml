@@ -296,6 +296,10 @@
         <servlet-name>AccountBlock</servlet-name>
         <servlet-class>controller.AccountBlock</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdatrShipper</servlet-name>
+        <servlet-class>controller.UpdatrShipper</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -591,5 +595,9 @@
     <servlet-mapping>
         <servlet-name>AccountBlock</servlet-name>
         <url-pattern>/showAccountblock</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdatrShipper</servlet-name>
+        <url-pattern>/updateShipper</url-pattern>
     </servlet-mapping>
 </web-app>
