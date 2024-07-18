@@ -79,11 +79,10 @@ public class CategoryDAO extends DBContext {
 
     public void addCategory(Category c) {
         try {
-            String sql = "INSERT INTO [dbo].[Category]([cname],[type],[deleted]) VALUES (?,?,?)";
+            String sql = "INSERT INTO [dbo].[Category]([cname],[type],[deleted]) VALUES (?,?,0)";
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, c.getCname());
             st.setString(2, c.getType());
-            st.setString(3, c.getDeleted());
             st.executeUpdate();
         } catch (Exception e) {
             //

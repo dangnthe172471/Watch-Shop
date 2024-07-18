@@ -783,7 +783,7 @@ public class AccountDAO extends DBContext {
 
     public List<Account> getAllAccountsSorted(String sortField, String sortOrder) {
         List<Account> accounts = new ArrayList<>();
-        String sql = "SELECT * FROM Account where roleID = 4 and status = 0";
+        String sql = "SELECT * FROM Account where roleID = 4";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             rs = st.executeQuery();

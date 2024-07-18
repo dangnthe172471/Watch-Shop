@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Order;
+import model.OrderList;
 
 /**
  *
@@ -38,11 +38,11 @@ public class ListOrderServlet extends HttpServlet {
         }
     } 
 
-    @Override
+     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         OrderDAO o = new OrderDAO();
-        List <Order> listorder = o.getOrderPending();
+        List<OrderList> listorder = o.getOrderForStaff();
         request.setAttribute("order", listorder);
         request.setAttribute("tab", "3");
         request.getRequestDispatcher("ShipperManagement.jsp").forward(request, response);

@@ -81,29 +81,15 @@ public class AddCServlet extends HttpServlet {
         Category check = c.getCategoryByName(name);
         String err = "";
 
-        if (request.getParameter("add") != null) {
-            if (name.isBlank()) {
-                err = "Chưa có tên thương hiệu";
-            } else if (type.isBlank()) {
-                err = "Chưa có hình ảnh";
-            } else {
-                if (check != null) {
-                    err = "Dòng sản phẩm đã tồn tại";
-                } else {
-                    c.addCategory(cate);
-                }
-            }
-            if (!err.isEmpty()) {
-                request.getSession().setAttribute("err", err);
-                request.getSession().setAttribute("keepModalOpen", true);
-                response.sendRedirect("category");
-            } else {
-                request.getSession().setAttribute("name", name);
-                request.getSession().removeAttribute("err");
-                request.getSession().removeAttribute("keepModalOpen");
-                response.sendRedirect("category");
-            }
+        if (check != null) {
+            request.getSession().setAttribute("err", "Thương hiệu đã tồn tại.");
+            request.getSession().setAttribute("keepModalOpen", "add");
+            response.sendRedirect("brand");
+            return;
         }
+        Category category = new Category(null, name, type, null);
+        c.addCategory(cate);
+        response.sendRedirect("category");
     }
 
         /**

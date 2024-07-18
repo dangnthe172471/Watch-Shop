@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 import model.Account;
+import model.ShippingHistory;
 
 /**
  *
@@ -75,10 +76,14 @@ public class AssignShipperServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        AccountDAO accountDAO = new AccountDAO();
-    List<Account> shippers = accountDAO.getAllShippers();
-    request.setAttribute("shippers", shippers);
-    request.getRequestDispatcher("ShipperManagement.jsp").forward(request, response);
+       String aid = request.getParameter("aid");
+       String oid = request.getParameter("oid");
+       ShippingHistory ship = new ShippingHistory(aid, oid);
+       OrderDAO o = new OrderDAO();
+       if(request.getParameter("update") !=null){
+           o.AssignOrderToShipper(aid, oid);
+       }
+       response.sendRedirect("listorder");
     }
 
     /** 
