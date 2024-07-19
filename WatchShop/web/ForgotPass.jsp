@@ -58,7 +58,7 @@
 
                     <div class="account">
                         <p>Bạn có nhớ mật khẩu của mình không?</p>
-                        <a href="login">Login.</a>
+                        <a href="login">Đăng nhập.</a>
                     </div>
                 </form>
             </div>

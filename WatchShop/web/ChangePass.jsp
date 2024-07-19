@@ -80,7 +80,7 @@
                     <a class="col-sm-6" href="home"><button class="btn btn-primary btn-block" type="button" id="btn-signup">Trang Chủ</button></a>
                     <div class="account">
                         <p>Trở về trang đăng nhập</p>
-                        <a href="login">Login.</a>
+                        <a href="login">Đăng nhập.</a>
                     </div>
                 </form>
             </div>

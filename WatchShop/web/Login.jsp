@@ -57,7 +57,7 @@
                     <a class="forgot" href="forgotpass">Bạn quên mật khẩu?</a>
                     <div class="others">
                         <hr>
-                        <p>OR</p>
+                        <p>Hoặc</p>
                         <hr>
                     </div>
                     <div class="social">
