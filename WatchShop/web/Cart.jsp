@@ -51,7 +51,7 @@
                 <div class="container">
                     <div class="cart-page bg-white">
                         <div class="row">
-                            <div class="col-md-9 cart">
+                            <div class="col-md-8 cart">
                                 <div class="cart-content py-3 pl-3">
                                     <h6 class="header-gio-hang">GIỎ HÀNG CỦA BẠN</h6><br>
                                     <div class="cart-list-items">
@@ -146,7 +146,7 @@
                             </c:if>
 
                             <!-- giao diện phần thanh toán nằm bên phải  -->
-                            <div class="col-md-3 cart-steps pl-0" style="width: 200px;display: none" id="khoimua">
+                            <div class="col-md-4 cart-steps pl-0" style="width: 200px;display: none" id="khoimua">
                                 <div id="cart-steps-accordion" role="tablist" aria-multiselectable="true">
                                     <form action="checkout">                                        
                                         <div class="card">
@@ -217,12 +217,16 @@
                                                         <div class="pttt">
                                                             <h6 class="header text-uppercase">Chọn phương thức thanh toán</h6>
                                                             <div class="option option1">
-                                                                <input type="radio" name="pttt" value="ttweb" checked>
-                                                                <label>Thanh toán bằng tiền tài khoản shop</label>
+                                                                <input type="radio" name="pttt" value="ttcod" checked>
+                                                                <label>Thanh toán khi nhận hàng</label>
                                                             </div>
                                                             <div class="option option2">
+                                                                <input type="radio" name="pttt" value="ttweb">
+                                                                <label>Thanh toán bằng tiền tài khoản shop</label>
+                                                            </div>
+                                                            <div class="option option3">
                                                                 <input type="radio" name="pttt" value="ttpay" id="atm">
-                                                                <label for="atm" class="chuyenkhoan">Thanh toán chuyển khoản qua Thẻ ATM/Internet Banking</label>
+                                                                <label style="margin-top: -25px;margin-left: 16px;" for="atm" class="chuyenkhoan">Thanh toán chuyển khoản qua Thẻ ATM/Internet Banking</label>
                                                                 <p>- Thời gian chuyển khoản là trong tối đa 1 ngày từ khi có xác
                                                                     nhận đặt mua.</p>
                                                                 <p>- Nội dung chuyển khoản cần ghi: <a href="#">[Mã đơn hàng]</a> ;

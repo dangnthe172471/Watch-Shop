@@ -49,6 +49,10 @@ public class CheckoutServlet extends HttpServlet {
             throws ServletException, IOException {
         String pttt = request.getParameter("pttt");
         if (pttt.equals("ttweb")) {
+            request.setAttribute("type", "0");
+            doPost(request, response);
+        } else if (pttt.equals("ttcod")) {
+            request.setAttribute("type", "1");
             doPost(request, response);
         } else if (pttt.equals("ttpay")) {
             HttpSession session = request.getSession();
@@ -96,6 +100,7 @@ public class CheckoutServlet extends HttpServlet {
         String address = request.getParameter("address");
         String dateShip = request.getParameter("dateShip");
         String timeShip = request.getParameter("timeShip");
+        String type = (String) request.getAttribute("type");
         String note = request.getParameter("note");
         if (note == null) {
             note = "";
@@ -122,7 +127,7 @@ public class CheckoutServlet extends HttpServlet {
                     }
                 }
                 if (acount.getAmount() >= cart.getTotalMoney()) {
-                    odao.addOrder(acount, cart, email, phone, address, note, dateShip, timeShip);
+                    odao.addOrder(acount, cart, email, phone, address, note, dateShip, timeShip, type);
                     odao.updateAmount(acount, cart);
 
                     session.removeAttribute("cart");

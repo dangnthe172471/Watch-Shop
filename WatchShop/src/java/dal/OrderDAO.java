@@ -28,12 +28,12 @@ import model.ShippingHistory;
  */
 public class OrderDAO extends DBContext {
 
-    public void addOrder(Account u, Cart cart, String email, String phone, String address, String note, String dateShip, String timeShip) {
+    public void addOrder(Account u, Cart cart, String email, String phone, String address, String note, String dateShip, String timeShip,String type) {
         LocalDate curDate = java.time.LocalDate.now();
         String date = curDate.toString();
         try {
             // add vào bảng Order
-            String sql = "INSERT [dbo].[Order] ([aid], [date], [dateShip], [timeShip] , [receivedDate], [totalMoney], [email] , [phone], [address],[note], [sid]) Values (?,?,?,?,N'',?,?,?,?,?,1)";
+            String sql = "INSERT [dbo].[Order] ([aid], [date], [dateShip], [timeShip] , [receivedDate], [totalMoney], [email] , [phone], [address],[note],[type], [sid]) Values (?,?,?,?,N'',?,?,?,?,?,?,1)";
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, u.getId());
             st.setString(2, date);
@@ -44,6 +44,7 @@ public class OrderDAO extends DBContext {
             st.setString(7, phone);
             st.setString(8, address);
             st.setString(9, note);
+            st.setString(10, type);
             st.executeUpdate();
 
             // lấy ra id order vừa add

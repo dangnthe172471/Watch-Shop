@@ -15,13 +15,13 @@ public class Order {
     private double totalMoney;
     private String email, phone, address;
     private String note;
-    private int sid;
+    private int type, sid;
     private Account account;
 
     public Order() {
     }
 
-    public Order(int oid, String date, String dateShip, String timeShip, String receivedDate, double totalMoney, String email, String phone, String address, String note, int sid, Account account) {
+    public Order(int oid, String date, String dateShip, String timeShip, String receivedDate, double totalMoney, String email, String phone, String address, String note, int type, int sid, Account account) {
         this.oid = oid;
         this.date = date;
         this.dateShip = dateShip;
@@ -32,6 +32,7 @@ public class Order {
         this.phone = phone;
         this.address = address;
         this.note = note;
+        this.type = type;
         this.sid = sid;
         this.account = account;
     }
@@ -114,6 +115,14 @@ public class Order {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public int getSid() {
