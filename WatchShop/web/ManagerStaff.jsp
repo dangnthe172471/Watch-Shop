@@ -1,10 +1,5 @@
-<%-- 
-    Document   : ManagerStaff
-    Created on : Jun 26, 2024, 2:32:05 AM
-    Author     : dung2
---%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +8,6 @@
         <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
         <!-- My CSS -->
         <link rel="stylesheet" href="css/manage.css">
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -30,14 +24,12 @@
         <script type="text/javascript" src="slick/slick.min.js"></script>  
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <style>
-            /* Custom CSS for modal and other elements */
             .modal-header {
                 background-color: #007bff;
                 color: white;
@@ -70,7 +62,6 @@
                 border-color: #dc3545;
             }
         </style>
-
     </head>
     <body>
         <jsp:include page="left.jsp" />
@@ -79,7 +70,6 @@
                 <div class="head-title">
                     <div class="left">
                         <h1>Quản Lý Nhân Viên</h1>    
-
                     </div>
                 </div>
                 <div class="table-data">
@@ -115,8 +105,6 @@
                                                 </button>
                                             </form>
                                         </th>
-
-
                                         <th>Email</th>
                                         <th>Số điện thoại</th>
                                         <th>Địa chỉ</th>
@@ -126,17 +114,15 @@
                                 <tbody>
                                     <c:forEach items="${listacc}" var="account">
                                         <tr>
-
                                             <td><img src="${account.avatar}" alt="Avatar" width="50" height="50"/></td>
                                             <td>${account.user}</td>
                                             <td>${account.email}</td>
                                             <td>${account.phone}</td>
                                             <td>${account.address}</td>
                                             <td>
-
+                                                <a href="#" class="editbtn" data-id="${account.id}" data-user="${account.user}" data-email="${account.email}" data-phone="${account.phone}" data-address="${account.address}" data-avatar="${account.avatar}"><i class="fa fa-edit"></i></a>
                                                 <a href="#" onclick="doDelete('${account.id}')"><i class="fa fa-trash"></i></a>
                                             </td>
-
                                         </tr> 
                                     </c:forEach>
                                 </tbody>
@@ -222,6 +208,47 @@
                     </div>
                 </div>
             </form>
+
+            <!-- The Modal Update -->
+            <form action="UpdateStaffServlet" method="post" id="updateStaffForm" enctype="multipart/form-data">
+                <div class="modal fade" id="updatemodal">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title w-100">Cập nhật Nhân Viên</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id" id="update-id">
+                                <div class="form-group">
+                                    <label for="username">Tên đăng nhập:</label>
+                                    <input type="text" class="form-control" name="user" id="update-username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" name="email" id="update-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone:</label>
+                                    <input type="text" class="form-control" name="phone" id="update-phone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address:</label>
+                                    <input type="text" class="form-control" name="address" id="update-address" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="avatar">Avatar:</label>
+                                    <input type="file" class="form-control" name="avatar" id="update-avatar">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>               
         </section>
 
         <script type="text/javascript">
@@ -231,22 +258,37 @@
                 });
 
                 // Tự động mở modal nếu có lỗi
-            <c:if test="${not empty errorMessage}">
-                $('#addmodal').modal('show');
-                $('#errorBanner').text('${errorMessage}').show();
-            </c:if>
+                <c:if test="${not empty errorMessage}">
+                    $('#addmodal').modal('show');
+                    $('#errorBanner').text('${errorMessage}').show();
+                </c:if>
             });
 
             $(document).ready(function () {
-                $('.addbtn').on('click', function () {
-                    $('#addmodal').modal('show');
+                $('.editbtn').on('click', function () {
+                    var id = $(this).data('id');
+                    var user = $(this).data('user');
+                    var email = $(this).data('email');
+                    var phone = $(this).data('phone');
+                    var address = $(this).data('address');
+                    var avatar = $(this).data('avatar');
+
+                    $('#update-id').val(id);
+                    $('#update-username').val(user);
+                    $('#update-email').val(email);
+                    $('#update-phone').val(phone);
+                    $('#update-address').val(address);
+
+                    $('#updatemodal').modal('show');
                 });
             });
+
             function doDelete(id) {
                 if (confirm('Bạn có muốn xóa Nhân Viên này ?')) {
                     window.location = 'deletestaff?id=' + id;
                 }
             }
+
             function searchStaff() {
                 var searchText = document.getElementById("search-text").value;
                 if (searchText.trim() === "") {
