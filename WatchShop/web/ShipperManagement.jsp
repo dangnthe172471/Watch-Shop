@@ -48,14 +48,14 @@
                 </div>
                 <div class="table-data">
                     <div class="order">
-                        <div class="nav-bgg">
+<!--                        <div class="nav-bgg">
                             <nav class="containerr" style="padding-left: 0px">
                                 <ul class="main-menuu">
                                     <li><a style="padding-right: 0px" href="listorder">Danh sách đơn</a></li>
                                     <li style="margin-left: 30px;"><a href="listorderaccept">Đơn đã xác nhận</a></li>
                                 </ul>
                             </nav>
-                        </div>
+                        </div>-->
                         <div class="search-container">
                             <form action="">
                                 <input type="text" id="search-customer" placeholder="Tìm kiếm theo khách hàng">
@@ -72,16 +72,16 @@
                                 <thead>
                                     <tr>
                                         <th style="display: none"></th>
-                                        <th style="width: 110px">Khách hàng<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(0, 'str')">⇅</span></th>
-                                        <th style="width: 110px">Số điện thoại<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(1, 'str')">⇅</span></th>
-                                        <th style="width: 155px; padding-left:50px">Email<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(2, 'str')">⇅</span></th>
+                                        <th style="width: 110px">Khách hàng<span style="padding-left: 3px" class="sort-icon" ></span></th>
+                                        <th style="width: 110px">Số điện thoại<span style="padding-left: 3px" class="sort-icon" ></span></th>
+                                        <th style="width: 155px; padding-left:50px">Email<span style="padding-left: 3px" class="sort-icon"></span></th>
                                         <th style="width: 120px">Địa chỉ<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(3, 'str')">⇅</span></th>
-                                        <th style="width: 150px">Tổng tiền<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(4, 'num')">⇅</span></th>
+                                        <th style="width: 150px">Tổng tiền<span style="padding-left: 3px" class="sort-icon"></span></th>
                                         <th style="width: 150px">Ngày đặt<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(5, 'str')">⇅</span></th>
                                         <th style="width: 150px">Ngày muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(6, 'str')">⇅</span></th>
                                         <th style="width: 100px">Thời gian muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
                                         <th style="width: 180px; padding-left:40px">Ghi chú</th>
-                                        <th style="width: 180px; padding-left:5px">Shipper</th>
+                                        <th style="width: 180px; padding-left:5px">Shipper<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(10, 'str')">⇅</span></th>
                                         <th style="width: 60px;"></th>
                                     </tr>
                                 </thead>
