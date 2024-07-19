@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-       <title>Quản Lý Nhân Viên Shipper</title>
+        <title>Quản Lý Nhân Viên Shipper</title>
         <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="css/manage.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -121,6 +121,7 @@
                                             <td>${account.phone}</td>
                                             <td>${account.address}</td>
                                             <td>
+                                                <a href="#" class="editbtn" data-id="${account.id}" data-user="${account.user}" data-email="${account.email}" data-phone="${account.phone}" data-address="${account.address}" data-avatar="${account.avatar}"><i class="fa fa-edit"></i></a>
                                                 <a href="#" onclick="doDelete('${account.id}')"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr> 
@@ -133,7 +134,7 @@
                 <c:if test="${totalPages > 1}">
                     <form action="shipper" method="get">
                         <div class="clearfix row" style="margin: 10px -24px">
-                            <div class="hint-text" style="margin-left: 40px;">Hiển thị <b>${listShipper.size()}</b> trong tổng  <b>${totalStaff}</b> thành viên</div>
+                            <div class="hint-text" style="margin-left: 40px;">Hiển thị <b>${listShipper.size()}</b> trong tổng  <b>${totalShipper}</b> thành viên</div>
                             <ul class="pagination" style="margin-left: 200px;">
                                 <c:set var="prevPage" value="${currentPage - 1}" />
                                 <button name="page" value="${prevPage}" type="${currentPage > 1 ? 'submit' : 'button'}" style="width: 65px;height: 30px;border: 1px solid #007BFF;background-color: ${currentPage > 1 ? 'white' : '#9698ab'}">
@@ -207,7 +208,49 @@
                     </div>
                 </div>
             </form>
+
+            <!-- The Modal Update -->
+            <form action="UpdateShipperServlet" method="post" id="updateShipperForm" enctype="multipart/form-data">
+                <div class="modal fade" id="updatemodal">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title w-100">Cập nhật Nhân Viên Shipper</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id" id="update-id">
+                                <div class="form-group">
+                                    <label for="username">Tên đăng nhập:</label>
+                                    <input type="text" class="form-control" name="user" id="update-username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" name="email" id="update-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone:</label>
+                                    <input type="text" class="form-control" name="phone" id="update-phone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address:</label>
+                                    <input type="text" class="form-control" name="address" id="update-address" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="avatar">Avatar:</label>
+                                    <input type="file" class="form-control" name="avatar" id="update-avatar">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>               
         </section>
+
         <script type="text/javascript">
             $(document).ready(function () {
                 $('.addbtn').on('click', function () {
@@ -218,6 +261,25 @@
                     $('#addmodal').modal('show');
                     $('#errorBanner').text('${errorMessage}').show();
                 </c:if>
+            });
+
+            $(document).ready(function () {
+                $('.editbtn').on('click', function () {
+                    var id = $(this).data('id');
+                    var user = $(this).data('user');
+                    var email = $(this).data('email');
+                    var phone = $(this).data('phone');
+                    var address = $(this).data('address');
+                    var avatar = $(this).data('avatar');
+
+                    $('#update-id').val(id);
+                    $('#update-username').val(user);
+                    $('#update-email').val(email);
+                    $('#update-phone').val(phone);
+                    $('#update-address').val(address);
+
+                    $('#updatemodal').modal('show');
+                });
             });
 
             function doDelete(id) {

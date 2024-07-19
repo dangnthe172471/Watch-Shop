@@ -300,6 +300,14 @@
         <servlet-name>UpdatrShipper</servlet-name>
         <servlet-class>controller.UpdatrShipper</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateStaffServlet</servlet-name>
+        <servlet-class>controller.UpdateStaffServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateShipperServlet</servlet-name>
+        <servlet-class>controller.UpdateShipperServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -599,5 +607,13 @@
     <servlet-mapping>
         <servlet-name>UpdatrShipper</servlet-name>
         <url-pattern>/updateShipper</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateStaffServlet</servlet-name>
+        <url-pattern>/UpdateStaffServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateShipperServlet</servlet-name>
+        <url-pattern>/UpdateShipperServlet</url-pattern>
     </servlet-mapping>
 </web-app>
