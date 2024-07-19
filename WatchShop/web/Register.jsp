@@ -31,7 +31,7 @@
             </div>
             <div class="login-container">
                 <form action="register" method="post" onsubmit="return onSubmitForm(event)">
-                    <h2>REGISTER</h2>
+                    <h2>Đăng Ký Tài Khoản</h2>
                     <div id="whitespaceMessage"></div>
                     <div class="input-div one">
                         <div class="i">
@@ -99,7 +99,7 @@
                     </div><br>
                     <h3 style="color: red">${requestScope.error}</h3>
                     <div class="btn-container">
-                        <input type="submit" class="btn" value="register">
+                        <input type="submit" class="btn" value="Đăng ký">
                         <a class="col-sm-6" href="login"><button class="btn btn-primary btn-block" type="button" id="btn-signup"> Trở về</button></a>
 
                     </div>

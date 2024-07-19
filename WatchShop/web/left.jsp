@@ -96,7 +96,7 @@
                     <li class="${tab==9?'active':''}">
                         <a href="manageAccounts">
                             <i class='bx bxs-group' ></i>
-                            <span class="text">Khách Hàng </span>
+                            <span class="text">Khách hàng </span>
                         </a>
 
                     </li>
@@ -169,8 +169,8 @@
                 <i class='bx bx-menu' ></i>  
                 <ul class="navbar-nav" style="margin-left: 850px;">
                     <div class="dropdown row" style="position: absolute; top: 10px;right: 50px;">
-                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="AdminManage.jsp" style="display:inline-block"> <i class="fa fa-user"></i>Hello ${sessionScope.account.user}</a></li> 
-                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">logout</a></li> 
+                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="profile" style="display:inline-block"> <img src="${account.avatar}" alt="Avatar" id="avatarImg" style="max-width: 25px; max-height: 25px; border-radius: 50%; border: 1px solid #ccc;" > ${sessionScope.account.user}</a></li> 
+                        <li class="nav-item account"><a class="nav-link text-dark text-uppercase" href="login?type=logout" style="display:inline-block">Đăng xuất</a></li> 
                     </div>
                 </ul>
             </nav>
