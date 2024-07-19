@@ -75,10 +75,10 @@
                                     <tr>
                                       
                                         <th style="width: 110px">Khách hàng<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(0, 'str')">⇅</span></th>
-                                        <th style="width: 110px">Số điện thoại<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(1, 'str')">⇅</span></th>
-                                        <th style="width: 155px; padding-left:50px">Email<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(2, 'str')">⇅</span></th>
+                                        <th style="width: 110px">Số điện thoại</th>
+                                        <th style="width: 155px; padding-left:50px">Email</th>
                                         <th style="width: 120px">Địa chỉ<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(3, 'str')">⇅</span></th>
-                                        <th style="width: 150px">Tổng tiền<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(4, 'num')">⇅</span></th>
+                                        <th style="width: 150px">Tổng tiền</th>
                                         <th style="width: 150px">Ngày đặt<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(5, 'str')">⇅</span></th>
                                         <th style="width: 150px">Ngày muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(6, 'str')">⇅</span></th>
                                         <th style="width: 100px">Thời gian muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
