@@ -9,7 +9,7 @@ package model;
  * @author quyld
  */
 public class OrderList {
-    private int orderId;
+    private int orderId, type;
     private String customer;
     private String orderDate;
     private String dateShip;
@@ -24,8 +24,9 @@ public class OrderList {
     public OrderList() {
     }
 
-    public OrderList(int orderId, String customer, String orderDate, String dateShip, String timeShip, float totalMoney, String email, String phone, String address, String note, String shipper) {
+    public OrderList(int orderId, int type, String customer, String orderDate, String dateShip, String timeShip, float totalMoney, String email, String phone, String address, String note, String shipper) {
         this.orderId = orderId;
+        this.type = type;
         this.customer = customer;
         this.orderDate = orderDate;
         this.dateShip = dateShip;
@@ -44,6 +45,14 @@ public class OrderList {
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getCustomer() {
@@ -128,7 +137,9 @@ public class OrderList {
 
     @Override
     public String toString() {
-        return "OrderList{" + "orderId=" + orderId + ", customer=" + customer + ", orderDate=" + orderDate + ", dateShip=" + dateShip + ", timeShip=" + timeShip + ", totalMoney=" + totalMoney + ", email=" + email + ", phone=" + phone + ", address=" + address + ", note=" + note + ", shipper=" + shipper + '}';
+        return "OrderList{" + "orderId=" + orderId + ", type=" + type + ", customer=" + customer + ", orderDate=" + orderDate + ", dateShip=" + dateShip + ", timeShip=" + timeShip + ", totalMoney=" + totalMoney + ", email=" + email + ", phone=" + phone + ", address=" + address + ", note=" + note + ", shipper=" + shipper + '}';
     }
+
+   
     
 }

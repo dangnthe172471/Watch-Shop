@@ -48,14 +48,6 @@
                 </div>
                 <div class="table-data">
                     <div class="order">
-<!--                        <div class="nav-bgg">
-                            <nav class="containerr" style="padding-left: 0px">
-                                <ul class="main-menuu">
-                                    <li><a style="padding-right: 0px" href="listorder">Danh sách đơn</a></li>
-                                    <li style="margin-left: 30px;"><a href="listorderaccept">Đơn đã xác nhận</a></li>
-                                </ul>
-                            </nav>
-                        </div>-->
                         <div class="search-container">
                             <form action="">
                                 <input type="text" id="search-customer" placeholder="Tìm kiếm theo khách hàng">
@@ -81,7 +73,8 @@
                                         <th style="width: 150px">Ngày muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(6, 'str')">⇅</span></th>
                                         <th style="width: 100px">Thời gian muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
                                         <th style="width: 180px; padding-left:40px">Ghi chú</th>
-                                        <th style="width: 180px; padding-left:5px">Shipper<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(10, 'str')">⇅</span></th>
+                                        <th style="width: 180px; padding-left:5px">Người vận chuyển<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(10, 'str')">⇅</span></th>
+                                        <th style="width: 120px; padding-left:5px">Trạng thái</th>
                                         <th style="width: 60px;"></th>
                                     </tr>
                                 </thead>
@@ -99,6 +92,19 @@
                                             <td>${o.timeShip}</td>
                                             <td>${o.note}</td>
                                             <td>${o.shipper}</td>
+                                            <td style="padding-left:5px">
+                                                <c:choose>
+                                                    <c:when test="${o.type == 0}">
+                                                        Đã thanh toán
+                                                    </c:when>
+                                                    <c:when test="${o.type == 1}">
+                                                        Chưa thanh toán
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        Không xác định
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${o.shipper == null}">
@@ -112,7 +118,6 @@
                                                         </a>
                                                     </c:otherwise>
                                                 </c:choose>
-
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -133,8 +138,10 @@
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="oid" id="update_id">
-                                <label>Địa chỉ</label>
-                                <input type="text" name="address" id="update_address" class="form-control">
+                                <label>Địa chỉ khách hàng</label>
+                                <select name="customerAddress" id="update_customerAddress" class="form-control">
+                                    <option value="">Chọn địa chỉ khách hàng</option>
+                                </select>
                                 <label>Chọn người vận chuyển</label>
                                 <select name="aid" id="update_shipper" class="form-control">
                                     <option value="">Chọn người vận chuyển</option>
@@ -148,6 +155,7 @@
                     </div>
                 </div>
             </form>
+
             <!-- The Modal Update -->
             <form action="updateShipper" method="post" id="updateBrandForm">
                 <div class="modal fade" id="updatemodal">
@@ -159,8 +167,10 @@
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="oid" id="update_id_update">
-                                <label>Địa chỉ</label>
-                                <input type="text" name="address" id="update_address_update" class="form-control">
+                                <label>Địa chỉ khách hàng</label>
+                                <select name="customerAddress" id="update_customerAddress_update" class="form-control">
+                                    <option value="">Chọn địa chỉ khách hàng</option>
+                                </select>
                                 <label>Chọn người vận chuyển</label>
                                 <select name="aid" id="update_shipper_update" class="form-control">
                                     <option value="">Chọn người vận chuyển</option>
@@ -179,22 +189,30 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
             <script>
                                             $(document).ready(function () {
-                                                $('.editbtn').on('click', function () {
-                                                    $('#editmodal').modal('show');
-                                                    $tr = $(this).closest('tr');
-                                                    var data = $tr.children("td").map(function () {
-                                                        return $(this).text();
-                                                    }).get();
-                                                    console.log(data);
-                                                    $('#update_id').val(data[0].trim());
-                                                    $('#update_address').val(data[4].trim());
-
-                                                    // Load danh sách người vận chuyển từ server
+                                                function loadCustomerAddresses() {
                                                     $.ajax({
                                                         url: 'getShippers',
+                                                        method: 'post',
+                                                        success: function (addresses) {
+                                                            console.log("Received addresses:", addresses); // Debug output
+                                                            var addressSelect = $('#update_customerAddress, #update_customerAddress_update');
+                                                            addressSelect.empty();
+                                                            addressSelect.append('<option value="">Chọn địa chỉ khách hàng</option>');
+                                                            $.each(addresses, function (index, address) {
+                                                                addressSelect.append('<option value="' + address + '">' + address + '</option>');
+                                                            });
+                                                        },
+                                                        error: function (error) {
+                                                            console.error("Error loading addresses: ", error);
+                                                        }
+                                                    });
+                                                }
+
+                                                function loadShippersByCustomerAddress(customerAddress, shipperSelect) {
+                                                    $.ajax({
+                                                        url: 'getShippers?customerAddress=' + customerAddress,
                                                         method: 'get',
                                                         success: function (shippers) {
-                                                            var shipperSelect = $('#update_shipper');
                                                             shipperSelect.empty();
                                                             shipperSelect.append('<option value="">Chọn người vận chuyển</option>');
                                                             $.each(shippers, function (index, shipper) {
@@ -205,32 +223,35 @@
                                                             console.error("Error loading shippers: ", error);
                                                         }
                                                     });
+                                                }
+
+                                                loadCustomerAddresses();
+
+                                                $('.editbtn').on('click', function () {
+                                                    $('#editmodal').modal('show');
+                                                    $tr = $(this).closest('tr');
+                                                    var data = $tr.children("td").map(function () {
+                                                        return $(this).text();
+                                                    }).get();
+                                                    $('#update_id').val(data[0].trim());
+
+                                                    $('#update_customerAddress').on('change', function () {
+                                                        var selectedAddress = $(this).val();
+                                                        loadShippersByCustomerAddress(selectedAddress, $('#update_shipper'));
+                                                    });
                                                 });
+
                                                 $('.updatebtn').on('click', function () {
                                                     $('#updatemodal').modal('show');
                                                     $tr = $(this).closest('tr');
                                                     var data = $tr.children("td").map(function () {
                                                         return $(this).text();
                                                     }).get();
-                                                    console.log(data);
                                                     $('#update_id_update').val(data[0].trim());
-                                                    $('#update_address_update').val(data[4].trim());
 
-                                                    // Load danh sách người vận chuyển từ server
-                                                    $.ajax({
-                                                        url: 'getShippers',
-                                                        method: 'get',
-                                                        success: function (shippers) {
-                                                            var shipperSelect = $('#update_shipper_update');
-                                                            shipperSelect.empty();
-                                                            shipperSelect.append('<option value="">Chọn người vận chuyển</option>');
-                                                            $.each(shippers, function (index, shipper) {
-                                                                shipperSelect.append('<option value="' + shipper.id + '">' + shipper.user + '</option>');
-                                                            });
-                                                        },
-                                                        error: function (error) {
-                                                            console.error("Error loading shippers: ", error);
-                                                        }
+                                                    $('#update_customerAddress_update').on('change', function () {
+                                                        var selectedAddress = $(this).val();
+                                                        loadShippersByCustomerAddress(selectedAddress, $('#update_shipper_update'));
                                                     });
                                                 });
                                             });

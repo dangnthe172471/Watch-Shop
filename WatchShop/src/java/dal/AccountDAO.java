@@ -734,24 +734,6 @@ public class AccountDAO extends DBContext {
         }
     }
 
-    public List<Account> getAllShippers() {
-        List<Account> shippers = new ArrayList<>();
-        String sql = "SELECT id, [user] FROM Account WHERE roleID = 3";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Account shipper = new Account();
-                shipper.setId(rs.getInt("id"));
-                shipper.setUser(rs.getString("user"));
-                shippers.add(shipper);
-            }
-        } catch (SQLException e) {
-            System.out.println("getAllShippers: " + e.getMessage());
-        }
-        return shippers;
-    }
-
     public List<Account> getAllAccounts() {
         List<Account> accounts = new ArrayList<>();
         String sql = "SELECT * FROM Account where roleID = 4 and status = 0";
@@ -878,6 +860,42 @@ public class AccountDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("updateAccount: " + e.getMessage());
         }
+    }
+
+    public List<Account> getShippersByCustomerAddress(String customerAddress) {
+        List<Account> shippers = new ArrayList<>();
+        String sql = "SELECT id, [user] FROM Account WHERE roleID = 3 AND [Address] = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, customerAddress);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account shipper = new Account();
+                shipper.setId(rs.getInt("id"));
+                shipper.setUser(rs.getString("user"));
+                shippers.add(shipper);
+            }
+        } catch (SQLException e) {
+            System.out.println("getShippersByCustomerAddress: " + e.getMessage());
+        }
+        return shippers;
+    }
+
+    public List<String> getDistinctAddresses() {
+        List<String> addresses = new ArrayList<>();
+        String sql = "SELECT DISTINCT a.Address FROM Account a JOIN [Order] o ON a.id = o.aid WHERE a.roleID = 4 AND a.Address IS NOT NULL AND o.sid = 1 "
+                + "UNION "
+                + "SELECT DISTINCT o.Address FROM [Order] o WHERE o.Address IS NOT NULL AND o.sid = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                addresses.add(rs.getString("Address"));
+            }
+        } catch (SQLException e) {
+            System.out.println("getDistinctAddresses: " + e.getMessage());
+        }
+        return addresses;
     }
 
 }

@@ -111,7 +111,7 @@
                     <li class="${tab==3?'active':''}">
                         <a href="listorder">
                             <i class='bx bxs-message-dots' ></i>
-                            <span class="text">Đơn Hàng</span>
+                            <span class="text">Đơn hàng</span>
                         </a>
                     </li>
                     <li class="${tab==4?'active':''}">

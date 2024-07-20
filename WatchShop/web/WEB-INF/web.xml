@@ -308,6 +308,10 @@
         <servlet-name>UpdateShipperServlet</servlet-name>
         <servlet-class>controller.UpdateShipperServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RefuseServlet</servlet-name>
+        <servlet-class>controller.RefuseServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -615,5 +619,9 @@
     <servlet-mapping>
         <servlet-name>UpdateShipperServlet</servlet-name>
         <url-pattern>/UpdateShipperServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RefuseServlet</servlet-name>
+        <url-pattern>/refuse</url-pattern>
     </servlet-mapping>
 </web-app>
