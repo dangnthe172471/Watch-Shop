@@ -28,7 +28,7 @@ import model.ShippingHistory;
  */
 public class OrderDAO extends DBContext {
 
-    public void addOrder(Account u, Cart cart, String email, String phone, String address, String note, String dateShip, String timeShip,String type) {
+    public void addOrder(Account u, Cart cart, String email, String phone, String address, String note, String dateShip, String timeShip, String type) {
         LocalDate curDate = java.time.LocalDate.now();
         String date = curDate.toString();
         try {
@@ -114,16 +114,6 @@ public class OrderDAO extends DBContext {
             st.executeUpdate();
         } catch (SQLException e) {
             // Handle exception here
-        }
-    }
-
-    public void CompletedOrderId(String oid) {
-        String sql = "UPDATE [dbo].[Order] SET [sid] = 2 WHERE [id] = ?;";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, oid);
-            st.executeUpdate();
-        } catch (Exception e) {
         }
     }
 
@@ -321,7 +311,7 @@ public class OrderDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Order o = new Order();
-                Account a = new Account(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getDouble(19), rs.getInt(20), rs.getString(21), rs.getInt(22), rs.getInt(23), rs.getString(24));
+                Account a = new Account(rs.getInt(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getString(19), rs.getDouble(20), rs.getInt(21), rs.getString(22), rs.getInt(23), rs.getInt(24), rs.getString(25));
                 o.setOid(rs.getInt(1));
                 o.setAccount(a);
                 o.setDate(rs.getString(3));
@@ -333,7 +323,8 @@ public class OrderDAO extends DBContext {
                 o.setPhone(rs.getString(9));
                 o.setAddress(rs.getString(10));
                 o.setNote(rs.getString(11));
-                o.setSid(rs.getInt(12));
+                o.setSid(rs.getInt(13));
+                o.setType(rs.getInt(12));
                 list.add(o);
             }
         } catch (Exception e) {
@@ -356,7 +347,7 @@ public class OrderDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Order o = new Order();
-                Account a = new Account(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getDouble(19), rs.getInt(20), rs.getString(21), rs.getInt(22), rs.getInt(23), rs.getString(24));
+                Account a = new Account(rs.getInt(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getString(19), rs.getDouble(20), rs.getInt(21), rs.getString(22), rs.getInt(23), rs.getInt(24), rs.getString(25));
                 o.setOid(rs.getInt(1));
                 o.setAccount(a);
                 o.setDate(rs.getString(3));
@@ -368,7 +359,8 @@ public class OrderDAO extends DBContext {
                 o.setPhone(rs.getString(9));
                 o.setAddress(rs.getString(10));
                 o.setNote(rs.getString(11));
-                o.setSid(rs.getInt(12));
+                o.setSid(rs.getInt(13));
+                o.setType(rs.getInt(12));
                 list.add(o);
             }
         } catch (Exception e) {
@@ -391,7 +383,7 @@ public class OrderDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Order o = new Order();
-                Account a = new Account(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getDouble(19), rs.getInt(20), rs.getString(21), rs.getInt(22), rs.getInt(23), rs.getString(24));
+                Account a = new Account(rs.getInt(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getString(19), rs.getDouble(20), rs.getInt(21), rs.getString(22), rs.getInt(23), rs.getInt(24), rs.getString(25));
                 o.setOid(rs.getInt(1));
                 o.setAccount(a);
                 o.setDate(rs.getString(3));
@@ -403,7 +395,8 @@ public class OrderDAO extends DBContext {
                 o.setPhone(rs.getString(9));
                 o.setAddress(rs.getString(10));
                 o.setNote(rs.getString(11));
-                o.setSid(rs.getInt(12));
+                o.setSid(rs.getInt(13));
+                o.setType(rs.getInt(12));
                 list.add(o);
             }
         } catch (Exception e) {
@@ -426,7 +419,7 @@ public class OrderDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Order o = new Order();
-                Account a = new Account(rs.getInt(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getDouble(19), rs.getInt(20), rs.getString(21), rs.getInt(22), rs.getInt(23), rs.getString(24));
+                Account a = new Account(rs.getInt(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18), rs.getString(19), rs.getDouble(20), rs.getInt(21), rs.getString(22), rs.getInt(23), rs.getInt(24), rs.getString(25));
                 o.setOid(rs.getInt(1));
                 o.setAccount(a);
                 o.setDate(rs.getString(3));
@@ -438,7 +431,8 @@ public class OrderDAO extends DBContext {
                 o.setPhone(rs.getString(9));
                 o.setAddress(rs.getString(10));
                 o.setNote(rs.getString(11));
-                o.setSid(rs.getInt(12));
+                o.setSid(rs.getInt(13));
+                o.setType(rs.getInt(12));
                 list.add(o);
             }
         } catch (Exception e) {
@@ -684,25 +678,27 @@ public class OrderDAO extends DBContext {
         }
         return 0;
     }
-        public List<OrderList> getOrderForStaff() {
+
+    public List<OrderList> getOrderForStaff() {
         List<OrderList> list = new ArrayList<>();
         try {
-            String sql = "SELECT o.id AS OrderID, \n"
-                    + "       a.[user] AS [User], \n"
-                    + "       o.date AS OrderDate, \n"
-                    + "       o.dateShip AS DateShip, \n"
-                    + "       o.timeShip AS TimeShip, \n"
-                    + "       o.totalMoney AS TotalMoney, \n"
-                    + "       o.email AS Email, \n"
-                    + "       o.phone AS Phone, \n"
-                    + "       o.address AS Address, \n"
-                    + "       o.note AS Note,\n"
-                    + "       a2.[user] AS ShippingAidUser\n"
-                    + "FROM [Order] o \n"
-                    + "JOIN [Account] a ON o.aid = a.id \n"
-                    + "LEFT JOIN [ShippingHistory] sh ON sh.oid = o.id \n"
-                    + "LEFT JOIN [Account] a2 ON sh.aid = a2.id\n"
-                    + "WHERE o.sid = 1";
+            String sql = "SELECT o.id AS OrderID,\n"
+                    + "                          a.[user] AS [User], \n"
+                    + "                          o.date AS OrderDate, \n"
+                    + "                          o.dateShip AS DateShip,\n"
+                    + "                          o.timeShip AS TimeShip, \n"
+                    + "                          o.totalMoney AS TotalMoney,\n"
+                    + "                          o.email AS Email, \n"
+                    + "                          o.phone AS Phone,\n"
+                    + "                          o.address AS Address, \n"
+                    + "                          o.note AS Note,\n"
+                    + "				 o.type As Type,\n"
+                    + "                           a2.[user] AS ShippingAidUser\n"
+                    + "                    FROM [Order] o\n"
+                    + "                    JOIN [Account] a ON o.aid = a.id \n"
+                    + "                    LEFT JOIN [ShippingHistory] sh ON sh.oid = o.id \n"
+                    + "                    LEFT JOIN [Account] a2 ON sh.aid = a2.id\n"
+                    + "                    WHERE o.sid = 1";
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -717,7 +713,8 @@ public class OrderDAO extends DBContext {
                 o.setPhone(rs.getString(8));
                 o.setAddress(rs.getString(9));
                 o.setNote(rs.getString(10));
-                o.setShipper(rs.getString(11));
+                o.setType(rs.getInt(11));
+                o.setShipper(rs.getString(12));
                 list.add(o);
             }
         } catch (Exception e) {
@@ -725,17 +722,37 @@ public class OrderDAO extends DBContext {
         }
         return list;
     }
-    
+
     public void updateShipper(int orderId, int shipperId) {
-    String sql = "UPDATE [ShippingHistory] SET aid = ? WHERE oid = ?";
-    try {
-        PreparedStatement st = connection.prepareStatement(sql);
-        st.setInt(1, shipperId);
-        st.setInt(2, orderId);
-        st.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
+        String sql = "UPDATE [ShippingHistory] SET aid = ? WHERE oid = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, shipperId);
+            st.setInt(2, orderId);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-}
+
+    public void CompletedOrderId(String oid) {
+        String sql = "UPDATE [dbo].[Order] SET [sid] = 2 WHERE [id] = ?;";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, oid);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void RefuseOrderId(String oid) {
+        String sql = "DELETE [ShippingHistory]  WHERE oid = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, oid);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
 
 }

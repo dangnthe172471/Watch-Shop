@@ -36,40 +36,71 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <style>
-        .custom-button {
-            background-color: #2196F3;
-            height: 35px; /* Tăng chiều cao để chữ rõ hơn */
-            width: 100px; /* Điều chỉnh lại width cho phù hợp */
-            border: none;
-            border-radius: 10px; /* Bo tròn góc */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            overflow: hidden; /* Ẩn phần chữ vượt quá */
-            white-space: nowrap; /* Không ngắt dòng */
-        }
+            .custom-button {
+                background-color: #2196F3;
+                height: 35px;
+                width: 100px;
+                border: none;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                overflow: hidden;
+                white-space: nowrap;
+                margin-bottom: 10px; /* Thêm khoảng cách giữa các nút */
+            }
 
-        .custom-button a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px; /* Tăng kích thước chữ */
-            font-weight: bold;
-            display: block;
-            width: 100%;
-            text-align: center;
-            line-height: 35px; /* Căn giữa theo chiều dọc */
-            overflow: hidden; /* Ẩn phần chữ vượt quá */
-            white-space: nowrap; /* Không ngắt dòng */
-        }
+            .custom-button a {
+                color: white;
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: bold;
+                display: block;
+                width: 100%;
+                text-align: center;
+                line-height: 35px;
+                overflow: hidden;
+                white-space: nowrap;
+            }
 
-        .custom-button:hover {
-            background-color: lightgreen; /* Thêm hiệu ứng khi rê chuột */
-        }
-    </style>
+            .custom-button:hover {
+                background-color: lightgreen;
+            }
 
-        
+            .custom-button1 {
+                background-color: #f44336;
+                height: 35px;
+                width: 100px;
+                border: none;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            .custom-button1 a {
+                color: white;
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: bold;
+                display: block;
+                width: 100%;
+                text-align: center;
+                line-height: 35px;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            .custom-button1:hover {
+                background-color: darkred;
+            }
+        </style>
     </head>
     <body>
         <jsp:include page="left.jsp" />
@@ -114,16 +145,17 @@
                             <table id="orderTable">
                                 <thead>
                                     <tr>
-                                         <th style="width: 110px">Khách hàng<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(0, 'str')">⇅</span></th>
-                                        <th style="width: 110px">Số điện thoại</th>
-                                        <th style="width: 155px; padding-left:50px">Email</th>
+                                        <th style="display: none"></th>
+                                        <th style="width: 110px">Khách hàng<span style="padding-left: 3px" class="sort-icon" ></span></th>
+                                        <th style="width: 110px">Số điện thoại<span style="padding-left: 3px" class="sort-icon" ></span></th>
+                                        <th style="width: 155px; padding-left:50px">Email<span style="padding-left: 3px" class="sort-icon"></span></th>
                                         <th style="width: 120px">Địa chỉ<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(3, 'str')">⇅</span></th>
-                                        <th style="width: 150px">Tổng tiền</th>
+                                        <th style="width: 150px">Tổng tiền<span style="padding-left: 3px" class="sort-icon"></span></th>
                                         <th style="width: 150px">Ngày đặt<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(5, 'str')">⇅</span></th>
                                         <th style="width: 150px">Ngày muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(6, 'str')">⇅</span></th>
                                         <th style="width: 100px">Thời gian muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
-                                        <th style="width: 100px">Ngày nhận<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
                                         <th style="width: 180px; padding-left:40px">Ghi chú</th>
+                                        <th style="width: 180px; padding-left:30px">Trạng thái</th>
                                         <th style="width: 60px;"></th>
                                     </tr>                                   
                                 </thead>
@@ -140,11 +172,28 @@
                                                 <td>${o.dateShip}</td>
                                                 <td>${o.timeShip}</td>
                                                 <td>${o.note}</td>  
-                                                <td>
-                                                    <button class="custom-button" onclick="doOrder('${o.oid}')">
-                                                    <a>Nhận Đơn</a>
+                                                <td style="padding-left:30px">
+                                                <c:choose>
+                                                    <c:when test="${o.type == 0}">
+                                                        Đã thanh toán
+                                                    </c:when>
+                                                    <c:when test="${o.type == 1}">
+                                                        Chưa thanh toán
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        Không xác định
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td> 
+                                            <td>
+                                                <button class="custom-button" onclick="doOrder('${o.oid}')">
+                                                    <a>Nhận</a>
                                                 </button>
-                                                </td>
+                                                <button class="custom-button1" onclick="doOrder1('${o.oid}')">
+                                                    <a>Từ chối</a>
+                                                </button>
+                                            </td>
+                                                
                                             </tr> 
                                         </c:forEach>
 
@@ -162,7 +211,13 @@
                     }
                 }
             </script>
+            <script type="text/javascript">
+                function doOrder1(oid) {
+                    if (confirm('Từ chối nhận đơn hàng')) {
+                        window.location = 'refuse?oid=' + oid;
+                    }
+                }
+            </script>
             <script src="js/script.js"></script>
-            
     </body>
 </html>
