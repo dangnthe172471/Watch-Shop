@@ -36,7 +36,6 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <body>
         <jsp:include page="left.jsp" />
         <section id="content">
@@ -64,15 +63,15 @@
                                 <thead>
                                     <tr>
                                         <th style="display: none"></th>
-                                        <th style="width: 110px">Khách hàng<span style="padding-left: 3px" class="sort-icon" ></span></th>
-                                        <th style="width: 110px">Số điện thoại<span style="padding-left: 3px" class="sort-icon" ></span></th>
-                                        <th style="width: 155px; padding-left:50px">Email<span style="padding-left: 3px" class="sort-icon"></span></th>
-                                        <th style="width: 120px">Địa chỉ<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(3, 'str')">⇅</span></th>
-                                        <th style="width: 150px">Tổng tiền<span style="padding-left: 3px" class="sort-icon"></span></th>
-                                        <th style="width: 150px">Ngày đặt<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(5, 'str')">⇅</span></th>
-                                        <th style="width: 150px">Ngày muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(6, 'str')">⇅</span></th>
-                                        <th style="width: 100px">Thời gian muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
-                                        <th style="width: 180px; padding-left:40px">Ghi chú</th>
+                                        <th style="width: 100px; padding-left:5px">Khách hàng<span style="padding-left: 3px" class="sort-icon" ></span></th>
+                                        <th style="width: 120px; padding-left:5px">Số điện thoại<span style="padding-left: 3px" class="sort-icon" ></span></th>
+                                        <th style="width: 160px; padding-left:50px">Email<span style="padding-left: 3px" class="sort-icon"></span></th>
+                                        <th style="width: 120px; padding-left:5px">Địa chỉ<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(3, 'str')">⇅</span></th>
+                                        <th style="width: 140px; padding-left:15px">Tổng tiền<span style="padding-left: 3px" class="sort-icon"></span></th>
+                                        <th style="width: 150px; padding-left:10px">Ngày đặt<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(5, 'str')">⇅</span></th>
+                                        <th style="width: 150px; padding-left:15px; padding-right: 20px">Ngày muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(6, 'str')">⇅</span></th>
+                                        <th style="width: 100px; padding-left:10px; padding-right: 10px">Thời gian muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
+                                        <th style="width: 180px; padding-left:20px">Ghi chú</th>
                                         <th style="width: 180px; padding-left:5px">Người vận chuyển<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(10, 'str')">⇅</span></th>
                                         <th style="width: 120px; padding-left:5px">Trạng thái</th>
                                         <th style="width: 60px;"></th>
@@ -86,12 +85,12 @@
                                             <td>${o.phone}</td>
                                             <td>${o.email}</td>
                                             <td>${o.address}</td>
-                                            <td><fmt:formatNumber value="${o.totalMoney}" /></td>
+                                            <td style="padding-left: 10px"><fmt:formatNumber value="${o.totalMoney}" /></td>
                                             <td>${o.orderDate}</td>
-                                            <td>${o.dateShip}</td>
-                                            <td>${o.timeShip}</td>
+                                            <td style="padding-left: 10px">${o.dateShip}</td>
+                                            <td style="padding-left: 10px">${o.timeShip}</td>
                                             <td>${o.note}</td>
-                                            <td>${o.shipper}</td>
+                                            <td style="padding-left: 10px">${o.shipper}</td>
                                             <td style="padding-left:5px">
                                                 <c:choose>
                                                     <c:when test="${o.type == 0}">
@@ -138,10 +137,8 @@
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="oid" id="update_id">
-                                <label>Địa chỉ khách hàng</label>
-                                <select name="customerAddress" id="update_customerAddress" class="form-control">
-                                    <option value="">Chọn địa chỉ khách hàng</option>
-                                </select>
+                                <label>Địa chỉ</label>
+                                <input type="text" name="customerAddress" id="update_customerAddress" class="form-control" value="" readonly>
                                 <label>Chọn người vận chuyển</label>
                                 <select name="aid" id="update_shipper" class="form-control">
                                     <option value="">Chọn người vận chuyển</option>
@@ -168,9 +165,7 @@
                             <div class="modal-body">
                                 <input type="hidden" name="oid" id="update_id_update">
                                 <label>Địa chỉ khách hàng</label>
-                                <select name="customerAddress" id="update_customerAddress_update" class="form-control">
-                                    <option value="">Chọn địa chỉ khách hàng</option>
-                                </select>
+                                <input type="text" name="customerAddress" id="update_customerAddress_update" class="form-control" value="" readonly>
                                 <label>Chọn người vận chuyển</label>
                                 <select name="aid" id="update_shipper_update" class="form-control">
                                     <option value="">Chọn người vận chuyển</option>
@@ -189,29 +184,12 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
             <script>
                                             $(document).ready(function () {
-                                                function loadCustomerAddresses() {
-                                                    $.ajax({
-                                                        url: 'getShippers',
-                                                        method: 'post',
-                                                        success: function (addresses) {
-                                                            console.log("Received addresses:", addresses); // Debug output
-                                                            var addressSelect = $('#update_customerAddress, #update_customerAddress_update');
-                                                            addressSelect.empty();
-                                                            addressSelect.append('<option value="">Chọn địa chỉ khách hàng</option>');
-                                                            $.each(addresses, function (index, address) {
-                                                                addressSelect.append('<option value="' + address + '">' + address + '</option>');
-                                                            });
-                                                        },
-                                                        error: function (error) {
-                                                            console.error("Error loading addresses: ", error);
-                                                        }
-                                                    });
-                                                }
-
+                                                // Function to load shippers by customer address
                                                 function loadShippersByCustomerAddress(customerAddress, shipperSelect) {
                                                     $.ajax({
                                                         url: 'getShippers?customerAddress=' + customerAddress,
                                                         method: 'get',
+                                                        dataType: 'json',
                                                         success: function (shippers) {
                                                             shipperSelect.empty();
                                                             shipperSelect.append('<option value="">Chọn người vận chuyển</option>');
@@ -225,8 +203,7 @@
                                                     });
                                                 }
 
-                                                loadCustomerAddresses();
-
+                                                // Event listener for edit button
                                                 $('.editbtn').on('click', function () {
                                                     $('#editmodal').modal('show');
                                                     $tr = $(this).closest('tr');
@@ -234,13 +211,11 @@
                                                         return $(this).text();
                                                     }).get();
                                                     $('#update_id').val(data[0].trim());
-
-                                                    $('#update_customerAddress').on('change', function () {
-                                                        var selectedAddress = $(this).val();
-                                                        loadShippersByCustomerAddress(selectedAddress, $('#update_shipper'));
-                                                    });
+                                                    $('#update_customerAddress').val(data[4].trim());
+                                                    loadShippersByCustomerAddress(data[4].trim(), $('#update_shipper'));
                                                 });
 
+                                                // Event listener for update button
                                                 $('.updatebtn').on('click', function () {
                                                     $('#updatemodal').modal('show');
                                                     $tr = $(this).closest('tr');
@@ -248,11 +223,8 @@
                                                         return $(this).text();
                                                     }).get();
                                                     $('#update_id_update').val(data[0].trim());
-
-                                                    $('#update_customerAddress_update').on('change', function () {
-                                                        var selectedAddress = $(this).val();
-                                                        loadShippersByCustomerAddress(selectedAddress, $('#update_shipper_update'));
-                                                    });
+                                                    $('#update_customerAddress_update').val(data[4].trim());
+                                                    loadShippersByCustomerAddress(data[4].trim(), $('#update_shipper_update'));
                                                 });
                                             });
             </script>

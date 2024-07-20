@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="css/update-brand.css">
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/sort-order.js"></script>
-        <script type="text/javascript" src="js/search-ship.js"></script>
+        <script type="text/javascript" src="js/search-order.js"></script>
         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
         <script type="text/javascript" src="slick/slick.min.js"></script>  
@@ -43,7 +43,7 @@
             <main>
                 <div class="head-title">
                     <div class="left">
-                        <h1>Đơn Hoàn Thành</h1>                      
+                        <h1>Danh sách đơn hoàn thành</h1>                      
                     </div>
                 </div>
 
@@ -53,8 +53,8 @@
                             <nav class="containerr" style="padding-left: 0px" >
                                 <ul class="main-menuu">
                                     <li><a style="padding-right: 0px" href="listorderaccept">Danh sách đơn</a></li>
-                                    <li style="margin-left: 30px;"><a href="listorderdelivering">Đơn Đang giao</a></li>               
-                                    <li style="margin-left: 30px;"><a href="listordercompleted">Đơn Hoàn Thành</a></li>         
+                                    <li style="margin-left: 30px;"><a href="listorderdelivering">Đơn đã nhận</a></li>               
+                                    <li style="margin-left: 30px;"><a href="listordercompleted">Đơn hoàn thành</a></li>         
                                 </ul>
                             </nav>
                         </div>
@@ -71,33 +71,33 @@
                         </div>
                         <form action="listordercompleted">
                             <table id="orderTable">
+                                
                                 <thead>
                                     <tr>
                                         <th style="display: none"></th>
-                                        <th style="width: 110px">Khách hàng<span style="padding-left: 3px" class="sort-icon"></span></th>
-                                        <th style="width: 110px">Số điện thoại<span style="padding-left: 3px" class="sort-icon"></span></th>
-                                        <th style="width: 155px; padding-left:50px">Email<span style="padding-left: 3px" class="sort-icon"></span></th>
-                                        <th style="width: 120px">Địa chỉ<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(3, 'str')">⇅</span></th>
-                                        <th style="width: 150px">Tổng tiền<span style="padding-left: 3px" class="sort-icon"></span></th>
-                                        <th style="width: 150px">Ngày đặt<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(5, 'str')">⇅</span></th>
-                                        <th style="width: 150px">Ngày muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(6, 'str')">⇅</span></th>
-                                        <th style="width: 100px">Thời gian muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
+                                        <th style="width: 90px">Khách hàng<span style="padding-left: 3px" class="sort-icon" ></span></th>
+                                        <th style="width: 110px">Số điện thoại<span style="padding-left: 3px" class="sort-icon" ></span></th>
+                                        <th style="width: 100px; padding-left: 10px;">Địa chỉ<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(3, 'str')">⇅</span></th>
+                                        <th style="width: 120px; padding-left: 10px;">Tổng tiền<span style="padding-left: 3px" class="sort-icon"></span></th>
+                                        <th style="width: 110px; padding-left: 5px">Ngày đặt<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(5, 'str')">⇅</span></th>
+                                        <th style="width: 130px">Ngày muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(6, 'str')">⇅</span></th>
+                                        <th style="width: 90px">Thời gian muốn giao<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
                                         <th style="width: 100px">Ngày nhận<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(7, 'str')">⇅</span></th>
-                                        <th style="width: 180px; padding-left:40px">Ghi chú</th>
-                                        <th>Trạng thái</th>
+                                        <th style="width: 150px; padding-left:40px">Ghi chú</th>
+                                        <th  style="padding-left: 15px">Trạng thái</th>
                                     </tr>                                   
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${order}" var="o">
                                         <tr>
+                                            <td style="display: none">${o.oid}</td>
                                             <td>${o.account.user}</td> 
                                             <td>${o.phone}</td>
-                                            <td>${o.email}</td>
-                                            <td>${o.address}</td>
+                                            <td style="padding-left: 10px">${o.address}</td>
                                             <td><fmt:formatNumber value="${o.totalMoney}" /></td>
                                             <td>${o.date}</td>
-                                            <td>${o.dateShip}</td>
-                                            <td>${o.timeShip}</td>
+                                            <td  style="padding-left: 10px">${o.dateShip}</td>
+                                            <td  style="padding-left: 10px">${o.timeShip}</td>
                                             <td>${o.receivedDate}</td>
                                             <td>${o.note}</td>  
                                             <td>
