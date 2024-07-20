@@ -881,21 +881,4 @@ public class AccountDAO extends DBContext {
         return shippers;
     }
 
-    public List<String> getDistinctAddresses() {
-        List<String> addresses = new ArrayList<>();
-        String sql = "SELECT DISTINCT a.Address FROM Account a JOIN [Order] o ON a.id = o.aid WHERE a.roleID = 4 AND a.Address IS NOT NULL AND o.sid = 1 "
-                + "UNION "
-                + "SELECT DISTINCT o.Address FROM [Order] o WHERE o.Address IS NOT NULL AND o.sid = 1";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                addresses.add(rs.getString("Address"));
-            }
-        } catch (SQLException e) {
-            System.out.println("getDistinctAddresses: " + e.getMessage());
-        }
-        return addresses;
-    }
-
 }

@@ -56,7 +56,7 @@ public class GetShippersServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+      @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String customerAddress = request.getParameter("customerAddress");
         AccountDAO accountDAO = new AccountDAO();
@@ -73,18 +73,14 @@ public class GetShippersServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        AccountDAO accountDAO = new AccountDAO();
-        List<String> addresses = accountDAO.getDistinctAddresses();
-
-        Gson gson = new Gson();
-        String jsonAddresses = gson.toJson(addresses);
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.print(jsonAddresses);
-            out.flush();
-        }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
+
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }
+
 }

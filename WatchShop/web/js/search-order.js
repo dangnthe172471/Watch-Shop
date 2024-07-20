@@ -19,7 +19,7 @@ function searchOrders() {
     rows.forEach(row => {
         var customerName = row.children[1].textContent.toLowerCase();
         var phone = row.children[2].textContent.toLowerCase();
-        var address = row.children[4].textContent.toLowerCase();
+        var address = row.children[3].textContent.toLowerCase();
 
         var matchCustomer = customerName.includes(searchCustomer);
         var matchSDT = phone.includes(searchSDT);
