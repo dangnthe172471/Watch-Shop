@@ -682,23 +682,24 @@ public class OrderDAO extends DBContext {
     public List<OrderList> getOrderForStaff() {
         List<OrderList> list = new ArrayList<>();
         try {
-            String sql = "SELECT o.id AS OrderID,\n"
-                    + "                          a.[user] AS [User], \n"
-                    + "                          o.date AS OrderDate, \n"
-                    + "                          o.dateShip AS DateShip,\n"
-                    + "                          o.timeShip AS TimeShip, \n"
-                    + "                          o.totalMoney AS TotalMoney,\n"
-                    + "                          o.email AS Email, \n"
-                    + "                          o.phone AS Phone,\n"
-                    + "                          o.address AS Address, \n"
-                    + "                          o.note AS Note,\n"
-                    + "				 o.type As Type,\n"
-                    + "                           a2.[user] AS ShippingAidUser\n"
-                    + "                    FROM [Order] o\n"
-                    + "                    JOIN [Account] a ON o.aid = a.id \n"
-                    + "                    LEFT JOIN [ShippingHistory] sh ON sh.oid = o.id \n"
-                    + "                    LEFT JOIN [Account] a2 ON sh.aid = a2.id\n"
-                    + "                    WHERE o.sid = 1";
+            String sql = """
+                        SELECT o.id AS OrderID,
+                        a.[user] AS [User], 
+                        o.date AS OrderDate, 
+                        o.dateShip AS DateShip,
+                        o.timeShip AS TimeShip, 
+                        o.totalMoney AS TotalMoney,
+                        o.email AS Email, 
+                        o.phone AS Phone,
+                        o.address AS Address, 
+                        o.note AS Note,
+                        o.type As Type,
+                        a2.[user] AS ShippingAidUser
+                        FROM [Order] o
+                        JOIN [Account] a ON o.aid = a.id 
+                        LEFT JOIN [ShippingHistory] sh ON sh.oid = o.id 
+                        LEFT JOIN [Account] a2 ON sh.aid = a2.id
+                        WHERE o.sid <> 4""";
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
