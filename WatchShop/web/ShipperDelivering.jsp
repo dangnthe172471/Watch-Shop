@@ -137,7 +137,7 @@
                                                         Đã thanh toán
                                                     </c:when>
                                                     <c:when test="${o.type == 1}">
-                                                        Chưa thanh toán
+                                                        Nhận hàng thanh toán
                                                     </c:when>
                                                     <c:otherwise>
                                                         Không xác định
@@ -168,7 +168,7 @@
                                                         Đã thanh toán
                                                     </c:when>
                                                     <c:when test="${o.type == 1}">
-                                                        Chưa thanh toán
+                                                        Nhận hàng thanh toán
                                                     </c:when>
                                                     <c:otherwise>
                                                         Không xác định

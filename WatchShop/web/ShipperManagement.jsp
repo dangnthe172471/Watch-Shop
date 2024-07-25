@@ -65,7 +65,6 @@
                                         <th style="display: none"></th>
                                         <th style="width: 100px; padding-left:5px">Khách hàng<span style="padding-left: 3px" class="sort-icon" ></span></th>
                                         <th style="width: 120px; padding-left:5px">Số điện thoại<span style="padding-left: 3px" class="sort-icon" ></span></th>
-                                        <th style="width: 160px; padding-left:50px">Email<span style="padding-left: 3px" class="sort-icon"></span></th>
                                         <th style="width: 120px; padding-left:5px">Địa chỉ<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(3, 'str')">⇅</span></th>
                                         <th style="width: 140px; padding-left:15px">Tổng tiền<span style="padding-left: 3px" class="sort-icon"></span></th>
                                         <th style="width: 150px; padding-left:10px">Ngày đặt<span style="padding-left: 3px" class="sort-icon" onclick="sortTable(5, 'str')">⇅</span></th>
@@ -83,7 +82,6 @@
                                             <td style="display: none">${o.orderId}</td>
                                             <td>${o.customer}</td>
                                             <td>${o.phone}</td>
-                                            <td>${o.email}</td>
                                             <td>${o.address}</td>
                                             <td style="padding-left: 10px"><fmt:formatNumber value="${o.totalMoney}" /></td>
                                             <td>${o.orderDate}</td>
@@ -97,7 +95,7 @@
                                                         Đã thanh toán
                                                     </c:when>
                                                     <c:when test="${o.type == 1}">
-                                                        Chưa thanh toán
+                                                        Nhận hàng thanh toán
                                                     </c:when>
                                                     <c:otherwise>
                                                         Không xác định
