@@ -36,23 +36,17 @@
                     <h3 style="color: red" ">${requestScope.error}</h3>
                     <h3 style="color: black" ">${requestScope.mess}</h3>
                     <div id="whitespaceMessage"></div>
-                    <div class="input-div one">
-                        <div class="i">
 
-                        </div>
-                        <div>
 
-                            <input class="input" type="text" name="user" value="${sessionScope.account.user}" readonly/>
-                        </div>
-                    </div>
+                    <input class="input" type="hidden" name="user" value="${sessionScope.account.user}" readonly/>
                     <div class="input-div one">
                         <div class="i">
                             <i class="fas fa-key"></i>
                         </div>
                         <div>
                             <h5>Mật khẩu cũ  <div id="oldPasswordMessage"></div></h5>
-                           <input class="input" type="password" name="opass" id="opass" oninput="validateOldPassword(),checkWhitespace()">
-                           
+                            <input class="input" type="password" name="opass" id="opass" oninput="validateOldPassword(),checkWhitespace()">
+
                         </div>
                     </div>
                     <div class="input-div one">
@@ -62,7 +56,7 @@
                         <div>
                             <h5>Mật khẩu mới<div id="passwordMessage"></div></h5>
                             <input class="input" type="password" name="pass" id="password" oninput="validatePassword(),checkWhitespace()">
-                            
+
                         </div>
                     </div>
                     <div class="input-div two">
@@ -72,10 +66,10 @@
                         <div>
                             <h5>Nhập lại mật khẩu mới <div id="repeatPasswordMessage"></div></h5>
                             <input class="input" type="password" name="rpass" id="re_pass" oninput="validateRepeatPassword(),checkWhitespace()">
-                           
+
                         </div>
                     </div>
-                    
+
                     <input type="submit" class="btn" value="Thay Đổi">
                     <a class="col-sm-6" href="home"><button class="btn btn-primary btn-block" type="button" id="btn-signup">Trang Chủ</button></a>
                     <div class="account">
@@ -86,7 +80,7 @@
             </div>
         </div>
 
-                        <script type="text/javascript" src="js/validation.js"></script>
+        <script type="text/javascript" src="js/validation.js"></script>
         <script type="text/javascript" src="js/login.js"></script>
     </body>
 </html>

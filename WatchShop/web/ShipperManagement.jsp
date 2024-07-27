@@ -210,7 +210,7 @@
                                                     }).get();
                                                     $('#update_id').val(data[0].trim());
                                                     $('#update_customerAddress').val(data[4].trim());
-                                                    loadShippersByCustomerAddress(data[4].trim(), $('#update_shipper'));
+                                                    loadShippersByCustomerAddress(data[3].trim(), $('#update_shipper'));
                                                 });
 
                                                 // Event listener for update button
@@ -222,7 +222,7 @@
                                                     }).get();
                                                     $('#update_id_update').val(data[0].trim());
                                                     $('#update_customerAddress_update').val(data[4].trim());
-                                                    loadShippersByCustomerAddress(data[4].trim(), $('#update_shipper_update'));
+                                                    loadShippersByCustomerAddress(data[3].trim(), $('#update_shipper_update'));
                                                 });
                                             });
             </script>
