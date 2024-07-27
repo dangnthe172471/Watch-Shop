@@ -66,11 +66,9 @@
                                     <label for="quantity">Số lượng trong kho</label><br>
                                     <input type="number" min="1" style="width: 268px;" value="${p.quantity}" name="quantity" required><br>
 
-                                    <label for="sold">Đã bán</label><br>
-                                    <input type="number" min="0" style="width: 268px;" value="${p.sold}" name="sold" required><br>
+                                    <input type="hidden" min="0" style="width: 268px;" value="${p.sold}" name="sold" required><br>
 
-                                    <label for="rate">Đánh giá</label><br>
-                                    <input type="number" step=0.01 min="0" max="5" oninput="checkNum(this)" style="width: 268px;" value="${p.rate}" name="rate" required><br>
+                                    <input type="hidden" step=0.01 min="0" max="5" oninput="checkNum(this)" style="width: 268px;" value="${p.rate}" name="rate" required><br>
                                 </div>
                             </div>
 
