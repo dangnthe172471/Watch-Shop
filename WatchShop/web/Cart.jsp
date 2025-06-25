@@ -87,7 +87,8 @@
                                                                 </div>
                                                                 <form action="process" id="f">
                                                                     <input type="hidden" name="pid" value="${i.product.id}"/>
-                                                                    <input type="number" oninput="checkNum(this)" name="num" max="${i.product.quantity}" value="${i.quantity}" class="soluongsp numProduct text-center" style="height: 35px;">                                                                </form>
+                                                                    <input type="number" oninput="checkNum(this)" name="num" max="${i.product.quantity}" value="${i.quantity}" class="soluongsp numProduct text-center" style="height: 35px;">                                                               
+                                                                </form>
                                                                 <div class="input-group-append" style="margin-left: -15px">
                                                                     <a href="process?type=add&&pid=${i.product.id}" class="input-group-text btn-spin btn-dec" style="border: none" >+</a>
                                                                 </div>

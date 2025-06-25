@@ -61,7 +61,7 @@ public class ProductDAO extends DBContext {
     public List<Product> listProductLast() {
         List<Product> list = new ArrayList<>();
         String sql = """
-                        select top 5 *
+                        select top 10 *
                         from product p inner join ImageProduct [pi] on(p.id=[pi].[pid])
                         inner join brand b on (b.bid=p.brandID)
                         inner join category c1 on (c1.cid=p.cateID1)
